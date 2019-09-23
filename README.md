@@ -10,4 +10,4 @@
 ### Board Structure
 
 - We will aim to implement each of the squares in terms of name, value, rent, mortgage by using the .properties files inside of the ie.ucd.gameConfigurations. This means that anyone can use our source code and put in their own custom version of Monopoly like the US, Irish and UK versions. 
-- We will split this into Utilities, Properties/Streets and then there is Chance Squares
+- We will split this into Utilities, Properties/Streets and then there is Chance/Community Squares
