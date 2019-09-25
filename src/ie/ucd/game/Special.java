@@ -25,9 +25,12 @@ public class Special extends Square {
 				break;
 			case "COMMUNITY_CHEST":
 				//player1.
+			case "CHANCE":
+				//player1.
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
+				player1.goToJail();
 				break; //FIXME Will need to be looking at the chance and community cards also
 		}
 	}
