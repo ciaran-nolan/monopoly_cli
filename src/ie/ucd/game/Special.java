@@ -7,12 +7,14 @@ package ie.ucd.game;
 public class Special extends Square {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
+	//private String description;
 	
 	public Special(String name, int indexLocation, int buyCost, boolean canBuy, Player owner, String type, int value) {
 		//super(name, indexLocation, buyCost, false, null); //Nobody owns it
 		//this.indexLocation = indexLocation;
 		this.type = type;
 		this.value = value;
+		//this.description = description;
 	}
 
 	public void implementSpecialSquare(Player player1) {
