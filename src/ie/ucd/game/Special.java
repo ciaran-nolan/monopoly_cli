@@ -7,14 +7,28 @@ package ie.ucd.game;
 public class Special extends Square {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
-	//private String description;
+	//private String description; //FIXME This has been passed up to the Square level
 	
-	public Special(String name, int indexLocation, int buyCost, boolean canBuy, Player owner, String type, int value) {
-		//super(name, indexLocation, buyCost, false, null); //Nobody owns it
-		//this.indexLocation = indexLocation;
+	public Special(boolean canBuy, String name, String type, int value) {
+		super(canBuy, name); //Nobody owns it
 		this.type = type;
 		this.value = value;
-		//this.description = description;
+	}
+	
+	public String getType() {
+		return this.type;
+	}
+	
+	public int getValue() {
+		return this.value;
+	}
+	
+	public void setType(String squareType) {
+		this.type = squareType;
+	}
+	
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	public void implementSpecialSquare(Player player1) {
