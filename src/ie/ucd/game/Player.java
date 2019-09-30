@@ -8,18 +8,15 @@ public class Player {
 	private String token; 	//Token that represents the player
 	private int money; 		// The amount of money that the Player will have
 	private int indexLocation; //The index of the square at which the player is on the board
-	private ArrayList<Property> propertyList; //A list of the properties being owned by the player
+	private ArrayList<CanOwn> propertyList = new ArrayList<CanOwn>(); //A list of the properties being owned by the player
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
+	private boolean inJail = false; //If they are in jail or not
+	//FIXME CONSIDER Perhaps a card Array to show what cards you have
 	
-	//Perhaps a card Array to show what cards you have
-	
-	public Player(String name, String token, int money, int indexLocation, ArrayList<Property> propertyList, int jailFreeCard) {
+	public Player(String name, String token, int money) {
 		this.name = name;
 		this.token = token;
 		this.money = money;
-		this.indexLocation = indexLocation;
-		this.propertyList = propertyList;
-		this.jailFreeCard = jailFreeCard;
 	}
 	
 	//GETTERS
@@ -39,7 +36,7 @@ public class Player {
 		return this.indexLocation;
 	}
 	
-	public ArrayList<Property> getPropertyList(){
+	public ArrayList<CanOwn> getPropertyList(){
 		return this.propertyList;
 	}
 	
@@ -82,10 +79,11 @@ public class Player {
 		this.indexLocation = this.indexLocation + moves; //This moves the index location by moves 
 	}
 	
-	public void goToJail() {
+	public boolean goToJail() {
 		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
 		if(this.jailFreeCard < 1) {
 			this.indexLocation = 3; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
+			return this.inJail = true;
 			//WIP REPLACE WITH AN ENUM FIXME 
 		}
 		else {
@@ -93,9 +91,11 @@ public class Player {
 			//Check if they still have one card
 			if(this.jailFreeCard > 0) {
 				System.out.println("You have a get out of jail free card still");
+				return this.inJail = false;
 			}
 			else {
 				this.indexLocation = 3; 
+				return this.inJail = true;
 			}
 			//RETURN THE CARD TO THE LIST as the user has now used it
 			//For the jail card, add it and then delete it from the array of cards. When you are done with it and want to return it, 
@@ -103,6 +103,24 @@ public class Player {
 		}
 	
 	}
+	
+	public boolean isInJail() {
+		return inJail; //Return inJail status
+	}
+	
+	public int leftInPrison() {
+		return 1;
+		//return turns left in prison FIXME
+	}
+	public boolean leavePrison() {
+		return true;
+		//FIXME Checks whether they can leave prison or not
+	}
+	//Functions to consider: FIXME
+		//Remove player from the game 
+		//isBankrupt function 
+		//buying a square from another player
+		//toString
 	
 	
 }

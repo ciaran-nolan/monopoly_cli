@@ -7,7 +7,7 @@ package ie.ucd.game;
 public abstract class Square  {
 	//private int indexLocation;
 	private boolean canBuy;
-	private String name;
+	private String name; //Could also be the description
 	
 	public Square(boolean canBuy, String name) {
 		//this.indexLocation = indexLocation;
@@ -41,6 +41,6 @@ public abstract class Square  {
 	
 	//FIXME Please consult this first and see whether it should be renamed
 	//Used for handling the special square landed on but could be implemented for both
-	public abstract void implementSpecialSquare(Player player1);
+	//public abstract void implementSpecialSquare(Player player1);
 	
 }
