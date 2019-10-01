@@ -5,10 +5,11 @@ public abstract class Card {
 	private String cardDesc;
 	private int cardValue;
 	
+	
 	public Card (String cardType, String cardDesc, int cardValue) {
 		this.cardType = cardType;
 		this.cardDesc = cardDesc;
-		this.cardValue = cardValue;
+		this.cardValue = cardValue;	
 	}
 	
 	public String getCardType() {
