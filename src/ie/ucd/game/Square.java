@@ -5,19 +5,19 @@ package ie.ucd.game;
  * Chance cards
  */
 public abstract class Square  {
-	//private int indexLocation;
+	private int indexLocation;
 	private boolean canBuy;
 	private String name; //Could also be the description
 	
-	public Square(boolean canBuy, String name) {
-		//this.indexLocation = indexLocation;
+	public Square(String name , int indexLocation, boolean canBuy) {
+		this.indexLocation = indexLocation;
 		this.canBuy = canBuy;
 		this.name = name;
 	}
 	
-	/*public int getLocation() {
+	public int getLocation() {
 		return this.indexLocation;
-	}*/
+	}
 	
 	public boolean getBuyStatus() {
 		return this.canBuy;
@@ -27,9 +27,9 @@ public abstract class Square  {
 		return this.name;
 	}
 	
-	/*public void setLocation(int location) {
+	public void setLocation(int location) {
 		this.indexLocation = location;
-	}*/
+	}
 	
 	public void setBuyStatus(boolean canBuy) {
 		this.canBuy = canBuy;

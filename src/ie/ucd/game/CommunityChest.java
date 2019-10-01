@@ -7,8 +7,8 @@ public class CommunityChest extends Special {
 	
 	ArrayList<Card> communityChestDeck = new ArrayList<Card>();
 	
-	public CommunityChest(boolean canBuy, String name, String type, int value) {
-		super(canBuy, name, type, value);
+	public CommunityChest(String name, int indexLocation, String type, int value) {
+		super(name, indexLocation, false, type, value);
 	}
 	
 	

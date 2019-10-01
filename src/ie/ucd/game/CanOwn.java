@@ -5,8 +5,8 @@ public abstract class CanOwn extends Square {
 	private int buyPrice;
 	Player owner;
 	
-	public CanOwn(String name, int mortgage, int buyPrice, Player owner) {
-		super(true, name);
+	public CanOwn(String name, int indexLocation, int mortgage, int buyPrice, Player owner) {
+		super(name, indexLocation, true);
 		this.mortgage = mortgage;
 		this.buyPrice = buyPrice;
 		this.owner = owner;

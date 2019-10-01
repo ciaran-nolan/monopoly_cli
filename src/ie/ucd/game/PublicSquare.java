@@ -3,8 +3,8 @@ package ie.ucd.game;
 public class PublicSquare extends CanOwn {
 	private int rent; //Rent in this case is different to rent in the case of properties with colours
 
-	public PublicSquare(String name, int buyPrice, int mortgage, int rent, Player owner) {
-		super(name, mortgage, buyPrice, owner);
+	public PublicSquare(String name, int indexLocation, int buyPrice, int mortgage, int rent, Player owner) {
+		super(name, indexLocation, mortgage, buyPrice, owner);
 		this.rent = rent;
 	}
 	

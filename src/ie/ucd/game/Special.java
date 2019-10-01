@@ -9,8 +9,8 @@ public class Special extends Square {
 	private int value; //This defines the value if they have any......like Tax, or Go
 	//private String description; //FIXME This has been passed up to the Square level
 	
-	public Special(boolean canBuy, String name, String type, int value) {
-		super(canBuy, name); //Nobody owns it
+	public Special(String name, int indexLocation, boolean canBuy, String type, int value) {
+		super(name, indexLocation, canBuy); //Nobody owns it
 		this.type = type;
 		this.value = value;
 	}
