@@ -79,6 +79,13 @@ public class Player {
 		this.indexLocation = this.indexLocation + moves; //This moves the index location by moves 
 	}
 	
+	public void moveToSquare(int squareNum) {
+		if(this.getLocation() > squareNum) {
+			this.addMoney(200); //This implies that they have passed GO
+		}
+		this.indexLocation = squareNum;
+	}
+	
 	public boolean goToJail() {
 		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
 		if(this.jailFreeCard < 1) {
@@ -102,6 +109,18 @@ public class Player {
 			//just add it to the end of the card 
 		}
 	
+	}
+	
+	public void pickCard(ArrayList<Card> cardDeck) {
+		//The card deck will be shuffled and so I will need to take this card and then call the 
+		Card pickedCard = cardDeck.get(0);
+		//If it is a get out of jail card, keep it and dont return to the pile
+		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+			cardDeck.remove(0);
+			cardDeck.add(pickedCard);
+		}
+		//This will implement the card
+		pickedCard.dealWithCard(this);
 	}
 	
 	public boolean isInJail() {

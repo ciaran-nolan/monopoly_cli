@@ -7,6 +7,7 @@ package ie.ucd.game;
 public class Special extends Square {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
+	
 	//private String description; //FIXME This has been passed up to the Square level
 	
 	public Special(String name, int indexLocation, boolean canBuy, String type, int value) {
@@ -42,9 +43,9 @@ public class Special extends Square {
 				player1.addMoney(value);
 				break;
 			case "COMMUNITY_CHEST":
-				//player1.
+				player1.pickCard(BoardReader.getCommunityChests());
 			case "CHANCE":
-				//player1.
+				player1.pickCard(BoardReader.getChances());
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:

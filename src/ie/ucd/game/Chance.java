@@ -13,10 +13,8 @@ public class Chance extends Card {
 		
 		switch(this.getCardType()) {
 			case "MOVE":
-				player1.setLocation(this.getCardValue());
-				if(this.getCardValue() == 0) {
-					player1.addMoney(200); //Add money as the user has gone to GO
-				}
+				//player1.setLocation(this.getCardValue());
+				player1.moveToSquare(this.getCardValue());
 			case "JAIL":
 				player1.goToJail();
 			case "PAY":
@@ -25,6 +23,7 @@ public class Chance extends Card {
 					for(CanOwn property : propertyList) {
 						//player1.reduceMoney(value*property.getNumHouses());
 						//player1.reduceMoney(4*value*property.getNumHotels());
+						//If there is no hotels, it will not take any money away at all
 						//FIXME
 						System.out.println(property.getLocation());
 					}
@@ -36,24 +35,6 @@ public class Chance extends Card {
 				player1.addMoney(this.getCardValue());
 			case "GET_OUT_OF_JAIL":
 				player1.setJailFree(); //Increments the amount of jail free cards by 1
-			case "CHOICE":
-				//We will need to take user input here
-				System.out.println(player1.getName()+": Would you like to: "+this.getCardDesc()+"?");
-				System.out.println("Please enter either FINE or CHANCE!");
-				//Have the input taken in ignoring the case
-				/*while(true) {
-					if(input == "FINE") {
-						player1.reduceMoney(this.getValue());
-						break;
-					}
-					else if(input == "CHANCE") {
-						//pick up a chance card
-						break;
-					}
-					else {
-						System.err.println("You have not chosen an option. Choose again!");
-					}
-				}*/
 		}
 	
 
