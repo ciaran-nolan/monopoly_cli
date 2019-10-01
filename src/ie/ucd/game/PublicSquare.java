@@ -1,4 +1,5 @@
 package ie.ucd.game;
+import java.util.*;
 
 public class PublicSquare extends CanOwn {
 	private int rent; //Rent in this case is different to rent in the case of properties with colours
@@ -16,7 +17,7 @@ public class PublicSquare extends CanOwn {
 		this.rent = rent;
 	}
 	
-	public void buy(Player player) {
+	public void buy(Player player, CanOwn publicProperty, List<Player> listPlayers) {
 		//Please fill in
 		//FIXME
 		//Yes: Add to the persons list of properties, give them the title deed card/Reduce the money
@@ -24,7 +25,7 @@ public class PublicSquare extends CanOwn {
 		//		If nobody wants to buy it, move onto the next turn 
 	}
 	
-	public void sell(Player player) {
+	public void sell(Player player, CanOwn publicProperty, List<Player> listPlayers) {
 		//FIXME
 		//if(unimproved/utilities) of all the same colour
 		//		Ask user do they want to sell 

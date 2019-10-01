@@ -1,6 +1,6 @@
 package ie.ucd.game;
 
-public class Card {
+public abstract class Card {
 	private String cardType;
 	private String cardDesc;
 	private int cardValue;
@@ -34,6 +34,9 @@ public class Card {
 	public void setCardValue(int cardValue) {
 		this.cardValue = cardValue;
 	}
+	
+	public abstract void dealWithCard(Player player1);
+	
 	
 	//Following the format of using a toString 
 	public String toString() {

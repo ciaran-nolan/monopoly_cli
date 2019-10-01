@@ -1,4 +1,5 @@
 package ie.ucd.game;
+import java.util.*;
 
 public abstract class CanOwn extends Square {
 	private int mortgage;
@@ -37,8 +38,8 @@ public abstract class CanOwn extends Square {
 	}
 	
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
-	public abstract void buy(Player player);
-		
+	public abstract void buy(Player player, CanOwn siteToBuy, List<Player> listPlayers);
+	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	
-	public abstract void sell(Player player);
+	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
 }

@@ -30,7 +30,9 @@ public class Special extends Square {
 	public void setValue(int value) {
 		this.value = value;
 	}
-
+	//For special square, the community chest and chance ones will implement
+	//the dealWithCard(Player) function from which a card can be produced from the deck
+	// and then used to perform a function
 	public void implementSpecialSquare(Player player1) {
 		switch(type) {
 			case "TAX":
