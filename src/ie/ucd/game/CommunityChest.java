@@ -40,6 +40,7 @@ public class CommunityChest extends Card {
 					}
 					else if(input == "CHANCE") {
 						//pick up a chance card
+						player1.pickChanceCard(BoardReader.getChances());
 						break;
 					}
 					else {

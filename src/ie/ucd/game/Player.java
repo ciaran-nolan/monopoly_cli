@@ -111,10 +111,22 @@ public class Player {
 	
 	}
 	
-	public void pickCard(ArrayList<Card> cardDeck) {
+	public void pickCommChestCard(ArrayList<CommunityChest> cardDeck) {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
-		Card pickedCard = cardDeck.get(0);
-		//If it is a get out of jail card, keep it and dont return to the pile
+		CommunityChest pickedCard = cardDeck.get(0);
+		//If it is a get out of jail card, keep it and don't return to the pile
+		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+			cardDeck.remove(0);
+			cardDeck.add(pickedCard);
+		}
+		//This will implement the card
+		pickedCard.dealWithCard(this);
+	}
+	
+	public void pickChanceCard(ArrayList<Chance> cardDeck) {
+		//The card deck will be shuffled and so I will need to take this card and then call the 
+		Chance pickedCard = cardDeck.get(0);
+		//If it is a get out of jail card, keep it and don't return to the pile
 		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
 			cardDeck.remove(0);
 			cardDeck.add(pickedCard);
