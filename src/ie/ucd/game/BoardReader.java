@@ -65,7 +65,7 @@ public class BoardReader {
     	
     	for(int i=0; i<=5; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Utility temp = new Utility(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("title"+i)),Integer.parseInt(prop.getProperty(("priceBuy"+i))),rentIntArray, Integer.parseInt(prop.getProperty(("mortgage"+i))));    	
+    		Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
     		utilities.add(temp);    	
     	}
     	

@@ -11,6 +11,7 @@ public class Player {
 	private ArrayList<CanOwn> propertyList = new ArrayList<CanOwn>(); //A list of the properties being owned by the player
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
 	private boolean inJail = false; //If they are in jail or not
+	private ArrayList<Card> jailCards = new ArrayList<Card>();
 	//FIXME CONSIDER Perhaps a card Array to show what cards you have
 	
 	public Player(String name, String token, int money) {
@@ -42,6 +43,14 @@ public class Player {
 	
 	public int getJailFreeNum() {
 		return this.jailFreeCard;
+	}
+	
+	public ArrayList<Card> getJailCard() {
+		return this.jailCards;
+	}
+	
+	public void addJailCard(Card card) {
+		this.jailCards.add(card);
 	}
 	
 	public void setName(String name) {
@@ -87,14 +96,28 @@ public class Player {
 	}
 	
 	public boolean goToJail() {
+		ArrayList<Chance> chanceDeck = BoardReader.getChances();
+		ArrayList<CommunityChest> commChestDeck = BoardReader.getCommunityChests();
 		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
 		if(this.jailFreeCard < 1) {
 			this.indexLocation = 3; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
 			return this.inJail = true;
-			//WIP REPLACE WITH AN ENUM FIXME 
 		}
 		else {
+			int currPos = 0;
 			this.jailFreeCard--;
+			//I now need to add the card back into the relevant array. I can see that by the Array that is less than 16 
+			for(Card card:this.jailCards){
+				if(card instanceof CommunityChest) {
+					this.jailCards.remove(currPos);
+					commChestDeck.add((CommunityChest)card);
+				}
+				if(card instanceof Chance) {
+					this.jailCards.remove(currPos);
+					chanceDeck.add((Chance)card);
+				}
+				currPos++;
+			}
 			//Check if they still have one card
 			if(this.jailFreeCard > 0) {
 				System.out.println("You have a get out of jail free card still");
@@ -119,6 +142,11 @@ public class Player {
 			cardDeck.remove(0);
 			cardDeck.add(pickedCard);
 		}
+		else {
+			//Remove the get out of jail card from the pile
+			cardDeck.remove(0);
+			this.addJailCard(pickedCard);
+		}
 		//This will implement the card
 		pickedCard.dealWithCard(this);
 	}
@@ -130,6 +158,11 @@ public class Player {
 		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
 			cardDeck.remove(0);
 			cardDeck.add(pickedCard);
+		}
+		else {
+			//Remove the get out of jail card from the pile
+			cardDeck.remove(0);
+			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
 		pickedCard.dealWithCard(this);
@@ -152,6 +185,12 @@ public class Player {
 		//isBankrupt function 
 		//buying a square from another player
 		//toString
+	
+	public String toString() {
+		return "Details of: "+this.name+
+				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
+				"\nIs In Jail?: "+this.inJail+"\n PropertyList"+this.propertyList;
+	}
 	
 	
 }

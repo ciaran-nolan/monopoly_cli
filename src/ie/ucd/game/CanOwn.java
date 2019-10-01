@@ -41,5 +41,6 @@ public abstract class CanOwn extends Square {
 	public abstract void buy(Player player, CanOwn siteToBuy, List<Player> listPlayers);
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	
+	
 	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
 }

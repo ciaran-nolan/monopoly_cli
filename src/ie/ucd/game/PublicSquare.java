@@ -1,22 +1,18 @@
 package ie.ucd.game;
 import java.util.*;
 
-public class PublicSquare extends CanOwn {
-	private int rent; //Rent in this case is different to rent in the case of properties with colours
+public abstract class PublicSquare extends CanOwn {
+	//private int rent; //Rent in this case is different to rent in the case of properties with colours
 
-	public PublicSquare(String name, int indexLocation, int buyPrice, int mortgage, int rent, Player owner) {
+	public PublicSquare(String name, int indexLocation, int buyPrice, int mortgage, Player owner) {
 		super(name, indexLocation, mortgage, buyPrice, owner);
-		this.rent = rent;
+		//this.rent = rent;
 	}
 	
-	public int getRent() {
-		return this.rent;
-	}
+	public abstract int[] getRent();
 	
-	public void setRent(int rent) {
-		this.rent = rent;
-	}
-	
+	public abstract void setRent(int[] rent);
+		
 	public void buy(Player player, CanOwn publicProperty, List<Player> listPlayers) {
 		//Please fill in
 		//FIXME
