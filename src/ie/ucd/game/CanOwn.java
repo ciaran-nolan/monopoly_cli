@@ -41,19 +41,19 @@ public abstract class CanOwn extends Square {
 	public abstract void buy(Player player, CanOwn siteToBuy, List<Player> listPlayers);
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	
-	public void playerAuction(CanOwn auctionableCard, List<Player> listPlayers, Player auctioningPlayer) {
+	public void playerAuction(List<Player> listPlayers) {
 	
 		List<Player> biddingPlayers = listPlayers;
-		
 		int currentAuctionPrice = 0;
 		Scanner auctionScanner = new Scanner(System.in);
+		int biddingPoolSize = listPlayers.size();
 		
-		while(true){
+		while(biddingPoolSize > 1){
 			//update the bidding pool size 
-			int biddingPoolSize = biddingPlayers.size();
 			for (int i = 0; i<= biddingPoolSize; i++) {
 				
-				System.out.println(biddingPlayers.get(i).getName()+" would you like to place a bid on"+auctionableCard.getName()+"? (y/n)");
+				System.out.println(biddingPlayers.get(i).getName()+" would you like to place a bid on"+this.getName()+"? (y/n)");
+				
 				System.out.println("Current bid: "+currentAuctionPrice+" by "+biddingPlayers.get(i-1).getName());
 				String bidAcknowledgement = auctionScanner.next();
 				
@@ -75,6 +75,12 @@ public abstract class CanOwn extends Square {
 					biddingPlayers.remove(i);
 					}
 				}
+			biddingPoolSize = biddingPlayers.size();
+			if (biddingPoolSize == 1) {
+				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionPrice);
+				this.setOwner(biddingPlayers.get(0));
+				biddingPlayers.get(0).reduceMoney(currentAuctionPrice);
+			}
 			}
 		}
 
