@@ -7,7 +7,9 @@ public class readerTest {
 	public static void main(String[] args) throws IOException { 
 	BoardReader b1 = new BoardReader();
 	b1.readProperties();
-	System.out.println(b1.getPropertyNames());
+	b1.readSpecialSquares();
+	b1.readUtilities();
+	b1.readCommunityChests();
+	b1.readChances();
 	}
-
 }

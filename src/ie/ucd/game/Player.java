@@ -8,18 +8,16 @@ public class Player {
 	private String token; 	//Token that represents the player
 	private int money; 		// The amount of money that the Player will have
 	private int indexLocation; //The index of the square at which the player is on the board
-	private ArrayList<Property> propertyList; //A list of the properties being owned by the player
+	private ArrayList<CanOwn> propertyList = new ArrayList<CanOwn>(); //A list of the properties being owned by the player
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
+	private boolean inJail = false; //If they are in jail or not
+	private ArrayList<Card> jailCards = new ArrayList<Card>();
+	//FIXME CONSIDER Perhaps a card Array to show what cards you have
 	
-	//Perhaps a card Array to show what cards you have
-	
-	public Player(String name, String token, int money, int indexLocation, ArrayList<Property> propertyList, int jailFreeCard) {
+	public Player(String name, String token, int money) {
 		this.name = name;
 		this.token = token;
 		this.money = money;
-		this.indexLocation = indexLocation;
-		this.propertyList = propertyList;
-		this.jailFreeCard = jailFreeCard;
 	}
 	
 	//GETTERS
@@ -39,12 +37,20 @@ public class Player {
 		return this.indexLocation;
 	}
 	
-	public ArrayList<Property> getPropertyList(){
+	public ArrayList<CanOwn> getPropertyList(){
 		return this.propertyList;
 	}
 	
 	public int getJailFreeNum() {
 		return this.jailFreeCard;
+	}
+	
+	public ArrayList<Card> getJailCard() {
+		return this.jailCards;
+	}
+	
+	public void addJailCard(Card card) {
+		this.jailCards.add(card);
 	}
 	
 	public void setName(String name) {
@@ -82,26 +88,108 @@ public class Player {
 		this.indexLocation = this.indexLocation + moves; //This moves the index location by moves 
 	}
 	
-	public void goToJail() {
+	public void moveToSquare(int squareNum) {
+		if(this.getLocation() > squareNum) {
+			this.addMoney(200); //This implies that they have passed GO
+		}
+		this.indexLocation = squareNum;
+	}
+	
+	public boolean goToJail() {
+		ArrayList<Chance> chanceDeck = BoardReader.getChances();
+		ArrayList<CommunityChest> commChestDeck = BoardReader.getCommunityChests();
 		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
 		if(this.jailFreeCard < 1) {
 			this.indexLocation = 3; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
-			//WIP REPLACE WITH AN ENUM FIXME 
+			return this.inJail = true;
 		}
 		else {
+			int currPos = 0;
 			this.jailFreeCard--;
+			//I now need to add the card back into the relevant array. I can see that by the Array that is less than 16 
+			for(Card card:this.jailCards){
+				if(card instanceof CommunityChest) {
+					this.jailCards.remove(currPos);
+					commChestDeck.add((CommunityChest)card);
+				}
+				if(card instanceof Chance) {
+					this.jailCards.remove(currPos);
+					chanceDeck.add((Chance)card);
+				}
+				currPos++;
+			}
 			//Check if they still have one card
 			if(this.jailFreeCard > 0) {
 				System.out.println("You have a get out of jail free card still");
+				return this.inJail = false;
 			}
 			else {
 				this.indexLocation = 3; 
+				return this.inJail = true;
 			}
 			//RETURN THE CARD TO THE LIST as the user has now used it
 			//For the jail card, add it and then delete it from the array of cards. When you are done with it and want to return it, 
 			//just add it to the end of the card 
 		}
 	
+	}
+	
+	public void pickCommChestCard(ArrayList<CommunityChest> cardDeck) {
+		//The card deck will be shuffled and so I will need to take this card and then call the 
+		CommunityChest pickedCard = cardDeck.get(0);
+		//If it is a get out of jail card, keep it and don't return to the pile
+		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+			cardDeck.remove(0);
+			cardDeck.add(pickedCard);
+		}
+		else {
+			//Remove the get out of jail card from the pile
+			cardDeck.remove(0);
+			this.addJailCard(pickedCard);
+		}
+		//This will implement the card
+		pickedCard.dealWithCard(this);
+	}
+	
+	public void pickChanceCard(ArrayList<Chance> cardDeck) {
+		//The card deck will be shuffled and so I will need to take this card and then call the 
+		Chance pickedCard = cardDeck.get(0);
+		//If it is a get out of jail card, keep it and don't return to the pile
+		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+			cardDeck.remove(0);
+			cardDeck.add(pickedCard);
+		}
+		else {
+			//Remove the get out of jail card from the pile
+			cardDeck.remove(0);
+			this.addJailCard(pickedCard);
+		}
+		//This will implement the card
+		pickedCard.dealWithCard(this);
+	}
+	
+	public boolean isInJail() {
+		return inJail; //Return inJail status
+	}
+	
+	public int leftInPrison() {
+		return 1;
+		//return turns left in prison FIXME
+	}
+	public boolean leavePrison() {
+		return true;
+		//FIXME Checks whether they can leave prison or not
+	}
+	//Functions to consider: FIXME
+		//Remove player from the game 
+		//isBankrupt function 
+		//buying a square from another player
+		//toString
+	
+	public String toString() {
+		return "Details of: "+this.name+
+				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
+				"\nIs In Jail?: "+this.inJail+"\n PropertyList"+this.propertyList;
 	}
 	
 	

@@ -8,13 +8,32 @@ public class Special extends Square {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
 	
-	public Special(String name, int indexLocation, int buyCost, boolean canBuy, Player owner, String type, int value) {
-		//super(name, indexLocation, buyCost, false, null); //Nobody owns it
-		//this.indexLocation = indexLocation;
+	//private String description; //FIXME This has been passed up to the Square level
+	
+	public Special(String name, int indexLocation, boolean canBuy, String type, int value) {
+		super(name, indexLocation, canBuy); //Nobody owns it
 		this.type = type;
 		this.value = value;
 	}
-
+	
+	public String getType() {
+		return this.type;
+	}
+	
+	public int getValue() {
+		return this.value;
+	}
+	
+	public void setType(String squareType) {
+		this.type = squareType;
+	}
+	
+	public void setValue(int value) {
+		this.value = value;
+	}
+	//For special square, the community chest and chance ones will implement
+	//the dealWithCard(Player) function from which a card can be produced from the deck
+	// and then used to perform a function
 	public void implementSpecialSquare(Player player1) {
 		switch(type) {
 			case "TAX":
@@ -24,9 +43,9 @@ public class Special extends Square {
 				player1.addMoney(value);
 				break;
 			case "COMMUNITY_CHEST":
-				//player1.
+				player1.pickCommChestCard(BoardReader.getCommunityChests());
 			case "CHANCE":
-				//player1.
+				player1.pickChanceCard(BoardReader.getChances());
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
