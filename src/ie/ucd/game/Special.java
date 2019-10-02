@@ -14,6 +14,7 @@ public class Special extends Square {
 		super(name, indexLocation, canBuy); //Nobody owns it
 		this.type = type;
 		this.value = value;
+		
 	}
 	
 	public String getType() {

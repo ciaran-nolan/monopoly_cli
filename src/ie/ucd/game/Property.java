@@ -1,22 +1,32 @@
 package ie.ucd.game;
 
-public class Property {
-	private int squareNum;
+import java.util.List;
+
+public class Property extends CanOwn {
 	private String squareColour;
-	private String title;
-	private int priceBuy;
 	private int[] rents;
 	private int housePrice;
-	private int mortgage;
+	private String Owner;
 	
-	public Property(int squareNum, String squareColour, String title, int priceBuy, int[] rents, int housePrice, int mortgage) {
-		this.squareNum = squareNum;
+	public Property(int squareNum, String squareColour, String title, int priceBuy, int[] rents, int housePrice, int mortgage, Player owner) {
+		super(title, squareNum, mortgage, priceBuy, owner);
+		
 		this.squareColour = squareColour;
-		this.title = title;
-		this.priceBuy = priceBuy;
 		this.rents = rents;
 		this.housePrice = housePrice;
-		this.mortgage = mortgage;
+		
 	}
+	
+	public void buy(Player player, CanOwn siteToBuy, List<Player> listPlayers) {
+		if(siteToBuy.owner.getName() == "BANK") {
+			System.out.println(player.getName()+", would you like to purchase "+siteToBuy.getName()+"?");
+			
+		}
+	}
+
+	public void sell(Player player, CanOwn siteToSell, List<Player> listPlayers) {
+		
+	}
+	
 	
 }
