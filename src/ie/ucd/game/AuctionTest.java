@@ -13,12 +13,16 @@ public class AuctionTest {
 	b1.readProperties();
 	 ArrayList<Property> properties = b1.getProperties();
 	 
-	 Player p1 = new Player("p1", "thing1", 1000);
-	 Player p2 = new Player("p2", "thing2", 10);
+	 Player p1 = new Player("p1", "thing1");
+	 Player p2 = new Player("p2", "thing2");
+	 Player p3 = new Player("p3", "thing3");
 	 
 	 ArrayList<Player> plist = new ArrayList<Player>();
 	 plist.add(p1);
 	 plist.add(p2);
+	 plist.add(p3);
+	 p1.reduceMoney(1490);
+	 p3.reduceMoney(1000);
 	 
 	 properties.get(1).buy(p1, plist);
 	 
