@@ -14,10 +14,12 @@ public class Player {
 	private ArrayList<Card> jailCards = new ArrayList<Card>();
 	//FIXME CONSIDER Perhaps a card Array to show what cards you have
 	
-	public Player(String name, String token, int money) {
+	public Player(String name, String token) {
 		this.name = name;
 		this.token = token;
-		this.money = money;
+		this.money = 1500; //The starting amount of money you start with
+		this.indexLocation = 0;
+		this.jailFreeCard = 0;
 	}
 	
 	//GETTERS
@@ -185,6 +187,63 @@ public class Player {
 		//isBankrupt function 
 		//buying a square from another player
 		//toString
+
+	public ArrayList<Player> createListPlayers(){
+		ArrayList<Player> listPlayers = new ArrayList<Player>();
+		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("How many players will be playing the game(In range 2-6)?");
+			int numPlayers = scanner.nextInt();
+			System.out.println("You have specified "+numPlayers+" players to play the game");
+			//Get the players to be entered by the user -> Have a loop that asks for that number of players.
+			if(numPlayers >= 2 && numPlayers <= 6) {
+				for(int i=0; i < numPlayers; i++) {
+					String line;
+					String[] lineVector;
+					String name, token;
+					while(true) {
+						System.out.println("Please enter the relevant details for each player in the format below");
+						System.out.println("Name, Token");
+						System.out.println("Token must be one of the following: "+tokenList);
+						line = scanner.nextLine();
+						lineVector = line.split(",");
+						name = lineVector[0];
+						token = lineVector[1];
+						if(!tokenList.contains(token)) {
+							System.out.println("Token not part of list. Enter details of Player again.");
+							continue;
+						}
+						else {
+							//Remove the index of the token from the array
+							tokenList.remove(tokenList.indexOf(token));
+							//Do I need to access them using the index though. I suppose I will go through them in 
+							listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
+							//I have added each player in the range of numPlayers to be in the listPlayers array. 
+							//Running this will return the list of players which I can set in main
+							break;
+						}
+					}
+				}
+				//When got through all of the players, break the infinite loop
+				break;
+			}
+			else {
+				System.out.println("Please enter a number of players between 2 and 6!");
+				continue;
+			}
+		}
+		//Inside of the main, we will return this list of players
+		return listPlayers;
+	}
+	
+	//This function will see if a player is bankrupt.
+	public boolean isBankrupt() {
+		return true;
+		//Return true for now FIXME
+	}
+	
 	
 	public String toString() {
 		return "Details of: "+this.name+
