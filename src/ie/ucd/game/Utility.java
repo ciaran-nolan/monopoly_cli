@@ -28,14 +28,14 @@ public class Utility extends PublicSquare {
 			
 			//check user has enough funds to purchase 
 			if(player.getMoney() < this.getPrice()) {
-				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
+				System.out.println("You do not have the necessary funds to purchase this Utility.\nYour Funds: "+player.getMoney()+"\nUtility Price: "+this.getPrice());
 				this.playerAuction(listPlayers);
+				buyScanner.close();
 				return;
 			}else{
 				System.out.println(player.getName()+", would you like to purchase "+this.getName()+"?");
 				buyAcknowledgement = buyScanner.next();
 			}
-			
 			
 			while(!(buyAcknowledgement.equalsIgnoreCase("y") || buyAcknowledgement.equalsIgnoreCase("n"))) {
 				System.out.println(player.getName()+", please enter a valid response (y/n)");
@@ -51,6 +51,7 @@ public class Utility extends PublicSquare {
 			else if(buyAcknowledgement.equalsIgnoreCase("n")) {
 				this.playerAuction(listPlayers);
 			}
+			buyScanner.close();
 			}
 		else {
 			

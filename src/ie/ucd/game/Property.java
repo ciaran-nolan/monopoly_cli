@@ -11,6 +11,13 @@ public class Property extends CanOwn {
 	private int numHouses;
 	private int numHotels;
 	
+	public int getNumHotels() {
+		return this.numHotels;
+	}
+	
+	public int getNumHotels() {
+		return this.numHouses;
+	}
 	
 	public Property(int squareNum, String squareColour, String title, int priceBuy, int[] rents, int housePrice, int mortgage) {
 		
@@ -33,6 +40,7 @@ public class Property extends CanOwn {
 			if(player.getMoney() < this.getPrice()) {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
 				this.playerAuction(listPlayers);
+				buyScanner.close();
 				return;
 			}else{
 				System.out.println(player.getName()+", would you like to purchase "+this.getName()+"?");
@@ -62,6 +70,30 @@ public class Property extends CanOwn {
 		}
 		}
 
+	public void buildHouses(Player player) {
+		
+		// need to add check for all colours in range
+		if(player.getMoney() < this.housePrice) {
+			System.out.println("You do not have enough funds to purchase any houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nHouse Price: "+this.housePrice);
+		}
+		else if(this.numHouses==4) {
+				System.out.println("You have built the maximum number of houses, would you like to build a hotel? (y/n)");
+		}
+		else {
+			Scanner houseScanner = new Scanner(System.in);
+			System.out.println("You have decided to build houses.\nYour funds: "+player.getMoney()+"\nHouse Price: "+this.housePrice);
+			System.out.println("How many houses do you want to build?");
+			
+			int houseNum = houseScanner.nextInt();
+			
+			while(player.getMoney() < houseNum*this.housePrice) {
+				System.out.println("You do not have enough funds to purchase "+houseNum+" houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nPrice of "+houseNum+" houses: "+4*this.housePrice+"\n\nWould you like to make a different choice? (y/n)");
+				
+			}
+		}
+		
+		
+	}
 	public void sell(Player player, CanOwn siteToSell, List<Player> listPlayers) {
 		
 	}
