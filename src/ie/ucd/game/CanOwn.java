@@ -149,9 +149,10 @@ public abstract class CanOwn extends Square {
 					biddingPlayers.remove(i);
 					i -= 1;
 					}
-				
-			biddingPoolSize = biddingPlayers.size();
+				//updating bidding pool size
+				biddingPoolSize = biddingPlayers.size();
 			}
+			//only one player remaining in bid pool, assign property to winner 
 			if (biddingPoolSize == 1) {
 				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionPrice[0]);
 				this.setOwner(biddingPlayers.get(0));
@@ -159,6 +160,7 @@ public abstract class CanOwn extends Square {
 				break;
 			}
 			}
+		//no player made an intention to bid, property remains with a null owner
 		if(this.getOwner()== null) {
 			System.out.println("There was no winning bid. "+this.getName()+" remains unpurchased");
 		}

@@ -54,6 +54,7 @@ public class Property extends CanOwn {
 			else if(buyAcknowledgement.equalsIgnoreCase("n")) {
 				this.playerAuction(listPlayers);
 			}
+			buyScanner.close();
 			}
 		else {
 			
