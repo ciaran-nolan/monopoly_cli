@@ -56,6 +56,7 @@ public class Property extends CanOwn {
 			if(buyAcknowledgement.equalsIgnoreCase("y")) {
 				
 			player.reduceMoney(this.getPrice());
+			player.
 			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
 					
 				}
@@ -70,14 +71,34 @@ public class Property extends CanOwn {
 		}
 		}
 
+	
+	
 	public void buildHouses(Player player) {
 		
-		// need to add check for all colours in range
+		// need to add check for: all colours in range && number of houses is being spread evenly
+		
+		
+		
 		if(player.getMoney() < this.housePrice) {
 			System.out.println("You do not have enough funds to purchase any houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nHouse Price: "+this.housePrice);
 		}
+		//the player owns all of the houses (Maybe do this check elsewhere)
 		else if(this.numHouses==4) {
 				System.out.println("You have built the maximum number of houses, would you like to build a hotel? (y/n)");
+				Scanner houseScanner = new Scanner(System.in);
+				String hotelAcknowledgement = houseScanner.next();
+				
+				//check correct bid acknowledgement (y/n) has been made
+				while(!(hotelAcknowledgement.equalsIgnoreCase("y") || hotelAcknowledgement.equalsIgnoreCase("n"))) {
+					System.out.println(player.getName()+", please enter a valid response (y/n)");
+					hotelAcknowledgement = houseScanner.next();
+				}
+				
+				//check if user has confirmed intention to bid again
+				if(hotelAcknowledgement.equalsIgnoreCase("y")) {
+					this.buildHotel(player);
+				}
+				houseScanner.close();
 		}
 		else {
 			Scanner houseScanner = new Scanner(System.in);
@@ -88,10 +109,41 @@ public class Property extends CanOwn {
 			
 			while(player.getMoney() < houseNum*this.housePrice) {
 				System.out.println("You do not have enough funds to purchase "+houseNum+" houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nPrice of "+houseNum+" houses: "+4*this.housePrice+"\n\nWould you like to make a different choice? (y/n)");
+
+				String houseAcknowledgement = houseScanner.next();
+				//check correct bid acknowledgement (y/n) has been made
+				while(!(houseAcknowledgement.equalsIgnoreCase("y") || houseAcknowledgement.equalsIgnoreCase("n"))) {
+					System.out.println(player.getName()+", please enter a valid response (y/n)");
+					houseAcknowledgement = houseScanner.next();
+				}
 				
+				//check if user has confirmed intention to bid again
+				if(houseAcknowledgement.equalsIgnoreCase("y")) {
+					this.buildHouses(player);
+				}
+				else {
+					System.out.println("You have decided against building additional houses. Current house count on "+this.getName()+": "+this.numHouses);
+					houseScanner.close();
+					return;
+				}
 			}
+			
+			this.numHouses += houseNum;
+			player.reduceMoney(houseNum*this.housePrice);
+			houseScanner.close();
+			
+		}	
+	}
+	public void buildHotel(Player player) {
+		if(player.getMoney() < this.housePrice) {
+			System.out.println("You do not have enough funds to purchase a hotel for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nHotel Price: "+this.housePrice);
+			return;
 		}
-		
+		else {
+			this.numHouses=0;
+			this.numHotels=1;
+			player.reduceMoney(this.housePrice);
+		}
 		
 	}
 	public void sell(Player player, CanOwn siteToSell, List<Player> listPlayers) {

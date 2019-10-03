@@ -160,7 +160,7 @@ public abstract class CanOwn extends Square {
 				break;
 			}
 			}
-		//no player made an intention to bid, property remains with a null owner
+		//no player made an intention to bid, property remains with a null owner 
 		if(this.getOwner()== null) {
 			System.out.println("There was no winning bid. "+this.getName()+" remains unpurchased");
 		}

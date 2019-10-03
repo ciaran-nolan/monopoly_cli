@@ -252,4 +252,8 @@ public class Player {
 	}
 	
 	
+	public void addPurchasedCard(CanOwn purchasedProperty) {
+		this.propertyList.add(purchasedProperty);
+	}
+	
 }

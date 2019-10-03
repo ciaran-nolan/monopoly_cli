@@ -10,6 +10,7 @@ import ie.ucd.game.Utility;
 import ie.ucd.game.Special;
 import ie.ucd.game.CommunityChest;
 import ie.ucd.game.Chance;
+import ie.ucd.game.Train;
 import java.io.*;
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class BoardReader {
 	private static ArrayList<Special> specials = new ArrayList<Special>(12);
 	private static ArrayList<CommunityChest> communityChests = new ArrayList<CommunityChest>();
 	private static ArrayList<Chance> chances = new ArrayList<Chance>();
+	private static ArrayList<Train> trains = new ArrayList<Train>(2);
 	
 	
     public void readProperties() throws FileNotFoundException { 	
@@ -63,7 +65,7 @@ public class BoardReader {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
     	
-    	for(int i=0; i<=5; i++) {
+    	for(int i=0; i<=3; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
     		utilities.add(temp);    	
@@ -144,6 +146,30 @@ public class BoardReader {
 			System.out.println("Exception: " + e);
 			}
     }
+   
+    public void readTrains() throws FileNotFoundException{
+    	try {
+    		Properties prop = new Properties();
+    		String propFileName = "ie/ucd/gameConfigurations/train.properties";
+    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		
+    		if (inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			}
+    	
+    	for(int i=0; i<=1; i++) {
+    		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
+    		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
+    		trains.add(temp);    	
+    	}
+    	
+    	} catch (Exception e) {
+			System.out.println("Exception: " + e);
+			}
+    }
+    
     public ArrayList<Utility> getUtilities(){
     	return utilities;
     	
