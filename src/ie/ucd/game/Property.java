@@ -15,7 +15,7 @@ public class Property extends CanOwn {
 		return this.numHotels;
 	}
 	
-	public int getNumHotels() {
+	public int getNumHouses() {
 		return this.numHouses;
 	}
 	
