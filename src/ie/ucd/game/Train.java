@@ -1,5 +1,7 @@
 package ie.ucd.game;
 
+import java.util.List;
+
 public class Train extends PublicSquare {
 	private int[] rent; //Rent for a train is Size 4 
 	
@@ -14,6 +16,11 @@ public class Train extends PublicSquare {
 	
 	public void setRent(int[] rent) {
 		this.rent = rent;
+	}
+
+	public void buy(Player player, List<Player> listPlayers) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
