@@ -34,7 +34,7 @@ public class Property extends CanOwn {
 	public void buy(Player player, List<Player> listPlayers) {
 		Scanner buyScanner = new Scanner(System.in);
 		String buyAcknowledgement;
-		if(this.owner == null) {
+		
 			
 			//check user has enough funds to purchase 
 			if(player.getMoney() < this.getPrice()) {
@@ -56,7 +56,7 @@ public class Property extends CanOwn {
 			if(buyAcknowledgement.equalsIgnoreCase("y")) {
 				
 			player.reduceMoney(this.getPrice());
-			player.
+			player.addPurchasedCard(this);
 			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
 					
 				}
@@ -65,11 +65,8 @@ public class Property extends CanOwn {
 			}
 			buyScanner.close();
 			}
-		else {
-			
-			//include code for player-to-player transactions
-		}
-		}
+	
+		
 
 	
 	

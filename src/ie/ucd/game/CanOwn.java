@@ -1,5 +1,6 @@
 package ie.ucd.game;
 import java.util.*;
+import ie.ucd.game.Checks;
 
 public abstract class CanOwn extends Square {
 	private int mortgage;
@@ -47,7 +48,6 @@ public abstract class CanOwn extends Square {
 		int[] currentAuctionPrice = new int[] {0,0};
 		Scanner auctionScanner = new Scanner(System.in);
 		int biddingPoolSize = listPlayers.size();
-		String rebidAcknowledgement = "nil";
 		
 		while(biddingPoolSize > 1){
 			//update the bidding pool size 
@@ -74,27 +74,14 @@ public abstract class CanOwn extends Square {
 						continue;	
 					}
 				}
-				
-				//prompt user to confirm intention to bid
-				else {
-					System.out.println(biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getName()+"? (y/n)");
-				}	
 					
 				//if a previous bid has already been made, display to user 
 				if(currentAuctionPrice[0] > 0) {
 					System.out.println("Current bid: "+currentAuctionPrice[0]+" by "+biddingPlayers.get(currentAuctionPrice[1]).getName());
 				}
-				//read intention to bid from user
-				String bidAcknowledgement = auctionScanner.next();
-				
-				//check for correct input from user
-				while(!(bidAcknowledgement.equalsIgnoreCase("y") || bidAcknowledgement.equalsIgnoreCase("n"))) {
-					System.out.println(biddingPlayers.get(i).getName()+", please enter a valid response (y/n)");
-					bidAcknowledgement = auctionScanner.next();
-				}
 				
 				//user has indicated intention to bid
-				if(bidAcknowledgement.equalsIgnoreCase("y")) {
+				if(Checks.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getName()+"? (y/n)"), biddingPlayers.get(i))) {
 					//prompt user to enter a bid
 					System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 					
@@ -111,20 +98,11 @@ public abstract class CanOwn extends Square {
 						else if(biddingPlayers.get(i).getMoney() < temporaryBid) {
 							System.out.println(biddingPlayers.get(i).getName() + " you do not have enough funds to make this bid.");
 							System.out.println("\nYour bid: "+temporaryBid+"\nYour Funds:"+biddingPlayers.get(i).getMoney()+"\nCurrent winning bid: "+currentAuctionPrice[0]+" by: "+biddingPlayers.get(currentAuctionPrice[1]).getName());
-							System.out.println("\nWould you like to make another bid? (y/n)");
-						}
-						
-						//read intention to make another bid
-						rebidAcknowledgement = auctionScanner.next();
-						
-						//check correct bid acknowledgement (y/n) has been made
-						while(!(rebidAcknowledgement.equalsIgnoreCase("y") || rebidAcknowledgement.equalsIgnoreCase("n"))) {
-							System.out.println(biddingPlayers.get(i).getName()+", please enter a valid response (y/n)");
-							rebidAcknowledgement = auctionScanner.next();
+							
 						}
 						
 						//check if user has confirmed intention to bid again
-						if(rebidAcknowledgement.equalsIgnoreCase("y")) {
+						if(Checks.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
 							System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 							//read in new bid
 							temporaryBid = auctionScanner.nextInt();
@@ -161,7 +139,7 @@ public abstract class CanOwn extends Square {
 			}
 			}
 		//no player made an intention to bid, property remains with a null owner 
-		if(this.getOwner()== null) {
+		if(this.getOwner() == null) {
 			System.out.println("There was no winning bid. "+this.getName()+" remains unpurchased");
 		}
 		}
