@@ -74,8 +74,7 @@ public class Property extends CanOwn {
 		
 		// need to add check for: all colours in range && number of houses is being spread evenly
 		
-		
-		
+	
 		if(player.getMoney() < this.housePrice) {
 			System.out.println("You do not have enough funds to purchase any houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nHouse Price: "+this.housePrice);
 		}
