@@ -54,9 +54,11 @@ public class Property extends CanOwn {
 				System.out.println(buyAcknowledgement);
 			}
 			if(buyAcknowledgement.equalsIgnoreCase("y")) {
-				
+			
+			//user has passed all necessary checks to purchase a property, reduce the price from users funds
 			player.reduceMoney(this.getPrice());
-			player.
+			//add property to users property list
+			player.addPurchasedCard(this);
 			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
 					
 				}

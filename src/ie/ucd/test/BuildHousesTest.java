@@ -25,9 +25,11 @@ public class BuildHousesTest {
 		 plist.add(p2);
 		 plist.add(p3);
 		 
+		 System.out.println(p1.getPropertyList().size());
 		 properties.get(0).buy(p1, plist);
+		 System.out.println(p1.getPropertyList().get(0).getName());
 		
-		 properties.get(1).buildHouses(p1);
+		 //properties.get(1).buildHouses(p1);
 		 
 	
 	
