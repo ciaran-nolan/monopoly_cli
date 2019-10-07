@@ -34,7 +34,7 @@ public class Property extends CanOwn {
 	public void buy(Player player, List<Player> listPlayers) {
 		Scanner buyScanner = new Scanner(System.in);
 		String buyAcknowledgement;
-		if(this.owner == null) {
+		
 			
 			//check user has enough funds to purchase 
 			if(player.getMoney() < this.getPrice()) {
@@ -67,11 +67,8 @@ public class Property extends CanOwn {
 			}
 			buyScanner.close();
 			}
-		else {
-			
-			//include code for player-to-player transactions
-		}
-		}
+	
+		
 
 	
 	
@@ -79,8 +76,7 @@ public class Property extends CanOwn {
 		
 		// need to add check for: all colours in range && number of houses is being spread evenly
 		
-		
-		
+	
 		if(player.getMoney() < this.housePrice) {
 			System.out.println("You do not have enough funds to purchase any houses for "+this.getName()+"\nYour funds: "+player.getMoney()+"\nHouse Price: "+this.housePrice);
 		}

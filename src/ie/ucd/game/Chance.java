@@ -21,11 +21,17 @@ public class Chance extends Card {
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site
 					for(CanOwn property : propertyList) {
-						//player1.reduceMoney(value*property.getNumHouses());
-						//player1.reduceMoney(4*value*property.getNumHotels());
-						//If there is no hotels, it will not take any money away at all
-						//FIXME
-						System.out.println(property.getLocation());
+						if(property instanceof Property) {
+							//This will get the card value and multiply the number of houses or hotels depending on if its of Property Class
+							player1.reduceMoney(this.getCardValue()*((Property) property).getNumHouses());
+							player1.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels());
+							//If there is no hotels, it will not take any money away at all
+							//FIXME
+							System.out.println(property.getLocation());
+						}
+						else {
+							continue;
+						}
 					}
 				}
 				else {
