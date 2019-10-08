@@ -102,7 +102,7 @@ public class Player {
 		ArrayList<CommunityChest> commChestDeck = BoardReader.getCommunityChests();
 		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
 		if(this.jailFreeCard < 1) {
-			this.indexLocation = 3; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
+			this.indexLocation = 10; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
 			return this.inJail = true;
 		}
 		else {
@@ -126,7 +126,7 @@ public class Player {
 				return this.inJail = false;
 			}
 			else {
-				this.indexLocation = 3; 
+				this.indexLocation = 10; 
 				return this.inJail = true;
 			}
 			//RETURN THE CARD TO THE LIST as the user has now used it
@@ -187,6 +187,27 @@ public class Player {
 		//isBankrupt function 
 		//buying a square from another player
 		//toString
+	
+	public void removePlayer(ArrayList<Player> playerList) {
+		 int indexPlayer = playerList.indexOf(this);
+		 if(indexPlayer >= 0) {
+			 System.out.println("Removing Player at Index "+indexPlayer+" from game!");
+			 playerList.remove(indexPlayer);
+		 }
+		 else {
+			 System.out.println("This player is not part of the Player List");
+		 }
+	}
+	
+	public void addPlayer(ArrayList<Player> playerList) {
+		if(!playerList.contains(this)) {
+			System.out.println("Adding Player to Player List");
+			playerList.add(this);
+		}
+		else {
+			System.out.println("Player is already a member of the Player List");
+		}
+	}
 
 	public ArrayList<Player> createListPlayers(){
 		ArrayList<Player> listPlayers = new ArrayList<Player>();
@@ -239,21 +260,36 @@ public class Player {
 	}
 	
 	//This function will see if a player is bankrupt.
+	//FIXME this is very much a temporary thing until we get the bankrupt functions looking to see if they can pay rent the whole time etc
 	public boolean isBankrupt() {
-		return true;
+		if(money<=0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 		//Return true for now FIXME
 	}
 	
+	public void addPurchasedCard(CanOwn purchasedProperty) {
+		this.propertyList.add(purchasedProperty);
+	}
+	
+	public void removeOwnedProperty(CanOwn property) {
+		int index = this.propertyList.indexOf(property);
+		//Detects that the property object is contained in Property List
+		if(index >= 0) {
+			this.propertyList.remove(index);
+		}
+		else {
+			System.out.println("You cannot remove a Property when it is not in your Property List!");
+		}
+	}
 	
 	public String toString() {
 		return "Details of: "+this.name+
 				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
 				"\nIs In Jail?: "+this.inJail+"\n PropertyList"+this.propertyList;
-	}
-	
-	
-	public void addPurchasedCard(CanOwn purchasedProperty) {
-		this.propertyList.add(purchasedProperty);
 	}
 	
 }

@@ -36,7 +36,7 @@ public class Dice {
 	public void resetDuplicateRollCounter() {
 		duplicateRollCounter = 0;
 	}
-	public boolean incrementDulicateRollCounter(){
+	public boolean incrementDuplicateRollCounter(){
 		//method will only increment as long as third duplicate has not been reached
 		if (this.duplicateRollCounter >= 2) {
 			resetDuplicateRollCounter();
@@ -47,6 +47,6 @@ public class Dice {
 			duplicateRollCounter+=1;
 		}
 		return false;
-		}
+	}
 	
 }
