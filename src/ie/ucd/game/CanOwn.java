@@ -5,6 +5,7 @@ import ie.ucd.game.Checks;
 public abstract class CanOwn extends Square {
 	private int mortgage;
 	private int buyPrice;
+	private boolean mortgaged = false; //Whether property is mortgaged
 	Player owner;
 	
 	public CanOwn(String name, int indexLocation, int mortgage, int buyPrice, Player owner) {
@@ -26,6 +27,10 @@ public abstract class CanOwn extends Square {
 		return this.owner;
 	}
 	
+	public boolean getMortgageStatus() {
+		return this.mortgaged;
+	}
+	
 	public void setMortgage(int mortgage) {
 		this.mortgage = mortgage;
 	}
@@ -37,6 +42,8 @@ public abstract class CanOwn extends Square {
 	public void setOwner(Player player) {
 		this.owner = player;
 	}
+	
+	
 	
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
 	public abstract void buy(Player player, List<Player> listPlayers);
@@ -143,8 +150,59 @@ public abstract class CanOwn extends Square {
 		if(this.getOwner() == null) {
 			System.out.println("There was no winning bid. "+this.getName()+" remains unpurchased");
 		}
-		}
+	}
 
 	
 	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
+	
+	public void mortgage(Player player1) {
+		if (this.getOwner() == player1) {
+			ArrayList<CanOwn> propertyList = owner.getPropertyList(); //I can now check if they own this property 
+			@SuppressWarnings("resource")
+			Scanner scanner = new Scanner(System.in);
+			if(this instanceof Property) {
+				if(((Property)this).getNumHouses() == 0 && ((Property)this).getNumHotels() == 0) {
+					System.out.println("This property is unimproved: "+this.getName());
+					System.out.println("Would you still like to mortgage this property? [Y/N]");
+					String mortgageAnswer = scanner.nextLine().toLowerCase();
+					if(mortgageAnswer == "y" && this.mortgaged == false) {
+						this.mortgaged = true;
+					}
+					else {
+						System.out.println("You have chosen not to mortgage this property or there is already a mortgage on it!");
+						this.mortgaged = false;
+					}
+				}
+				else {
+					boolean toBeMortgaged = true;
+					//It has houses or hotels on it so you must sell all of them
+					//Go through property list. Get the colour of the property and sell all of them from there
+					//sellHouses(numHouses.getNumHouses, Player player1)
+					//To mortgage it first, you must sell the houses
+					((Property)this).sellHouses(((Property)this).getNumHouses(), player1, true);
+					((Property)this).sellHotels(((Property)this).getNumHotels(), player1, true);
+					//Once all of the houses and hotels are sold on each site, you will need to 
+					this.mortgaged = true;
+				}
+				//If its an instance of a property, it can be improved so I need to check that it is unimproved before mortgaging it
+				
+			}
+			else {
+				if(this instanceof PublicSquare && this.getMortgageStatus() == false) {
+					this.mortgaged = true;
+				}
+				else {
+					System.out.println("This property is non-ownable or has been mortgaged already!");
+					this.mortgaged = false; //FIXME Double check whether this is actually needed
+				}
+			}
+		}
+		else {
+			System.err.println("You cannot mortgage this property as you do not own it!");
+		}
+	}
+	
+	public void demortgage(boolean demortgageOnSale) {
+		
+	}
 }
