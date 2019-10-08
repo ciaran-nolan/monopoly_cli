@@ -92,7 +92,7 @@ public abstract class CanOwn extends Square {
 					while(temporaryBid <= currentAuctionPrice[0] || biddingPlayers.get(i).getMoney() < temporaryBid) {
 						//bid is less than current highest bid, prompt for intention to re input bid
 						if(temporaryBid <= currentAuctionPrice[0]) {
-							System.out.println(biddingPlayers.get(i).getName() + " your bid must be greater than the current bid of: "+currentAuctionPrice[0]+".\nWould you like to make another bid? (y/n)");
+							System.out.println(biddingPlayers.get(i).getName() + " your bid must be greater than the current bid of: "+currentAuctionPrice[0]);
 						}
 						//user does not have the specified funds to make bid, prompt for intention to rebid 
 						else if(biddingPlayers.get(i).getMoney() < temporaryBid) {
@@ -133,6 +133,7 @@ public abstract class CanOwn extends Square {
 			//only one player remaining in bid pool, assign property to winner 
 			if (biddingPoolSize == 1) {
 				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionPrice[0]);
+				biddingPlayers.get(0).addPurchasedCard(this);
 				this.setOwner(biddingPlayers.get(0));
 				biddingPlayers.get(0).reduceMoney(currentAuctionPrice[0]);
 				break;

@@ -27,14 +27,14 @@ public class Checks {
 			acknowledgement = yesNoScanner.next();
 		}
 		if(acknowledgement.equalsIgnoreCase("y")){
-			
 			return true;
 		}
 		else {
-			
 			return false;
 			}
 	}
+	
+
 }
 		
 		
