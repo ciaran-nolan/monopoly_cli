@@ -24,16 +24,16 @@ public class BoardReader {
 	private static ArrayList<CommunityChest> communityChests = new ArrayList<CommunityChest>();
 	private static ArrayList<Chance> chances = new ArrayList<Chance>();
 	private static ArrayList<Train> trains = new ArrayList<Train>(2);
+	private static Properties prop = new Properties();
 	
-	
-    public void readProperties() throws FileNotFoundException { 	
+    public static void readProperties() throws FileNotFoundException { 	
     	try {
     		//define properties list to hold the .properties file
-    		Properties prop = new Properties();
+    		
     		//define the location of the prop file
     		String propFileName = "ie/ucd/gameConfigurations/property.properties";
     		//define the input stream for the prop file
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		//check that the prop file location is valid
     		if (inputStream != null) {
@@ -53,11 +53,11 @@ public class BoardReader {
     		}
     	}
     
-    public void readUtilities() throws FileNotFoundException {
+    public static void readUtilities() throws FileNotFoundException {
     	try {
-    		Properties prop = new Properties();
+    		
     		String propFileName = "ie/ucd/gameConfigurations/utilities.properties";
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -70,19 +70,18 @@ public class BoardReader {
     		Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
     		utilities.add(temp);    	
     	}
-    	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     	}
     
-    public void readSpecialSquares() throws FileNotFoundException{
+    public static void readSpecialSquares() throws FileNotFoundException{
     	try {
     		//define properties list to hold properties file  
-    		Properties prop = new Properties();
+    		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/specialSquares.properties";
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -94,19 +93,20 @@ public class BoardReader {
     		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("squareType"+i),Integer.parseInt(prop.getProperty("value"+i)));
     		specials.add(temp);  	
     	}
+    	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     	
     }
     
-    public void readCommunityChests() throws FileNotFoundException {
+    public static void readCommunityChests() throws FileNotFoundException {
     	try {
     		//define properties list to hold properties file  
-    		Properties prop = new Properties();
+    		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/communityChest.properties";
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -119,18 +119,19 @@ public class BoardReader {
     		CommunityChest temp = new CommunityChest(prop.getProperty(("type"+i)),prop.getProperty(("card"+i)),Integer.parseInt(prop.getProperty(("value"+i))));
     		communityChests.add(temp);
     	}
+    	Collections.shuffle(communityChests); 
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     }
     
-    public void readChances() throws FileNotFoundException {
+    public static void readChances() throws FileNotFoundException {
     	try {
     		//define properties list to hold properties file  
-    		Properties prop = new Properties();
+    		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/chance.properties";
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -142,16 +143,17 @@ public class BoardReader {
     		Chance temp = new Chance(prop.getProperty(("type"+i)),prop.getProperty(("card"+i)),Integer.parseInt(prop.getProperty(("value"+i))));
     		chances.add(temp);
     	}
+    	Collections.shuffle(chances);
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     }
    
-    public void readTrains() throws FileNotFoundException{
+    public static void readTrains() throws FileNotFoundException{
     	try {
-    		Properties prop = new Properties();
+    		
     		String propFileName = "ie/ucd/gameConfigurations/train.properties";
-    		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -170,15 +172,15 @@ public class BoardReader {
 			}
     }
     
-    public ArrayList<Utility> getUtilities(){
+    public static ArrayList<Utility> getUtilities(){
     	return utilities;
     	
     }
-    public ArrayList<Property> getProperties(){
+    public static ArrayList<Property> getProperties(){
     	return properties;
     	
     }
-    public ArrayList<Special> getSpecials(){
+    public static ArrayList<Special> getSpecials(){
     	return specials;
     }
     public static ArrayList<CommunityChest> getCommunityChests(){
