@@ -203,6 +203,16 @@ public abstract class CanOwn extends Square {
 	}
 	
 	public void demortgage(boolean demortgageOnSale) {
-		
+		//the new owner now owns it or not. and can demortgage at any time
+		this.getOwner().reduceMoney((int)0.01*this.getPrice()); //We will automatically set 10% interest to paying
+		//Then this is for if the user decides to demortgage on sale or not
+		if(demortgageOnSale) {
+			this.getOwner().reduceMoney(this.getPrice());
+		}
+		else {
+			//The mortgage will be removed at a later stage
+			this.getOwner().reduceMoney(this.getPrice()); //Paying price of house
+			this.getOwner().reduceMoney((int)0.01*this.getPrice()); //Paying interest
+		}
 	}
 }
