@@ -3,18 +3,19 @@ package ie.ucd.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import ie.ucd.game.*;
 
 public class BuildHousesTest {
 	public static void main(String[] args) throws IOException { 
 		BoardReader b1 = new BoardReader();
-		b1.readProperties();
-		b1.readSpecialSquares();
-		b1.readUtilities();
-		b1.readCommunityChests();
-		b1.readChances();
+		BoardReader.readProperties();
+		BoardReader.readSpecialSquares();
+		BoardReader.readUtilities();
+		BoardReader.readCommunityChests();
+		BoardReader.readChances();
 		
-		 ArrayList<Property> properties = b1.getProperties();
+		 ArrayList<Property> properties = BoardReader.getProperties();
 		 
 		 Player p1 = new Player("p1", "thing1");
 		 Player p2 = new Player("p2", "thing2");
@@ -27,9 +28,14 @@ public class BuildHousesTest {
 		 
 		 System.out.println(p1.getPropertyList().size());
 		 properties.get(0).buy(p1, plist);
-		 System.out.println(p1.getPropertyList().get(0).getName());
+		 properties.get(1).buy(p1, plist);
+		 System.out.println(((Property) p1.getPropertyList().get(0)).getSquareColour());
 		
-		 //properties.get(1).buildHouses(p1);
+		 
+		 
+		
+		
+		 
 		 
 	
 	
