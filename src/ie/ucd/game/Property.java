@@ -18,6 +18,10 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
+	public int[] getRents() {
+		return this.rents;
+	}
+	
 	public Property(int squareNum, String squareColour, String title, int priceBuy, int[] rents, int housePrice, int mortgage) {
 		
 		//owner will always be null at constructor since a property starts without an owner
