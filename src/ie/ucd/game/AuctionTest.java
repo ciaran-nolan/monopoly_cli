@@ -25,7 +25,7 @@ public class AuctionTest {
 	 
 	 properties.get(1).buy(p1, plist);
 	 if(p2.getPropertyList().get(0) instanceof Property) {
-		 System.out.println(p2.getPropertyList().get(0).getName());	 
+		 System.out.println(((Property) p2.getPropertyList().get(0)).getSquareColour());	 
 	 }
 	 
 	 

@@ -22,40 +22,23 @@ public class Utility extends PublicSquare {
 
 	
 	public void buy(Player player, List<Player> listPlayers) {
-		Scanner buyScanner = new Scanner(System.in);
-		String buyAcknowledgement;
-		if(this.owner == null) {
+		
+		//check user has enough funds to purchase 
+		if(player.getMoney() < this.getPrice()) {
+			System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
+			//player does not have enough funds to buy property, automatically enter auction
+			this.playerAuction(listPlayers);
+			return;
+		}
+		else if(Checks.yesNoInput(player.getName()+", would you like to purchase "+this.getName()+"?", player)) {
 			
-			//check user has enough funds to purchase 
-			if(player.getMoney() < this.getPrice()) {
-				System.out.println("You do not have the necessary funds to purchase this Utility.\nYour Funds: "+player.getMoney()+"\nUtility Price: "+this.getPrice());
-				this.playerAuction(listPlayers);
-				buyScanner.close();
-				return;
-			}else{
-				System.out.println(player.getName()+", would you like to purchase "+this.getName()+"?");
-				buyAcknowledgement = buyScanner.next();
-			}
-			
-			while(!(buyAcknowledgement.equalsIgnoreCase("y") || buyAcknowledgement.equalsIgnoreCase("n"))) {
-				System.out.println(player.getName()+", please enter a valid response (y/n)");
-				buyAcknowledgement = buyScanner.next();
-				System.out.println(buyAcknowledgement);
-			}
-			if(buyAcknowledgement.equalsIgnoreCase("y")) {
-				
-			player.reduceMoney(this.getPrice());
-			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
-					
-				}
-			else if(buyAcknowledgement.equalsIgnoreCase("n")) {
-				this.playerAuction(listPlayers);
-			}
-			buyScanner.close();
-			}
-		else {
-			
-			//include code for player-to-player transactions
+		//user has passed all necessary checks to purchase a property, reduce the price from users funds
+		player.reduceMoney(this.getPrice());
+		//add property to users property list
+		player.addPurchasedCard(this);
+		System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());}
+		else{
+			this.playerAuction(listPlayers);
 		}
 		}
 }

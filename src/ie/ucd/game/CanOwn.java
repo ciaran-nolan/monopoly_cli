@@ -179,8 +179,8 @@ public abstract class CanOwn extends Square {
 					//Go through property list. Get the colour of the property and sell all of them from there
 					//sellHouses(numHouses.getNumHouses, Player player1)
 					//To mortgage it first, you must sell the houses
-					((Property)this).sellHouses(((Property)this).getNumHouses(), player1, true);
-					((Property)this).sellHotels(((Property)this).getNumHotels(), player1, true);
+					((Property)this).sellHouses(player1, true);
+					((Property)this).sellHotels(player1, true);
 					//Once all of the houses and hotels are sold on each site, you will need to 
 					this.mortgaged = true;
 				}
