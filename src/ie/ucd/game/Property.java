@@ -18,7 +18,7 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
-	public int[] getRents() {
+	public int[] getRent() {
 		return this.rents;
 	}
 	
