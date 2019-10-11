@@ -308,15 +308,15 @@ public class Player {
 					//Below is for if you own all of the properties but they are not improved,
 					//Charge double rent
 					if(Checks.ownAllColour != null && numHouses + numHotels == 0) {
-						this.reduceMoney(2*((Property) ownableSquare).getRents()[0]);
+						this.reduceMoney(2*((Property) ownableSquare).getRent()[0]);
 					}
 					else if(numHotels == 0) {
 						//This is for if you own all the properties in a colour group but you have houses
-						this.reduceMoney(((Property) ownableSquare).getRents()[numHouses]);
+						this.reduceMoney(((Property) ownableSquare).getRent()[numHouses]);
 					}
 					else {
 						//This is for if there is a hotel on the site. Max 1
-						this.reduceMoney(((Property) ownableSquare).getRents()[5]);
+						this.reduceMoney(((Property) ownableSquare).getRent()[5]);
 					}	
 				}
 				else if(ownableSquare instanceof Train) {
