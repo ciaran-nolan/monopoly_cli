@@ -26,11 +26,24 @@ public class BuildHousesTest {
 		 plist.add(p2);
 		 plist.add(p3);
 		 
-		 System.out.println(p1.getPropertyList().size());
 		 properties.get(0).buy(p1, plist);
 		 properties.get(1).buy(p1, plist);
 		 System.out.println(((Property) p1.getPropertyList().get(0)).getSquareColour());
 		
+		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
+		 ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
+		 
+		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
+		 ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
+		 
+		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
+		 ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
+		 
+		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
+		// ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
+		 
+		 ((Property) p1.getPropertyList().get(0)).buildHotel(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
+		// ((Property) p1.getPropertyList().get(1)).buildHotel(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
 		 
 		 
 		
