@@ -286,6 +286,71 @@ public class Player {
 		}
 	}
 	
+	public void payRent(CanOwn ownableSquare) {
+		//Going to take the ownable square and work with it from there
+		//Ask the player who owns it first whether they want to pay rent or not
+		Player owner = ownableSquare.getOwner();
+		if(ownableSquare.getMortgageStatus() == true) {
+			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
+		}
+		else {
+			System.out.println("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?");
+			@SuppressWarnings("resource")
+			Scanner input = new Scanner(System.in);
+			String answer = input.next();
+			
+			if(answer.toLowerCase() == "y") {
+				//This means i need to claim rent from the user
+				//Need to check what type of property it is followed by how much rent they will need to pay
+				if(ownableSquare instanceof Property) {
+					int numHouses = ((Property)ownableSquare).getNumHouses();
+					int numHotels = ((Property)ownableSquare).getNumHotels();
+					//Below is for if you own all of the properties but they are not improved,
+					//Charge double rent
+					if(Checks.ownAllColour != null && numHouses + numHotels == 0) {
+						this.reduceMoney(2*((Property) ownableSquare).getRents()[0]);
+					}
+					else if(numHotels == 0) {
+						//This is for if you own all the properties in a colour group but you have houses
+						this.reduceMoney(((Property) ownableSquare).getRents()[numHouses]);
+					}
+					else {
+						//This is for if there is a hotel on the site. Max 1
+						this.reduceMoney(((Property) ownableSquare).getRents()[5]);
+					}	
+				}
+				else if(ownableSquare instanceof Train) {
+					//Rent for a train is size 4
+					//Check the amount of trains that an owner has
+					int numTrains=0;
+					for(CanOwn train:owner.getPropertyList()) {
+						if(train instanceof Train) {
+							numTrains++;
+						}
+						else {
+							continue;
+						}
+					}
+					this.reduceMoney(((Train) ownableSquare).getRent()[numTrains-1]);
+				}
+				else {
+					//Rent payment for a utility
+					//Check the amount of utilities that an owner has
+					int numUtilities=0;
+					for(CanOwn utility:owner.getPropertyList()) {
+						if(utility instanceof Train) {
+							numUtilities++;
+						}
+						else {
+							continue;
+						}
+					}
+					this.reduceMoney(((Train) ownableSquare).getRent()[numUtilities-1]);
+				}
+			}
+		}
+	}
+	
 	public String toString() {
 		return "Details of: "+this.name+
 				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
