@@ -10,8 +10,8 @@ public class Special extends Square {
 	
 	//private String description; //FIXME This has been passed up to the Square level
 	
-	public Special(String name, int indexLocation, boolean canBuy, String type, int value) {
-		super(name, indexLocation, canBuy); //Nobody owns it
+	public Special(String name, int indexLocation, boolean canBuy, String type, int value, SquareType squareType) {
+		super(name, indexLocation, canBuy, squareType); //Nobody owns it
 		this.type = type;
 		this.value = value;
 	}
@@ -35,17 +35,19 @@ public class Special extends Square {
 	//the dealWithCard(Player) function from which a card can be produced from the deck
 	// and then used to perform a function
 	public void implementSpecialSquare(Player player1) {
-		switch(type) {
+		switch(this.type) {
 			case "TAX":
-				player1.reduceMoney(value); //Reducing the money in a players account using the value given
+				player1.reduceMoney(this.value); //Reducing the money in a players account using the value given
 				break; //Break the switch statement
 			case "GO":
-				player1.addMoney(value);
+				player1.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
 				player1.pickCommChestCard(BoardReader.getCommunityChests());
+				break;
 			case "CHANCE":
 				player1.pickChanceCard(BoardReader.getChances());
+				break;
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
@@ -75,4 +77,5 @@ public class Special extends Square {
 	
 	
 	
+}
 }

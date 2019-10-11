@@ -4,15 +4,21 @@ package ie.ucd.game;
  * I will need to populate the derived classes such as Property, Utility and Special Squares later (Incl. Community Chest 
  * Chance cards
  */
+
+enum SquareType {
+	PROPERTY, UTILITY, TRAIN, SPECIAL;
+}
 public abstract class Square  {
 	private int indexLocation;
 	private boolean canBuy;
 	private String name; //Could also be the description
+	private SquareType squareType;
 	
-	public Square(String name , int indexLocation, boolean canBuy) {
+	public Square(String name , int indexLocation, boolean canBuy, SquareType squareType) {
 		this.indexLocation = indexLocation;
 		this.canBuy = canBuy;
 		this.name = name;
+		this.squareType = squareType;
 	}
 	
 	public int getLocation() {
@@ -25,6 +31,14 @@ public abstract class Square  {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public SquareType getSquareType() {
+		return this.squareType;
+	}
+	
+	public void setSquareType(SquareType squareType) {
+		this.squareType = squareType;
 	}
 	
 	public void setLocation(int location) {
