@@ -19,8 +19,10 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
+	public int getHousePrice() {
+		return this.housePrice;
+	}
 
-	
 	public String getSquareColour() {
 		return this.squareColour;
 	}
