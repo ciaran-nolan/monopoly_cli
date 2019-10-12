@@ -19,6 +19,14 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
+	public void setNumHouses(int numHouses) {
+		this.numHouses = numHouses;
+	}
+	
+	public void setNumHotels(int numHotels) {
+		this.numHotels = numHotels;
+	}
+	
 	public int getHousePrice() {
 		return this.housePrice;
 	}

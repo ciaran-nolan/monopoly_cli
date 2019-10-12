@@ -1,4 +1,6 @@
 package ie.ucd.game;
+
+import java.util.*;
 //This will be the file that reads the configuration of the board and asks for user input
 //It is a main file
 public class Game {
@@ -22,7 +24,12 @@ public class Game {
 	public static void setRemainingHotels(int newHotelCount) {
 		remainingHotels = newHotelCount;
 	}
+	//This function will check the winner of the game by looping through the player list and checking who has the most money
+	//Will return the player object that is the winner and then the main class will finish the game
+	//Check winner will be called when 
+	
 	public static void main(String[] args){
-		
+		//We will loop through the board arraylist which is listed at 
+		//BoardReader.board
 	}
 }

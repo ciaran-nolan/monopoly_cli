@@ -1,7 +1,8 @@
 package ie.ucd.game;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+//import java.util.ArrayList;
+//import java.util.Scanner;
+import java.util.*;
 
 import ie.ucd.game.*;
 
@@ -114,7 +115,36 @@ public class Checks {
 			}
 		
 		return true;
-	} 
+	}
+	
+	//This function will check the winner of the game by looping through the player list and checking who has the most money
+	//Will return the player object that is the winner and then the main class will finish the game
+	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
+	public void checkWinner(ArrayList<Player> playerList) {
+		int totalValue=0;
+		ArrayList<Integer> valueArray = new ArrayList<Integer>();
+		int maxValue, maxIndex;
+		
+		for(Player player:playerList) {
+			totalValue += player.getMoney();
+			for(CanOwn ownable:player.getPropertyList()) {
+				if(ownable instanceof Property) {
+					totalValue += ((Property)ownable).getNumHouses()*((Property)ownable).getHousePrice();
+					totalValue += ((Property)ownable).getNumHotels()*((Property)ownable).getHousePrice()*5; //A Hotel is 5 times the price of a house
+				}
+				totalValue+= ownable.getPrice();
+				valueArray.add(totalValue);
+				System.out.println("Player: "+player.getName()+" has Total Asset value of €"+totalValue);
+			}
+			//Zero the local variable for use with next player
+			totalValue=0;
+		}
+		maxValue = Collections.max(valueArray);
+		maxIndex = valueArray.indexOf(maxValue);
+		System.out.println("The richest player and winner of the game is: "+(playerList.get(maxIndex).getName()+" with a Total Asset Value of €"+maxValue));
+		System.out.println("The game has been won! It is now over");
+		System.exit(1);
+	}
 }
 		
 		

@@ -136,34 +136,34 @@ public class Player {
 	
 	}
 	
-	public void pickCommChestCard(ArrayList<CommunityChest> cardDeck) {
+	public void pickCommChestCard() {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
-		CommunityChest pickedCard = cardDeck.get(0);
+		CommunityChest pickedCard = BoardReader.communityChests.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
 		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
-			cardDeck.remove(0);
-			cardDeck.add(pickedCard);
+			BoardReader.communityChests.remove(0);
+			BoardReader.communityChests.add(pickedCard);
 		}
 		else {
 			//Remove the get out of jail card from the pile
-			cardDeck.remove(0);
+			BoardReader.communityChests.remove(0);
 			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
 		pickedCard.dealWithCard(this);
 	}
 	
-	public void pickChanceCard(ArrayList<Chance> cardDeck) {
+	public void pickChanceCard() {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
-		Chance pickedCard = cardDeck.get(0);
+		Chance pickedCard = BoardReader.chances.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
 		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
-			cardDeck.remove(0);
-			cardDeck.add(pickedCard);
+			BoardReader.chances.remove(0);
+			BoardReader.chances.add(pickedCard);
 		}
 		else {
 			//Remove the get out of jail card from the pile
-			cardDeck.remove(0);
+			BoardReader.chances.remove(0);
 			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
@@ -261,16 +261,47 @@ public class Player {
 	
 	//This function will see if a player is bankrupt.
 	//FIXME this is very much a temporary thing until we get the bankrupt functions looking to see if they can pay rent the whole time etc
-	public boolean isBankrupt() {
-		if(money<=0) {
-			return true;
+	public boolean isBankrupt(Player playerOwed) {
+		//Need to check if it is a player that you owe money to. 
+		//If it is a player, turn over all of value to that player
+		if(playerOwed == null) {
+			//Bank owed
+			//Sell off any properties and buildings
+			int currPos = 0;
+			for(CanOwn property:this.propertyList) {
+				//Sell off all of the houses at no price
+				if(property instanceof Property) {
+					if(((Property)property).getNumHouses()>0) {
+						Game.setRemainingHouses(Game.getRemainingHouses()+((Property)property).getNumHouses());
+						((Property)property).setNumHouses(0);
+					}
+					else if (((Property)property).getNumHotels()>0) {
+						Game.setRemainingHotels(Game.getRemainingHotels()+((Property)property).getNumHotels());
+						((Property)property).setNumHotels(0);
+					}
+					else {
+						System.out.println("There is no hotels or houses on this property to be sold!");
+					}	
+				}
+				//Remove the property from their List of Owned properties and now the bank will auction the property
+				this.propertyList.remove(currPos);
+				System.out.println("Property will now be auctioned");
+				property.playerAuction(listPlayers); //FIXME Need a list of players to be global
+				currPos++;
+			}
+			listPlayers.remove(this); //FIXME need to remove the player from the game
+			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
+			return true; //FIXME can see if this is needed
 		}
 		else {
-			return false;
+			//You owe a player for all of the loans
+			//FIXME needs to be implemented for a player
+			return true;
 		}
-		//Return true for now FIXME
-	}
 	
+	}
+		
+
 	public void addPurchasedCard(CanOwn purchasedProperty) {
 		this.propertyList.add(purchasedProperty);
 	}
@@ -349,6 +380,10 @@ public class Player {
 				}
 			}
 		}
+	}
+	
+	public boolean checkBankrupt() {
+		return false;
 	}
 	
 	public String toString() {

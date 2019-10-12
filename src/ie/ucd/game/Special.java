@@ -43,10 +43,10 @@ public class Special extends Square {
 				player1.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
-				player1.pickCommChestCard(BoardReader.getCommunityChests());
+				player1.pickCommChestCard();
 				break;
 			case "CHANCE":
-				player1.pickChanceCard(BoardReader.getChances());
+				player1.pickChanceCard();
 				break;
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING

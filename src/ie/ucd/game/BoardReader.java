@@ -18,12 +18,13 @@ import java.util.*;
 
 public class BoardReader {
 
-	private static ArrayList<Property> properties = new ArrayList<Property>(22);
-	private static ArrayList<Utility> utilities = new ArrayList<Utility>(6);
-	private static ArrayList<Special> specials = new ArrayList<Special>(12);
-	private static ArrayList<CommunityChest> communityChests = new ArrayList<CommunityChest>();
-	private static ArrayList<Chance> chances = new ArrayList<Chance>();
-	private static ArrayList<Train> trains = new ArrayList<Train>(2);
+	public static ArrayList<Property> properties = new ArrayList<Property>(22);
+	public static ArrayList<Utility> utilities = new ArrayList<Utility>(6);
+	public static ArrayList<Special> specials = new ArrayList<Special>(12);
+	public static ArrayList<CommunityChest> communityChests = new ArrayList<CommunityChest>();
+	public static ArrayList<Chance> chances = new ArrayList<Chance>();
+	public static ArrayList<Train> trains = new ArrayList<Train>(2);
+	public static ArrayList<Square> board = new ArrayList<Square>(40);
 	private static Properties prop = new Properties();
 	
     public static void readProperties() throws FileNotFoundException { 	
@@ -46,6 +47,7 @@ public class BoardReader {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Property temp = new Property(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("squareColour"+i)),prop.getProperty(("title"+i)),Integer.parseInt((prop.getProperty(("priceBuy"+i)))),rentIntArray, Integer.parseInt(prop.getProperty(("housePrice"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))));
     		properties.add(temp);
+    		board.add(temp.getLocation(),temp);
     	}
     	} 
     	catch (Exception e) {
@@ -68,7 +70,8 @@ public class BoardReader {
     	for(int i=0; i<=3; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
-    		utilities.add(temp);    	
+    		utilities.add(temp);  
+    		board.add(temp.getLocation(),temp);
     	}
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
@@ -91,7 +94,8 @@ public class BoardReader {
     	
     	for(int i=0; i<=11; i++) {
     		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("squareType"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
-    		specials.add(temp);  	
+    		specials.add(temp);  
+    		board.add(temp.getLocation(),temp);
     	}
     	
     	} catch (Exception e) {
@@ -164,7 +168,8 @@ public class BoardReader {
     	for(int i=0; i<=1; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
-    		trains.add(temp);    	
+    		trains.add(temp);   
+    		board.add(temp.getLocation(),temp);
     	}
     	
     	} catch (Exception e) {
