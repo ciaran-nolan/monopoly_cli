@@ -19,13 +19,9 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
-<<<<<<< HEAD
 	public int getHousePrice() {
 		return this.housePrice;
 	}
-
-=======
->>>>>>> 9f9b175... Update Square type for constructors, update buy/sell methods
 	public String getSquareColour() {
 		return this.squareColour;
 	}
