@@ -7,27 +7,27 @@ import java.util.Random;
 
 public class Dice {
 
-	private int dice1;
-	private int dice2;
+	private static int dice1;
+	private static int dice2;
 	private int duplicateRollCounter=0;
 	
 	public boolean rollDice(){
 		Random rollGenerator = new Random();
 			
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
-		this.dice1 = rollGenerator.nextInt(6)+1; 
-		this.dice2 = rollGenerator.nextInt(6)+1;
+		dice1 = rollGenerator.nextInt(6)+1; 
+		dice2 = rollGenerator.nextInt(6)+1;
 		
-		System.out.println("You have rolled "+this.dice1+" and "+this.dice2);
-		if (this.dice1==this.dice2) {
+		System.out.println("You have rolled "+dice1+" and "+dice2);
+		if (dice1==dice2) {
 			return true;
 		}
 		return false;
 	}
 	
-	public int getDieVals() {
+	public static int getDieVals() {
 		//return object containing both die values
-		return (this.dice1 + this.dice2);
+		return (dice1 + dice2);
 	}
 	
 	public int getDuplicateRollCounter() {
