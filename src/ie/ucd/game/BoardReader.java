@@ -90,7 +90,7 @@ public class BoardReader {
 			}
     	
     	for(int i=0; i<=11; i++) {
-    		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("squareType"+i),Integer.parseInt(prop.getProperty("value"+i)));
+    		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("squareType"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
     		specials.add(temp);  	
     	}
     	

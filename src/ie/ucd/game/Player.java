@@ -307,7 +307,7 @@ public class Player {
 					int numHotels = ((Property)ownableSquare).getNumHotels();
 					//Below is for if you own all of the properties but they are not improved,
 					//Charge double rent
-					if(Checks.ownAllColour != null && numHouses + numHotels == 0) {
+					if(Checks.ownAllColour(this, (Property)ownableSquare) != null && numHouses + numHotels == 0) {
 						this.reduceMoney(2*((Property) ownableSquare).getRent()[0]);
 					}
 					else if(numHotels == 0) {

@@ -5,14 +5,18 @@ package ie.ucd.game;
  * Chance cards
  */
 
-enum SquareType {
-	PROPERTY, UTILITY, TRAIN, SPECIAL;
-}
+
 public abstract class Square  {
 	private int indexLocation;
 	private boolean canBuy;
 	private String name; //Could also be the description
+	
+	public enum SquareType {
+		PROPERTY, UTILITY, TRAIN, SPECIAL;
+	}
+	
 	private SquareType squareType;
+	
 	
 	public Square(String name , int indexLocation, boolean canBuy, SquareType squareType) {
 		this.indexLocation = indexLocation;

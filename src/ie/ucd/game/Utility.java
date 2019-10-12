@@ -8,7 +8,7 @@ public class Utility extends PublicSquare {
 	//The rents will be dealt with at a level above
 
 	public Utility(String name, int indexLocation, int buyPrice, int mortgage, int[] rent, Player owner) {
-		super(name, indexLocation, buyPrice, mortgage, owner);
+		super(name, indexLocation, buyPrice, mortgage, owner, Square.SquareType.UTILITY);
 		this.rent = rent;
 	}
 	

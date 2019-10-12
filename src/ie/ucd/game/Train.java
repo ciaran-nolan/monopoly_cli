@@ -6,7 +6,7 @@ public class Train extends PublicSquare {
 	private int[] rent; //Rent for a train is Size 4 
 	
 	public Train(String name, int indexLocation, int buyPrice, int mortgage, int[] rent, Player owner) {
-		super(name, indexLocation, buyPrice, mortgage, owner);
+		super(name, indexLocation, buyPrice, mortgage, owner, Square.SquareType.TRAIN);
 		this.rent = rent;
 	}
 	
@@ -19,7 +19,7 @@ public class Train extends PublicSquare {
 	}
 
 	public void buy(Player player, List<Player> listPlayers) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

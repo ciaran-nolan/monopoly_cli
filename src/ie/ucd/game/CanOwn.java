@@ -8,8 +8,8 @@ public abstract class CanOwn extends Square {
 	private boolean mortgaged = false; //Whether property is mortgaged
 	Player owner;
 	
-	public CanOwn(String name, int indexLocation, int mortgage, int buyPrice, Player owner) {
-		super(name, indexLocation, true);
+	public CanOwn(String name, int indexLocation, int mortgage, int buyPrice, Player owner, Square.SquareType type) {
+		super(name, indexLocation, true, type);
 		this.mortgage = mortgage;
 		this.buyPrice = buyPrice;
 		this.owner = owner;
