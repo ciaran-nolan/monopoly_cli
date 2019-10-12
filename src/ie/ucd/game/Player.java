@@ -338,14 +338,14 @@ public class Player {
 					//Check the amount of utilities that an owner has
 					int numUtilities=0;
 					for(CanOwn utility:owner.getPropertyList()) {
-						if(utility instanceof Train) {
+						if(utility instanceof Utility) {
 							numUtilities++;
 						}
 						else {
 							continue;
 						}
 					}
-					this.reduceMoney(((Train) ownableSquare).getRent()[numUtilities-1]);
+					this.reduceMoney((((Utility) ownableSquare).getRent()[numUtilities-1])*Dice.getDieVals());
 				}
 			}
 		}
