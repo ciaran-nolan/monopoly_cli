@@ -19,9 +19,17 @@ public class Checks {
 		}
 		}
 	
-	
+	public static boolean isPlayerOwner(CanOwn ownableCar, Player player){
+		if(ownableCar.getOwner().getName().equals(player.getName())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public static boolean yesNoInput(String message,Player player) {
+		@SuppressWarnings("resource")
 		Scanner yesNoScanner = new Scanner(System.in);
 		System.out.println(message);
 		String acknowledgement = yesNoScanner.next();
@@ -67,7 +75,7 @@ public class Checks {
 		for(CanOwn currentOwnable: player.getPropertyList()) {
 			//only analyse the type property
 			if(currentOwnable instanceof Property) {
-				//compare sqyuare colour with the specified property
+				//compare square colour with the specified property
 				if(((Property) currentOwnable).getSquareColour().equals(property.getSquareColour())) {	
 					//add the property to the list if there is a colour group match
 					propertyList.add((Property) currentOwnable);
@@ -83,18 +91,22 @@ public class Checks {
 		}
 	
 	public static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
-		int houseDifferentialBound;
+		int[] houseDifferentialBounds = new int[2];
 		if(buyOrSell) {
-			houseDifferentialBound = 0;
+			//when buying a house the must only be a difference of 0 or -1 between the chosen property and all other property's house numbers
+			houseDifferentialBounds[0]=-1;
+			houseDifferentialBounds[1]=0;
 		}
 		else {
-			houseDifferentialBound = 1;
+			//when selling it can be 1 or 0
+			houseDifferentialBounds[0] = 0;
+			houseDifferentialBounds[1] = 1;
 				}
 		
 		for(int i=0; i<colourGroup.size();i++) {
 			if(colourGroup.get(i).getName().equals(propertyToAlterHouses.getName())) {
 				for(int k = 0; k < colourGroup.size(); k++) {
-					if(!(colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()<=houseDifferentialBound)){
+					if(!((colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()>=houseDifferentialBounds[0])&&(colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()<=houseDifferentialBounds[1]))){
 						return false;
 						}
 					}

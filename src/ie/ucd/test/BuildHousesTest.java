@@ -26,12 +26,28 @@ public class BuildHousesTest {
 		 plist.add(p2);
 		 plist.add(p3);
 		 
-		 properties.get(0).buy(p1, plist);
-		 properties.get(1).buy(p1, plist);
+		 p1.addMoney(10000);
+		 for(int i=0; i<properties.size();i++) {
+		 properties.get(i).buy(p1, plist);
+		 }
+		for(int k=0; k<5; k++) {
+		 for(int i=0; i<properties.size();i++) {
+			 ((Property) p1.getPropertyList().get(i)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(i)));
+			 if(Game.getRemainingHouses()==0) {
+				 break;
+			 }
+		 }
+		 if(Game.getRemainingHouses()==0) {
+			 break;
+		 }
+		}
+		
 		 System.out.println(((Property) p1.getPropertyList().get(0)).getSquareColour());
 		
 		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
 		 ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
+		
+		 System.out.println(Game.getRemainingHouses());
 		 
 		 ((Property) p1.getPropertyList().get(0)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(0)));
 		 ((Property) p1.getPropertyList().get(1)).buildHouses(p1, Checks.ownAllColour(p1, (Property) p1.getPropertyList().get(1)));
