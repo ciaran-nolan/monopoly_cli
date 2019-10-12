@@ -71,8 +71,11 @@ public class Property extends CanOwn {
 		if(colourGroup!=null) {
 			if(Checks.yesNoInput("If any of the properties in this colour group are improved, selling "+this.getName()+" will result in all houses and hotels being sold. Do you wish to continue? (y/n)", player));
 			{
-				
+				//the isMortgage function will provide the same outcome by selling all houses
+				this.sellHouses(player, true);
+				this.sellHotels(player, true);
 			}
+			
 		}
 	}
 	
@@ -204,7 +207,9 @@ public class Property extends CanOwn {
 			}
 		}
 		else if(Checks.yesNoInput("Would you like sell the hotel at once? (y/n)", player)) {
-			if(Checks.yesNoInput("In order to sell this hotel at once ", player))
+			if(Checks.yesNoInput("In order to sell this hotel at once ", player)) {
+				
+			}
 		}
 			
 		else if(Game.getRemainingHouses()<4) {
