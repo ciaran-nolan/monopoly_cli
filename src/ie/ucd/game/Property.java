@@ -65,8 +65,15 @@ public class Property extends CanOwn {
 				this.playerAuction(listPlayers);
 			}
 			}
+	
 	public void sell(Player player, CanOwn siteToSell, List<Player> listPlayers) {
-		
+		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
+		if(colourGroup!=null) {
+			if(Checks.yesNoInput("If any of the properties in this colour group are improved, selling "+this.getName()+" will result in all houses and hotels being sold. Do you wish to continue? (y/n)", player));
+			{
+				
+			}
+		}
 	}
 	
 	
@@ -197,7 +204,7 @@ public class Property extends CanOwn {
 			}
 		}
 		else if(Checks.yesNoInput("Would you like sell the hotel at once? (y/n)", player)) {
-			
+			if(Checks.yesNoInput("In order to sell this hotel at once ", player))
 		}
 			
 		else if(Game.getRemainingHouses()<4) {
