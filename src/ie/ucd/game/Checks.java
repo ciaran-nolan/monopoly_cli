@@ -120,12 +120,12 @@ public class Checks {
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
-	public void checkWinner(ArrayList<Player> playerList) {
+	public void checkWinner() {
 		int totalValue=0;
 		ArrayList<Integer> valueArray = new ArrayList<Integer>();
 		int maxValue, maxIndex;
 		
-		for(Player player:playerList) {
+		for(Player player:Game.playerList) {
 			totalValue += player.getMoney();
 			for(CanOwn ownable:player.getPropertyList()) {
 				if(ownable instanceof Property) {
@@ -141,7 +141,7 @@ public class Checks {
 		}
 		maxValue = Collections.max(valueArray);
 		maxIndex = valueArray.indexOf(maxValue);
-		System.out.println("The richest player and winner of the game is: "+(playerList.get(maxIndex).getName()+" with a Total Asset Value of €"+maxValue));
+		System.out.println("The richest player and winner of the game is: "+(Game.playerList.get(maxIndex).getName()+" with a Total Asset Value of €"+maxValue));
 		System.out.println("The game has been won! It is now over");
 		System.exit(1);
 	}

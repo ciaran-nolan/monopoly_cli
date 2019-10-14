@@ -290,6 +290,7 @@ public class Player {
 				currPos++;
 			}
 			Game.playerList.remove(this); //FIXME need to remove the player from the game
+			Game.numPlayersBankrupt++;
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true; //FIXME can see if this is needed
 		}
@@ -306,7 +307,7 @@ public class Player {
 					Card temp = this.jailCards.remove(currPos);
 					playerOwed.addJailCard(temp);
 					//Need to check that the card was actually removed
-					System.out.println("Bakrupt player Jail Card array now of size: "+this.jailCards.size());
+					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
 					currPos++;
 				}
 			}
@@ -314,13 +315,14 @@ public class Player {
 				if(ownedSquare instanceof Property) {
 					//Need to sell the houses and hotels
 					//FIXME Need to return the value so it can be passed to the player owed
-					playerOwed.addMoney(((Property)ownedSquare).sellHouses());
-					playerOwed.addMoney(((Property)ownedSquare).sellHotels());
+					playerOwed.addMoney(((Property)ownedSquare).sellHouses(this, false, true));
+					playerOwed.addMoney(((Property)ownedSquare).sellHotels(this, false, true));
 				}
 				ownedSquare.setOwner(playerOwed);
  				playerOwed.addPurchasedCard(ownedSquare); //Adding the square to their property list
 			}
 			Game.playerList.remove(this); //FIXME need to remove the player from the game
+			Game.numPlayersBankrupt++;
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true;
 		}
