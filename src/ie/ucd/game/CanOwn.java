@@ -66,13 +66,13 @@ public abstract class CanOwn extends Square {
 					System.out.println(biddingPlayers.get(i).getName()+" does not have enough funds to make a winning bid on "+this.getName()+"\nCurrent bid: "+currentAuctionPrice[0]+"\nYour Funds: "+biddingPlayers.get(i).getMoney());
 					biddingPlayers.remove(i);
 					//reduce index as pool size has decreased
-					i -= 1;
+					i --;
 					//update building pool size for while loop
 					biddingPoolSize = biddingPlayers.size();
 					//index of user with winning needs to be reduced by one
 					currentAuctionPrice[1] -= 1;
 					
-					//if there is only one player remaining, the auction is over and they win, so breaqk from loop
+					//if there is only one player remaining, the auction is over and they win, so break from loop
 					if(currentAuctionPrice[0] > 0 && biddingPoolSize == 1) {
 						break;
 					}
@@ -117,7 +117,7 @@ public abstract class CanOwn extends Square {
 						//user has declared intention to NOT bid again, remove from list of current users in auction
 						else {
 							biddingPlayers.remove(i);
-							i -= 1;
+							i --;
 							//reset temporary bid back to highest bid so it is not overwritten
 							temporaryBid = currentAuctionPrice[0];
 							break;
@@ -132,7 +132,7 @@ public abstract class CanOwn extends Square {
 				//user has indicated intention to not make a bid, remove from pool and update
 				else {
 					biddingPlayers.remove(i);
-					i -= 1;
+					i --;
 					}
 				//updating bidding pool size
 				biddingPoolSize = biddingPlayers.size();

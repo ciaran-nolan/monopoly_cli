@@ -92,7 +92,6 @@ public class Property extends CanOwn {
 		}
 	}
 	
-	
 	public void buildHouses(Player player, ArrayList<Property> colourGroup) {
 		
 		//we know they own all houses in property group
@@ -184,14 +183,21 @@ public class Property extends CanOwn {
 		
 	}
 	
-	public void sellHouses(Player player, boolean isMortgage) {
+	public int sellHouses(Player player, boolean isMortgage, boolean isBankrupt) {
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
-		if(isMortgage) {
+
+		if(isMortgage||isBankrupt) {
+			int valOfSoldHouses = 0;
 			for (int i = 0; i< colourGroup.size(); i++) {
-				player.addMoney((colourGroup.get(i).getNumHouses()*this.housePrice)/2);
+				if(isMortgage) {
+					player.addMoney((colourGroup.get(i).getNumHouses()*this.housePrice)/2);
+					}
+					valOfSoldHouses+=(colourGroup.get(i).getNumHouses()*this.housePrice)/2;
+				
 				Game.setRemainingHouses(Game.getRemainingHouses()+colourGroup.get(i).getNumHouses());
 				colourGroup.get(i).numHouses=0;
 			}
+			return valOfSoldHouses;
 		}
 		// specify false to indicate to checks method you wish to SELL houses
 		else if(Checks.evenHouseDistribution(colourGroup, this, false)) {
@@ -206,14 +212,16 @@ public class Property extends CanOwn {
 			}
 			//check if they would like to sell another house
 			if(Checks.yesNoInput("Would you like to sell another house? (y/n)", player)){
-				sellHouses(player, false);
+				sellHouses(player, false, false);
 			}
+			return this.housePrice/2;
 		}
 		else {
 			System.out.println("The current distribution of your houses do not allow you to sell a house on "+this.getName());
 			for(int i=0; i<colourGroup.size(); i++) {
 				System.out.println(colourGroup.get(i).getName()+": "+colourGroup.get(i).getNumHouses()+"\n");
 			}
+			return 0;
 		}
 	}
 	

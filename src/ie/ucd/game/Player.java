@@ -451,6 +451,7 @@ public class Player {
 		}
 	}
 	
+<<<<<<< HEAD
 	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
 	//the reduceMoney() function
 	
@@ -493,6 +494,11 @@ public class Player {
 			}
 		}
 		return true;
+=======
+	//method to intitate a player to player transaction
+	public void playerToPlayerTransaction() {
+		
+>>>>>>> 57b8298... Add shell of player to player method
 	}
 	
 	public boolean checkBankrupt() {
