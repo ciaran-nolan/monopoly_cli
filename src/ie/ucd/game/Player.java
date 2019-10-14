@@ -296,9 +296,34 @@ public class Player {
 		else {
 			//You owe a player for all of the loans
 			//FIXME needs to be implemented for a player
+			//You must turn over everything that you own.....aka I send over any get out of jail cards, properties anmd change the owner
+			// For houses and properties, I sell all of the houses and hotels on a properties
+			if(this.jailCards.size()> 0) {
+				//Need to transfer the get out of jail card to the playerOwed
+				int currPos = 0;
+				for(Card card:this.jailCards) {
+					//Remove it and then send to the new owner
+					Card temp = this.jailCards.remove(currPos);
+					playerOwed.addJailCard(temp);
+					//Need to check that the card was actually removed
+					System.out.println("Bakrupt player Jail Card array now of size: "+this.jailCards.size());
+					currPos++;
+				}
+			}
+			for(CanOwn ownedSquare:this.propertyList) {
+				if(ownedSquare instanceof Property) {
+					//Need to sell the houses and hotels
+					//FIXME Need to return the value so it can be passed to the player owed
+					playerOwed.addMoney(((Property)ownedSquare).sellHouses());
+					playerOwed.addMoney(((Property)ownedSquare).sellHotels());
+				}
+				ownedSquare.setOwner(playerOwed);
+ 				playerOwed.addPurchasedCard(ownedSquare); //Adding the square to their property list
+			}
+			Game.playerList.remove(this); //FIXME need to remove the player from the game
+			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true;
 		}
-	
 	}
 		
 
