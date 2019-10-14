@@ -209,7 +209,7 @@ public class Player {
 		}
 	}
 
-	public ArrayList<Player> createListPlayers(){
+	public static ArrayList<Player> createListPlayers(){
 		ArrayList<Player> listPlayers = new ArrayList<Player>();
 		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
 		@SuppressWarnings("resource")
@@ -286,10 +286,10 @@ public class Player {
 				//Remove the property from their List of Owned properties and now the bank will auction the property
 				this.propertyList.remove(currPos);
 				System.out.println("Property will now be auctioned");
-				property.playerAuction(listPlayers); //FIXME Need a list of players to be global
+				property.playerAuction(Game.playerList); //FIXME Need a list of players to be global
 				currPos++;
 			}
-			listPlayers.remove(this); //FIXME need to remove the player from the game
+			Game.playerList.remove(this); //FIXME need to remove the player from the game
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true; //FIXME can see if this is needed
 		}
