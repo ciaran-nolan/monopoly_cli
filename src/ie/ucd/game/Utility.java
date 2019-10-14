@@ -22,7 +22,6 @@ public class Utility extends PublicSquare {
 
 	
 	public void buy(Player player, List<Player> listPlayers) {
-		
 		//check user has enough funds to purchase 
 		if(player.getMoney() < this.getPrice()) {
 			System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
@@ -31,14 +30,19 @@ public class Utility extends PublicSquare {
 			return;
 		}
 		else if(Checks.yesNoInput(player.getName()+", would you like to purchase "+this.getName()+"?", player)) {
-			
-		//user has passed all necessary checks to purchase a property, reduce the price from users funds
-		player.reduceMoney(this.getPrice());
-		//add property to users property list
-		player.addPurchasedCard(this);
-		System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());}
+			if(this.getPrice() > player.getMoney()) {
+				System.err.println("You do not have enough money to purchase this Utility! Raise money please");
+			}
+			else {
+				//user has passed all necessary checks to purchase a property, reduce the price from users funds
+				player.reduceMoney(this.getPrice(), null);
+				//add property to users property list
+				player.addPurchasedCard(this);
+				System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
+			}
+		}
 		else{
 			this.playerAuction(listPlayers);
 		}
-		}
+	}
 }

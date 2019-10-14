@@ -63,12 +63,17 @@ public class Property extends CanOwn {
 				System.out.println("This property is already owned!");
 			}
 			else if(Checks.yesNoInput(player.getName()+", would you like to purchase "+this.getName()+"?", player)) {
-				
-			//user has passed all necessary checks to purchase a property, reduce the price from users funds
-			player.reduceMoney(this.getPrice());
-			//add property to users property list
-			player.addPurchasedCard(this);
-			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());}
+				if(this.getPrice() > player.getMoney()) {
+					System.err.println("You do not have enough money to purchase this Utility! Raise money please");
+				}
+				else {
+					//user has passed all necessary checks to purchase a property, reduce the price from users funds
+					player.reduceMoney(this.getPrice(), null);
+					//add property to users property list
+					player.addPurchasedCard(this);
+					System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
+				}
+			}
 			else{
 				this.playerAuction(listPlayers);
 			}
@@ -122,13 +127,18 @@ public class Property extends CanOwn {
 		else if(Checks.evenHouseDistribution(colourGroup, this, true)) {
 			// y/n input to confirm intention to build house
 			if(Checks.yesNoInput("Please confirm you wish to purchase a house for "+this.getName()+" (y/n)", player)) {
-				this.numHouses++;
-				//update the remaining available houses
-				Game.setRemainingHouses(Game.getRemainingHouses()-1);
-				player.reduceMoney(this.housePrice);
-				System.out.println("Successfully purchased house for "+this.getName()+"\nCurrent house count: "+this.numHouses);
+				if (5*this.getHousePrice()>player.getMoney()) {
+					System.err.println("You cannot afford to purchase a hotel");
+				}
+				else {
+					this.numHouses++;
+					//update the remaining available houses
+					Game.setRemainingHouses(Game.getRemainingHouses()-1);
+					player.reduceMoney(this.housePrice,null);
+					System.out.println("Successfully purchased house for "+this.getName()+"\nCurrent house count: "+this.numHouses);
 				}
 			}
+		}
 		else {
 			System.out.println("Building a house on "+this.getName()+" will result in an uneven house distribution in this colour group");
 		}
@@ -150,7 +160,10 @@ public class Property extends CanOwn {
 				return;
 			}
 			else if(Checks.evenHouseDistribution(colourGroup, this, true)){
-		
+				if (5*this.getHousePrice()>player.getMoney()) {
+					System.err.println("You cannot afford to purchase a hotel");
+				}
+				else {
 				//remove all houses from attribute as hotel is being built
 				this.numHouses=0;
 				//add the 4 houses being replaced by the hotel back into the available pool
@@ -160,9 +173,10 @@ public class Property extends CanOwn {
 				//update hotel number
 				Game.setRemainingHotels((Game.getRemainingHotels())-1);
 				//price of hotel is price of additional house
-				player.reduceMoney(this.housePrice);
+				player.reduceMoney(this.housePrice, null);
 				System.out.println("Sucessfully purchased hotel for "+this.getName());
 				}
+			}
 			else {
 				System.out.println("Building a hotel on "+this.getName()+" will result in an uneven distribution in this colour group");
 			}

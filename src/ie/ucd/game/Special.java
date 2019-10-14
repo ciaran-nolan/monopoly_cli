@@ -37,7 +37,8 @@ public class Special extends Square {
 	public void implementSpecialSquare(Player player1) {
 		switch(this.type) {
 			case "TAX":
-				player1.reduceMoney(this.value); //Reducing the money in a players account using the value given
+				//Null as you owe the bank if you cant pay
+				player1.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
 				break; //Break the switch statement
 			case "GO":
 				player1.addMoney(this.value);

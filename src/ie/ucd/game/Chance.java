@@ -23,8 +23,8 @@ public class Chance extends Card {
 					for(CanOwn property : propertyList) {
 						if(property instanceof Property) {
 							//This will get the card value and multiply the number of houses or hotels depending on if its of Property Class
-							player1.reduceMoney(this.getCardValue()*((Property) property).getNumHouses());
-							player1.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels());
+							player1.reduceMoney(this.getCardValue()*((Property) property).getNumHouses(),null);
+							player1.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels(),null);
 							//If there is no hotels, it will not take any money away at all
 							//FIXME
 							System.out.println(property.getLocation());
@@ -35,7 +35,7 @@ public class Chance extends Card {
 					}
 				}
 				else {
-					player1.reduceMoney(this.getCardValue());
+					player1.reduceMoney(this.getCardValue(), null);
 				}
 			case "INCOME":
 				player1.addMoney(this.getCardValue());

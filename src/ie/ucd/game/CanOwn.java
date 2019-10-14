@@ -142,7 +142,7 @@ public abstract class CanOwn extends Square {
 				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionPrice[0]);
 				biddingPlayers.get(0).addPurchasedCard(this);
 				this.setOwner(biddingPlayers.get(0));
-				biddingPlayers.get(0).reduceMoney(currentAuctionPrice[0]);
+				biddingPlayers.get(0).reduceMoney(currentAuctionPrice[0], null);
 				break;
 			}
 			}
@@ -204,15 +204,26 @@ public abstract class CanOwn extends Square {
 	
 	public void demortgage(boolean demortgageOnSale) {
 		//the new owner now owns it or not. and can demortgage at any time
-		this.getOwner().reduceMoney((int)(0.01*this.getPrice())); //We will automatically set 10% interest to paying
+		this.getOwner().reduceMoney((int)(0.01*this.getMortgage()), null); //We will automatically set 10% interest to paying
 		//Then this is for if the user decides to demortgage on sale or not
 		if(demortgageOnSale) {
-			this.getOwner().reduceMoney(this.getPrice());
+			//If they dont have enough money to pay off mortgage
+			if(this.getMortgage() > this.getOwner().getMoney()) {
+				System.err .println("You don't have enough money to demortgage this property now!");
+			}
+			else {
+				this.getOwner().reduceMoney(this.getMortgage(), null);
+			}
 		}
 		else {
-			//The mortgage will be removed at a later stage
-			this.getOwner().reduceMoney(this.getPrice()); //Paying price of house
-			this.getOwner().reduceMoney((int)(0.01*this.getPrice())); //Paying interest
+			if((this.getMortgage() + 0.01*this.getMortgage()) > this.getOwner().getMoney()) {
+				System.err.println("You don't have enough money to demortgage this property now!");
+			}
+			else {
+				//The mortgage will be removed at a later stage
+				this.getOwner().reduceMoney(this.getMortgage(), null); //Paying price of mortgage
+				this.getOwner().reduceMoney((int)(0.01*this.getMortgage()), null); //Paying interest
+			}
 		}
 	}
 }

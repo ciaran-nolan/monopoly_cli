@@ -74,9 +74,26 @@ public class Player {
 	public void setJailFree() {
 		this.jailFreeCard++;
 	}
-	
-	public void reduceMoney(int money) {
-		this.money-=money;
+	//Takes a playerOwed to see if the square is a player owed or the bank (in case of taxes and cards)
+	public void reduceMoney(int money, Player playerOwed) {
+		//Reduce money needs to see if there is enough money to do everything
+		//I will then need a function to check if they can sell of anything if they cant afford to pay the money
+		//This may involve mortgaging the property but i will need to have a save from bankruptcy function
+		if(money > this.money) {
+			//It will take an argument of the amount of money needed raise
+			if(this.saveFromBankruptcy(money-this.money)) {
+				//I have saved from bankruptcy and so I can now reduce the money
+				this.money-=money;
+			}
+			else {
+				//If its null it is paying the bank. If it is not null, it owes a player money on that square
+				this.isBankrupt(playerOwed);
+			}
+		}
+		//Else you have enough money for paying the bill and so you can just reduce the money
+		else {
+			this.money-=money;
+		}
 	}
 	
 	//This function will increment the location of the player
@@ -266,8 +283,27 @@ public class Player {
 		//If it is a player, turn over all of value to that player
 		if(playerOwed == null) {
 			//Bank owed
-			//Sell off any properties and buildings
+			//Get rid of jail free card
 			int currPos = 0;
+			int currPosJail = 0;
+			if(this.jailCards.size()> 0) {
+				//Need to transfer the get out of jail card to the playerOwed
+				for(Card card:this.jailCards) {
+					//Remove it and then send to the new owner
+					Card temp = this.jailCards.remove(currPosJail);
+					if(temp instanceof CommunityChest) {
+						BoardReader.communityChests.add((CommunityChest)temp);
+					}
+					else {
+						BoardReader.chances.add((Chance)temp);
+					}
+					//Need to check that the card was actually removed
+					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
+					currPosJail++;
+				}
+			}
+			//Sell off any properties and buildings
+			
 			for(CanOwn property:this.propertyList) {
 				//Sell off all of the houses at no price
 				if(property instanceof Property) {
@@ -366,15 +402,15 @@ public class Player {
 					//Below is for if you own all of the properties but they are not improved,
 					//Charge double rent
 					if(Checks.ownAllColour(this, (Property)ownableSquare) != null && numHouses + numHotels == 0) {
-						this.reduceMoney(2*((Property) ownableSquare).getRent()[0]);
+						this.reduceMoney(2*((Property) ownableSquare).getRent()[0], ownableSquare.getOwner());
 					}
 					else if(numHotels == 0) {
 						//This is for if you own all the properties in a colour group but you have houses
-						this.reduceMoney(((Property) ownableSquare).getRent()[numHouses]);
+						this.reduceMoney(((Property) ownableSquare).getRent()[numHouses], ownableSquare.getOwner());
 					}
 					else {
 						//This is for if there is a hotel on the site. Max 1
-						this.reduceMoney(((Property) ownableSquare).getRent()[5]);
+						this.reduceMoney(((Property) ownableSquare).getRent()[5], ownableSquare.getOwner());
 					}	
 				}
 				else if(ownableSquare instanceof Train) {
@@ -389,7 +425,7 @@ public class Player {
 							continue;
 						}
 					}
-					this.reduceMoney(((Train) ownableSquare).getRent()[numTrains-1]);
+					this.reduceMoney(((Train) ownableSquare).getRent()[numTrains-1], ownableSquare.getOwner());
 				}
 				else {
 					//Rent payment for a utility
@@ -403,10 +439,19 @@ public class Player {
 							continue;
 						}
 					}
-					this.reduceMoney((((Utility) ownableSquare).getRent()[numUtilities-1])*Dice.getDieVals());
+					this.reduceMoney((((Utility) ownableSquare).getRent()[numUtilities-1])*Dice.getDieVals(), ownableSquare.getOwner());
 				}
 			}
 		}
+	}
+	
+	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
+	//the reduceMoney() function
+	
+	public boolean saveFromBankruptcy(int moneyNeedToRaise) {
+		//Need to check if I can raise money by any method......
+		
+		return true;
 	}
 	
 	public boolean checkBankrupt() {

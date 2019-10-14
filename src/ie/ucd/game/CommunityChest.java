@@ -23,7 +23,7 @@ public class CommunityChest extends Card {
 			case "JAIL":
 				player1.goToJail();
 			case "PAY":
-				player1.reduceMoney(this.getCardValue());
+				player1.reduceMoney(this.getCardValue(), null);
 			case "INCOME":
 				player1.addMoney(this.getCardValue());
 			case "GET_OUT_OF_JAIL":
