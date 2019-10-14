@@ -77,9 +77,8 @@ public class Player {
 	//Takes a playerOwed to see if the square is a player owed or the bank (in case of taxes and cards)
 	public void reduceMoney(int money, Player playerOwed) {
 		//Reduce money needs to see if there is enough money to do everything
-		//I will then need a function to check if they can sell of anything if they cant afford to pay the money
-		//This may involve mortgaging the property but i will need to have a save from bankruptcy function
-		if(money > this.money) {
+		//This is if you are owing money to the bank......if you can raise enough, you can get around it
+		if(money > this.money && playerOwed == null) {
 			//It will take an argument of the amount of money needed raise
 			if(this.saveFromBankruptcy(money-this.money)) {
 				//I have saved from bankruptcy and so I can now reduce the money
@@ -89,6 +88,10 @@ public class Player {
 				//If its null it is paying the bank. If it is not null, it owes a player money on that square
 				this.isBankrupt(playerOwed);
 			}
+		}
+		//You owe a player and if 
+		else if(money > this.money && playerOwed != null) {
+			this.isBankrupt(playerOwed);
 		}
 		//Else you have enough money for paying the bill and so you can just reduce the money
 		else {
@@ -450,7 +453,42 @@ public class Player {
 	
 	public boolean saveFromBankruptcy(int moneyNeedToRaise) {
 		//Need to check if I can raise money by any method......
-		
+		//I also need to continually check that the money raised is larger than the money to be paid
+		while(true) {
+			//Need to sell off all of the things in here
+			if(this.propertyList.size() > 0) {
+				//Step 1: Sell off the houses and hotels
+				for(CanOwn ownable:this.propertyList) {
+					if(ownable instanceof Property) {
+						this.addMoney(((Property)ownable).sellHouses()); //FIXME confirm parameters
+						this.addMoney(((Property)ownable).sellHotels());
+					}
+					//If they have raised sufficient money from sellingHouses
+					if(this.money - moneyNeedToRaise > 0) {
+						break;
+					}
+				}
+				//Step 2: Mortgage the properties
+				for(CanOwn ownable:this.propertyList) {
+					ownable.mortgage(this);
+					if(this.money - moneyNeedToRaise > 0) {
+						break;
+					}
+				}
+				//Step 3: Sell off some properties
+				for(CanOwn ownable:this.propertyList) {
+					ownable.playerAuction(Game.playerList);
+					if(this.money - moneyNeedToRaise > 0) {
+						break;
+					}
+				}
+				return false;
+			}
+			//They own no physical assets and so cannot raise any money
+			else {
+				return false;
+			}
+		}
 		return true;
 	}
 	
