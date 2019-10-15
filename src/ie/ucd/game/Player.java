@@ -325,46 +325,19 @@ public class Player {
 				//Remove the property from their List of Owned properties and now the bank will auction the property
 				this.propertyList.remove(currPos);
 				System.out.println("Property will now be auctioned");
-				property.playerAuction(Game.playerList); //FIXME Need a list of players to be global
+				property.playerAuction(listPlayers); //FIXME Need a list of players to be global
 				currPos++;
 			}
-			Game.playerList.remove(this); //FIXME need to remove the player from the game
-			Game.numPlayersBankrupt++;
+			listPlayers.remove(this); //FIXME need to remove the player from the game
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true; //FIXME can see if this is needed
 		}
 		else {
 			//You owe a player for all of the loans
 			//FIXME needs to be implemented for a player
-			//You must turn over everything that you own.....aka I send over any get out of jail cards, properties anmd change the owner
-			// For houses and properties, I sell all of the houses and hotels on a properties
-			if(this.jailCards.size()> 0) {
-				//Need to transfer the get out of jail card to the playerOwed
-				int currPos = 0;
-				for(Card card:this.jailCards) {
-					//Remove it and then send to the new owner
-					Card temp = this.jailCards.remove(currPos);
-					playerOwed.addJailCard(temp);
-					//Need to check that the card was actually removed
-					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
-					currPos++;
-				}
-			}
-			for(CanOwn ownedSquare:this.propertyList) {
-				if(ownedSquare instanceof Property) {
-					//Need to sell the houses and hotels
-					//FIXME Need to return the value so it can be passed to the player owed
-					playerOwed.addMoney(((Property)ownedSquare).sellHouses(this, false, true));
-					playerOwed.addMoney(((Property)ownedSquare).sellHotels(this, false, true));
-				}
-				ownedSquare.setOwner(playerOwed);
- 				playerOwed.addPurchasedCard(ownedSquare); //Adding the square to their property list
-			}
-			Game.playerList.remove(this); //FIXME need to remove the player from the game
-			Game.numPlayersBankrupt++;
-			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true;
 		}
+	
 	}
 		
 
@@ -451,7 +424,7 @@ public class Player {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
 	//the reduceMoney() function
 	
@@ -494,11 +467,24 @@ public class Player {
 			}
 		}
 		return true;
-=======
+}
 	//method to intitate a player to player transaction
+
+	//method to initiate a player to player transaction
+
 	public void playerToPlayerTransaction() {
+		System.out.println("Please indicate the player who you wish to initiate a transaction with, using their name");
+		Scanner input = new Scanner(System.in);
+		String transactionChoice;
 		
->>>>>>> 57b8298... Add shell of player to player method
+		transactionChoice= input.next();
+		
+		while(!Checks.isValidPlayer(transactionChoice)) {
+			System.out.println(this.name+", please enter a valid name");
+			transactionChoice= input.next();
+		}
+		
+
 	}
 	
 	public boolean checkBankrupt() {

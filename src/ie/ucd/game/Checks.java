@@ -28,6 +28,14 @@ public class Checks {
 			return false;
 		}
 	}
+	public static boolean isValidPlayer(String playerName) {
+		for(int i=0; i<Game.playerList.size(); i++) {
+			if(Game.playerList.get(i).getName().equalsIgnoreCase(playerName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public static boolean yesNoInput(String message,Player player) {
 		@SuppressWarnings("resource")
