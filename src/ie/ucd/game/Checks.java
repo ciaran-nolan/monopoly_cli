@@ -120,7 +120,7 @@ public class Checks {
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
-	public void checkWinner() {
+	public static void checkWinner() {
 		int totalValue=0;
 		ArrayList<Integer> valueArray = new ArrayList<Integer>();
 		int maxValue, maxIndex;

@@ -445,6 +445,9 @@ public class Player {
 					this.reduceMoney((((Utility) ownableSquare).getRent()[numUtilities-1])*Dice.getDieVals(), ownableSquare.getOwner());
 				}
 			}
+			else {
+				System.out.println("Owner of Square does not require rent to be paid");
+			}
 		}
 	}
 	
