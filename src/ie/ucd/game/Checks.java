@@ -20,21 +20,35 @@ public class Checks {
 		}
 		}
 	
-	public static boolean isPlayerOwner(CanOwn ownableCar, Player player){
-		if(ownableCar.getOwner().getName().equals(player.getName())) {
+	public static boolean isPlayerOwner(CanOwn ownableCard, Player player){
+		if(ownableCard.getOwner().getName().equals(player.getName())) {
 			return true;
 		}
 		else {
 			return false;
 		}
 	}
-	public static boolean isValidPlayer(String playerName) {
-		for(int i=0; i<Game.playerList.size(); i++) {
-			if(Game.playerList.get(i).getName().equalsIgnoreCase(playerName)) {
-				return true;
+	
+	public static Property isValidProp(String name, Player player) {
+		for(CanOwn currentOwnable: player.getPropertyList()) {
+			//only analyse the type property
+			if(currentOwnable instanceof Property) {
+				//compare square colour with the specified property
+				if(((Property) currentOwnable).getName().equalsIgnoreCase(name)){	
+					//add the property to the list if there is a colour group match
+					return ((Property) currentOwnable);
+				}
 			}
 		}
-		return false;
+		return null;
+	}
+	public static Player isValidPlayer(String playerName) {
+		for(int i=0; i<Game.playerList.size(); i++) {
+			if(Game.playerList.get(i).getName().equalsIgnoreCase(playerName)) {
+				return Game.playerList.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public static boolean yesNoInput(String message,Player player) {
