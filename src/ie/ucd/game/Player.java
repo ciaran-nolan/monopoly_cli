@@ -329,42 +329,15 @@ public class Player {
 				currPos++;
 			}
 			Game.playerList.remove(this); //FIXME need to remove the player from the game
-			Game.numPlayersBankrupt++;
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true; //FIXME can see if this is needed
 		}
 		else {
 			//You owe a player for all of the loans
 			//FIXME needs to be implemented for a player
-			//You must turn over everything that you own.....aka I send over any get out of jail cards, properties anmd change the owner
-			// For houses and properties, I sell all of the houses and hotels on a properties
-			if(this.jailCards.size()> 0) {
-				//Need to transfer the get out of jail card to the playerOwed
-				int currPos = 0;
-				for(Card card:this.jailCards) {
-					//Remove it and then send to the new owner
-					Card temp = this.jailCards.remove(currPos);
-					playerOwed.addJailCard(temp);
-					//Need to check that the card was actually removed
-					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
-					currPos++;
-				}
-			}
-			for(CanOwn ownedSquare:this.propertyList) {
-				if(ownedSquare instanceof Property) {
-					//Need to sell the houses and hotels
-					//FIXME Need to return the value so it can be passed to the player owed
-					playerOwed.addMoney(((Property)ownedSquare).sellHouses(this, false, true));
-					playerOwed.addMoney(((Property)ownedSquare).sellHotels(this, false, true));
-				}
-				ownedSquare.setOwner(playerOwed);
- 				playerOwed.addPurchasedCard(ownedSquare); //Adding the square to their property list
-			}
-			Game.playerList.remove(this); //FIXME need to remove the player from the game
-			Game.numPlayersBankrupt++;
-			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
 			return true;
 		}
+	
 	}
 		
 
@@ -451,6 +424,7 @@ public class Player {
 		}
 	}
 	
+
 	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
 	//the reduceMoney() function
 	
@@ -461,6 +435,7 @@ public class Player {
 			//Need to sell off all of the things in here
 			if(this.propertyList.size() > 0) {
 				//Step 1: Sell off the houses and hotels
+		
 				for(CanOwn ownable:this.propertyList) {
 					if(ownable instanceof Property) {
 						this.addMoney(((Property)ownable).sellHouses()); //FIXME confirm parameters
@@ -493,6 +468,62 @@ public class Player {
 			}
 		}
 		return true;
+	}
+	
+	//method to initiate a player to player transaction
+
+	public void playerToPlayerTransaction() {
+		//prompt the user who has initiated the desire to trade, to select who they wish to trade with
+		System.out.println("Please indicate the player who you wish to initiate a transaction with, using their name");
+		Scanner input = new Scanner(System.in);
+		String transactionChoice;
+		
+		transactionChoice= input.next();
+		Player chosenPlayer = Checks.isValidPlayer(transactionChoice);
+		
+		while(null==chosenPlayer) {
+			System.out.println(this.name+", please enter a valid name");
+			transactionChoice= input.next();
+			chosenPlayer = Checks.isValidPlayer(transactionChoice);
+		}
+		
+		ArrayList<Player> tradeList = new ArrayList<Player>(2);
+		//iterate over both players 
+		for(int i=0; i<2;i++){
+			//using a boolean marker to 
+			
+			boolean finishedTrade = false;
+			while(!finishedTrade) {
+				
+				System.out.println(tradeList.get(i).getName()+", you have:\n\n"+this.jailFreeCard+" Jail Free Cards\n"+this.propertyList.size()+" ownable properties\n"+this.money+" in cash \n\n");
+				System.out.println("Please selct what you wish to trade:\n[0]Cancel Trade\n[1]Jail Free Card\n[2]Property\n[3]Cash");
+				
+				transactionChoice=input.next();
+				
+				switch(transactionChoice) {
+				case "0":
+					System.out.println("Exiting without trade");
+					return;
+				case "1":
+					if(this.jailFreeCard==0) {
+						if(Checks.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)", tradeList.get(i))) {
+							continue;
+						}
+					
+					}
+				case "2":
+					System.out.println("Please enter the name of the property you wish to include in the trade");
+					Property propToTrade = Checks.isValidProp(transactionChoice, );
+					if(null==propToTrade){
+						if(Checks.yesNoInput("The property you have entered is either invalid or not owned by you. Would you like to trade something else? (y/n)", tradeList.get(0))) {
+							continue;
+						}
+					}
+				}
+			}
+		}
+		
+
 	}
 	
 	public boolean checkBankrupt() {
