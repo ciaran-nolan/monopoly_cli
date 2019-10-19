@@ -9,9 +9,9 @@ public class Dice {
 
 	private static int dice1;
 	private static int dice2;
-	private int duplicateRollCounter=0;
+	private static int duplicateRollCounter=0;
 	
-	public boolean rollDice(){
+	public static boolean rollDice(){
 		Random rollGenerator = new Random();
 			
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
@@ -30,23 +30,14 @@ public class Dice {
 		return (dice1 + dice2);
 	}
 	
-	public int getDuplicateRollCounter() {
+	public static int getDuplicateRollCounter() {
 		return duplicateRollCounter;
 	}
-	public void resetDuplicateRollCounter() {
+	public static void resetDuplicateRollCounter() {
 		duplicateRollCounter = 0;
 	}
-	public boolean incrementDuplicateRollCounter(){
-		//method will only increment as long as third duplicate has not been reached
-		if (this.duplicateRollCounter >= 2) {
-			resetDuplicateRollCounter();
-			return true;
-		}
-		else {
-			//third duplicate roll has not yet been reached so increment counter
-			duplicateRollCounter+=1;
-		}
-		return false;
+	public static void incrementDuplicateRollCounter(){
+		duplicateRollCounter++;	
 	}
 	
 }

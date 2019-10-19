@@ -92,8 +92,8 @@ public class Property extends CanOwn {
 		}
 	}
 	
-	public void buildHouses(Player player, ArrayList<Property> colourGroup) {
-		
+	public void buildHouses(Player player) {
+		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 		//we know they own all houses in property group
 		System.out.println("You have chosen to purchase houses for: "+this.getName());
 		
