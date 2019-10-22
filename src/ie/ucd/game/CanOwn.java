@@ -46,15 +46,15 @@ public abstract class CanOwn extends Square {
 	
 	
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
-	public abstract void buy(Player player, List<Player> listPlayers);
+	public abstract void buy(Player player);
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	
-	public void playerAuction(List<Player> listPlayers) {
+	public void playerAuction() {
 	
-		List<Player> biddingPlayers = listPlayers;
+		ArrayList<Player> biddingPlayers = new ArrayList<Player>(Game.playerList);
 		int[] currentAuctionPrice = new int[] {0,0};
 		Scanner auctionScanner = new Scanner(System.in);
-		int biddingPoolSize = listPlayers.size();
+		int biddingPoolSize = Game.playerList.size();
 		
 		while(biddingPoolSize > 1){
 			//update the bidding pool size 

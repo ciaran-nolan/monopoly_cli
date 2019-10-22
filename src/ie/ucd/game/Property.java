@@ -50,13 +50,13 @@ public class Property extends CanOwn {
 		this.numHouses = 0;
 	}
 	
-	public void buy(Player player, List<Player> listPlayers) {
+	public void buy(Player player) {
 		
 			//check user has enough funds to purchase 
 			if(player.getMoney() < this.getPrice()) {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
 				//player does not have enough funds to buy property, automatically enter auction
-				this.playerAuction(listPlayers);
+				this.playerAuction();
 				return;
 			}
 			else if(!(Checks.canBuy((CanOwn) this, player))){
@@ -75,7 +75,7 @@ public class Property extends CanOwn {
 				}
 			}
 			else{
-				this.playerAuction(listPlayers);
+				this.playerAuction();
 			}
 			}
 	

@@ -33,8 +33,10 @@ public class Checks {
 		for(CanOwn currentOwnable: player.getPropertyList()) {
 			//only analyse the type property
 			if(currentOwnable instanceof Property) {
+				System.out.println(currentOwnable.getName());
 				//compare square colour with the specified property
-				if(((Property) currentOwnable).getName().equalsIgnoreCase(name)){	
+				if(((Property) currentOwnable).getName().equalsIgnoreCase(name)){
+					System.out.println("Here");
 					//add the property to the list if there is a colour group match
 					return ((Property) currentOwnable);
 				}
@@ -103,16 +105,16 @@ public class Checks {
 					//add the property to the list if there is a colour group match
 					propertyList.add((Property) currentOwnable);
 					colourCounter++;
-					}
 				}
+			}
 			//matching cases for both two and three house groups
 			if(((twoPropGroup) && colourCounter == 2) || colourCounter == 3) {
 				return propertyList;
-				}
 			}
-		return null;
 		}
-	
+		return null;
+	}
+
 	public static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
 		int[] houseDifferentialBounds = new int[2];
 		if(buyOrSell) {
@@ -124,18 +126,17 @@ public class Checks {
 			//when selling it can be 1 or 0
 			houseDifferentialBounds[0] = 0;
 			houseDifferentialBounds[1] = 1;
-				}
+		}
 		
 		for(int i=0; i<colourGroup.size();i++) {
 			if(colourGroup.get(i).getName().equals(propertyToAlterHouses.getName())) {
 				for(int k = 0; k < colourGroup.size(); k++) {
 					if(!((colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()>=houseDifferentialBounds[0])&&(colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()<=houseDifferentialBounds[1]))){
 						return false;
-						}
 					}
 				}
 			}
-		
+		}
 		return true;
 	}
 	
@@ -167,6 +168,7 @@ public class Checks {
 		System.out.println("The game has been won! It is now over");
 		System.exit(1);
 	}
+	
 }
 		
 		

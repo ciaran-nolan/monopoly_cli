@@ -6,7 +6,7 @@ import java.util.*;
 public class Game {
 	private static int remainingHouses=32;
 	private static int remainingHotels=12;
-	public static ArrayList<Player> playerList;
+	public static ArrayList<Player> playerList = new ArrayList<Player>();
 	ArrayList<Square> board = BoardReader.board;
 	public static int numPlayersBankrupt=0;
 	public Game() {

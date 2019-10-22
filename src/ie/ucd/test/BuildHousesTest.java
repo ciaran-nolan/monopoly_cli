@@ -10,7 +10,6 @@ public class BuildHousesTest {
 	public static void main(String[] args) throws IOException { 
 	
 		BoardReader.readProperties();
-		
 		BoardReader.readSpecialSquares();
 		BoardReader.readUtilities();
 		BoardReader.readCommunityChests();
@@ -27,6 +26,9 @@ public class BuildHousesTest {
 		 plist.add(p2);
 		 plist.add(p3);
 		 
+		 Game.playerList.add(p1);
+		 Game.playerList.add(p2);
+		 Game.playerList.add(p3);
 		//test 1
 		 
 		/* p1.addMoney(10000);
@@ -63,7 +65,7 @@ public class BuildHousesTest {
 				 break;
 			 }
 			}*/
-		 properties.get(0).buy(p1, plist);
+		 properties.get(0).buy(p1);
 		 ((Property) p1.getPropertyList().get(0)).sellHouses(p1, false, false);
 		
 		 
