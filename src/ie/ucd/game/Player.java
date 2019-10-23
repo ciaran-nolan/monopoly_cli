@@ -509,8 +509,9 @@ public class Player {
 			boolean finishedTrade = false;
 			while(!finishedTrade) {
 				input.nextLine();
-				System.out.println(tradeList.get(i).getName()+", you have:\n\n"+tradeList.get(i).jailFreeCard+" Jail Free Cards\n"+tradeList.get(i).propertyList.size()+" ownable properties\n"+tradeList.get(i).money+" in cash \n\n");
-				System.out.println("Please selct what you wish to trade:\n[0]Cancel Trade\n[1]Jail Free Card\n[2]Property\n[3]Cash");
+				System.out.println(tradeList.get(i).getName()+", you have:\n\n"+tradeList.get(i).jailFreeCard+" Jail Free Cards\n"
+						+tradeList.get(i).propertyList.size()+" ownable properties\n"+tradeList.get(i).money+" in cash \n\n");
+				System.out.println("Please select what you wish to trade:\n[0]Cancel Trade\n[1]Jail Free Card\n[2]Property\n[3]Cash");
 				
 				transactionChoice=input.next();
 				
