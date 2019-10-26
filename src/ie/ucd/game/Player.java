@@ -604,6 +604,9 @@ public class Player {
 						if(Checks.yesNoInput("You have specified more cash than you currently have. Would you like to trade something else? (y/n)", tradeList.get(i))) {
 							continue;
 						}
+						
+						
+						
 						else {
 							finishedTrade=true;
 							break;
