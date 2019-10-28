@@ -9,7 +9,10 @@ import ie.ucd.game.*;
 
 public class Checks {
 	
-	
+	public static void playerStatus(Player player) {
+		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailFreeNum()
+		+" Jail Free Cards\n"+player.getPropertyList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
+	}
 
 	public static boolean canBuy(CanOwn ownableCard, Player player) {
 		if(ownableCard.getOwner() == null) {

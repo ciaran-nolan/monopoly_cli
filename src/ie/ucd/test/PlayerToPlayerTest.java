@@ -7,6 +7,7 @@ import ie.ucd.game.BoardReader;
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 import ie.ucd.game.Property;
+import ie.ucd.game.Transactions;
 
 public class PlayerToPlayerTest {
 	public static void main(String[] args) throws IOException { 
@@ -34,7 +35,7 @@ public class PlayerToPlayerTest {
 		 properties.get(0).buy(p1);
 		 properties.get(1).buy(p2);
 		 
-		 p1.playerToPlayerTransaction();
+		 Transactions.playerToPlayerTransaction(p1);
 		 
 	}
 }
