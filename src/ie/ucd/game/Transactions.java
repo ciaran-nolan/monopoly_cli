@@ -76,7 +76,7 @@ public class Transactions {
 		
 	}
 	
-	public static void playerToPlayerTransaction(Player initiatingPlayer) {
+	public static void playerToPlayerTrade(Player initiatingPlayer) {
 		
 		initiateTrade(initiatingPlayer);
 	

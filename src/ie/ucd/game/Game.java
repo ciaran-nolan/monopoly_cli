@@ -42,84 +42,35 @@ public class Game {
 			//This is the loop that consistently loop through the players of the game
 			for(Player currentPlayer:playerList) {
 				
-				
-				Scanner input = new Scanner(System.in);
-				int choiceInput = 0;
 				boolean doubleRoll = true;
 				//This is here for doubles being rolled so you can do as much things as you want
 				while(doubleRoll) {
 					//This is where to get a correct input from the user
-					while(true) {
-						System.out.println("Please enter in Numeric form what you would like to do!");
-						System.out.println("1: Roll Dice / 2: Build Houses/Hotels on Square / 3: Buy/Sell Properties or Cards with other players"
-								+ " / 4: Mortgage a property");
-						choiceInput = input.nextInt();
-						if(choiceInput > 0 && choiceInput < 6) {
-							break;
-						}
-						else {
-							System.out.println("Please enter a choice of a number between 1 and 4");
-							continue;
-						}
-					}
+					
+					System.out.println("Please enter in Numeric form what you would like to do!");
+					System.out.println("1: Roll Dice / 2: Build Houses/Hotels on Square / 3: Buy/Sell Properties or Cards with other players"
+							+ " / 4: Mortgage a property");
+					int choiceInput = InputOutput.integerMenu(1, 4);
+					
 					switch(choiceInput) {
 						case 1:
 							//Rolling the dice instantly. No other choice
-							//Dice.rollDice();
-							//currentPlayer.movePlayer(Dice.getDieVals());
+							Dice.rollDice();
+							currentPlayer.movePlayer(Dice.getDieVals());
 							
 							break;
 						case 2:
 							//This is for choosing to build house on a square
-							System.out.println("Please enter the name of the poperty you wish to purchase houses/hotels for");
-							String propName = input.next();
-							Property propToBuild = Checks.isValidProp(propName, currentPlayer);
-							if(null==propToBuild) {
-								if(Checks.yesNoInput("The property you have entered is not valid, would you like to try again? (y/n)", currentPlayer)){
-									//restart pre-dice roll options
-									continue;
-								}
-								break;
-							}
-							else if(!(Checks.isPlayerOwner((CanOwn) propToBuild, currentPlayer))){
-								if(Checks.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
-									//restart pre-dice roll options
-									continue;
-								}
-								break;
-							}
-							else {
-								System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
-								choiceInput = input.nextInt();
-								while(choiceInput!=0||choiceInput!=1) {
-									System.out.println(currentPlayer.getName()+" please enter a valid response.\n0 for houses\n1 for hotels");
-									choiceInput=input.nextInt();
-								}
-								if(choiceInput==0) {
-									propToBuild.buildHouses(currentPlayer);
-								}
-								else {
-									propToBuild.buildHotel(currentPlayer);
-								}
-								break;
-							}
+							Property.buildHouses(currentPlayer);				
 						case 3:
 							//This is for buying a property
-							currentPlayer.playerToPlayerTransaction(); //????? FIXME
-							break;
+							Transactions.playerToPlayerTrade(currentPlayer); 
 						case 4: 
-							System.out.println("Please enter the name of the poperty you wish to purchase mortgage");
-							String mortgageName = input.next();
-							Property propToMortgage = Checks.isValidProp(mortgageName, currentPlayer);
-							if(null==propToMortgage) {
-								if(Checks.yesNoInput("The property you have entered is not valid, would you like to try again? (y/n)", currentPlayer)){
-									//restart pre-dice roll options
-									continue;
-								}
-								break;
-							}
-							else if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
-								if(Checks.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
+							
+							Property propToMortgage=InputOutput.propertyInput(currentPlayer, "Mortgage");
+							
+							if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
+								if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
 									//restart pre-dice roll options
 									continue;
 								}
@@ -133,13 +84,13 @@ public class Game {
 							break;
 					}
 					//check if they are finished before rolling dice
-					if(Checks.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
+					if(InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
 						continue;
 					}
 					else{
 						break;
 					}
-					//Roll the dice regardless after they have done all of their things#
+					//Roll the dice regardless after they have done all of their things
 					//This will hopefully update the dice roll and allow it to see if a double has been rolled
 					//this will both roll the dice and check if a double has been rolled
 					doubleRoll=Dice.rollDice();

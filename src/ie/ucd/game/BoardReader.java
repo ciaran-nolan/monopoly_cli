@@ -48,7 +48,6 @@ public class BoardReader {
     		Property temp = new Property(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("squareColour"+i)),prop.getProperty(("title"+i)),Integer.parseInt((prop.getProperty(("priceBuy"+i)))),rentIntArray, Integer.parseInt(prop.getProperty(("housePrice"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))));
     		properties.add(temp);
     		board.set(temp.getLocation(),temp);
-    		
     	}
     
     	} 

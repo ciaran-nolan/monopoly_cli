@@ -9,6 +9,13 @@ import ie.ucd.game.*;
 
 public class Checks {
 	
+	public static boolean enoughFunds(Player player, int price) {
+		if(player.getMoney() < price) {
+			return false;
+		}
+		return true;
+	}
+	
 	public static void playerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailFreeNum()
 		+" Jail Free Cards\n"+player.getPropertyList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
@@ -39,8 +46,6 @@ public class Checks {
 				System.out.println(currentOwnable.getName());
 				//compare square colour with the specified property
 				if(((Property) currentOwnable).getName().equalsIgnoreCase(name)){
-					System.out.println("Here");
-					//add the property to the list if there is a colour group match
 					return ((Property) currentOwnable);
 				}
 			}
@@ -56,37 +61,9 @@ public class Checks {
 		return null;
 	}
 	
-	public static boolean yesNoInput(String message,Player player) {
-		@SuppressWarnings("resource")
-		Scanner yesNoScanner = new Scanner(System.in);
-		System.out.println(message);
-		String acknowledgement = yesNoScanner.next();
-		
-		while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
-			System.out.println(player.getName()+", please enter a valid response (y/n)");
-			acknowledgement = yesNoScanner.next();
-		}
-		if(acknowledgement.equalsIgnoreCase("y")){
-			return true;
-		}
-		else {
-			return false;
-			}
-	}
-	
-	public static boolean canBuildHouses(CanOwn ownableCard) {
-		//only cards of type property can have houses
-		if(ownableCard instanceof Property) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
 	//method to check if a player owns all the properties in a given colour group.
 	public static ArrayList<Property> ownAllColour(Player player, Property property) {
-		//counter to track how mnay of type colour
+		//counter to track how many of type colour
 		int colourCounter = 0;
 		//boolean to track that the particular property group has either two or three instances on the board
 		boolean twoPropGroup = false;
