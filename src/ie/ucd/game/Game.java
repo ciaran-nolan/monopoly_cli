@@ -46,50 +46,12 @@ public class Game {
 				//This is here for doubles being rolled so you can do as much things as you want
 				while(doubleRoll) {
 					//This is where to get a correct input from the user
-					
-					System.out.println("Please enter in Numeric form what you would like to do!");
-					System.out.println("1: Roll Dice / 2: Build Houses/Hotels on Square / 3: Buy/Sell Properties or Cards with other players"
-							+ " / 4: Mortgage a property");
-					int choiceInput = InputOutput.integerMenu(1, 4);
-					
-					switch(choiceInput) {
-						case 1:
-							//Rolling the dice instantly. No other choice
-							Dice.rollDice();
-							currentPlayer.movePlayer(Dice.getDieVals());
-							
-							break;
-						case 2:
-							//This is for choosing to build house on a square
-							Property.buildHouses(currentPlayer);				
-						case 3:
-							//This is for buying a property
-							Transactions.playerToPlayerTrade(currentPlayer); 
-						case 4: 
-							
-							Property propToMortgage=InputOutput.propertyInput(currentPlayer, "Mortgage");
-							
-							if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
-								if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
-									//restart pre-dice roll options
-									continue;
-								}
-								break;
-							}
-							//This is for mortgaging a property
-							//Need to search for the index and then mortgage it using the below
-							propToMortgage.mortgage(currentPlayer);
-						default:
-							System.out.println("Your input did not correspond to any provided actions");
-							break;
-					}
+					InputOutput.handleUserOption(currentPlayer, doubleRoll);
 					//check if they are finished before rolling dice
 					if(InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
 						continue;
 					}
-					else{
-						break;
-					}
+					
 					//Roll the dice regardless after they have done all of their things
 					//This will hopefully update the dice roll and allow it to see if a double has been rolled
 					//this will both roll the dice and check if a double has been rolled
@@ -98,29 +60,38 @@ public class Game {
 					if(doubleRoll) {
 						Dice.incrementDuplicateRollCounter();
 					}
+					else {
+						doubleRoll= false;
+					}
+					//condition for jail
 					if(Dice.getDuplicateRollCounter()==3) {
 						currentPlayer.goToJail();
 						Dice.resetDuplicateRollCounter();
 						break;
 					}
+					
 					currentPlayer.movePlayer(Dice.getDieVals());
 					//Checks will implement everything in there that is needed such as working on special squares etc or going to jail
 					//It needs to see what square it has to know what to do next 
 					//FIXME We could have a switch statement and the checksquare returns a value to the main
-					Checks.checkSquare(currentPlayer.getLocation());
+					//Checks.checkSquare(currentPlayer.getLocation());
 					
 					//Need to implement an input function which will take a parameter of whether they are allowed to rollDice again or not and then the switch statement
 					// will change as a result
-					System.out.println("Are you done with your turn?[Y/N]");
-					String finishedInput = input.next();
-					//If asked to finish and didnt rol double, break
-					if(finishedInput.toLowerCase() == "y" && !(doubleRoll)) {
+					
+			
+					//If asked to finish and didnt roll double, break
+					while(!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer)) {
+						System.out.println("Here!");
+						InputOutput.handleUserOption(currentPlayer, doubleRoll);
+					}
+					if(doubleRoll) {
 						break;
 					}
-					//else if((finishedInput.toLowerCase() == "n") &&!(doubleRoll)) {
 					else {
 						continue;
 					}
+					
 				}	
 			}
 			//You can build at any time on whatever square

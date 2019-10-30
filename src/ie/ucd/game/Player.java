@@ -234,15 +234,15 @@ public class Player {
 		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		while(true) {
+	
 			System.out.println("How many players will be playing the game(In range 2-6)?");
-			int numPlayers = scanner.nextInt();
+			int numPlayers = InputOutput.integerMenu(2, 6);
 			System.out.println("You have specified "+numPlayers+" players to play the game");
 			//Get the players to be entered by the user -> Have a loop that asks for that number of players.
 			if(numPlayers >= 2 && numPlayers <= 6) {
 				for(int i=0; i < numPlayers; i++) {
 					String line;
-					String[] lineVector;
+					String[] lineVector = new String[2];
 					String name, token;
 					while(true) {
 						System.out.println("Please enter the relevant details for each player in the format below");
@@ -267,14 +267,9 @@ public class Player {
 						}
 					}
 				}
-				//When got through all of the players, break the infinite loop
-				break;
 			}
-			else {
-				System.out.println("Please enter a number of players between 2 and 6!");
-				continue;
-			}
-		}
+			
+		
 		//Inside of the main, we will return this list of players
 		return listPlayers;
 	}
