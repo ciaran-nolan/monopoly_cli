@@ -120,6 +120,29 @@ public class Checks {
 		return true;
 	}
 	
+	public static int checkHouseHotelValue(Player player) {
+		int valOfHousesHotels = 0;
+		
+		for(CanOwn currentOwnable: player.getPropertyList()) {
+			//only analyse the type property
+			if(currentOwnable instanceof Property) {
+				valOfHousesHotels += ((((Property) currentOwnable).getHousePrice()*((Property) currentOwnable).getNumHouses())/2);
+				valOfHousesHotels += ((((Property) currentOwnable).getHousePrice()*((Property) currentOwnable).getNumHotels()*5)/2);
+			}
+		}
+		return valOfHousesHotels;
+	}
+	
+	public static int checkMortgagingValue(Player player) {
+		int mortgageValue = 0;
+		
+		for(CanOwn currentOwnable: player.getPropertyList()) {
+			//only analyse the type property
+				mortgageValue += (currentOwnable.getPrice()/2);
+		}
+		return mortgageValue;
+	}
+	
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
@@ -137,14 +160,14 @@ public class Checks {
 				}
 				totalValue+= ownable.getPrice();
 				valueArray.add(totalValue);
-				System.out.println("Player: "+player.getName()+" has Total Asset value of €"+totalValue);
+				System.out.println("Player: "+player.getName()+" has Total Asset value of ï¿½"+totalValue);
 			}
 			//Zero the local variable for use with next player
 			totalValue=0;
 		}
 		maxValue = Collections.max(valueArray);
 		maxIndex = valueArray.indexOf(maxValue);
-		System.out.println("The richest player and winner of the game is: "+(Game.playerList.get(maxIndex).getName()+" with a Total Asset Value of €"+maxValue));
+		System.out.println("The richest player and winner of the game is: "+(Game.playerList.get(maxIndex).getName()+" with a Total Asset Value of ï¿½"+maxValue));
 		System.out.println("The game has been won! It is now over");
 		System.exit(1);
 	}

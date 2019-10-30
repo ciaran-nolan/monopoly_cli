@@ -177,7 +177,7 @@ public class Property extends CanOwn {
 		//If there are four houses, they have reached the max number. Offer to purchase a hotel
 		else if(propToBuild.numHouses==4) {
 			if(InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
-				buildHouses(player);
+				buildHousesHotels(player);
 			}
 		}
 		//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses

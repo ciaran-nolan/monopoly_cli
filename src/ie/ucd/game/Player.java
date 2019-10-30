@@ -422,19 +422,76 @@ public class Player {
 
 	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
 	//the reduceMoney() function
+	public void bankruptcyMortgage(int moneyNeedToRaise) {
+		for(CanOwn ownable:this.propertyList) {
+			ownable.mortgage(this);
+			if(this.money - moneyNeedToRaise > 0) {
+				//exit the method as soon as the limit has been reached
+				return;
+			}
+		}
+	}
+	
+	public void bankruptcySellHousesHotels(int moneyNeedToRaise) {
+		for(CanOwn ownable:this.propertyList) {
+			if(ownable instanceof Property) {
+				this.addMoney(((Property)ownable).sellHouses(this,false,true)); //FIXME confirm parameters
+				this.addMoney(((Property)ownable).sellHotels(this,false,true));
+			}
+			//If they have raised sufficient money from sellingHouses
+			if(this.money - moneyNeedToRaise > 0) {
+				return;
+			}
+		}
+	}
 	
 	public boolean saveFromBankruptcy(int moneyNeedToRaise) {
+		boolean mustSellHouseHotels=false;
+		boolean mustMortgage=false;
+		
+		int valOfHouseHotels = Checks.checkHouseHotelValue(this);
+		if(valOfHouseHotels > moneyNeedToRaise) mustSellHouseHotels = true;
+		
+		int valOfMortgage = Checks.checkMortgagingValue(this);
+		if (valOfHouseHotels + valOfMortgage > moneyNeedToRaise) mustMortgage = true;
+		
+		if(mustSellHouseHotels) {
+			bankruptcySellHousesHotels(moneyNeedToRaise);
+			return true;
+		}
+			
+		else if(mustMortgage) {
+			bankruptcySellHousesHotels(moneyNeedToRaise);
+			bankruptcyMortgage(moneyNeedToRaise);
+			return true;
+		}
+		else {
+			//FIXME
+			for(CanOwn ownable:this.propertyList) {
+				ownable.playerAuction();
+				//if property
+				valOfMortgage = Checks.checkMortgagingValue(this);
+				
+				if((this.money + valOfHouseHotels + valOfMortgage) - moneyNeedToRaise > 0) {
+					bankruptcySellHousesHotels(moneyNeedToRaise);
+					bankruptcyMortgage(moneyNeedToRaise);
+					return true;
+				}
+			}
+			
+			return false;
+		}
+	}
 		//Need to check if I can raise money by any method......
 		//I also need to continually check that the money raised is larger than the money to be paid
-		while(true) {
+		/*while(true) {
 			//Need to sell off all of the things in here
 			if(this.propertyList.size() > 0) {
 				//Step 1: Sell off the houses and hotels
-				int valOfHouseHotels = Checks.checkHouseHotelValue(this);
+				
 				if(valOfHouseHotels > moneyNeedToRaise) {
 					for(CanOwn ownable:this.propertyList) {
 						if(ownable instanceof Property) {
-						
 							this.addMoney(((Property)ownable).sellHouses(this,false,true)); //FIXME confirm parameters
 							this.addMoney(((Property)ownable).sellHotels(this,false,true));
 						}
@@ -445,19 +502,10 @@ public class Player {
 					}
 				}
 				//Step 2: Mortgage the properties
-				for(CanOwn ownable:this.propertyList) {
-					ownable.mortgage(this);
-					if(this.money - moneyNeedToRaise > 0) {
-						break;
-					}
-				}
+				
+				
 				//Step 3: Sell off some properties
-				for(CanOwn ownable:this.propertyList) {
-					ownable.playerAuction();
-					if(this.money - moneyNeedToRaise > 0) {
-						break;
-					}
-				}
+				
 				return false;
 			}
 			//They own no physical assets and so cannot raise any money
@@ -466,7 +514,7 @@ public class Player {
 			}
 		}
 		return true;
-	}
+	}*/
 	
 	//method to initiate a player to player transaction
 
