@@ -84,7 +84,7 @@ public class InputOutput {
 				propToMortgage.mortgage(currentPlayer);
 			case 2:
 				//This is for choosing to build house on a square
-				Property.buildHouses(currentPlayer);				
+				Property.buildHousesHotels(currentPlayer);				
 			case 3:
 				//This is for buying a property
 				Transactions.playerToPlayerTrade(currentPlayer); 

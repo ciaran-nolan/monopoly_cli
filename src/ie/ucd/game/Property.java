@@ -91,7 +91,7 @@ public class Property extends CanOwn {
 		}
 	}
 	
-	public static void buildHouses(Player player) {
+	public static void buildHousesHotels(Player player) {
 		Scanner input = new Scanner(System.in);
 		boolean isHotel = false;
 		
@@ -101,32 +101,24 @@ public class Property extends CanOwn {
 		
 		if(null==propToBuild) {
 			if(InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player)){
-				buildHouses(player);
+				buildHousesHotels(player);
 			}
 			else return;
 		}
 		else if(!(Checks.isPlayerOwner((CanOwn) propToBuild, player))){
 			if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)){
 				//restart pre-dice roll options
-				buildHouses(player);
+				buildHousesHotels(player);
 			}
 			else return;
 		}
 		
 		else {
 			System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
-			choiceInput = input.nextInt();
-			while(choiceInput!=0||choiceInput!=1) {
-				System.out.println(currentPlayer.getName()+" please enter a valid response.\n0 for houses\n1 for hotels");
-				choiceInput=input.nextInt();
+			int choiceInput =  InputOutput.integerMenu(0, 1);
+			if(choiceInput==1) {
+				isHotel=true;
 			}
-			if(choiceInput==0) {
-				propToBuild.buildHouses(currentPlayer, false);
-			}
-			else {
-				propToBuild.buildHouses(currentPlayer, false);
-			}
-			break;
 		}
 		
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, propToBuild);

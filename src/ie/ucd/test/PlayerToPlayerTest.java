@@ -35,7 +35,7 @@ public class PlayerToPlayerTest {
 		 properties.get(0).buy(p1);
 		 properties.get(1).buy(p2);
 		 
-		 Transactions.playerToPlayerTransaction(p1);
+		 Transactions.playerToPlayerTrade(p1);
 		 
 	}
 }

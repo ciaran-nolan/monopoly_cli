@@ -1,4 +1,4 @@
-package ie.ucd.game;
+package ie.ucd.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ public class AuctionTest {
 	plist.add(p1);
 	plist.add(p2);
 	plist.add(p3);
-	p1.reduceMoney(1490);
-	p3.reduceMoney(1000);
+	p1.reduceMoney(1490, null);
+	p3.reduceMoney(1000, null);
 	 
-	 properties.get(1).buy(p1, plist);
+	 properties.get(1).buy(p1);
 	 if(p2.getPropertyList().get(0) instanceof Property) {
 		 System.out.println(((Property) p2.getPropertyList().get(0)).getSquareColour());	 
 	 }

@@ -430,15 +430,18 @@ public class Player {
 			//Need to sell off all of the things in here
 			if(this.propertyList.size() > 0) {
 				//Step 1: Sell off the houses and hotels
-		
-				for(CanOwn ownable:this.propertyList) {
-					if(ownable instanceof Property) {
-						this.addMoney(((Property)ownable).sellHouses()); //FIXME confirm parameters
-						this.addMoney(((Property)ownable).sellHotels());
-					}
-					//If they have raised sufficient money from sellingHouses
-					if(this.money - moneyNeedToRaise > 0) {
-						break;
+				int valOfHouseHotels = Checks.checkHouseHotelValue(this);
+				if(valOfHouseHotels > moneyNeedToRaise) {
+					for(CanOwn ownable:this.propertyList) {
+						if(ownable instanceof Property) {
+						
+							this.addMoney(((Property)ownable).sellHouses(this,false,true)); //FIXME confirm parameters
+							this.addMoney(((Property)ownable).sellHotels(this,false,true));
+						}
+						//If they have raised sufficient money from sellingHouses
+						if(this.money - moneyNeedToRaise > 0) {
+							break;
+						}
 					}
 				}
 				//Step 2: Mortgage the properties
