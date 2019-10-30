@@ -23,4 +23,10 @@ public class Train extends PublicSquare {
 		
 	}
 
+	@Override
+	public void buy(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

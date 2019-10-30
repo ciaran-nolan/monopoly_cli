@@ -103,7 +103,7 @@ public class Transactions {
 					return;
 				case "1":
 					if(tradeList.get(i).getJailFreeNum()==0) {
-						if(Checks.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
+						if(InputOutput.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
 							continue;
 						}
 						else{
@@ -113,7 +113,7 @@ public class Transactions {
 					}
 					else {
 						if(tradeList.get(i).getJailFreeNum()==tempJail) {
-							if(Checks.yesNoInput("You do not have any more get out of jail free cards to add to your trade.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
+							if(InputOutput.yesNoInput("You do not have any more get out of jail free cards to add to your trade.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
 								continue;
 							}
 							else {
@@ -131,7 +131,7 @@ public class Transactions {
 					transactionChoice = input.nextLine();
 					Property propToTrade = Checks.isValidProp(transactionChoice,  tradeList.get(i));
 					if(null==propToTrade){
-						if(Checks.yesNoInput("The property you have entered is either invalid or not owned by you. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+						if(InputOutput.yesNoInput("The property you have entered is either invalid or not owned by you. Would you like to trade something else? (y/n)", tradeList.get(i))) {
 							continue;
 						}
 						else {
@@ -140,7 +140,7 @@ public class Transactions {
 						}
 					}
 					else if(tempPropsToTrade.containsKey(propToTrade.getName())){
-							if(Checks.yesNoInput("The property you have entered is already in your list of items to trade. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+							if(InputOutput.yesNoInput("The property you have entered is already in your list of items to trade. Would you like to trade something else? (y/n)", tradeList.get(i))) {
 								continue;
 							}
 							else {
@@ -156,7 +156,7 @@ public class Transactions {
 					System.out.println("Please specify the amount of cash you would like to include in this trade:");
 					int cashToTrade = input.nextInt();
 					if(cashToTrade>tradeList.get(i).getMoney()) {
-						if(Checks.yesNoInput("You have specified more cash than you currently have. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+						if(InputOutput.yesNoInput("You have specified more cash than you currently have. Would you like to trade something else? (y/n)", tradeList.get(i))) {
 							continue;
 						}
 						else {
@@ -171,7 +171,7 @@ public class Transactions {
 				}
 				
 				if(finishedTrade==false) {
-					if(Checks.yesNoInput(tradeList.get(i).getName()+" are you finished making your trade? (y/n)", tradeList.get(i))) {
+					if(InputOutput.yesNoInput(tradeList.get(i).getName()+" are you finished making your trade? (y/n)", tradeList.get(i))) {
 						if(i==0) {
 							traderOneCash=tempCash;
 							traderOneJailFree=tempJail;
@@ -190,8 +190,8 @@ public class Transactions {
 	
 		displayTradeItems();
 		//Trade Acceptance
-		if(Checks.yesNoInput(tradeList.get(0).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(0)) 
-				&& Checks.yesNoInput(tradeList.get(1).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(1))) {
+		if(InputOutput.yesNoInput(tradeList.get(0).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(0)) 
+				&& InputOutput.yesNoInput(tradeList.get(1).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(1))) {
 			exchangeTradeItems();
 		}
 		else {

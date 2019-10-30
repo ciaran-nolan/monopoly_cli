@@ -88,7 +88,7 @@ public abstract class CanOwn extends Square {
 				}
 				
 				//user has indicated intention to bid
-				if(Checks.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getName()+"? (y/n)"), biddingPlayers.get(i))) {
+				if(InputOutput.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getName()+"? (y/n)"), biddingPlayers.get(i))) {
 					//prompt user to enter a bid
 					System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 					
@@ -109,7 +109,7 @@ public abstract class CanOwn extends Square {
 						}
 						
 						//check if user has confirmed intention to bid again
-						if(Checks.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
+						if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
 							System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 							//read in new bid
 							temporaryBid = auctionScanner.nextInt();

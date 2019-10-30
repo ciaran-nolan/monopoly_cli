@@ -184,14 +184,14 @@ public class Property extends CanOwn {
 		
 		//If there are four houses, they have reached the max number. Offer to purchase a hotel
 		else if(propToBuild.numHouses==4) {
-			if(Checks.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
-				buildHouses(player,propToBuild, true);
+			if(InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
+				buildHouses(player);
 			}
 		}
 		//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses
 		else if(Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
 			// y/n input to confirm intention to build house
-			if(Checks.yesNoInput("Please confirm you wish to purchase a house for "+propToBuild.getName()+" (y/n)", player)) {
+			if(InputOutput.yesNoInput("Please confirm you wish to purchase a house for "+propToBuild.getName()+" (y/n)", player)) {
 				if (propToBuild.getHousePrice()>player.getMoney()) {
 					System.err.println("You cannot afford to purchase a house");
 				}
@@ -246,7 +246,7 @@ public class Property extends CanOwn {
 			System.out.println(colourGroup.get(i).getName()+": "+colourGroup.get(i).getNumHouses()+"\n");
 		}
 			//check if they would like to sell another house
-		if(Checks.yesNoInput("Would you like to sell another house? (y/n)", player)){
+		if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player)){
 			sellHouses(player, false, false);
 		}
 		return this.housePrice/2;
@@ -281,7 +281,7 @@ public class Property extends CanOwn {
 		//first check if there is enough houses to break the hotel down into houses
 		else if(Game.getRemainingHouses()<4) {
 			System.out.println("There are insufficeint houses "+Game.getRemainingHouses()+" to exchange your hotel. In order to sell this hotel directly, all housese/hotels in this colour group will be sold.");
-			if(Checks.yesNoInput("Would you like to proceed (y/n)", player)) {
+			if(InputOutput.yesNoInput("Would you like to proceed (y/n)", player)) {
 				//sell all hotels directly 
 				return (sellHotels(player, true, false)+this.sellHouses(player, true,false));
 			}
