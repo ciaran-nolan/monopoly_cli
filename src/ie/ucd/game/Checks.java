@@ -9,6 +9,45 @@ import ie.ucd.game.*;
 
 public class Checks {
 	
+	public static void checkSquare(Square currentSquare, Player player) {
+		//Square currentSquare = BoardReader.board.get(index);
+		
+		switch(currentSquare.getSquareType()) {
+		case PROPERTY:
+			if(((Property)currentSquare).getOwner().equals(null)){
+				((Property)currentSquare).buy(player);
+			}
+			else {
+				player.payRent((CanOwn)currentSquare);
+			}
+			break;
+		case SPECIAL:
+			((Special)currentSquare).implementSpecialSquare(player);
+			break;
+		case TRAIN:
+			if(((Train)currentSquare).getOwner().equals(null)){
+				((Train)currentSquare).buy(player);
+			}
+			//FIXME Type mismatch, can't pay rent for train or utility as input expects type CanOwn
+			else {
+				player.payRent((CanOwn)currentSquare);
+			}
+			
+			break;
+		case UTILITY:
+			if(((Utility)currentSquare).getOwner().equals(null)){
+				((Utility)currentSquare).buy(player);
+			}
+			//FIXME Type mismatch, cant pay rent for train or utility as input expects type CanOwn
+			else {
+				player.payRent((CanOwn)currentSquare);
+			}
+			break;
+		default:
+			break;	
+		}
+	}
+	
 	public static boolean enoughFunds(Player player, int price) {
 		if(player.getMoney() < price) {
 			return false;
