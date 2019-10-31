@@ -34,11 +34,15 @@ public class InputOutput {
 	}
 	
 	public static int integerMenu(int lowerBound, int upperBound){
-		int choiceInput = Integer.parseInt(input.nextLine());
-		while(!(choiceInput >= lowerBound && choiceInput <= upperBound)) {
+		int choiceInput = 0;
+		do{
 			System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound);
-			choiceInput = Integer.parseInt(input.nextLine());
-		}
+			while(!input.hasNextInt()) {
+				System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound);
+				input.nextLine();
+			}
+			choiceInput = input.nextInt();
+		}while(!(choiceInput >= lowerBound && choiceInput <= upperBound));
 		
 		return choiceInput;
 	}

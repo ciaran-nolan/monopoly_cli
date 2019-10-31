@@ -25,12 +25,13 @@ public class BoardReader {
 	public static ArrayList<Chance> chances = new ArrayList<Chance>();
 	public static ArrayList<Train> trains = new ArrayList<Train>(2);
 	public static ArrayList<Square> board = new ArrayList<Square>(Collections.nCopies(40, null));
-	private static Properties prop = new Properties();
+	
 	
 	
 	
     public static void readProperties() throws FileNotFoundException { 	
     	try {
+    		Properties prop = new Properties();
     		//define properties list to hold the .properties file
     		
     		//define the location of the prop file
@@ -46,12 +47,15 @@ public class BoardReader {
 			}
     	//recursively loop to organize all property date into respective class variables and place them in an array list
     	for(int i=0; i<=21; i++) {
+    		
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Property temp = new Property(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("squareColour"+i)),prop.getProperty(("title"+i)),Integer.parseInt((prop.getProperty(("priceBuy"+i)))),rentIntArray, Integer.parseInt(prop.getProperty(("housePrice"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))));
     		properties.add(temp);
     		board.set(temp.getLocation(),temp);
+    		
     	}
-    
+    	
+    	inputStream.close();
     	} 
     	catch (Exception e) {
     		System.out.println("Exception: " + e);
@@ -60,22 +64,24 @@ public class BoardReader {
     
     public static void readUtilities() throws FileNotFoundException {
     	try {
-    		
+    		Properties utilProp = new Properties();
     		String propFileName = "ie/ucd/gameConfigurations/utilities.properties";
     		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
-				prop.load(inputStream);
+    			utilProp.load(inputStream);
+				
 			} else {
 				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
 			}
     	
-    	for(int i=0; i<=3; i++) {
-    		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
-    		utilities.add(temp);  
+    	for(int i=0; i<=1; i++) {
+    		int[] rentIntArray = Arrays.stream(utilProp.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
+    		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))), Integer.parseInt(utilProp.getProperty(("priceBuy"+i))), Integer.parseInt(utilProp.getProperty(("mortgage"+i))), rentIntArray, null);    	
+    		utilities.add(temp);
     		board.set(temp.getLocation(),temp);
     	}
+    	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
@@ -83,6 +89,7 @@ public class BoardReader {
     
     public static void readSpecialSquares() throws FileNotFoundException{
     	try {
+    		Properties prop = new Properties();
     		//define properties list to hold properties file  
     		
     		//location of prop file
@@ -96,8 +103,9 @@ public class BoardReader {
 			}
     	
     	for(int i=0; i<=11; i++) {
-    		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("squareType"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
+    		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("type"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
     		specials.add(temp);  
+    		System.out.println("Type:"+temp.getType());
     		board.set(temp.getLocation(),temp);
     	}
     	
@@ -109,6 +117,7 @@ public class BoardReader {
     
     public static void readCommunityChests() throws FileNotFoundException {
     	try {
+    		Properties prop = new Properties();
     		//define properties list to hold properties file  
     		
     		//location of prop file
@@ -126,7 +135,8 @@ public class BoardReader {
     		CommunityChest temp = new CommunityChest(prop.getProperty(("type"+i)),prop.getProperty(("card"+i)),Integer.parseInt(prop.getProperty(("value"+i))));
     		communityChests.add(temp);
     	}
-    	Collections.shuffle(communityChests); 
+    	Collections.shuffle(communityChests);
+    	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
@@ -134,6 +144,7 @@ public class BoardReader {
     
     public static void readChances() throws FileNotFoundException {
     	try {
+    		Properties prop = new Properties();
     		//define properties list to hold properties file  
     		
     		//location of prop file
@@ -151,6 +162,7 @@ public class BoardReader {
     		chances.add(temp);
     	}
     	Collections.shuffle(chances);
+    
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
@@ -158,26 +170,32 @@ public class BoardReader {
    
     public static void readTrains() throws FileNotFoundException{
     	try {
-    		
-    		String propFileName = "ie/ucd/gameConfigurations/train.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
+    		Properties prop = new Properties();
+    		String trainFileName = "ie/ucd/gameConfigurations/train.properties";
+    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(trainFileName);
+    		System.out.println(trainFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
 			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+				throw new FileNotFoundException("property file '" + trainFileName + "' not found in the classpath");
 			}
     	
-    	for(int i=0; i<=1; i++) {
+    	for(int i=0; i<=3; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
     		trains.add(temp);   
-    		board.add(temp.getLocation(),temp);
+    		board.set(temp.getLocation(),temp);
+    		//System.out.println(board.get(temp.getLocation()).getName());
     	}
     	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
+    }
+    
+    public static void initialiseChanceComChestSquares() {
+    	
     }
     public static void initialiseBoard() {
 		try {
@@ -187,12 +205,19 @@ public class BoardReader {
 			readCommunityChests();
 			readChances();
 			readTrains();
+			outputBoard();
 		}catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     	
 		
 	}
+    
+    public static void outputBoard() {
+    	for(int i=0;i<board.size();i++) {
+    		System.out.println(board.get(i).getName());
+    	}
+    }
     
     public static ArrayList<Utility> getUtilities(){
     	return utilities;
