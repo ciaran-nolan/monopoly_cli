@@ -9,12 +9,12 @@ import ie.ucd.game.*;
 
 public class Checks {
 	
-	public static void checkSquare(Square currentSquare, Player player) {
-		//Square currentSquare = BoardReader.board.get(index);
+	public static void checkSquare(int index, Player player) {
+		Square currentSquare = BoardReader.board.get(index);
 		
 		switch(currentSquare.getSquareType()) {
 		case PROPERTY:
-			if(((Property)currentSquare).getOwner().equals(null)){
+			if(null==((Property)currentSquare).getOwner()){
 				((Property)currentSquare).buy(player);
 			}
 			else {
@@ -25,7 +25,7 @@ public class Checks {
 			((Special)currentSquare).implementSpecialSquare(player);
 			break;
 		case TRAIN:
-			if(((Train)currentSquare).getOwner().equals(null)){
+			if(null==((Train)currentSquare).getOwner()){
 				((Train)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, can't pay rent for train or utility as input expects type CanOwn
@@ -35,7 +35,7 @@ public class Checks {
 			
 			break;
 		case UTILITY:
-			if(((Utility)currentSquare).getOwner().equals(null)){
+			if(null==((Utility)currentSquare).getOwner()){
 				((Utility)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, cant pay rent for train or utility as input expects type CanOwn

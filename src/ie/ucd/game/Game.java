@@ -37,6 +37,7 @@ public class Game {
 		//We will loop through the board arraylist which is listed at 
 		//BoardReader.board
 		playerList = Player.createListPlayers();
+		BoardReader.initialiseBoard();
 		
 		while(numPlayersBankrupt < 2) {
 			//This is the loop that consistently loop through the players of the game
@@ -74,7 +75,7 @@ public class Game {
 					//Checks will implement everything in there that is needed such as working on special squares etc or going to jail
 					//It needs to see what square it has to know what to do next 
 					//FIXME We could have a switch statement and the checksquare returns a value to the main
-					//Checks.checkSquare(currentPlayer.getLocation());
+					Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
 					
 					//Need to implement an input function which will take a parameter of whether they are allowed to rollDice again or not and then the switch statement
 					// will change as a result

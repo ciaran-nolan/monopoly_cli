@@ -27,6 +27,8 @@ public class BoardReader {
 	public static ArrayList<Square> board = new ArrayList<Square>(Collections.nCopies(40, null));
 	private static Properties prop = new Properties();
 	
+	
+	
     public static void readProperties() throws FileNotFoundException { 	
     	try {
     		//define properties list to hold the .properties file
@@ -177,6 +179,20 @@ public class BoardReader {
 			System.out.println("Exception: " + e);
 			}
     }
+    public static void initialiseBoard() {
+		try {
+			readProperties();
+			readUtilities();
+			readSpecialSquares();
+			readCommunityChests();
+			readChances();
+			readTrains();
+		}catch (Exception e) {
+			System.out.println("Exception: " + e);
+			}
+    	
+		
+	}
     
     public static ArrayList<Utility> getUtilities(){
     	return utilities;
