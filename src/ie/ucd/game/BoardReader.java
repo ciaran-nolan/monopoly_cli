@@ -105,7 +105,6 @@ public class BoardReader {
     	for(int i=0; i<=11; i++) {
     		Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("type"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
     		specials.add(temp);  
-    		System.out.println("Type:"+temp.getType());
     		board.set(temp.getLocation(),temp);
     	}
     	
@@ -205,7 +204,6 @@ public class BoardReader {
 			readCommunityChests();
 			readChances();
 			readTrains();
-			outputBoard();
 		}catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}

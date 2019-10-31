@@ -14,9 +14,11 @@ public class CommunityChest extends Card {
 	
 	public void dealWithCard(Player player1) {
 		//From here I need to deal with a card produced from a deck of cards
+		System.out.println(this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
 				player1.setLocation(this.getCardValue());
+				Checks.checkSquare(player1.getLocation(), player1);
 				if(this.getCardValue() == 0) { 
 					player1.addMoney(200); //Add money as the user has gone to GO
 				}

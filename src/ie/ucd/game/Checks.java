@@ -47,6 +47,12 @@ public class Checks {
 			break;	
 		}
 	}
+	public static boolean hasPassedGo(int startIndex, int endIndex) {
+		if(startIndex>endIndex) {
+			return true;
+		}
+		return false;
+	}
 	
 	public static boolean enoughFunds(Player player, int price) {
 		if(player.getMoney() < price) {
