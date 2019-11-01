@@ -12,7 +12,7 @@ public class Player {
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
 	private boolean inJail = false; //If they are in jail or not
 	private ArrayList<Card> jailCards = new ArrayList<Card>();
-	//FIXME CONSIDER Perhaps a card Array to show what cards you have
+
 	
 	public Player(String name, String token) {
 		this.name = name;
@@ -234,7 +234,6 @@ public class Player {
 		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-	
 			System.out.println("How many players will be playing the game(In range 2-6)?");
 			int numPlayers = InputOutput.integerMenu(2, 6);
 			System.out.println("You have specified "+numPlayers+" players to play the game");
@@ -245,15 +244,21 @@ public class Player {
 					String[] lineVector = new String[2];
 					String name, token;
 					while(true) {
-						System.out.println("Please enter the relevant details for each player in the format below");
-						System.out.println("Name, Token");
-						System.out.println("Token must be one of the following: "+tokenList);
+						System.out.println("Please enter the relevant details for each player in the format below:");
+						System.out.println("\t\t\tName, Token");
+						System.out.println("Token picked must be one of the following: "+tokenList+
+								"\n----------------------------------------------------------------");
 						line = scanner.nextLine();
+						//Trim the whitespace first before splitting
 						lineVector = line.split(",");
-						name = lineVector[0];
-						token = lineVector[1];
+						name = lineVector[0].trim();
+						token = lineVector[1].trim();
 						if(!tokenList.contains(token)) {
-							System.out.println("Token not part of list. Enter details of Player again.");
+							System.err.println("Token not part of list. Enter details of Player again!");
+							continue;
+						}
+						else if(name.length() == 0 ){
+							System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
 							continue;
 						}
 						else {

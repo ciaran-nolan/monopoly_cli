@@ -35,16 +35,16 @@ public class InputOutput {
 	
 	public static int integerMenu(int lowerBound, int upperBound){
 		int choiceInput = 0;
-		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound);
+		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 
 		do{
 			while(!input.hasNextInt()) {
-				System.out.println("Please enter a valid integer between "+lowerBound+" and "+upperBound);
+				System.out.println("Please enter a valid integer between "+lowerBound+" and "+upperBound+":");
 				input.next();
 			}
 			choiceInput = input.nextInt();
 			if(!(choiceInput >= lowerBound && choiceInput <= upperBound)) {
-				System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound);
+				System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 			}
 		}while(!(choiceInput >= lowerBound && choiceInput <= upperBound));
 		
@@ -52,7 +52,7 @@ public class InputOutput {
 	}
 	
 	public static Property propertyInput(Player player, String propAction) {
-		System.out.println("Please enter the name of the poperty you wish to "+ propAction);
+		System.out.println("Please enter the name of the property you wish to "+ propAction);
 		String propName = input.nextLine();
 		Property property = Checks.isValidProp(propName, player);
 		if(null==property) {
@@ -67,12 +67,16 @@ public class InputOutput {
 	}
 	
 	public static void handleUserOption(Player currentPlayer,boolean doubleRoll) {
-		System.out.println(currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
-		System.out.print("1: Mortgage a property / 2: Build Houses/Hotels on Square / "
-		+"3: Buy/Sell Properties or Cards with other players");
+		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
+		System.out.println("----------------------------------------------------------------\n" +
+						"|\t1: Mortgage a property\n" +
+						"|\t2: Build Houses/Hotels on Square\n" +
+						"|\t3: Buy/Sell Properties or Cards with other players");
 		
-		if(doubleRoll) System.out.println(" 4: Roll Dice /");
-		else System.out.println(" 4: Exit /");
+		if(doubleRoll) System.out.println("|\t4: Roll Dice\n"+
+				"----------------------------------------------------------------\n");
+		else System.out.println("|\t4: Exit\n"+
+				"----------------------------------------------------------------\n");
 			
 		
 		int choiceInput = InputOutput.integerMenu(1, 4);
