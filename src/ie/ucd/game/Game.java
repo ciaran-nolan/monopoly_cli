@@ -49,9 +49,7 @@ public class Game {
 					//This is where to get a correct input from the user
 					InputOutput.handleUserOption(currentPlayer, doubleRoll);
 					//check if they are finished before rolling dice
-					if(InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
-						continue;
-					}
+
 					
 					//Roll the dice regardless after they have done all of their things
 					//This will hopefully update the dice roll and allow it to see if a double has been rolled

@@ -9,7 +9,7 @@ public class Chance extends Card {
 	
 	public void dealWithCard(Player player) {
 		//From here I need to deal with a card produced from a deck of cards
-		System.out.println("Chance");
+
 		ArrayList<CanOwn> propertyList = player.getPropertyList();
 		System.out.println(this.getCardDesc());
 		switch(this.getCardType()) {

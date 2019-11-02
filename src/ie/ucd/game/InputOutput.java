@@ -103,17 +103,23 @@ public class InputOutput {
 				//This is for mortgaging a property
 				//Need to search for the index and then mortgage it using the below
 				propToMortgage.mortgage(currentPlayer);
+				break;
 			case 2:
 				//This is for choosing to build house on a square
-				Property.buildHousesHotels(currentPlayer);				
+				Property.buildHousesHotels(currentPlayer);
+				break;
 			case 3:
 				//This is for buying a property
-				Transactions.playerToPlayerTrade(currentPlayer); 
+				Transactions.playerToPlayerTrade(currentPlayer);
+				break;
 			case 4: 
 				 break;
 			default:
 				System.out.println("Your input did not correspond to any provided actions");
 				break;
+		}
+		if((choiceInput<4) && doubleRoll && InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
+			handleUserOption(currentPlayer, true);
 		}
 	}
 }

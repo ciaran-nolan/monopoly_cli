@@ -154,22 +154,19 @@ public abstract class CanOwn extends Square {
 	
 	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
 	
-	public void mortgage(Player player1) {
-		if (this.getOwner() == player1) {
-			ArrayList<CanOwn> propertyList = owner.getPropertyList(); //I can now check if they own this property 
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);
+	public void mortgage(Player player) {
+		if (this.getOwner() == player) {
+			ArrayList<CanOwn> propertyList = owner.getPropertyList(); //I can now check if they own this property
 			if(this instanceof Property) {
 				if(((Property)this).getNumHouses() == 0 && ((Property)this).getNumHotels() == 0) {
-					System.out.println("This property is unimproved: "+this.getName());
-					System.out.println("Would you still like to mortgage this property? [Y/N]");
-					String mortgageAnswer = scanner.nextLine().toLowerCase();
-					if(mortgageAnswer == "y" && this.mortgaged == false) {
+					if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n))", player)) {
 						this.mortgaged = true;
+						player.addMoney(this.getMortgage());
+						System.out.println("Successfully mortgaged "+this.getName()+"\nCurrent Funds: £"+player.getMoney());
 					}
 					else {
 						System.out.println("You have chosen not to mortgage this property or there is already a mortgage on it!");
-						this.mortgaged = false;
+						this.mortgaged = false; //FIXME why is this set to false if there is already a mortgage potentially on it?
 					}
 				}
 				else {
@@ -178,8 +175,8 @@ public abstract class CanOwn extends Square {
 					//Go through property list. Get the colour of the property and sell all of them from there
 					//sellHouses(numHouses.getNumHouses, Player player1)
 					//To mortgage it first, you must sell the houses
-					((Property)this).sellHouses(player1, true, false);
-					((Property)this).sellHotels(player1, true, false);
+					((Property)this).sellHouses(player, true, false);
+					((Property)this).sellHotels(player, true, false);
 					//Once all of the houses and hotels are sold on each site, you will need to 
 					this.mortgaged = true;
 				}

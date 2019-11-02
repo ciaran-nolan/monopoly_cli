@@ -35,7 +35,7 @@ public class Special extends Square {
 	//the dealWithCard(Player) function from which a card can be produced from the deck
 	// and then used to perform a function
 	public void implementSpecialSquare(Player player) {
-		System.out.println("Special"+this.type);
+
 		switch(this.type) {
 			case "TAX":
 				System.out.println("You must pay tax of "+"£"+this.value);
@@ -48,17 +48,14 @@ public class Special extends Square {
 				player.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
-				System.out.println("Com Chest");
 				player.pickCommChestCard();
 				break;
 			case "CHANCE":
-				System.out.println("Chance");
 				player.pickChanceCard();
 				break;
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
-				System.out.println("Jail");
 				player.goToJail();
 				break; //FIXME Will need to be looking at the chance and community cards also
 		}
