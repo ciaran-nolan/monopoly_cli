@@ -70,26 +70,27 @@ public class Game {
 						Dice.resetDuplicateRollCounter();
 						break;
 					}
-					
+
 					currentPlayer.movePlayer(Dice.getDieVals());
 					//Checks will implement everything in there that is needed such as working on special squares etc or going to jail
-					//It needs to see what square it has to know what to do next 
+					//It needs to see what square it has to know what to do next
 					//FIXME We could have a switch statement and the checksquare returns a value to the main
+					InputOutput.squareInformation(currentPlayer.getLocation());
 					Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
-					
+
 					//Need to implement an input function which will take a parameter of whether they are allowed to rollDice again or not and then the switch statement
 					// will change as a result
 					
 			
 					//If asked to finish and didnt roll double, break
 					while(!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer)) {
-						System.out.println("Here!");
 						InputOutput.handleUserOption(currentPlayer, doubleRoll);
 					}
-					if(doubleRoll) {
+					if(!doubleRoll) {
 						break;
 					}
 					else {
+						System.out.println(currentPlayer+", you have rolled doubles, you will roll again");
 						continue;
 					}
 					

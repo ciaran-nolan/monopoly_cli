@@ -5,15 +5,22 @@ import java.util.Scanner;
 public class InputOutput {
 	private static Scanner input = new Scanner(System.in);
 	
+	public static void clearScannerBuffer(){
+		input.nextLine();
+	}
+	
+	public static void displayPlayerPosition(Player player) {
+		System.out.println(player.getName()+" you are currently on square "+player.getLocation()+" - "
+	+BoardReader.board.get(player.getLocation()).getName());
+	}
+
 	public static boolean yesNoInput(String message,Player player) {
-		@SuppressWarnings("resource")
-		Scanner yesNoScanner = new Scanner(System.in);
 		System.out.println(message);
-		String acknowledgement = yesNoScanner.nextLine();
+		String acknowledgement = input.nextLine();
 		
 		while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
 			System.out.println(player.getName()+", please enter a valid response (y/n)");
-			acknowledgement = yesNoScanner.nextLine();
+			acknowledgement = input.nextLine();
 		}
 		if(acknowledgement.equalsIgnoreCase("y")){
 			return true;
@@ -22,16 +29,12 @@ public class InputOutput {
 			return false;
 			}
 	}
-	
-	public static boolean canBuildHouses(CanOwn ownableCard) {
-		//only cards of type property can have houses
-		if(ownableCard instanceof Property) {
-			return true;
-		}
-		else {
-			return false;
-		}
+
+	public static void squareInformation(int index){
+		System.out.println("You have landed on "+BoardReader.board.get(index).getName());
 	}
+	
+
 	public static int integerMenu(int lowerBound, int upperBound){
 		int choiceInput = 0;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
@@ -46,7 +49,7 @@ public class InputOutput {
 				System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 			}
 		}while(!(choiceInput >= lowerBound && choiceInput <= upperBound));
-		
+		clearScannerBuffer();
 		return choiceInput;
 	}
 	
@@ -64,7 +67,14 @@ public class InputOutput {
 		else return property;
 		
 	}
-	
+
+	public static void jailMove(Player player){
+		System.out.println(player+" you are currently in jail, please selec");
+	}
+
+	public static void miscellaneousStringInputs(){
+
+	}
 	public static void handleUserOption(Player currentPlayer,boolean doubleRoll) {
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
@@ -82,7 +92,7 @@ public class InputOutput {
 		
 		switch(choiceInput) {
 			case 1:
-				Property propToMortgage = InputOutput.propertyInput(currentPlayer, "Mortgage");
+				Property propToMortgage = propertyInput(currentPlayer, "Mortgage");
 				
 				if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
 					if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){

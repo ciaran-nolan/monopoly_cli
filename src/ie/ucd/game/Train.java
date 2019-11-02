@@ -18,7 +18,7 @@ public class Train extends PublicSquare {
 		this.rent = rent;
 	}
 
-	public void buy(Player player, List<Player> listPlayers) {
+	public void buy(Player player) {
 		//check user has enough funds to purchase 
 		if(!Checks.enoughFunds(player, this.getPrice())) {
 			System.out.println("You do not have the necessary funds to purchase this train.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
@@ -42,12 +42,6 @@ public class Train extends PublicSquare {
 			}
 		}
 		else this.playerAuction();
-		
-	}
-
-	@Override
-	public void buy(Player player) {
-		// TODO Auto-generated method stub
 		
 	}
 

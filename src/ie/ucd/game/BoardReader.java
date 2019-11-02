@@ -172,7 +172,6 @@ public class BoardReader {
     		Properties prop = new Properties();
     		String trainFileName = "ie/ucd/gameConfigurations/train.properties";
     		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(trainFileName);
-    		System.out.println(trainFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);

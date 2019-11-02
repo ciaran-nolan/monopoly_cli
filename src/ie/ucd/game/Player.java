@@ -104,8 +104,10 @@ public class Player {
 	public void movePlayer(int moves) {
 		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 39) {
-			//In this they are either on the square or they have now passed it 
+			//In this they are either on the square or they have now passed it
+			this.setLocation(this.getLocation()+ moves -39);
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
+			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}
 		this.indexLocation = this.indexLocation + moves; //This moves the index location by moves 
 	}
@@ -344,6 +346,7 @@ public class Player {
 
 	public void addPurchasedCard(CanOwn purchasedProperty) {
 		this.propertyList.add(purchasedProperty);
+		purchasedProperty.setOwner(this);
 	}
 	
 	public void removeOwnedProperty(CanOwn property) {
@@ -365,12 +368,7 @@ public class Player {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
 		}
 		else {
-			System.out.println("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?");
-			@SuppressWarnings("resource")
-			Scanner input = new Scanner(System.in);
-			String answer = input.next();
-			
-			if(answer.toLowerCase() == "y") {
+			if(InputOutput.yesNoInput("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?", owner)) {
 				//This means i need to claim rent from the user
 				//Need to check what type of property it is followed by how much rent they will need to pay
 				if(ownableSquare instanceof Property) {

@@ -7,24 +7,30 @@ public class Chance extends Card {
 		super(cardType, cardDesc, cardValue);
 	}
 	
-	public void dealWithCard(Player player1) {
+	public void dealWithCard(Player player) {
 		//From here I need to deal with a card produced from a deck of cards
-		ArrayList<CanOwn> propertyList = player1.getPropertyList();
-		
+		System.out.println("Chance");
+		ArrayList<CanOwn> propertyList = player.getPropertyList();
+		System.out.println(this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
+				//case where players move backwards and not to a specific property
+				if(this.getCardValue()<0){
+					player.moveToSquare(player.getLocation()+this.getCardValue());
+					Checks.checkSquare(player.getLocation(), player);
+				}
 				//player1.setLocation(this.getCardValue());
-				player1.moveToSquare(this.getCardValue());
+				player.moveToSquare(this.getCardValue());
 			case "JAIL":
-				player1.goToJail();
+				player.goToJail();
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site
 					for(CanOwn property : propertyList) {
 						if(property instanceof Property) {
 							//This will get the card value and multiply the number of houses or hotels depending on if its of Property Class
-							player1.reduceMoney(this.getCardValue()*((Property) property).getNumHouses(),null);
-							player1.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels(),null);
+							player.reduceMoney(this.getCardValue()*((Property) property).getNumHouses(),null);
+							player.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels(),null);
 							//If there is no hotels, it will not take any money away at all
 							//FIXME
 							System.out.println(property.getLocation());
@@ -35,12 +41,12 @@ public class Chance extends Card {
 					}
 				}
 				else {
-					player1.reduceMoney(this.getCardValue(), null);
+					player.reduceMoney(this.getCardValue(), null);
 				}
 			case "INCOME":
-				player1.addMoney(this.getCardValue());
+				player.addMoney(this.getCardValue());
 			case "GET_OUT_OF_JAIL":
-				player1.setJailFree(); //Increments the amount of jail free cards by 1
+				player.setJailFree(); //Increments the amount of jail free cards by 1
 		}
 	
 

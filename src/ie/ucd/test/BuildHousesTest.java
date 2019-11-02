@@ -20,12 +20,6 @@ public class BuildHousesTest {
 		 Player p1 = new Player("p1", "thing1");
 		 Player p2 = new Player("p2", "thing2");
 		 Player p3 = new Player("p3", "thing3");
-		 
-		 ArrayList<Player> plist = new ArrayList<Player>();
-		 plist.add(p1);
-		 plist.add(p2);
-		 plist.add(p3);
-		 
 		 Game.playerList.add(p1);
 		 Game.playerList.add(p2);
 		 Game.playerList.add(p3);
@@ -66,7 +60,7 @@ public class BuildHousesTest {
 			 }
 			}*/
 		 properties.get(0).buy(p1);
-		 ((Property) p1.getPropertyList().get(0)).sellHouses(p1, false, false);
+		 Property.buildHousesHotels(p1);
 		
 		 
 	

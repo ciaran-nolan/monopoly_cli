@@ -34,25 +34,32 @@ public class Special extends Square {
 	//For special square, the community chest and chance ones will implement
 	//the dealWithCard(Player) function from which a card can be produced from the deck
 	// and then used to perform a function
-	public void implementSpecialSquare(Player player1) {
+	public void implementSpecialSquare(Player player) {
+		System.out.println("Special"+this.type);
 		switch(this.type) {
 			case "TAX":
+				System.out.println("You must pay tax of "+"£"+this.value);
 				//Null as you owe the bank if you cant pay
-				player1.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
+				player.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
+				System.out.println("Your remaining funds £"+player.getMoney());
 				break; //Break the switch statement
 			case "GO":
-				player1.addMoney(this.value);
+				System.out.println("You you have landed on GO, collect "+"£"+this.value);
+				player.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
-				player1.pickCommChestCard();
+				System.out.println("Com Chest");
+				player.pickCommChestCard();
 				break;
 			case "CHANCE":
-				player1.pickChanceCard();
+				System.out.println("Chance");
+				player.pickChanceCard();
 				break;
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
-				player1.goToJail();
+				System.out.println("Jail");
+				player.goToJail();
 				break; //FIXME Will need to be looking at the chance and community cards also
 		}
 	}

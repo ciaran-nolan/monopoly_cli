@@ -95,108 +95,90 @@ public class Property extends CanOwn {
 		Scanner input = new Scanner(System.in);
 		boolean isHotel = false;
 		
-		System.out.println("Please enter the name of the poperty you wish to purchase houses/hotels for");
+		System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");
 		String propName = input.nextLine();
 		Property propToBuild = Checks.isValidProp(propName, player);
-		
-		if(null==propToBuild) {
-			if(InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player)){
-				buildHousesHotels(player);
-			}
-			else return;
-		}
-		else if(!(Checks.isPlayerOwner((CanOwn) propToBuild, player))){
-			if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)){
-				//restart pre-dice roll options
-				buildHousesHotels(player);
-			}
-			else return;
-		}
-		
-		else {
-			System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
-			int choiceInput =  InputOutput.integerMenu(0, 1);
-			if(choiceInput==1) {
-				isHotel=true;
-			}
-		}
-		
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, propToBuild);
-		//we know they own all houses in property group
-		System.out.println("You have chosen to purchase houses for: "+propToBuild.getName());
-		
-		//Preliminary Check
-		//check the player can afford a house
-		if(player.getMoney() < propToBuild.housePrice) {
-			System.out.println("You do not have enough funds to purchase any houses/hotels for "+propToBuild.getName()+"\nYour funds: "+player.getMoney()+"\nHouse Price: "+propToBuild.housePrice);
-			return;
+
+		int canBuildStatus = Checks.canBuildHousesHotels(propToBuild, player);
+
+		switch(canBuildStatus){
+			case -1:
+				buildHousesHotels(player);
+			case -2:
+				System.out.println("No houses or hotels have been built");
+				return;
+			default:
+				break;
+		}
+
+		System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
+		int choiceInput =  InputOutput.integerMenu(0, 1);
+		if(choiceInput==1) {
+			isHotel=true;
 		}
 
 		//inform the player of the current house distribution
 		System.out.println("Current Houses Distribution for colour group "+ propToBuild.getSquareColour()+":\n\n");
 		
 		//print house distribution to screen
-		for(int i=0; i<colourGroup.size(); i++) {
-			System.out.println(colourGroup.get(i).getName()+": "+colourGroup.get(i).getNumHouses()+"\n");
+		for (Property property : colourGroup) {
+			System.out.println(property.getName() + ": " + property.getNumHouses() + "\n");
 		}
 		
 		if(isHotel) {
-			if(InputOutput.yesNoInput("Would you like to build a hotel for: "+propToBuild.getName()+"? (y/n)", player)){
-				if(Game.getRemainingHotels()==0) {
-					System.out.println("The maximum number of hotels on the board has been reached, a hotel cannot currently be purchased for "+propToBuild.getName());
-					return;
-				}
-				else if(propToBuild.numHouses!=4) {
-					System.out.println("You must have 4 houses on this property to purchase a hotel");
-					return;
-				}
-				else if(Checks.evenHouseDistribution(Checks.ownAllColour(player, propToBuild), propToBuild, true)){
-					//remove all houses from attribute as hotel is being built
-					propToBuild.numHouses=0;
-					//add the 4 houses being replaced by the hotel back into the available pool
-					Game.setRemainingHouses(Game.getRemainingHouses()+4);
-					//update the hotel attribute of the property
-					propToBuild.numHotels=1;
-					//update hotel number
-					Game.setRemainingHotels((Game.getRemainingHotels())-1);
-					//price of hotel is price of additional house
-					player.reduceMoney(propToBuild.housePrice, null);
-					System.out.println("Sucessfully purchased hotel for "+propToBuild.getName());
-				}
-				else System.out.println("Building a hotel on "+propToBuild.getName()+" will result in an uneven distribution in this colour group");
-				
+			if(Game.getRemainingHotels()==0) {
+				System.out.println("The maximum number of hotels on the board has been reached, a hotel cannot currently be purchased for "+propToBuild.getName());
+				return;
 			}
-			else return;
-		}
-	
-		if(Game.getRemainingHouses()==0) {
-			System.out.println("The maximum number of houses on the board has been reached, a house cannot currently be purchased for "+propToBuild.getName());
-			return;
-		}
-		
-		//If there are four houses, they have reached the max number. Offer to purchase a hotel
-		else if(propToBuild.numHouses==4) {
-			if(InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
-				buildHousesHotels(player);
+			else if(propToBuild.numHouses!=4) {
+				System.out.println("You must have 4 houses on this property to purchase a hotel");
+				return;
 			}
+			else if(Checks.evenHouseDistribution(Checks.ownAllColour(player, propToBuild), propToBuild, true)){
+				//remove all houses from attribute as hotel is being built
+				propToBuild.numHouses=0;
+				//add the 4 houses being replaced by the hotel back into the available pool
+				Game.setRemainingHouses(Game.getRemainingHouses()+4);
+				//update the hotel attribute of the property
+				propToBuild.numHotels=1;
+				//update hotel number
+				Game.setRemainingHotels((Game.getRemainingHotels())-1);
+				//price of hotel is price of additional house
+				player.reduceMoney(propToBuild.housePrice, null);
+				System.out.println("Successfully purchased hotel for "+propToBuild.getName());
+			}
+			else System.out.println("Building a hotel on "+propToBuild.getName()+" will result in an uneven distribution in this colour group");
 		}
-		//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses
-		else if(Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
-			// y/n input to confirm intention to build house
-			if(InputOutput.yesNoInput("Please confirm you wish to purchase a house for "+propToBuild.getName()+" (y/n)", player)) {
-				if (propToBuild.getHousePrice()>player.getMoney()) {
-					System.err.println("You cannot afford to purchase a house");
-				}
-				else {
-					propToBuild.numHouses++;
-					//update the remaining available houses
-					Game.setRemainingHouses(Game.getRemainingHouses()-1);
-					player.reduceMoney(propToBuild.housePrice,null);
-					System.out.println("Successfully purchased house for "+propToBuild.getName()+"\nCurrent house count: "+propToBuild.numHouses);
+		else {
+			if (Game.getRemainingHouses() == 0) {
+				System.out.println("The maximum number of houses on the board has been reached, a house cannot currently be purchased for " + propToBuild.getName());
+				return;
+			}
+
+			//If there are four houses, they have reached the max number. Offer to purchase a hotel
+			else if (propToBuild.numHouses == 4) {
+				if (InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
+					buildHousesHotels(player);
 				}
 			}
+			//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses
+			else if (Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
+				// y/n input to confirm intention to build house
+				if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player)) {
+					if (propToBuild.getHousePrice() > player.getMoney()) {
+						System.err.println("You cannot afford to purchase a house");
+					} else {
+						propToBuild.numHouses++;
+						//update the remaining available houses
+						Game.setRemainingHouses(Game.getRemainingHouses() - 1);
+						player.reduceMoney(propToBuild.housePrice, null);
+						System.out.println("Successfully purchased house for " + propToBuild.getName() + "\nCurrent house count: " + propToBuild.numHouses);
+					}
+				}
+			} else
+				System.out.println("Building a house on " + propToBuild.getName() + " will result in an uneven house distribution in this colour group");
 		}
-		else System.out.println("Building a house on "+propToBuild.getName()+" will result in an uneven house distribution in this colour group");
 	}
 		
 	
@@ -210,13 +192,13 @@ public class Property extends CanOwn {
 	}
 	else if(isMortgage||isBankrupt) {
 		int valOfSoldHouses = 0;
-		for (int i = 0; i< colourGroup.size(); i++) {
-			if(isMortgage) {
-				player.addMoney((colourGroup.get(i).getNumHouses()*this.housePrice)/2);
+		for (Property property : colourGroup) {
+			if (isMortgage) {
+				player.addMoney((property.getNumHouses() * this.housePrice) / 2);
 			}
-			valOfSoldHouses+=(colourGroup.get(i).getNumHouses()*this.housePrice)/2;
-			Game.setRemainingHouses(Game.getRemainingHouses()+colourGroup.get(i).getNumHouses());
-			colourGroup.get(i).numHouses=0;
+			valOfSoldHouses += (property.getNumHouses() * this.housePrice) / 2;
+			Game.setRemainingHouses(Game.getRemainingHouses() + property.getNumHouses());
+			property.numHouses = 0;
 		}
 		return valOfSoldHouses;
 	}
@@ -234,8 +216,8 @@ public class Property extends CanOwn {
 		System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n\n");
 			
 		//print house distribution to screen
-		for(int i=0; i<colourGroup.size(); i++) {
-			System.out.println(colourGroup.get(i).getName()+": "+colourGroup.get(i).getNumHouses()+"\n");
+		for (Property property : colourGroup) {
+			System.out.println(property.getName() + ": " + property.getNumHouses() + "\n");
 		}
 			//check if they would like to sell another house
 		if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player)){
@@ -246,8 +228,8 @@ public class Property extends CanOwn {
 			
 	else {
 		System.out.println("The current distribution of your houses do not allow you to sell a house on "+this.getName());
-		for(int i=0; i<colourGroup.size(); i++) {
-			System.out.println(colourGroup.get(i).getName()+": "+colourGroup.get(i).getNumHouses()+"\n");				
+		for (Property property : colourGroup) {
+			System.out.println(property.getName() + ": " + property.getNumHouses() + "\n");
 		}
 		return 0;
 		}
@@ -257,16 +239,16 @@ public class Property extends CanOwn {
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 		if(isMortgage||isBankrupt) {
 			int valOfSoldHouses = 0;
-			for (int i = 0; i< colourGroup.size(); i++) {
+			for (Property property : colourGroup) {
 				//selling a hotel is the equivalent of selling five houses
 				//this will add 0 if there is no hotel
-				if(isMortgage) {
+				if (isMortgage) {
 					//ensure the player is not bankrupt before increasing their money
-					player.addMoney(((this.numHotels)*(5*this.housePrice))/2);
+					player.addMoney(((this.numHotels) * (5 * this.housePrice)) / 2);
 				}
-				valOfSoldHouses+=((this.numHotels)*(5*this.housePrice))/2;
-				Game.setRemainingHotels(Game.getRemainingHotels()+this.numHotels);
-				colourGroup.get(i).numHotels=0;
+				valOfSoldHouses += ((this.numHotels) * (5 * this.housePrice)) / 2;
+				Game.setRemainingHotels(Game.getRemainingHotels() + this.numHotels);
+				property.numHotels = 0;
 			}
 			return valOfSoldHouses;
 		}

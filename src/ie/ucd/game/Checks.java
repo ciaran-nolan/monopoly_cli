@@ -76,6 +76,9 @@ public class Checks {
 		}
 	
 	public static boolean isPlayerOwner(CanOwn ownableCard, Player player){
+		if(null == ownableCard.getOwner()){
+			return false;
+		}
 		if(ownableCard.getOwner().getName().equals(player.getName())) {
 			return true;
 		}
@@ -85,18 +88,15 @@ public class Checks {
 	}
 	
 	public static Property isValidProp(String name, Player player) {
-		for(CanOwn currentOwnable: player.getPropertyList()) {
-			//only analyse the type property
-			if(currentOwnable instanceof Property) {
-				System.out.println(currentOwnable.getName());
+		for(Property currentProp: BoardReader.properties) {
 				//compare square colour with the specified property
-				if(((Property) currentOwnable).getName().equalsIgnoreCase(name)){
-					return ((Property) currentOwnable);
+				if(currentProp.getName().equals(name)){
+					return currentProp;
 				}
-			}
 		}
 		return null;
 	}
+
 	public static Player isValidPlayer(String playerName) {
 		for(int i=0; i<Game.playerList.size(); i++) {
 			if(Game.playerList.get(i).getName().equalsIgnoreCase(playerName)) {
@@ -108,6 +108,9 @@ public class Checks {
 	
 	//method to check if a player owns all the properties in a given colour group.
 	public static ArrayList<Property> ownAllColour(Player player, Property property) {
+		if(null == property){
+			return null;
+		}
 		//counter to track how many of type colour
 		int colourCounter = 0;
 		//boolean to track that the particular property group has either two or three instances on the board
@@ -163,6 +166,51 @@ public class Checks {
 			}
 		}
 		return true;
+	}
+
+	public static boolean canBuildHouses(CanOwn ownableCard) {
+		//only cards of type property can have houses
+		if(ownableCard instanceof Property) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static int canBuildHousesHotels(Property propToBuild, Player player){
+
+		// Status codes:
+		// - 1 - attempt again
+		// - 2 - exit without building
+		// return 0 - valid
+		if(null==propToBuild) {
+			if (InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player)) {
+				return -1;
+			}
+			else return -2;
+		}
+		else if(!(Checks.isPlayerOwner(propToBuild, player))){
+			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)) {
+				//restart pre-dice roll options
+				return -1;
+			} else return -2;
+		}
+		else if(player.getMoney() < propToBuild.getHousePrice()) {
+			System.out.println("You do not have enough funds to purchase any houses/hotels for " + propToBuild.getName()
+					+ "\nYour funds: " + player.getMoney() + "\nHouse Price: " + propToBuild.getHousePrice());
+			return -2;
+		}
+
+		if(null == Checks.ownAllColour(player,propToBuild)) {
+			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player)) {
+				//restart pre-dice roll options
+				return -1;
+			} else return -2;
+		}
+		else {
+			return 0;
+		}
 	}
 	
 	public static int checkHouseHotelValue(Player player) {

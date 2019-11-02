@@ -141,7 +141,6 @@ public abstract class CanOwn extends Square {
 			if (biddingPoolSize == 1) {
 				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionPrice[0]);
 				biddingPlayers.get(0).addPurchasedCard(this);
-				this.setOwner(biddingPlayers.get(0));
 				biddingPlayers.get(0).reduceMoney(currentAuctionPrice[0], null);
 				break;
 			}

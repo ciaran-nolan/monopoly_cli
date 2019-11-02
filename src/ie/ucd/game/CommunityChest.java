@@ -17,8 +17,7 @@ public class CommunityChest extends Card {
 		System.out.println(this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
-				player1.setLocation(this.getCardValue());
-				Checks.checkSquare(player1.getLocation(), player1);
+				player1.moveToSquare(this.getCardValue());
 				if(this.getCardValue() == 0) { 
 					player1.addMoney(200); //Add money as the user has gone to GO
 				}
@@ -34,6 +33,7 @@ public class CommunityChest extends Card {
 				//We will need to take user input here
 				System.out.println(player1.getName()+": Would you like to: "+this.getCardDesc()+"?");
 				System.out.println("Please enter either FINE or CHANCE!");
+
 				//Have the input taken in ignoring the case
 				/*while(true) {
 					if(input == "FINE") {
