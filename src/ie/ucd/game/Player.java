@@ -250,25 +250,26 @@ public class Player {
 								"\n----------------------------------------------------------------");
 						line = scanner.nextLine();
 						//Trim the whitespace first before splitting
-						lineVector = line.split(",");
-						name = lineVector[0].trim();
-						token = lineVector[1].trim();
-						if(!tokenList.contains(token)) {
-							System.err.println("Token not part of list. Enter details of Player again!");
-							continue;
-						}
-						else if(name.length() == 0 ){
-							System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
-							continue;
-						}
-						else {
-							//Remove the index of the token from the array
-							tokenList.remove(tokenList.indexOf(token));
-							//Do I need to access them using the index though. I suppose I will go through them in 
-							listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
-							//I have added each player in the range of numPlayers to be in the listPlayers array. 
-							//Running this will return the list of players which I can set in main
-							break;
+						if(!line.contains(","))	System.err.println("Please use a comma (,) to separate input");
+						else{
+							lineVector = line.split(",");
+							name = lineVector[0].trim();
+							token = lineVector[1].trim();
+							if (!tokenList.contains(token)) {
+								System.err.println("Token not part of list. Enter details of Player again!");
+								continue;
+							} else if (name.length() == 0) {
+								System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
+								continue;
+							} else {
+								//Remove the index of the token from the array
+								tokenList.remove(tokenList.indexOf(token));
+								//Do I need to access them using the index though. I suppose I will go through them in
+								listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
+								//I have added each player in the range of numPlayers to be in the listPlayers array.
+								//Running this will return the list of players which I can set in main
+								break;
+							}
 						}
 					}
 				}

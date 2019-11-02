@@ -32,7 +32,6 @@ public class InputOutput {
 			return false;
 		}
 	}
-	
 	public static int integerMenu(int lowerBound, int upperBound){
 		int choiceInput = 0;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");

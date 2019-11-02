@@ -17,8 +17,8 @@ public class Dice {
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
 		dice1 = rollGenerator.nextInt(6)+1; 
 		dice2 = rollGenerator.nextInt(6)+1;
-		
-		System.out.println("You have rolled "+dice1+" and "+dice2);
+		System.out.println("\n-----------------------\n\tDICE ROLL\n-----------------------");
+		System.out.println("\tFirst Dice: "+dice1+"\n\tSecond Dice: "+dice2+"\n");
 		if (dice1==dice2) {
 			return true;
 		}
