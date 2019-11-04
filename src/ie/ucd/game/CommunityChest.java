@@ -32,8 +32,15 @@ public class CommunityChest extends Card {
 			case "CHOICE":
 				//We will need to take user input here
 				System.out.println(player1.getName()+": Would you like to: "+this.getCardDesc()+"?");
-				System.out.println("Please enter either FINE or CHANCE!");
+				System.out.println("Please use the integers provided to select\n FINE[0]\nCHANCE[1]");
+				int choice = InputOutput.integerMenu(0,1);
 
+				if(choice==0){
+					player1.reduceMoney(this.getValue());
+				}
+				else{
+					player1.pickChanceCard();
+				}
 				//Have the input taken in ignoring the case
 				/*while(true) {
 					if(input == "FINE") {

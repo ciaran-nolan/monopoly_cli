@@ -88,9 +88,8 @@ public class Game {
 						break;
 					}
 					else {
-						System.out.println(currentPlayer+", you have rolled doubles, you will roll again");
-						continue;
-					}
+						System.out.println(currentPlayer.getName()+", you have rolled doubles, you will roll again");
+                    }
 					
 				}	
 			}
