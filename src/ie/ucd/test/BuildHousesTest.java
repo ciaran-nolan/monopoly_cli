@@ -59,10 +59,18 @@ public class BuildHousesTest {
 				 break;
 			 }
 			}*/
-		 properties.get(0).buy(p1);
-		 Property.buildHousesHotels(p1);
-		
-		 
+		properties.get(0).buy(p1);
+		properties.get(1).buy(p1);
+
+		Property.buildHousesHotels(p1);
+		Property.buildHousesHotels(p1);
+		//Property.buildHousesHotels(p1);
+		//Property.buildHousesHotels(p1);
+
+		properties.get(0).mortgage(p1);
+
+		System.out.println(properties.get(0).getNumHouses());
+		System.out.println(properties.get(1).getNumHouses());
 	
 	}
 	}

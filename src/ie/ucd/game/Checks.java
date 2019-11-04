@@ -48,18 +48,12 @@ public class Checks {
 		}
 	}
 	public static boolean hasPassedGo(int startIndex, int endIndex) {
-		if(startIndex>endIndex) {
-			return true;
-		}
-		return false;
-	}
+        return startIndex > endIndex;
+    }
 	
 	public static boolean enoughFunds(Player player, int price) {
-		if(player.getMoney() < price) {
-			return false;
-		}
-		return true;
-	}
+        return player.getMoney() >= price;
+    }
 	
 	public static void playerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailFreeNum()
@@ -67,12 +61,7 @@ public class Checks {
 	}
 
 	public static boolean canBuy(CanOwn ownableCard, Player player) {
-		if(ownableCard.getOwner() == null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+        return null == ownableCard.getOwner();
 		}
 	
 	public static boolean isPlayerOwner(CanOwn ownableCard, Player player){
@@ -116,11 +105,11 @@ public class Checks {
 		//boolean to track that the particular property group has either two or three instances on the board
 		boolean twoPropGroup = false;
 		//A list of the properties of the particular colour being owned by the player to be returned if all are owned
-		ArrayList<Property> propertyList = new ArrayList<Property>();
+		ArrayList<Property> propertyList = new ArrayList<>();
 
 		
 		//check if the property group is two or three cards 
-		if(property.getSquareColour().equals("\"Purple\"")  || property.getSquareColour().equals("\"Dark Blue\"")) {
+		if(property.getSquareColour().equals("Purple")  || property.getSquareColour().equals("Dark Blue")) {
 			twoPropGroup = true;
 		}
 
@@ -158,11 +147,11 @@ public class Checks {
 		
 		for(int i=0; i<colourGroup.size();i++) {
 			if(colourGroup.get(i).getName().equals(propertyToAlterHouses.getName())) {
-				for(int k = 0; k < colourGroup.size(); k++) {
-					if(!((colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()>=houseDifferentialBounds[0])&&(colourGroup.get(i).getNumHouses()-colourGroup.get(k).getNumHouses()<=houseDifferentialBounds[1]))){
-						return false;
-					}
-				}
+                for (Property property : colourGroup) {
+                    if (!((colourGroup.get(i).getNumHouses() - property.getNumHouses() >= houseDifferentialBounds[0]) && (colourGroup.get(i).getNumHouses() - property.getNumHouses() <= houseDifferentialBounds[1]))) {
+                        return false;
+                    }
+                }
 			}
 		}
 		return true;
@@ -170,12 +159,7 @@ public class Checks {
 
 	public static boolean canBuildHouses(CanOwn ownableCard) {
 		//only cards of type property can have houses
-		if(ownableCard instanceof Property) {
-			return true;
-		}
-		else {
-			return false;
-		}
+        return ownableCard instanceof Property;
 	}
 	
 	public static int canBuildHousesHotels(Property propToBuild, Player player){
@@ -241,7 +225,7 @@ public class Checks {
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
 	public static void checkWinner() {
 		int totalValue=0;
-		ArrayList<Integer> valueArray = new ArrayList<Integer>();
+		ArrayList<Integer> valueArray = new ArrayList<>();
 		int maxValue, maxIndex;
 		
 		for(Player player:Game.playerList) {

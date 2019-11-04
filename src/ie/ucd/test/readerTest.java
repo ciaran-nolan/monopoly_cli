@@ -1,4 +1,4 @@
-package ie.ucd.game;
+package ie.ucd.test;
 import java.io.IOException;
 
 import ie.ucd.game.BoardReader;

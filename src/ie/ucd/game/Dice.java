@@ -29,7 +29,11 @@ public class Dice {
 		//return object containing both die values
 		return (dice1 + dice2);
 	}
-	
+
+	public static void handlePlayerRoll(Player player){
+
+	}
+
 	public static int getDuplicateRollCounter() {
 		return duplicateRollCounter;
 	}

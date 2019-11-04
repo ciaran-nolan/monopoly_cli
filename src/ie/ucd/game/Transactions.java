@@ -87,7 +87,7 @@ public class Transactions {
 			
 			int tempCash = 0;
 			int tempJail = 0;
-			HashMap<String,Property> tempPropsToTrade = new HashMap<String, Property>();
+			HashMap<String,Property> tempPropsToTrade = new HashMap<>();
 			boolean finishedTrade = false;
 			
 			while(!finishedTrade) {
@@ -125,7 +125,7 @@ public class Transactions {
 					}
 				case "2":
 					if(input.hasNext()) {
-						transactionChoice=input.nextLine();
+						input.nextLine();
 					}
 					System.out.println("Please enter the name of the property you wish to include in the trade");
 					transactionChoice = input.nextLine();
@@ -170,7 +170,7 @@ public class Transactions {
 					}
 				}
 				
-				if(finishedTrade==false) {
+				if(!finishedTrade) {
 					if(InputOutput.yesNoInput(tradeList.get(i).getName()+" are you finished making your trade? (y/n)", tradeList.get(i))) {
 						if(i==0) {
 							traderOneCash=tempCash;

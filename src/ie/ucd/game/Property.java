@@ -54,25 +54,23 @@ public class Property extends CanOwn {
 		
 			//check user has enough funds to purchase 
 			if(!Checks.enoughFunds(player, this.getPrice())) {
-				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
+				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
+                        +player.getMoney()+"\nProperty Price: "+this.getPrice());
 				//player does not have enough funds to buy property, automatically enter auction
 				this.playerAuction();
 				return;
 			}
+			//the case of the owner should be handled in check square
 			else if(!(Checks.canBuy((CanOwn) this, player))){
 				System.out.println("This property is already owned!");
 			}
-			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "+this.getName()+"?", player)) {
-				if(!Checks.enoughFunds(player, this.getPrice())) {
-					System.err.println("You do not have enough money to purchase this Utility! Raise money please");
-				}
-				else {
+			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
+                    +this.getName()+" for £"+this.getPrice()+"?", player)) {
 					//user has passed all necessary checks to purchase a property, reduce the price from users funds
 					player.reduceMoney(this.getPrice(), null);
 					//add property to users property list
 					player.addPurchasedCard(this);
 					System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
-				}
 			}
 			else this.playerAuction();
 			
@@ -196,24 +194,25 @@ public class Property extends CanOwn {
 			if (isMortgage) {
 				player.addMoney((property.getNumHouses() * this.housePrice) / 2);
 			}
-			valOfSoldHouses += (property.getNumHouses() * this.housePrice) / 2;
+			else{
+				valOfSoldHouses += (property.getNumHouses() * this.housePrice) / 2;
+			}
+			System.out.println(property.getNumHouses()+" house(s) sold for: "+property.getName());
 			Game.setRemainingHouses(Game.getRemainingHouses() + property.getNumHouses());
 			property.numHouses = 0;
 		}
 		return valOfSoldHouses;
 	}
-		// specify false to indicate to checks method you wish to SELL houses
 	else if(this.numHouses==0) {
 		System.out.println("There are no houses on "+this.getName());
 		return 0;
 	}
-
 	else if(Checks.evenHouseDistribution(colourGroup, this, false)) {
-			
+
 		player.addMoney(this.housePrice/2);
 		this.numHouses--;
 		Game.setRemainingHouses(Game.getRemainingHouses()+1);
-		System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n\n");
+		System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n");
 			
 		//print house distribution to screen
 		for (Property property : colourGroup) {
