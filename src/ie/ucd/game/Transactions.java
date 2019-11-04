@@ -199,6 +199,16 @@ public class Transactions {
 			return;
 		}
 	}
-	
-	
+
+	//to save from bankruptcy, the player must exchange cards/properties for cash only
+	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
+		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
+		InputOutput.playerCanOwnInfo(bankruptPlayer);
+		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
+
+		}
+		else{
+			System.out.println("No players are willing to trade");
+		}
+	}
 }

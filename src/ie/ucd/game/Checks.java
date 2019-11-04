@@ -214,8 +214,10 @@ public class Checks {
 		int mortgageValue = 0;
 		
 		for(CanOwn currentOwnable: player.getPropertyList()) {
-			//only analyse the type property
-				mortgageValue += (currentOwnable.getPrice()/2);
+			//only add the value of properties that are not currently mortgaged
+			if(!currentOwnable.getMortgageStatus()) {
+				mortgageValue += (currentOwnable.getPrice() / 2);
+			}
 		}
 		return mortgageValue;
 	}

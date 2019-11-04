@@ -2,6 +2,8 @@ package ie.ucd.game;
 
 import java.util.Scanner;
 
+import static ie.ucd.game.BoardReader.board;
+
 public class InputOutput {
 	private static Scanner input = new Scanner(System.in);
 	
@@ -11,7 +13,7 @@ public class InputOutput {
 	
 	public static void displayPlayerPosition(Player player) {
 		System.out.println(player.getName()+" you are currently on square "+player.getLocation()+" - "
-	+BoardReader.board.get(player.getLocation()).getName());
+	+ board.get(player.getLocation()).getName());
 	}
 
 	public static boolean yesNoInput(String message,Player player) {
@@ -31,7 +33,24 @@ public class InputOutput {
 	}
 
 	public static void squareInformation(int index){
-		System.out.println("You have landed on "+BoardReader.board.get(index).getName());
+
+            if(board.get(index) instanceof CanOwn){
+                System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
+                if(null == (((CanOwn) board.get(index)).getOwner())){
+                    System.out.println("Owner: None") ;
+                }
+                else{
+                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getOwner().getName())) ;
+                }
+                if (board.get(index) instanceof Property) {
+                    System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
+                            +((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
+                }
+            }
+            else{
+                System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
+            }
+
 	}
 	
 
@@ -122,4 +141,15 @@ public class InputOutput {
 			handleUserOption(currentPlayer, true);
 		}
 	}
+
+	public static void playerCanOwnInfo (Player player){
+	    System.out.println(player.getName()+"'s current property/utility/train status:");
+	    for (CanOwn currentProperty : player.getPropertyList()){
+	        System.out.println("Name:"+currentProperty.getName()+"\nIs Mortgaged?: "+currentProperty.getMortgageStatus());
+	        if(currentProperty instanceof Property){
+	            System.out.println("Colour: "+((Property) currentProperty).getSquareColour()+"\nHouses: "
+                        +((Property) currentProperty).getNumHouses()+"\nHotels: "+((Property) currentProperty).getNumHotels());
+            }
+        }
+    }
 }

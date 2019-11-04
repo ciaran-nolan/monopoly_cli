@@ -11,7 +11,7 @@ public class Chance extends Card {
 		//From here I need to deal with a card produced from a deck of cards
 
 		ArrayList<CanOwn> propertyList = player.getPropertyList();
-		System.out.println(this.getCardDesc());
+		System.out.println("The chance card reads: "+this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
 				//case where players move backwards and not to a specific property

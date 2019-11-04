@@ -14,7 +14,7 @@ public class CommunityChest extends Card {
 	
 	public void dealWithCard(Player player1) {
 		//From here I need to deal with a card produced from a deck of cards
-		System.out.println(this.getCardDesc());
+		System.out.println("The community chest card reads: "+this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
 				player1.moveToSquare(this.getCardValue());

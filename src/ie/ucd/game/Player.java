@@ -65,6 +65,7 @@ public class Player {
 	
 	public void addMoney(int money) {
 		this.money+= money;
+		System.out.println("Remaining Funds = £"+this.money);
 	}
 	
 	public void setLocation(int index) {
@@ -96,6 +97,7 @@ public class Player {
 		//Else you have enough money for paying the bill and so you can just reduce the money
 		else {
 			this.money-=money;
+			System.out.println("Remaining Funds: £"+this.money);
 		}
 	}
 	
@@ -105,7 +107,8 @@ public class Player {
 		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 39) {
 			//In this they are either on the square or they have now passed it
-			this.setLocation(this.getLocation()+ moves -39);
+            System.out.println(this.getLocation()+ (moves-39));
+			this.setLocation(this.getLocation()+ (moves-39));
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
 			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}
@@ -113,7 +116,8 @@ public class Player {
 	}
 	
 	public void moveToSquare(int squareNum) {
-		if(this.getLocation() > squareNum) {
+		if(this.getLocation() > squareNum || this.indexLocation == 0) {
+		    System.out.println("You have passed go, collect £200.");
 			this.addMoney(200); //This implies that they have passed GO
 		}
 		this.indexLocation = squareNum;
@@ -463,16 +467,24 @@ public class Player {
 			bankruptcySellHousesHotels(moneyNeedToRaise);
 			return true;
 		}
-			
 		else if(mustMortgage) {
 			bankruptcySellHousesHotels(moneyNeedToRaise);
 			bankruptcyMortgage(moneyNeedToRaise);
 			return true;
 		}
 		else {
-			//FIXME
+			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insuffiecient to cover your debt."+
+                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
+			    boolean continueTrade = true;
+			    while(continueTrade) {
+                    Transactions.saveFromBankruptcyTrade(this);
+                    if (!InputOutput.yesNoInput("Would you like to make another trade? (y/n)", this)) {
+                        continueTrade=false;
+                    }
+                }
+            }
 			for(CanOwn ownable:this.propertyList) {
-				ownable.playerAuction();
+
 				//if property
 				valOfMortgage = Checks.checkMortgagingValue(this);
 				

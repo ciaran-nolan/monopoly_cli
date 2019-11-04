@@ -34,7 +34,7 @@ public class Utility extends PublicSquare {
 				player.reduceMoney(this.getPrice(), null);
 				//add property to users property list
 				player.addPurchasedCard(this);
-				System.out.println("You have purchased "+this.getName()+" for "+this.getPrice()+"\nRemaining Funds: "+player.getMoney());
+				System.out.println("You have purchased "+this.getName()+" for "+this.getPrice());
 		}
 		else{
 			this.playerAuction();
