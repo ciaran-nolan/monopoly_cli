@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class Property extends CanOwn {
 	private String squareColour;
-	private int[] rents;
-	private int housePrice;
 	private int numHouses;
 	private int numHotels;
 	
@@ -26,36 +24,25 @@ public class Property extends CanOwn {
 	public void setNumHotels(int numHotels) {
 		this.numHotels = numHotels;
 	}
-	
-	public int getHousePrice() {
-		return this.housePrice;
-	}
+
 	public String getSquareColour() {
 		return this.squareColour;
 	}
-	
-	public int[] getRent() {
-		return this.rents;
-	}
-	
-	public Property(int squareNum, String squareColour, String title, int priceBuy, int[] rents, int housePrice, int mortgage) {
-		
+
+	public Property(int squareNum, String squareColour, String title) {
 		//owner will always be null at constructor since a property starts without an owner
-		super(title, squareNum, mortgage, priceBuy, null, Square.SquareType.PROPERTY);
-		
+		super(title, squareNum, Square.SquareType.PROPERTY);
 		this.squareColour = squareColour;
-		this.rents = rents;
-		this.housePrice = housePrice;
 		this.numHotels = 0;
 		this.numHouses = 0;
 	}
 	
 	public void buy(Player player) {
-		
-			//check user has enough funds to purchase 
-			if(!Checks.enoughFunds(player, this.getPrice())) {
+			//check user has enough funds to purchase
+			TitleDeed titleDeedCard = this.getTitleDeedCard();
+			if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
-                        +player.getMoney()+"\nProperty Price: "+this.getPrice());
+                        +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
 				this.playerAuction();
 				return;
@@ -65,11 +52,11 @@ public class Property extends CanOwn {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for £"+this.getPrice()+"?", player)) {
+                    +this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
-				System.out.println("You have purchased "+this.getName()+" for "+this.getPrice());
+				System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
 
-				player.reduceMoney(this.getPrice(), null);
+				player.reduceMoney(titleDeedCard.getPriceBuy(), null);
 				//add property to users property list
 				player.addPurchasedCard(this);
 			}
@@ -93,7 +80,7 @@ public class Property extends CanOwn {
 	public static void buildHousesHotels(Player player) {
 		Scanner input = new Scanner(System.in);
 		boolean isHotel = false;
-		
+
 		System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");
 		String propName = input.nextLine();
 		Property propToBuild = Checks.isValidProp(propName, player);
@@ -144,7 +131,7 @@ public class Property extends CanOwn {
 				//update hotel number
 				Game.setRemainingHotels((Game.getRemainingHotels())-1);
 				//price of hotel is price of additional house
-				player.reduceMoney(propToBuild.housePrice, null);
+				player.reduceMoney(propToBuild.getTitleDeedCard().getHousePrice(), null);
 				System.out.println("Successfully purchased hotel for "+propToBuild.getName());
 			}
 			else System.out.println("Building a hotel on "+propToBuild.getName()+" will result in an uneven distribution in this colour group");
@@ -165,13 +152,13 @@ public class Property extends CanOwn {
 			else if (Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
 				// y/n input to confirm intention to build house
 				if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player)) {
-					if (propToBuild.getHousePrice() > player.getMoney()) {
+					if (propToBuild.getTitleDeedCard().getHousePrice() > player.getMoney()) {
 						System.err.println("You cannot afford to purchase a house");
 					} else {
 						propToBuild.numHouses++;
 						//update the remaining available houses
 						Game.setRemainingHouses(Game.getRemainingHouses() - 1);
-						player.reduceMoney(propToBuild.housePrice, null);
+						player.reduceMoney(propToBuild.getTitleDeedCard().getHousePrice(), null);
 						System.out.println("Successfully purchased house for " + propToBuild.getName() + "\nCurrent house count: " + propToBuild.numHouses);
 					}
 				}
@@ -193,10 +180,10 @@ public class Property extends CanOwn {
 		int valOfSoldHouses = 0;
 		for (Property property : colourGroup) {
 			if (isMortgage) {
-				player.addMoney((property.getNumHouses() * this.housePrice) / 2);
+				player.addMoney((property.getNumHouses() * this.getTitleDeedCard().getHousePrice()) / 2);
 			}
 			else{
-				valOfSoldHouses += (property.getNumHouses() * this.housePrice) / 2;
+				valOfSoldHouses += (property.getNumHouses() * this.getTitleDeedCard().getHousePrice()) / 2;
 			}
 			System.out.println(property.getNumHouses()+" house(s) sold for: "+property.getName());
 			Game.setRemainingHouses(Game.getRemainingHouses() + property.getNumHouses());
@@ -210,7 +197,7 @@ public class Property extends CanOwn {
 	}
 	else if(Checks.evenHouseDistribution(colourGroup, this, false)) {
 
-		player.addMoney(this.housePrice/2);
+		player.addMoney(this.getTitleDeedCard().getHousePrice()/2);
 		this.numHouses--;
 		Game.setRemainingHouses(Game.getRemainingHouses()+1);
 		System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n");
@@ -223,7 +210,7 @@ public class Property extends CanOwn {
 		if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player)){
 			sellHouses(player, false, false);
 		}
-		return this.housePrice/2;
+		return this.getTitleDeedCard().getHousePrice()/2;
 		}
 			
 	else {
@@ -244,9 +231,9 @@ public class Property extends CanOwn {
 				//this will add 0 if there is no hotel
 				if (isMortgage) {
 					//ensure the player is not bankrupt before increasing their money
-					player.addMoney(((this.numHotels) * (5 * this.housePrice)) / 2);
+					player.addMoney(((this.numHotels) * (5 * this.getTitleDeedCard().getHousePrice())) / 2);
 				}
-				valOfSoldHouses += ((this.numHotels) * (5 * this.housePrice)) / 2;
+				valOfSoldHouses += ((this.numHotels) * (5 * this.getTitleDeedCard().getHousePrice())) / 2;
 				Game.setRemainingHotels(Game.getRemainingHotels() + this.numHotels);
 				property.numHotels = 0;
 			}
@@ -265,26 +252,27 @@ public class Property extends CanOwn {
 			}	
 		}
 		else {
-			player.addMoney(this.housePrice/2);
+			player.addMoney(this.getTitleDeedCard().getHousePrice()/2);
 			this.numHotels=0;
 			//return house number to 4
 			this.numHouses=4;
 			Game.setRemainingHouses(Game.getRemainingHouses()-4);
-			return this.housePrice/2;	
+			return this.getTitleDeedCard().getHousePrice()/2;
 		}
 	}
 	
 	//method to determine the value of a player's houses/hotels
 	public static int playerHouseHotelEval(Player player) {
 		int houseHotelVal=0;
-		for(CanOwn ownable:player.getPropertyList()) {
+		for(TitleDeed titleDeed:player.getTitleDeedList()) {
+			CanOwn ownable = titleDeed.getOwnableSite();
 			if(ownable instanceof Property) {
 				if(((Property) ownable).getNumHotels()==0){
 					//if there are no houses on the property, this will not increment by anything
-				houseHotelVal+=((((Property) ownable).getHousePrice())*((Property) ownable).getNumHouses())/2;
+				houseHotelVal+=((titleDeed.getHousePrice())*((Property) ownable).getNumHouses())/2;
 				}
 				else {
-					houseHotelVal+=((((Property) ownable).getHousePrice())*(5))/2;
+					houseHotelVal+=((titleDeed.getHousePrice())*(5))/2;
 				}
 			}
 		}

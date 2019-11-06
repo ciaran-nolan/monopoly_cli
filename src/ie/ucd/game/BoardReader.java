@@ -49,7 +49,9 @@ public class BoardReader {
     	for(int i=0; i<=21; i++) {
     		
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Property temp = new Property(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("squareColour"+i)),prop.getProperty(("title"+i)),Integer.parseInt((prop.getProperty(("priceBuy"+i)))),rentIntArray, Integer.parseInt(prop.getProperty(("housePrice"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))));
+    		Property temp = new Property(Integer.parseInt(prop.getProperty(("squareNum"+i))),prop.getProperty(("squareColour"+i)),prop.getProperty(("title"+i)));
+    		TitleDeed tempDeed = new TitleDeed("Title Deed", prop.getProperty(("title"+i)),0, prop.getProperty(("squareColour"+i)),Integer.parseInt((prop.getProperty(("priceBuy"+i)))),rentIntArray, Integer.parseInt(prop.getProperty(("housePrice"+i))),Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
+    		temp.setTitleDeedCard(tempDeed);
     		properties.add(temp);
     		board.set(temp.getLocation(),temp);
     		
@@ -59,8 +61,8 @@ public class BoardReader {
     	} 
     	catch (Exception e) {
     		System.out.println("Exception: " + e);
-    		}
     	}
+    }
     
     public static void readUtilities() throws FileNotFoundException {
     	try {
@@ -77,8 +79,10 @@ public class BoardReader {
     	
     	for(int i=0; i<=1; i++) {
     		int[] rentIntArray = Arrays.stream(utilProp.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))), Integer.parseInt(utilProp.getProperty(("priceBuy"+i))), Integer.parseInt(utilProp.getProperty(("mortgage"+i))), rentIntArray, null);    	
-    		utilities.add(temp);
+    		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))), Integer.parseInt(utilProp.getProperty(("priceBuy"+i))), Integer.parseInt(utilProp.getProperty(("mortgage"+i))), rentIntArray, null);
+			TitleDeed tempDeed = new TitleDeed("Title Deed", utilProp.getProperty(("title"+i)),0, null, Integer.parseInt((utilProp.getProperty(("priceBuy"+i)))), rentIntArray, 0, Integer.parseInt(utilProp.getProperty(("mortgage"+i))),null, temp);
+    		temp.setTitleDeedCard(tempDeed);
+			utilities.add(temp);
     		board.set(temp.getLocation(),temp);
     	}
     	
@@ -181,8 +185,10 @@ public class BoardReader {
     	
     	for(int i=0; i<=3; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);    	
-    		trains.add(temp);   
+    		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);
+			TitleDeed tempDeed = new TitleDeed("Title Deed", prop.getProperty(("title"+i)),0, null, Integer.parseInt((prop.getProperty(("priceBuy"+i)))), rentIntArray, 0, Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
+    		temp.setTitleDeedCard(tempDeed);
+			trains.add(temp);
     		board.set(temp.getLocation(),temp);
     		//System.out.println(board.get(temp.getLocation()).getName());
     	}

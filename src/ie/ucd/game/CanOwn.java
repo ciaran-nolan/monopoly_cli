@@ -3,54 +3,25 @@ import java.util.*;
 import ie.ucd.game.Checks;
 
 public abstract class CanOwn extends Square {
-	private int mortgage;
-	private int buyPrice;
-	private boolean mortgaged = false; //Whether property is mortgaged
-	Player owner;
-	
-	public CanOwn(String name, int indexLocation, int mortgage, int buyPrice, Player owner, Square.SquareType type) {
+	private TitleDeed titleDeedCard;
+
+	public CanOwn(String name, int indexLocation, Square.SquareType type) {
 		super(name, indexLocation, true, type);
-		this.mortgage = mortgage;
-		this.buyPrice = buyPrice;
-		this.owner = owner;
 	}
-	
-	public int getMortgage() {
-		return this.mortgage;
+
+	public TitleDeed getTitleDeedCard(){
+		return this.titleDeedCard;
 	}
-	
-	public int getPrice() {
-		return this.buyPrice;
+
+	public void setTitleDeedCard(TitleDeed card){
+		this.titleDeedCard = card;
 	}
-	
-	public Player getOwner() {
-		return this.owner;
-	}
-	
-	public boolean getMortgageStatus() {
-		return this.mortgaged;
-	}
-	
-	public void setMortgage(int mortgage) {
-		this.mortgage = mortgage;
-	}
-	
-	public void setPrice(int buyPrice) {
-		this.buyPrice = buyPrice;
-	}
-	
-	public void setOwner(Player player) {
-		this.owner = player;
-	}
-	
-	
-	
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
 	public abstract void buy(Player player);
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	
 	public void playerAuction() {
-	
+
 		ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
 		int[] currentAuctionDetails = new int[] {0,0};
 		Scanner auctionScanner = new Scanner(System.in);
@@ -99,12 +70,14 @@ public abstract class CanOwn extends Square {
 					while(temporaryBid <= currentAuctionDetails[0] || biddingPlayers.get(i).getMoney() < temporaryBid) {
 						//bid is less than current highest bid, prompt for intention to re input bid
 						if(temporaryBid <= currentAuctionDetails[0]) {
-							System.out.println(biddingPlayers.get(i).getName() + " your bid must be greater than the current bid of: "+currentAuctionDetails[0]);
+							System.out.println(biddingPlayers.get(i).getName() +
+									" your bid must be greater than the current bid of: "+currentAuctionDetails[0]);
 						}
 						//user does not have the specified funds to make bid, prompt for intention to rebid 
 						else if(biddingPlayers.get(i).getMoney() < temporaryBid) {
 							System.out.println(biddingPlayers.get(i).getName() + " you do not have enough funds to make this bid.");
-							System.out.println("\nYour bid: "+temporaryBid+"\nYour Funds:"+biddingPlayers.get(i).getMoney()+"\nCurrent winning bid: "+currentAuctionDetails[0]+" by: "+biddingPlayers.get(currentAuctionDetails[1]).getName());
+							System.out.println("\nYour bid: "+temporaryBid+"\nYour Funds:"+biddingPlayers.get(i).getMoney()+
+									"\nCurrent winning bid: "+currentAuctionDetails[0]+" by: "+biddingPlayers.get(currentAuctionDetails[1]).getName());
 							
 						}
 						
@@ -146,7 +119,7 @@ public abstract class CanOwn extends Square {
 			}
 			}
 		//no player made an intention to bid, property remains with a null owner 
-		if(this.getOwner() == null) {
+		if(this.titleDeedCard.getOwner() == null) {
 			System.out.println("There was no winning bid. "+this.getName()+" remains unpurchased");
 		}
 	}
@@ -155,20 +128,20 @@ public abstract class CanOwn extends Square {
 	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
 	
 	public void mortgage(Player player) {
-		if (this.getOwner() == player) {
+		if (this.titleDeedCard.getOwner() == player) {
 			if(this instanceof Property) {
 				if(((Property)this).getNumHouses() == 0 && ((Property)this).getNumHotels() == 0) {
-					if(this.mortgaged == true){
+					if(this.titleDeedCard.getMortgageStatus() == true){
 						System.err.println("This property is already mortgaged!");
 					}
 					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n))", player)) {
-						this.mortgaged = true;
-						player.addMoney(this.getMortgage());
+						this.titleDeedCard.setMortgageStatus(true);
+						player.addMoney(this.titleDeedCard.getMortgage());
 						System.out.println("Successfully mortgaged "+this.getName()+"\nCurrent Funds: £"+player.getMoney());
 					}
 					else {
 						System.out.println("You have chosen not to mortgage this property");
-						this.mortgaged = false;
+						this.titleDeedCard.setMortgageStatus(false);
 					}
 				}
 				else{
@@ -184,7 +157,7 @@ public abstract class CanOwn extends Square {
 						((Property) this).sellHouses(player, true, false);
 						((Property) this).sellHotels(player, true, false);
 						//Once all of the houses and hotels are sold on each site, you will need to
-						this.mortgaged = true;
+						this.titleDeedCard.setMortgageStatus(true);
 					}
 					else System.out.println("Property has not been mortgaged");
 				}
@@ -192,14 +165,14 @@ public abstract class CanOwn extends Square {
 				
 			}
 			else {
-				if(this instanceof PublicSquare && this.getMortgageStatus() == false) {
-					this.mortgaged = true;
-					player.addMoney(this.getMortgage());
+				if(this instanceof PublicSquare && this.titleDeedCard.getMortgageStatus() == false) {
+					this.titleDeedCard.setMortgageStatus(true);
+					player.addMoney(this.titleDeedCard.getMortgage());
 					System.out.println("Successfully mortgaged "+this.getName()+"\nCurrent Funds: £"+player.getMoney());
 				}
 				else {
 					System.out.println("This property is non-ownable or has been mortgaged already!");
-					this.mortgaged = false; //FIXME Double check whether this is actually needed
+					this.titleDeedCard.setMortgageStatus(false); //FIXME Double check whether this is actually needed
 				}
 			}
 		}
@@ -212,25 +185,25 @@ public abstract class CanOwn extends Square {
 		//the new owner now owns it or not. and can demortgage at any time
 
 		//FIXME why reduce the money without chec
-		this.getOwner().reduceMoney((int)(0.01*this.getMortgage()), null); //We will automatically set 10% interest to paying
+		this.titleDeedCard.getOwner().reduceMoney((int)(0.01*this.titleDeedCard.getMortgage()), null); //We will automatically set 10% interest to paying
 		//Then this is for if the user decides to demortgage on sale or not
 		if(demortgageOnSale) {
 			//If they dont have enough money to pay off mortgage
-			if(this.getMortgage() > this.getOwner().getMoney()) {
+			if(this.titleDeedCard.getMortgage() > this.titleDeedCard.getOwner().getMoney()) {
 				System.err .println("You don't have enough money to demortgage this property now!");
 			}
 			else {
-				this.getOwner().reduceMoney(this.getMortgage(), null);
+				this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null);
 			}
 		}
 		else {
-			if((this.getMortgage() + 0.01*this.getMortgage()) > this.getOwner().getMoney()) {
+			if((this.titleDeedCard.getMortgage() + 0.01*this.titleDeedCard.getMortgage()) > this.titleDeedCard.getOwner().getMoney()) {
 				System.err.println("You don't have enough money to demortgage this property now!");
 			}
 			else {
 				//The mortgage will be removed at a later stage
-				this.getOwner().reduceMoney(this.getMortgage(), null); //Paying price of mortgage
-				this.getOwner().reduceMoney((int)(0.01*this.getMortgage()), null); //Paying interest
+				this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null); //Paying price of mortgage
+				this.titleDeedCard.getOwner().reduceMoney((int)(0.01*this.titleDeedCard.getMortgage()), null); //Paying interest
 			}
 		}
 	}

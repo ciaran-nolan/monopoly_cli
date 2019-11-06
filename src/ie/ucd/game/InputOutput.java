@@ -36,11 +36,11 @@ public class InputOutput {
 
             if(board.get(index) instanceof CanOwn){
                 System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
-                if(null == (((CanOwn) board.get(index)).getOwner())){
+                if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
                     System.out.println("Owner: None") ;
                 }
                 else{
-                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getOwner().getName())) ;
+                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
                 }
                 if (board.get(index) instanceof Property) {
                     System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
@@ -144,8 +144,9 @@ public class InputOutput {
 
 	public static void playerCanOwnInfo (Player player){
 	    System.out.println(player.getName()+"'s current property/utility/train status:");
-	    for (CanOwn currentProperty : player.getPropertyList()){
-	        System.out.println("Name:"+currentProperty.getName()+"\nIs Mortgaged?: "+currentProperty.getMortgageStatus());
+	    for (TitleDeed titleDeed : player.getTitleDeedList()){
+			CanOwn currentProperty = titleDeed.getOwnableSite();
+	    	System.out.println("Name:"+titleDeed.getCardDesc()+"\nIs Mortgaged?: "+titleDeed.getMortgageStatus());
 	        if(currentProperty instanceof Property){
 	            System.out.println("Colour: "+((Property) currentProperty).getSquareColour()+"\nHouses: "
                         +((Property) currentProperty).getNumHouses()+"\nHotels: "+((Property) currentProperty).getNumHotels());

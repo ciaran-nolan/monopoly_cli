@@ -19,9 +19,10 @@ public class Train extends PublicSquare {
 	}
 
 	public void buy(Player player) {
-		//check user has enough funds to purchase 
-		if(!Checks.enoughFunds(player, this.getPrice())) {
-			System.err.println("You do not have the necessary funds to purchase this train.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+this.getPrice());
+		//check user has enough funds to purchase
+		TitleDeed titleDeedCard = this.getTitleDeedCard();
+		if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
+			System.err.println("You do not have the necessary funds to purchase this train.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 			//player does not have enough funds to buy property, automatically enter auction
 			this.playerAuction();
 			return;
@@ -30,13 +31,12 @@ public class Train extends PublicSquare {
 			System.err.println("This property is already owned!");
 		}
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-				+this.getName()+" for £"+this.getPrice()+"?", player)) {
+				+this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
 			//user has passed all necessary checks to purchase a property, reduce the price from users funds
-			System.out.println("You have purchased "+this.getName()+" for "+this.getPrice());
-			player.reduceMoney(this.getPrice(), null);
+			System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
+			player.reduceMoney(titleDeedCard.getPriceBuy(), null);
 			//add property to users property list
 			player.addPurchasedCard(this);
-
 		}
 		else this.playerAuction();
 		

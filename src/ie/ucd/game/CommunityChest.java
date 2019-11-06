@@ -36,7 +36,7 @@ public class CommunityChest extends Card {
 				int choice = InputOutput.integerMenu(0,1);
 
 				if(choice==0){
-					player1.reduceMoney(this.getValue());
+					player1.reduceMoney(this.getCardValue(), null);
 				}
 				else{
 					player1.pickChanceCard();
@@ -56,6 +56,9 @@ public class CommunityChest extends Card {
 						System.err.println("You have not chosen an option. Choose again!");
 					}
 				}*/
+				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + this.getCardType());
 		}
 	}
 	

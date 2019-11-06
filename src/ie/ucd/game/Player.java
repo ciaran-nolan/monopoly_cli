@@ -8,7 +8,7 @@ public class Player {
 	private String token; 	//Token that represents the player
 	private int money; 		// The amount of money that the Player will have
 	private int indexLocation; //The index of the square at which the player is on the board
-	private ArrayList<CanOwn> propertyList = new ArrayList<CanOwn>(); //A list of the properties being owned by the player
+	private ArrayList<TitleDeed> titleDeedCardList = new ArrayList<TitleDeed>(); //A list of the properties being owned by the player
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
 	private boolean inJail = false; //If they are in jail or not
 	private ArrayList<Card> jailCards = new ArrayList<Card>();
@@ -39,8 +39,8 @@ public class Player {
 		return this.indexLocation;
 	}
 	
-	public ArrayList<CanOwn> getPropertyList(){
-		return this.propertyList;
+	public ArrayList<TitleDeed> getTitleDeedList(){
+		return this.titleDeedCardList;
 	}
 	
 	public int getJailFreeNum() {
@@ -264,10 +264,12 @@ public class Player {
 							if (!tokenList.contains(token)) {
 								System.err.println("Token not part of list. Enter details of Player again!");
 								continue;
-							} else if (name.length() == 0) {
+							}
+							else if (name.length() == 0) {
 								System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
 								continue;
-							} else {
+							}
+							else {
 								//Remove the index of the token from the array
 								tokenList.remove(tokenList.indexOf(token));
 								//Do I need to access them using the index though. I suppose I will go through them in
@@ -312,10 +314,9 @@ public class Player {
 					currPosJail++;
 				}
 			}
-			//Sell off any properties and buildings
-			
-			for(CanOwn property:this.propertyList) {
-				//Sell off all of the houses at no price
+
+			for(TitleDeed titleDeedCard:this.titleDeedCardList){
+				CanOwn property = titleDeedCard.getOwnableSite();
 				if(property instanceof Property) {
 					if(((Property)property).getNumHouses()>0) {
 						Game.setRemainingHouses(Game.getRemainingHouses()+((Property)property).getNumHouses());
@@ -330,7 +331,7 @@ public class Player {
 					}	
 				}
 				//Remove the property from their List of Owned properties and now the bank will auction the property
-				this.propertyList.remove(currPos);
+				this.titleDeedCardList.remove(currPos);
 				System.out.println("Property will now be auctioned");
 				property.playerAuction(); //FIXME Need a list of players to be global
 				currPos++;
@@ -349,15 +350,15 @@ public class Player {
 		
 
 	public void addPurchasedCard(CanOwn purchasedProperty) {
-		this.propertyList.add(purchasedProperty);
-		purchasedProperty.setOwner(this);
+		this.titleDeedCardList.add(purchasedProperty.getTitleDeedCard());
+		purchasedProperty.getTitleDeedCard().setOwner(this);
 	}
 	
 	public void removeOwnedProperty(CanOwn property) {
-		int index = this.propertyList.indexOf(property);
+		int index = this.titleDeedCardList.indexOf(property.getTitleDeedCard());
 		//Detects that the property object is contained in Property List
 		if(index >= 0) {
-			this.propertyList.remove(index);
+			this.titleDeedCardList.remove(index);
 		}
 		else {
 			System.out.println("You cannot remove a Property when it is not in your Property List!");
@@ -367,8 +368,9 @@ public class Player {
 	public void payRent(CanOwn ownableSquare) {
 		//Going to take the ownable square and work with it from there
 		//Ask the player who owns it first whether they want to pay rent or not
-		Player owner = ownableSquare.getOwner();
-		if(ownableSquare.getMortgageStatus() == true) {
+		Player owner = ownableSquare.getTitleDeedCard().getOwner();
+		TitleDeed titleDeedCard = ownableSquare.getTitleDeedCard();
+		if(titleDeedCard.getMortgageStatus() == true) {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
 		}
 		else {
@@ -381,44 +383,46 @@ public class Player {
 					//Below is for if you own all of the properties but they are not improved,
 					//Charge double rent
 					if(Checks.ownAllColour(this, (Property)ownableSquare) != null && numHouses + numHotels == 0) {
-						this.reduceMoney(2*((Property) ownableSquare).getRent()[0], ownableSquare.getOwner());
+						this.reduceMoney(2*(titleDeedCard.getRents()[0]), titleDeedCard.getOwner());
 					}
 					else if(numHotels == 0) {
 						//This is for if you own all the properties in a colour group but you have houses
-						this.reduceMoney(((Property) ownableSquare).getRent()[numHouses], ownableSquare.getOwner());
+						this.reduceMoney(titleDeedCard.getRents()[numHouses], titleDeedCard.getOwner());
 					}
 					else {
 						//This is for if there is a hotel on the site. Max 1
-						this.reduceMoney(((Property) ownableSquare).getRent()[5], ownableSquare.getOwner());
+						this.reduceMoney(titleDeedCard.getRents()[5], titleDeedCard.getOwner());
 					}	
 				}
 				else if(ownableSquare instanceof Train) {
 					//Rent for a train is size 4
 					//Check the amount of trains that an owner has
 					int numTrains=0;
-					for(CanOwn train:owner.getPropertyList()) {
-						if(train instanceof Train) {
+					for(TitleDeed titleDeedTrain:owner.getTitleDeedList()) {
+						CanOwn ownedSquare = titleDeedTrain.getOwnableSite();
+						if(ownedSquare instanceof Train) {
 							numTrains++;
 						}
 						else {
 							continue;
 						}
 					}
-					this.reduceMoney(((Train) ownableSquare).getRent()[numTrains-1], ownableSquare.getOwner());
+					this.reduceMoney(titleDeedCard.getRents()[numTrains-1], titleDeedCard.getOwner());
 				}
 				else {
 					//Rent payment for a utility
 					//Check the amount of utilities that an owner has
 					int numUtilities=0;
-					for(CanOwn utility:owner.getPropertyList()) {
-						if(utility instanceof Utility) {
+					for(TitleDeed titleDeedUtility:owner.getTitleDeedList()) {
+						CanOwn ownedSquare = titleDeedUtility.getOwnableSite();
+						if(ownedSquare instanceof Utility) {
 							numUtilities++;
 						}
 						else {
 							continue;
 						}
 					}
-					this.reduceMoney((((Utility) ownableSquare).getRent()[numUtilities-1])*Dice.getDieVals(), ownableSquare.getOwner());
+					this.reduceMoney((titleDeedCard.getRents()[numUtilities-1])*Dice.getDieVals(), titleDeedCard.getOwner());
 				}
 			}
 			else {
@@ -431,7 +435,8 @@ public class Player {
 	//This function will be used to save a person from bankruptcy using the amount of money in argument as what is needed to raise to pay off any off debts from 
 	//the reduceMoney() function
 	public void bankruptcyMortgage(int moneyNeedToRaise) {
-		for(CanOwn ownable:this.propertyList) {
+		for(TitleDeed toMortgage:this.titleDeedCardList) {
+			CanOwn ownable = toMortgage.getOwnableSite();
 			ownable.mortgage(this);
 			if(this.money - moneyNeedToRaise > 0) {
 				//exit the method as soon as the limit has been reached
@@ -441,7 +446,8 @@ public class Player {
 	}
 	
 	public void bankruptcySellHousesHotels(int moneyNeedToRaise) {
-		for(CanOwn ownable:this.propertyList) {
+		for(TitleDeed titleDeed:this.titleDeedCardList) {
+			CanOwn ownable = titleDeed.getOwnableSite();
 			if(ownable instanceof Property) {
 				this.addMoney(((Property)ownable).sellHouses(this,false,true)); //FIXME confirm parameters
 				this.addMoney(((Property)ownable).sellHotels(this,false,true));
@@ -483,8 +489,7 @@ public class Player {
                     }
                 }
             }
-			for(CanOwn ownable:this.propertyList) {
-
+			for(int i =0; i<this.titleDeedCardList.size();i++) {
 				//if property
 				valOfMortgage = Checks.checkMortgagingValue(this);
 				
@@ -543,7 +548,7 @@ public class Player {
 	public String toString() {
 		return "Details of: "+this.name+
 				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
-				"\nIs In Jail?: "+this.inJail+"\n PropertyList"+this.propertyList;
+				"\nIs In Jail?: "+this.inJail+"\n Title Deed Card List"+this.titleDeedCardList;
 	}
 	
 }
