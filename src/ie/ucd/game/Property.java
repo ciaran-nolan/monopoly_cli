@@ -63,11 +63,11 @@ public class Property extends CanOwn {
 			else this.playerAuction();
 			
 			}
-	
+	@Override
 	public void sell(Player player, CanOwn siteToSell, List<Player> listPlayers) {
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 		if(colourGroup!=null) {
-			if(InputOutput.yesNoInput("If any of the properties in this colour group are improved, selling "+this.getName()+" will result in all houses and hotels being sold. Do you wish to continue? (y/n)", player));
+			if(InputOutput.yesNoInput("If any of the properties in this colour group are improved, selling "+this.getName()+" will result in all houses and hotels being sold. Do you wish to continue? (y/n)", player))
 			{
 				//the isMortgage parameter will provide the same outcome by selling all houses
 				this.sellHouses(player, true, false);

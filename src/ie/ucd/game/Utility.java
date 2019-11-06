@@ -1,8 +1,5 @@
 package ie.ucd.game;
 
-import java.util.List;
-import java.util.Scanner;
-
 public class Utility extends PublicSquare {
 	private int[] rent; //Rent is size 2
 	//The rents will be dealt with at a level above

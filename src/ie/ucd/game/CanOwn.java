@@ -1,6 +1,6 @@
 package ie.ucd.game;
 import java.util.*;
-import ie.ucd.game.Checks;
+
 
 public abstract class CanOwn extends Square {
 	private TitleDeed titleDeedCard;

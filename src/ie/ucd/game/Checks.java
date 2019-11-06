@@ -217,7 +217,6 @@ public class Checks {
 		
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only add the value of properties that are not currently mortgaged
-			CanOwn currentOwnable = titleDeed.getOwnableSite();
 			if(!titleDeed.getMortgageStatus()) {
 				mortgageValue += (titleDeed.getPriceBuy() / 2);
 			}

@@ -87,11 +87,11 @@ public class Player {
 			}
 			else {
 				//If its null it is paying the bank. If it is not null, it owes a player money on that square
-				this.isBankrupt(playerOwed);
+				this.isBankrupt(null);
 			}
 		}
 		//You owe a player and if 
-		else if(money > this.money && playerOwed != null) {
+		else if(money > this.money) {
 			this.isBankrupt(playerOwed);
 		}
 		//Else you have enough money for paying the bill and so you can just reduce the money
@@ -166,7 +166,7 @@ public class Player {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
 		CommunityChest pickedCard = BoardReader.communityChests.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
-		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+		if(!pickedCard.getCardType().equals("GET_OUT_OF_JAIL")) {
 			BoardReader.communityChests.remove(0);
 			BoardReader.communityChests.add(pickedCard);
 		}
@@ -183,7 +183,7 @@ public class Player {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
 		Chance pickedCard = BoardReader.chances.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
-		if(pickedCard.getCardType() != "GET_OUT_OF_JAIL") {
+		if(!pickedCard.getCardType().equals("GET_OUT_OF_JAIL")) {
 			BoardReader.chances.remove(0);
 			BoardReader.chances.add(pickedCard);
 		}
@@ -214,7 +214,7 @@ public class Player {
 		//buying a square from another player
 		//toString
 	
-	public void removePlayer(ArrayList<Player> playerList) {
+	/*public void removePlayer(ArrayList<Player> playerList) {
 		 int indexPlayer = playerList.indexOf(this);
 		 if(indexPlayer >= 0) {
 			 System.out.println("Removing Player at Index "+indexPlayer+" from game!");
@@ -223,7 +223,7 @@ public class Player {
 		 else {
 			 System.out.println("This player is not part of the Player List");
 		 }
-	}
+	}*/
 	
 	public void addPlayer(ArrayList<Player> playerList) {
 		if(!playerList.contains(this)) {
@@ -270,8 +270,8 @@ public class Player {
 								continue;
 							}
 							else {
-								//Remove the index of the token from the array
-								tokenList.remove(tokenList.indexOf(token));
+								//Remove token from the array
+								tokenList.remove(token);
 								//Do I need to access them using the index though. I suppose I will go through them in
 								listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
 								//I have added each player in the range of numPlayers to be in the listPlayers array.
@@ -296,22 +296,19 @@ public class Player {
 		if(playerOwed == null) {
 			//Bank owed
 			//Get rid of jail free card
-			int currPos = 0;
-			int currPosJail = 0;
 			if(this.jailCards.size()> 0) {
 				//Need to transfer the get out of jail card to the playerOwed
 				for(Card card:this.jailCards) {
 					//Remove it and then send to the new owner
-					Card temp = this.jailCards.remove(currPosJail);
-					if(temp instanceof CommunityChest) {
-						BoardReader.communityChests.add((CommunityChest)temp);
+					this.jailCards.remove(card);
+					if(card instanceof CommunityChest) {
+						BoardReader.communityChests.add((CommunityChest)card);
 					}
 					else {
-						BoardReader.chances.add((Chance)temp);
+						BoardReader.chances.add((Chance)card);
 					}
 					//Need to check that the card was actually removed
 					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
-					currPosJail++;
 				}
 			}
 
@@ -331,13 +328,13 @@ public class Player {
 					}	
 				}
 				//Remove the property from their List of Owned properties and now the bank will auction the property
-				this.titleDeedCardList.remove(currPos);
+				this.titleDeedCardList.remove(titleDeedCard);
 				System.out.println("Property will now be auctioned");
 				property.playerAuction(); //FIXME Need a list of players to be global
-				currPos++;
 			}
 			Game.playerList.remove(this); //FIXME need to remove the player from the game
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
+			Game.numPlayersBankrupt++; //Increase the number of players bankrupt
 			return true; //FIXME can see if this is needed
 		}
 		else {
@@ -370,7 +367,7 @@ public class Player {
 		//Ask the player who owns it first whether they want to pay rent or not
 		Player owner = ownableSquare.getTitleDeedCard().getOwner();
 		TitleDeed titleDeedCard = ownableSquare.getTitleDeedCard();
-		if(titleDeedCard.getMortgageStatus() == true) {
+		if(titleDeedCard.getMortgageStatus()) {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
 		}
 		else {

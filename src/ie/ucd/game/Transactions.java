@@ -100,7 +100,7 @@ public class Transactions {
 					case "0":
 						System.out.println(tradeList.get(i).getName() + " is exiting without trade. Nothing has been exchanged");
 						//return method without conducting a trade
-						return;
+						break;
 					case "1":
 						if (tradeList.get(i).getJailFreeNum() == 0) {
 							if (InputOutput.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)", tradeList.get(i))) {
@@ -120,6 +120,7 @@ public class Transactions {
 							}
 							tempJail++;
 						}
+						break;
 					case "2":
 						if (input.hasNext()) {
 							input.nextLine();
@@ -144,6 +145,7 @@ public class Transactions {
 						} else {
 							tempPropsToTrade.put(propToTrade.getName(), propToTrade);
 						}
+						break;
 					case "3":
 						System.out.println("Please specify the amount of cash you would like to include in this trade:");
 						int cashToTrade = input.nextInt();
@@ -160,21 +162,24 @@ public class Transactions {
 								break;
 							}
 						}
-
-						if (!finishedTrade) {
-							if (InputOutput.yesNoInput(tradeList.get(i).getName() + " are you finished making your trade? (y/n)", tradeList.get(i))) {
-								if (i == 0) {
-									traderOneCash = tempCash;
-									traderOneJailFree = tempJail;
-									traderOnePropsToTrade.putAll(tempPropsToTrade);
-								} else {
-									traderTwoCash = tempCash;
-									traderTwoJailFree = tempJail;
-									traderTwoPropsToTrade.putAll(tempPropsToTrade);
-								}
-								finishedTrade = true;
+						//FIXME @@ciarannolan this condition isnt needed
+						//if (!finishedTrade) {
+						if (InputOutput.yesNoInput(tradeList.get(i).getName() + " are you finished making your trade? (y/n)", tradeList.get(i))) {
+							if (i == 0) {
+								traderOneCash = tempCash;
+								traderOneJailFree = tempJail;
+								traderOnePropsToTrade.putAll(tempPropsToTrade);
+							} else {
+								traderTwoCash = tempCash;
+								traderTwoJailFree = tempJail;
+								traderTwoPropsToTrade.putAll(tempPropsToTrade);
 							}
+							finishedTrade = true;
 						}
+						//}
+						break;
+					default:
+						throw new IllegalStateException("Unexpected value: " + transactionChoice);
 				}
 			}
 
@@ -194,7 +199,7 @@ public class Transactions {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		InputOutput.playerCanOwnInfo(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
-
+			//FIXME please implement here
 		}
 		else{
 			System.out.println("No players are willing to trade");

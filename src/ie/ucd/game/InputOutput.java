@@ -24,12 +24,7 @@ public class InputOutput {
 			System.out.println(player.getName()+", please enter a valid response (y/n)");
 			acknowledgement = input.nextLine();
 		}
-		if(acknowledgement.equalsIgnoreCase("y")){
-			return true;
-		}
-		else {
-			return false;
-			}
+		return acknowledgement.equalsIgnoreCase("y");
 	}
 
 	public static void squareInformation(int index){
@@ -55,7 +50,7 @@ public class InputOutput {
 	
 
 	public static int integerMenu(int lowerBound, int upperBound){
-		int choiceInput = 0;
+		int choiceInput;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 
 		do{
@@ -113,7 +108,7 @@ public class InputOutput {
 			case 1:
 				Property propToMortgage = propertyInput(currentPlayer, "Mortgage");
 				
-				if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
+				if(!(Checks.isPlayerOwner(propToMortgage, currentPlayer))){
 					if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
 						//restart pre-dice roll options
 						handleUserOption(currentPlayer, doubleRoll);

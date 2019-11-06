@@ -19,10 +19,7 @@ public class Dice {
 		dice2 = rollGenerator.nextInt(6)+1;
 		System.out.println("\n-----------------------\n\tDICE ROLL\n-----------------------");
 		System.out.println("\tFirst Dice: "+dice1+"\n\tSecond Dice: "+dice2+"\n");
-		if (dice1==dice2) {
-			return true;
-		}
-		return false;
+		return dice1 == dice2;
 	}
 	
 	public static int getDieVals() {
