@@ -21,14 +21,17 @@ public class Train extends PublicSquare {
 	public void buy(Player player) {
 		//check user has enough funds to purchase
 		TitleDeed titleDeedCard = this.getTitleDeedCard();
+		//The player doesn't have enough money to purchase it
 		if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
 			System.err.println("You do not have the necessary funds to purchase this train.\nYour Funds: "+player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 			//player does not have enough funds to buy property, automatically enter auction
 			this.playerAuction();
 		}
+		//Property is already owned
 		else if(!(Checks.canBuy((CanOwn) this, player))){
 			System.err.println("This property is already owned!");
 		}
+		//They can purchase it
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
 				+this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
 			//user has passed all necessary checks to purchase a property, reduce the price from users funds
@@ -37,6 +40,7 @@ public class Train extends PublicSquare {
 			//add property to users property list
 			player.addPurchasedCard(this);
 		}
+		//Send to auction
 		else {
 			this.playerAuction();
 		}
