@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Property extends CanOwn {
 	private String squareColour;
 	private int numHouses;
@@ -45,10 +46,10 @@ public class Property extends CanOwn {
                         +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
 				this.playerAuction();
-				return;
+
 			}
 			//the case of the owner should be handled in check square
-			else if(!(Checks.canBuy((CanOwn) this, player))){
+			else if(!(Checks.canBuy(this, player))){
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "

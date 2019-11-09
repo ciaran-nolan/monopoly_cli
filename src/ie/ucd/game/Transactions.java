@@ -157,13 +157,13 @@ public class Transactions {
 									finishedTrade = true;
 									break;
 								}
-							} else {
+							}
+							else {
+								//I have the money to trade - Add money to the trade
 								tempCash += cashToTrade;
-								break;
 							}
 						}
-						//FIXME @@ciarannolan this condition isnt needed
-						//if (!finishedTrade) {
+						//We can then ask do they want to add anything to the trade
 						if (InputOutput.yesNoInput(tradeList.get(i).getName() + " are you finished making your trade? (y/n)", tradeList.get(i))) {
 							if (i == 0) {
 								traderOneCash = tempCash;
@@ -176,7 +176,6 @@ public class Transactions {
 							}
 							finishedTrade = true;
 						}
-						//}
 						break;
 					default:
 						throw new IllegalStateException("Unexpected value: " + transactionChoice);
