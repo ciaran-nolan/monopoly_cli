@@ -10,19 +10,19 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class UtilityTest {
     private Utility utilityNew;
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         //In this I will create a new Utility
         utilityNew = new Utility("Water Works",4,200,20, new int[]{4,10} , null);
     }
 
     @Test
-    public void getRent() throws Exception {
+    void getRent() throws Exception {
         int[] expectedRent = new int[]{4,10};
         assertEquals("Expected value: "+expectedRent, "Actual value: " +utilityNew.getRent());
     }
 
     @Test
-    public void setRent() throws Exception {
+    void setRent() throws Exception {
         int[] expectedRent = new int[]{10,20};
         int[] overfillRent = new int[]{10,20,30,40};
         utilityNew.setRent(expectedRent);
@@ -37,7 +37,7 @@ class UtilityTest {
     }
 
     @Test
-    public void buy() throws  Exception{
+    void buy() throws  Exception{
         Player player1 = new Player("John", "blue");
     }
 
