@@ -21,8 +21,10 @@ public class Chance extends Card {
 				}
 				//player1.setLocation(this.getCardValue());
 				player.moveToSquare(this.getCardValue());
+				break;
 			case "JAIL":
 				player.goToJail();
+				break;
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site
@@ -43,11 +45,17 @@ public class Chance extends Card {
 				}
 				else {
 					player.reduceMoney(this.getCardValue(), null);
+					break;
 				}
 			case "INCOME":
 				player.addMoney(this.getCardValue());
+				break;
 			case "GET_OUT_OF_JAIL":
+				player.addJailCard(this);
 				player.setJailFree(); //Increments the amount of jail free cards by 1
+				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + this.getCardType());
 		}
 	
 
