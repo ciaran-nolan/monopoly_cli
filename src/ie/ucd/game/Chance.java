@@ -22,7 +22,7 @@ public class Chance extends Card {
 				//player1.setLocation(this.getCardValue());
 				player.moveToSquare(this.getCardValue());
 			case "JAIL":
-				player.goToJail();
+				Jail.sendToJail(player);
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site

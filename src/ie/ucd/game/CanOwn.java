@@ -113,6 +113,7 @@ public abstract class CanOwn extends Square {
 			//only one player remaining in bid pool, assign property to winner 
 			if (biddingPoolSize == 1) {
 				System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getName()+" at auction for: "+currentAuctionDetails[0]);
+				// add purchased card also updates the owner of said title deed card
 				biddingPlayers.get(0).addPurchasedCard(this);
 				biddingPlayers.get(0).reduceMoney(currentAuctionDetails[0], null);
 				break;
