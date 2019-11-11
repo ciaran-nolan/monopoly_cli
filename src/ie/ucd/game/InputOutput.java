@@ -27,6 +27,7 @@ public class InputOutput {
 		return acknowledgement.equalsIgnoreCase("y");
 	}
 
+
 	public static void squareInformation(int index){
 
             if(board.get(index) instanceof CanOwn){

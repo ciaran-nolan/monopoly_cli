@@ -12,6 +12,7 @@ public class Player {
 	private int jailFreeCard; // This is used to see if the Player has a Get out of Jail Free card which can be used
 	private boolean inJail = false; //If they are in jail or not
 	private ArrayList<Card> jailCards = new ArrayList<Card>();
+	private int jailMoves = 0;
 
 	
 	public Player(String name, String token) {
@@ -46,6 +47,9 @@ public class Player {
 	public int getJailFreeNum() {
 		return this.jailFreeCard;
 	}
+	public void setJailFreeNum(int cardNum){
+	    this.jailFreeCard = cardNum;
+    }
 	
 	public ArrayList<Card> getJailCard() {
 		return this.jailCards;
@@ -58,6 +62,9 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public int getJailMoves(){ return this.jailMoves;}
+	public void setJailMoves(int numJailMoves){ this.jailMoves=numJailMoves;}
 	
 	public void setToken(String token) {
 		this.token = token;
@@ -122,46 +129,8 @@ public class Player {
 		}
 		this.indexLocation = squareNum;
 	}
-	
-	public boolean goToJail() {
-		ArrayList<Chance> chanceDeck = BoardReader.getChances();
-		ArrayList<CommunityChest> commChestDeck = BoardReader.getCommunityChests();
-		//You need to check if the location of the Player is at the index location of the square for that and whether they have gotten a go to jail card
-		if(this.jailFreeCard < 1) {
-			this.indexLocation = 10; //FIXME CHANGE TO THE INDEX OF JAIL.....OR EVEN ENUMERATE THE INDEX
-			return this.inJail = true;
-		}
-		else {
-			int currPos = 0;
-			this.jailFreeCard--;
-			//I now need to add the card back into the relevant array. I can see that by the Array that is less than 16 
-			for(Card card:this.jailCards){
-				if(card instanceof CommunityChest) {
-					this.jailCards.remove(currPos);
-					commChestDeck.add((CommunityChest)card);
-				}
-				if(card instanceof Chance) {
-					this.jailCards.remove(currPos);
-					chanceDeck.add((Chance)card);
-				}
-				currPos++;
-			}
-			//Check if they still have one card
-			if(this.jailFreeCard > 0) {
-				System.out.println("You have a get out of jail free card still");
-				return this.inJail = false;
-			}
-			else {
-				this.indexLocation = 10; 
-				return this.inJail = true;
-			}
-			//RETURN THE CARD TO THE LIST as the user has now used it
-			//For the jail card, add it and then delete it from the array of cards. When you are done with it and want to return it, 
-			//just add it to the end of the card 
-		}
-	
-	}
-	
+
+
 	public void pickCommChestCard() {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
 		CommunityChest pickedCard = BoardReader.communityChests.get(0);
@@ -199,15 +168,11 @@ public class Player {
 	public boolean isInJail() {
 		return inJail; //Return inJail status
 	}
+	public void setInJail(boolean jailStatus){
+	    this.inJail = jailStatus;
+    }
 	
-	public int leftInPrison() {
-		return 1;
-		//return turns left in prison FIXME
-	}
-	public boolean leavePrison() {
-		return true;
-		//FIXME Checks whether they can leave prison or not
-	}
+
 	//Functions to consider: FIXME
 		//Remove player from the game 
 		//isBankrupt function 

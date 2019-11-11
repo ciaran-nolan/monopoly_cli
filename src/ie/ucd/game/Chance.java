@@ -23,7 +23,7 @@ public class Chance extends Card {
 				player.moveToSquare(this.getCardValue());
 				break;
 			case "JAIL":
-				player.goToJail();
+				Jail.sendToJail(player);
 				break;
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
@@ -57,7 +57,5 @@ public class Chance extends Card {
 			default:
 				throw new IllegalStateException("Unexpected value: " + this.getCardType());
 		}
-	
-
 	}
 }

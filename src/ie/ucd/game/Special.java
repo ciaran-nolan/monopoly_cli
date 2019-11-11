@@ -56,7 +56,7 @@ public class Special extends Square {
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
-				player.goToJail();
+				Jail.sendToJail(player);
 				break; //FIXME Will need to be looking at the chance and community cards also
 		}
 	}
