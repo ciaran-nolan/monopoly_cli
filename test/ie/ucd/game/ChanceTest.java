@@ -19,12 +19,18 @@ class ChanceTest {
         Player playerTest = new Player("John", "blue");
         //FIXME @@ciarannolan does this need to be static?
         int initialMoney = playerTest.getMoney();
+        int expectedValuePay= initialMoney - chanceTest.getCardValue();
+
         int currLocation = playerTest.getLocation();
+        chanceTest.dealWithCard(playerTest);
+        System.out.println(expectedValuePay);
         //PAY
-        assertEquals(initialMoney-chanceTest.getCardValue(), playerTest.getMoney(),"Check money is reduced from Player");
+        assertEquals(expectedValuePay, playerTest.getMoney(),"Check money is reduced from Player");
         //INCOME
+        int expectedValueIncome = expectedValuePay + chanceTest.getCardValue();;
         chanceTest.setCardType("INCOME");
-        assertEquals(initialMoney+chanceTest.getCardValue(),playerTest.getMoney(),"Checking income works");
+        chanceTest.dealWithCard(playerTest);
+        assertEquals(expectedValueIncome,playerTest.getMoney(),"Checking income works");
         //MOVE
         chanceTest.setCardType("MOVE");
         chanceTest.setCardValue(5);

@@ -7,7 +7,7 @@ public class Game {
 	private static int remainingHouses=32;
 	private static int remainingHotels=12;
 	public static ArrayList<Player> playerList = new ArrayList<Player>();
-	ArrayList<Square> board = BoardReader.board;
+
 	public static int numPlayersBankrupt=0;
 	public Game() {
 		
@@ -38,7 +38,7 @@ public class Game {
 		//BoardReader.board
 		playerList = Player.createListPlayers();
 		BoardReader.initialiseBoard();
-		
+		//game ends after two players go bankrupt mso only need to go to
 		while(numPlayersBankrupt < 2) {
 			//This is the loop that consistently loop through the players of the game
 			for(Player currentPlayer:playerList) {
