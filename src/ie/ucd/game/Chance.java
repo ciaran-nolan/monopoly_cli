@@ -25,7 +25,6 @@ public class Chance extends Card {
 			case "JAIL":
 				Jail.sendToJail(player);
 				break;
-
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site
