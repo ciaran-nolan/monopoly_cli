@@ -88,7 +88,8 @@ public class Jail {
 
         if(jailExitChoice==0){
             //they have decided to roll the dice
-            doubleRoll = Dice.rollDice();
+            Dice.rollDice();
+            doubleRoll = Dice.isDoubleRoll();
             //check if they have rolled a double
             if(doubleRoll){
                 System.out.println("You have rolled doubles, you now exit jail and move "+Dice.getDieVals()+" places");
@@ -105,7 +106,8 @@ public class Jail {
         else if(jailExitChoice == 1){
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the fine, you must roll");
-                doubleRoll=Dice.rollDice();
+                Dice.rollDice();
+                doubleRoll=Dice.isDoubleRoll();
                 jailedPlayer.setJailMoves(jailedPlayer.getJailMoves()+1);
                 if(doubleRoll){
                     System.out.println("You have rolled doubles, you now exit jail and move "+Dice.getDieVals()+" places");

@@ -57,6 +57,7 @@ public class Player {
 	
 	public void addJailCard(Card card) {
 		this.jailCards.add(card);
+		this.jailFreeCard++;
 	}
 	
 	public void setName(String name) {

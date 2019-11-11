@@ -53,36 +53,15 @@ public class Game {
                     while (doubleRoll) {
                         //This is where to get a correct input from the user
                         InputOutput.handleUserOption(currentPlayer, doubleRoll);
-                        //check if they are finished before rolling dice
-
 
                         //Roll the dice regardless after they have done all of their things
-                        //This will hopefully update the dice roll and allow it to see if a double has been rolled
                         //this will both roll the dice and check if a double has been rolled
-                        doubleRoll = Dice.rollDice();
-
-                        if (doubleRoll) {
-                            Dice.incrementDuplicateRollCounter();
-                        } else {
-                            doubleRoll = false;
-                        }
-                        //condition for jail
-                        if (Dice.getDuplicateRollCounter() == 3) {
-                            Jail.sendToJail(currentPlayer);
-                            Dice.resetDuplicateRollCounter();
-                            break;
-                        }
-
+                        doubleRoll=Dice.handlePlayerRoll(currentPlayer);
                         currentPlayer.movePlayer(Dice.getDieVals());
-                        //Checks will implement everything in there that is needed such as working on special squares etc or going to jail
-                        //It needs to see what square it has to know what to do next
-                        //FIXME We could have a switch statement and the checksquare returns a value to the main
+                        //Display information about the square
                         InputOutput.squareInformation(currentPlayer.getLocation());
+                        //handle the required action on the square
                         Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
-
-                        //Need to implement an input function which will take a parameter of whether they are allowed to rollDice again or not and then the switch statement
-                        // will change as a result
-
 
                         //If asked to finish and didnt roll double, break
                         while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer)) {
@@ -91,29 +70,14 @@ public class Game {
                         if (!doubleRoll) {
                             break;
                         } else {
-                            System.out.println(currentPlayer.getName() + ", you have rolled doubles, you will roll again");
+                            System.out.print("\n"+currentPlayer.getName() + ", you have rolled doubles, you will roll again");
                         }
 
                     }
                 }
-                //You can build at any time on whatever square
-                //Do you want to Roll dice?
-                //IF it was a roll, i need to move player
-                //Check the square
-                //Double -Roll again after the decision has been made -> Cannot roll again if it is jail
-                //At end of turn, do you want to mortgage properties, buy and sell hotels/houses
-                //Check square needs to check if they are on a chance card and them implementSpecialSquare will be able to implement what is happening
-                //Ask them if they are finished with their turn
-                //increment the playerlist and then do it all again
-                //have at bottom of for loop that
-			/*for{
-				if (numPlayersBankrupt)
-				break;
-			}*/
             }
 		}
+        //Will check the winner and finish the game
 		Checks.checkWinner();
-		//Will check the winner and finish the game
-		
 	}
 }
