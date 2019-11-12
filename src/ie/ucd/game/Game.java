@@ -56,11 +56,13 @@ public class Game {
                         //Roll the dice regardless after they have done all of their things
                         //this will both roll the dice and check if a double has been rolled
                         doubleRoll=Dice.handlePlayerRoll(currentPlayer);
-                        currentPlayer.movePlayer(Dice.getDieVals());
-                        //Display information about the square
-                        InputOutput.squareInformation(currentPlayer.getLocation());
-                        //handle the required action on the square
-                        Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
+                        if(!currentPlayer.isInJail()){
+							currentPlayer.movePlayer(Dice.getDieVals());
+							//Display information about the square
+							InputOutput.squareInformation(currentPlayer.getLocation());
+							//handle the required action on the square
+							Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
+						}
 
                         //If asked to finish and didnt roll double, break
                         while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer)) {
@@ -71,7 +73,6 @@ public class Game {
                         } else {
                             System.out.print("\n"+currentPlayer.getName() + ", you have rolled doubles, you will roll again");
                         }
-
                     }
                 }
             }

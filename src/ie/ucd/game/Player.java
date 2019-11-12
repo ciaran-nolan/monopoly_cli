@@ -73,7 +73,7 @@ public class Player {
 	
 	public void addMoney(int money) {
 		this.money+= money;
-		System.out.println("Remaining Funds = £"+this.money);
+		System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
 	}
 	
 	public void setLocation(int index) {
@@ -124,12 +124,12 @@ public class Player {
 		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 39) {
 			//In this they are either on the square or they have now passed it
-            System.out.println(this.getLocation()+ (moves-39));
-			this.setLocation(this.getLocation()+ (moves-39));
+            System.out.println(this.indexLocation + (moves-39));
+			this.indexLocation += (moves-39);
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
 			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}
-		this.indexLocation = this.indexLocation + moves; //This moves the index location by moves 
+		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
 	
 	public void moveToSquare(int squareNum) {
