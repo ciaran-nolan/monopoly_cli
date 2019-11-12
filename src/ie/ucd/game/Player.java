@@ -87,26 +87,34 @@ public class Player {
 	public void reduceMoney(int money, Player playerOwed) {
 		//Reduce money needs to see if there is enough money to do everything
 		//This is if you are owing money to the bank......if you can raise enough, you can get around it
-		if(money > this.money && playerOwed == null) {
-			//It will take an argument of the amount of money needed raise
-			if(this.saveFromBankruptcy(money-this.money)) {
-				//I have saved from bankruptcy and so I can now reduce the money
-				this.money-=money;
-			}
-			else {
-				//If its null it is paying the bank. If it is not null, it owes a player money on that square
+
+		//check who is owed first
+		if(playerOwed == null){
+			//can the player afford to pay the bank
+			if(money > this.money) {
+				//cant afford, player is bankrupt
 				this.isBankrupt(null);
 			}
+			else{
+				//can afford, pay the amount
+				this.money -= money;
+				System.out.println(this.name+", remaining Funds: £"+this.money);
+			}
 		}
-		//You owe a player and if 
-		else if(money > this.money) {
-			this.isBankrupt(playerOwed);
-		}
-		//Else you have enough money for paying the bill and so you can just reduce the money
-		else {
-			this.money-=money;
-			playerOwed.addMoney(money);
-			System.out.println(this.name+", remaining Funds: £"+this.money);
+		//a player is owed
+		else{
+			//can the player afford to pay the payee
+			if(money > this.money) {
+				//they are bankrupt to another player
+				this.isBankrupt(playerOwed);
+			}
+			else{
+				//can afford to pay, reduce payer's money
+				this.money-=money;
+				System.out.println(this.name+", remaining Funds: £"+this.money);
+				//increment payees money
+				playerOwed.addMoney(money);
+			}
 		}
 	}
 	

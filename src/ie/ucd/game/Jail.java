@@ -44,7 +44,10 @@ public class Jail {
             }
             else {
                 jailedPlayer.setInJail(false);
-                jailedPlayer.reduceMoney(50,null);}
+                jailedPlayer.reduceMoney(50,null);
+                jailedPlayer.movePlayer(Dice.getDieVals());
+                Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer);
+            }
         }
         else{
             System.out.println("You have rolled for the third time without getting doubles.");
