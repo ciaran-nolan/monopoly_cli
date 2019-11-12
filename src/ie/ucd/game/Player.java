@@ -122,10 +122,10 @@ public class Player {
 	//moves is the amount of the 
 	public void movePlayer(int moves) {
 		//FIXME change this 39 to be the GO SQUARE configuration
-		if((this.getLocation()+ moves) >= 39) {
+		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
-            System.out.println(this.indexLocation + (moves-39));
-			this.indexLocation += (moves-39);
+            System.out.println(this.indexLocation + (moves-40));
+			this.indexLocation += (moves-40);
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
 			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}

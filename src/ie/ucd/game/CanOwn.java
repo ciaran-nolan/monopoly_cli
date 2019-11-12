@@ -135,7 +135,7 @@ public abstract class CanOwn extends Square {
 					if(this.titleDeedCard.getMortgageStatus() == true){
 						System.err.println("This property is already mortgaged!");
 					}
-					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n))", player)) {
+					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n)", player)) {
 						this.titleDeedCard.setMortgageStatus(true);
 						player.addMoney(this.titleDeedCard.getMortgage());
 						System.out.println("Successfully mortgaged "+this.getName());
