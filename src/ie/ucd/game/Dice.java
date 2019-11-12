@@ -11,7 +11,7 @@ public class Dice {
 	private static int dice2;
 	private static int duplicateRollCounter=0;
 	
-	public static boolean rollDice(){
+	public static void rollDice(){
 		Random rollGenerator = new Random();
 			
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
@@ -19,19 +19,39 @@ public class Dice {
 		dice2 = rollGenerator.nextInt(6)+1;
 		System.out.println("\n-----------------------\n\tDICE ROLL\n-----------------------");
 		System.out.println("\tFirst Dice: "+dice1+"\n\tSecond Dice: "+dice2+"\n");
-		if (dice1==dice2) {
-			return true;
-		}
-		return false;
 	}
-	
+	public static boolean isDoubleRoll(){
+		return dice1 == dice2;
+	}
+
 	public static int getDieVals() {
 		//return object containing both die values
 		return (dice1 + dice2);
 	}
 
-	public static void handlePlayerRoll(Player player){
+	public static boolean isThirdDouble(Player player){
+		if (Dice.getDuplicateRollCounter() == 3) {
+			System.out.println("You have rolled doubles for the third time.");
+			Jail.sendToJail(player);
+			Dice.resetDuplicateRollCounter();
+			return true;
+		}
+		return false;
+	}
+	public static boolean handlePlayerRoll(Player player){
+		rollDice();
+		if (isDoubleRoll()) {
+			Dice.incrementDuplicateRollCounter();
+			if(isThirdDouble(player)){
+				//player is in jail and cant roll again
+				return false;
+			}
+			else return true;
 
+		} else {
+			Dice.resetDuplicateRollCounter();
+			return false;
+		}
 	}
 
 	public static int getDuplicateRollCounter() {

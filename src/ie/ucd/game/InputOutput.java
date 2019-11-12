@@ -1,5 +1,6 @@
 package ie.ucd.game;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static ie.ucd.game.BoardReader.board;
@@ -24,23 +25,50 @@ public class InputOutput {
 			System.out.println(player.getName()+", please enter a valid response (y/n)");
 			acknowledgement = input.nextLine();
 		}
-		if(acknowledgement.equalsIgnoreCase("y")){
-			return true;
-		}
-		else {
-			return false;
+		return acknowledgement.equalsIgnoreCase("y");
+	}
+
+	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
+		System.out.println("Please select the title deed card you wish to "+operation);
+		ArrayList<TitleDeed>houseHotelList = new ArrayList<>();
+		int choiceInput;
+
+		for(int i=0; i<player.getTitleDeedList().size() ;i++){
+			if(housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)){
+				houseHotelList.add(player.getTitleDeedList().get(i));
 			}
+			else System.out.println("["+i+"] "+player.getTitleDeedList().get(i).getCardDesc());
+		}
+		if(housesHotels){
+			for(int i=0; i<houseHotelList.size();i++){
+				System.out.println("["+i+"] "+houseHotelList.get(i).getCardDesc());
+			}
+			System.out.println("["+(houseHotelList.size())+"] Cancel");
+			choiceInput = integerMenu(0,houseHotelList.size());
+			if(choiceInput == houseHotelList.size()){
+				return null;
+			}
+			else return houseHotelList.get(choiceInput);
+		}
+		else{
+			System.out.println("["+(player.getTitleDeedList().size())+"] Cancel");
+			choiceInput = integerMenu(0,player.getTitleDeedList().size());
+			if(choiceInput == player.getTitleDeedList().size()){
+				return null;
+			}
+			else return player.getTitleDeedList().get(choiceInput);
+		}
 	}
 
 	public static void squareInformation(int index){
 
             if(board.get(index) instanceof CanOwn){
                 System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
-                if(null == (((CanOwn) board.get(index)).getOwner())){
+                if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
                     System.out.println("Owner: None") ;
                 }
                 else{
-                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getOwner().getName())) ;
+                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
                 }
                 if (board.get(index) instanceof Property) {
                     System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
@@ -52,10 +80,9 @@ public class InputOutput {
             }
 
 	}
-	
 
 	public static int integerMenu(int lowerBound, int upperBound){
-		int choiceInput = 0;
+		int choiceInput;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 
 		do{
@@ -87,13 +114,6 @@ public class InputOutput {
 		
 	}
 
-	public static void jailMove(Player player){
-		System.out.println(player+" you are currently in jail, please selec");
-	}
-
-	public static void miscellaneousStringInputs(){
-
-	}
 	public static void handleUserOption(Player currentPlayer,boolean doubleRoll) {
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
@@ -111,17 +131,14 @@ public class InputOutput {
 		
 		switch(choiceInput) {
 			case 1:
-				Property propToMortgage = propertyInput(currentPlayer, "Mortgage");
-				
-				if(!(Checks.isPlayerOwner((CanOwn) propToMortgage, currentPlayer))){
-					if(InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", currentPlayer)){
-						//restart pre-dice roll options
-						handleUserOption(currentPlayer, doubleRoll);
-					}
+				TitleDeed titleDeedToMortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
+				if(null == titleDeedToMortgage){
+					System.out.println("Cancelling Operation");
 				}
-				//This is for mortgaging a property
-				//Need to search for the index and then mortgage it using the below
-				propToMortgage.mortgage(currentPlayer);
+				else {
+					CanOwn propToMortgage = (titleDeedToMortgage.getOwnableSite());
+					propToMortgage.mortgage(currentPlayer);
+				}
 				break;
 			case 2:
 				//This is for choosing to build house on a square
@@ -144,8 +161,9 @@ public class InputOutput {
 
 	public static void playerCanOwnInfo (Player player){
 	    System.out.println(player.getName()+"'s current property/utility/train status:");
-	    for (CanOwn currentProperty : player.getPropertyList()){
-	        System.out.println("Name:"+currentProperty.getName()+"\nIs Mortgaged?: "+currentProperty.getMortgageStatus());
+	    for (TitleDeed titleDeed : player.getTitleDeedList()){
+			CanOwn currentProperty = titleDeed.getOwnableSite();
+	    	System.out.println("Name:"+titleDeed.getCardDesc()+"\nIs Mortgaged?: "+titleDeed.getMortgageStatus());
 	        if(currentProperty instanceof Property){
 	            System.out.println("Colour: "+((Property) currentProperty).getSquareColour()+"\nHouses: "
                         +((Property) currentProperty).getNumHouses()+"\nHotels: "+((Property) currentProperty).getNumHotels());

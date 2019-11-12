@@ -10,7 +10,7 @@ public class Chance extends Card {
 	public void dealWithCard(Player player) {
 		//From here I need to deal with a card produced from a deck of cards
 
-		ArrayList<CanOwn> propertyList = player.getPropertyList();
+		ArrayList<TitleDeed> titleDeedList = player.getTitleDeedList();
 		System.out.println("The chance card reads: "+this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
@@ -21,12 +21,15 @@ public class Chance extends Card {
 				}
 				//player1.setLocation(this.getCardValue());
 				player.moveToSquare(this.getCardValue());
+				break;
 			case "JAIL":
-				player.goToJail();
+				Jail.sendToJail(player);
+				break;
 			case "PAY":
 				if(this.getCardDesc().contains("repairs")) {
 					//In this case I need to get how many houses or hotels are on each site
-					for(CanOwn property : propertyList) {
+					for(TitleDeed titleDeed : titleDeedList) {
+						CanOwn property = titleDeed.getOwnableSite();
 						if(property instanceof Property) {
 							//This will get the card value and multiply the number of houses or hotels depending on if its of Property Class
 							player.reduceMoney(this.getCardValue()*((Property) property).getNumHouses(),null);
@@ -42,13 +45,17 @@ public class Chance extends Card {
 				}
 				else {
 					player.reduceMoney(this.getCardValue(), null);
+					break;
 				}
 			case "INCOME":
 				player.addMoney(this.getCardValue());
+				break;
 			case "GET_OUT_OF_JAIL":
+				player.addJailCard(this);
 				player.setJailFree(); //Increments the amount of jail free cards by 1
+				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + this.getCardType());
 		}
-	
-
 	}
 }

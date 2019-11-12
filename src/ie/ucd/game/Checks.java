@@ -14,34 +14,36 @@ public class Checks {
 		
 		switch(currentSquare.getSquareType()) {
 		case PROPERTY:
-			if(null==((Property)currentSquare).getOwner()){
+			if(null==((Property)currentSquare).getTitleDeedCard().getOwner()){
 				((Property)currentSquare).buy(player);
 			}
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		case SPECIAL:
 			((Special)currentSquare).implementSpecialSquare(player);
 			break;
 		case TRAIN:
-			if(null==((Train)currentSquare).getOwner()){
+			if(null==((Train)currentSquare).getTitleDeedCard().getOwner()){
 				((Train)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, can't pay rent for train or utility as input expects type CanOwn
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
-			
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		case UTILITY:
-			if(null==((Utility)currentSquare).getOwner()){
+			if(null==((Utility)currentSquare).getTitleDeedCard().getOwner()){
 				((Utility)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, cant pay rent for train or utility as input expects type CanOwn
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		default:
 			break;	
@@ -57,18 +59,18 @@ public class Checks {
 	
 	public static void playerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailFreeNum()
-		+" Jail Free Cards\n"+player.getPropertyList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
+		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
 
 	public static boolean canBuy(CanOwn ownableCard, Player player) {
-        return null == ownableCard.getOwner();
+        return null == ownableCard.getTitleDeedCard().getOwner();
 		}
 	
 	public static boolean isPlayerOwner(CanOwn ownableCard, Player player){
-		if(null == ownableCard.getOwner()){
+		if(null == ownableCard.getTitleDeedCard().getOwner()){
 			return false;
 		}
-		if(ownableCard.getOwner().getName().equals(player.getName())) {
+		if(ownableCard.getTitleDeedCard().getOwner().getName().equals(player.getName())) {
 			return true;
 		}
 		else {
@@ -114,8 +116,9 @@ public class Checks {
 		}
 
 		//loop through the players property list
-		for(CanOwn currentOwnable: player.getPropertyList()) {
+		for(TitleDeed titleDeed: player.getTitleDeedList()) {
 			//only analyse the type property
+			CanOwn currentOwnable = titleDeed.getOwnableSite();
 			if(currentOwnable instanceof Property) {
 				//compare square colour with the specified property
 				if(((Property) currentOwnable).getSquareColour().equals(property.getSquareColour())) {	
@@ -180,9 +183,9 @@ public class Checks {
 				return -1;
 			} else return -2;
 		}
-		else if(player.getMoney() < propToBuild.getHousePrice()) {
+		else if(player.getMoney() < propToBuild.getTitleDeedCard().getHousePrice()) {
 			System.out.println("You do not have enough funds to purchase any houses/hotels for " + propToBuild.getName()
-					+ "\nYour funds: " + player.getMoney() + "\nHouse Price: " + propToBuild.getHousePrice());
+					+ "\nYour funds: " + player.getMoney() + "\nHouse Price: " + propToBuild.getTitleDeedCard().getHousePrice());
 			return -2;
 		}
 
@@ -199,12 +202,12 @@ public class Checks {
 	
 	public static int checkHouseHotelValue(Player player) {
 		int valOfHousesHotels = 0;
-		
-		for(CanOwn currentOwnable: player.getPropertyList()) {
+		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only analyse the type property
+			CanOwn currentOwnable = titleDeed.getOwnableSite();
 			if(currentOwnable instanceof Property) {
-				valOfHousesHotels += ((((Property) currentOwnable).getHousePrice()*((Property) currentOwnable).getNumHouses())/2);
-				valOfHousesHotels += ((((Property) currentOwnable).getHousePrice()*((Property) currentOwnable).getNumHotels()*5)/2);
+				valOfHousesHotels += ((titleDeed.getHousePrice()*((Property) currentOwnable).getNumHouses())/2);
+				valOfHousesHotels += ((titleDeed.getHousePrice()*((Property) currentOwnable).getNumHotels()*5)/2);
 			}
 		}
 		return valOfHousesHotels;
@@ -213,10 +216,10 @@ public class Checks {
 	public static int checkMortgagingValue(Player player) {
 		int mortgageValue = 0;
 		
-		for(CanOwn currentOwnable: player.getPropertyList()) {
+		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only add the value of properties that are not currently mortgaged
-			if(!currentOwnable.getMortgageStatus()) {
-				mortgageValue += (currentOwnable.getPrice() / 2);
+			if(!titleDeed.getMortgageStatus()) {
+				mortgageValue += (titleDeed.getPriceBuy() / 2);
 			}
 		}
 		return mortgageValue;
@@ -232,12 +235,13 @@ public class Checks {
 		
 		for(Player player:Game.playerList) {
 			totalValue += player.getMoney();
-			for(CanOwn ownable:player.getPropertyList()) {
+			for(TitleDeed titleDeed:player.getTitleDeedList()) {
+				CanOwn ownable = titleDeed.getOwnableSite();
 				if(ownable instanceof Property) {
-					totalValue += ((Property)ownable).getNumHouses()*((Property)ownable).getHousePrice();
-					totalValue += ((Property)ownable).getNumHotels()*((Property)ownable).getHousePrice()*5; //A Hotel is 5 times the price of a house
+					totalValue += ((Property)ownable).getNumHouses()*titleDeed.getHousePrice();
+					totalValue += ((Property)ownable).getNumHotels()*titleDeed.getHousePrice()*5; //A Hotel is 5 times the price of a house
 				}
-				totalValue+= ownable.getPrice();
+				totalValue+= titleDeed.getPriceBuy();
 				valueArray.add(totalValue);
 				System.out.println("Player: "+player.getName()+" has Total Asset value of �"+totalValue);
 			}

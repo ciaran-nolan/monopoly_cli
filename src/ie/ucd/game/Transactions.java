@@ -77,135 +77,130 @@ public class Transactions {
 	}
 	
 	public static void playerToPlayerTrade(Player initiatingPlayer) {
-		
+
 		initiateTrade(initiatingPlayer);
-	
+
 		Scanner input = new Scanner(System.in);
 		String transactionChoice;
 		//iterate over both players 
-		for(int i =0; i<2; i++){
-			
+		for (int i = 0; i < 2; i++) {
+
 			int tempCash = 0;
 			int tempJail = 0;
-			HashMap<String,Property> tempPropsToTrade = new HashMap<>();
+			HashMap<String, Property> tempPropsToTrade = new HashMap<>();
 			boolean finishedTrade = false;
-			
-			while(!finishedTrade) {
+
+			while (!finishedTrade) {
 				Checks.playerStatus(tradeList.get(i));
-				
+
 				System.out.println("Please select what you wish to trade:\n[0]Cancel Trade\n[1]Jail Free Card\n[2]Property\n[3]Cash");
-				transactionChoice=input.next();
-				
-				switch(transactionChoice) {			
-				case "0":
-					System.out.println(tradeList.get(i).getName()+" is exiting without trade. Nothing has been exchanged");
-					//return method without conducting a trade
-					return;
-				case "1":
-					if(tradeList.get(i).getJailFreeNum()==0) {
-						if(InputOutput.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
-							continue;
-						}
-						else{
-							finishedTrade=true;
-							break;
-						}
-					}
-					else {
-						if(tradeList.get(i).getJailFreeNum()==tempJail) {
-							if(InputOutput.yesNoInput("You do not have any more get out of jail free cards to add to your trade.\n\nWould you like to trade something else? (y/n)",  tradeList.get(i))) {
+				transactionChoice = input.next();
+
+				switch (transactionChoice) {
+					case "0":
+						System.out.println(tradeList.get(i).getName() + " is exiting without trade. Nothing has been exchanged");
+						//return method without conducting a trade
+						break;
+					case "1":
+						if (tradeList.get(i).getJailFreeNum() == 0) {
+							if (InputOutput.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)", tradeList.get(i))) {
 								continue;
-							}
-							else {
-								finishedTrade=true;
+							} else {
+								finishedTrade = true;
 								break;
 							}
-						}
-						tempJail++;
-					}
-				case "2":
-					if(input.hasNext()) {
-						input.nextLine();
-					}
-					System.out.println("Please enter the name of the property you wish to include in the trade");
-					transactionChoice = input.nextLine();
-					Property propToTrade = Checks.isValidProp(transactionChoice,  tradeList.get(i));
-					if(null==propToTrade){
-						if(InputOutput.yesNoInput("The property you have entered is either invalid or not owned by you. Would you like to trade something else? (y/n)", tradeList.get(i))) {
-							continue;
-						}
-						else {
-							finishedTrade=true;
-							break;
-						}
-					}
-					else if(tempPropsToTrade.containsKey(propToTrade.getName())){
-							if(InputOutput.yesNoInput("The property you have entered is already in your list of items to trade. Would you like to trade something else? (y/n)", tradeList.get(i))) {
-								continue;
+						} else {
+							if (tradeList.get(i).getJailFreeNum() == tempJail) {
+								if (InputOutput.yesNoInput("You do not have any more get out of jail free cards to add to your trade.\n\nWould you like to trade something else? (y/n)", tradeList.get(i))) {
+									continue;
+								} else {
+									finishedTrade = true;
+									break;
+								}
 							}
-							else {
-								finishedTrade=true;
+							tempJail++;
+						}
+						break;
+					case "2":
+						if (input.hasNext()) {
+							input.nextLine();
+						}
+						System.out.println("Please enter the name of the property you wish to include in the trade");
+						transactionChoice = input.nextLine();
+						Property propToTrade = Checks.isValidProp(transactionChoice, tradeList.get(i));
+						if (null == propToTrade) {
+							if (InputOutput.yesNoInput("The property you have entered is either invalid or not owned by you. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+								continue;
+							} else {
+								finishedTrade = true;
 								break;
 							}
-						}
-						
-					else {
+						} else if (tempPropsToTrade.containsKey(propToTrade.getName())) {
+							if (InputOutput.yesNoInput("The property you have entered is already in your list of items to trade. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+								continue;
+							} else {
+								finishedTrade = true;
+								break;
+							}
+						} else {
 							tempPropsToTrade.put(propToTrade.getName(), propToTrade);
 						}
-				case "3":
-					System.out.println("Please specify the amount of cash you would like to include in this trade:");
-					int cashToTrade = input.nextInt();
-					if(cashToTrade>tradeList.get(i).getMoney()) {
-						if(InputOutput.yesNoInput("You have specified more cash than you currently have. Would you like to trade something else? (y/n)", tradeList.get(i))) {
-							continue;
-						}
-						else {
-							finishedTrade=true;
-							break;
-						}
-					}
-					else {
-						tempCash+=cashToTrade;
 						break;
-					}
-				}
-				
-				if(!finishedTrade) {
-					if(InputOutput.yesNoInput(tradeList.get(i).getName()+" are you finished making your trade? (y/n)", tradeList.get(i))) {
-						if(i==0) {
-							traderOneCash=tempCash;
-							traderOneJailFree=tempJail;
-							traderOnePropsToTrade.putAll(tempPropsToTrade);
+					case "3":
+						System.out.println("Please specify the amount of cash you would like to include in this trade:");
+						int cashToTrade = input.nextInt();
+						if (cashToTrade > tradeList.get(i).getMoney()) {
+							if (cashToTrade > tradeList.get(i).getMoney()) {
+								if (InputOutput.yesNoInput("You have specified more cash than you currently have. Would you like to trade something else? (y/n)", tradeList.get(i))) {
+									continue;
+								} else {
+									finishedTrade = true;
+									break;
+								}
+							}
+							else {
+								//I have the money to trade - Add money to the trade
+								tempCash += cashToTrade;
+							}
 						}
-						else {
-							traderTwoCash=tempCash;
-							traderTwoJailFree=tempJail;
-							traderTwoPropsToTrade.putAll(tempPropsToTrade);
+						//We can then ask do they want to add anything to the trade
+						if (InputOutput.yesNoInput(tradeList.get(i).getName() + " are you finished making your trade? (y/n)", tradeList.get(i))) {
+							if (i == 0) {
+								traderOneCash = tempCash;
+								traderOneJailFree = tempJail;
+								traderOnePropsToTrade.putAll(tempPropsToTrade);
+							} else {
+								traderTwoCash = tempCash;
+								traderTwoJailFree = tempJail;
+								traderTwoPropsToTrade.putAll(tempPropsToTrade);
+							}
+							finishedTrade = true;
 						}
-						finishedTrade=true;
-					}
+						break;
+					default:
+						throw new IllegalStateException("Unexpected value: " + transactionChoice);
 				}
 			}
-		}
-	
-		displayTradeItems();
-		//Trade Acceptance
-		if(InputOutput.yesNoInput(tradeList.get(0).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(0)) 
-				&& InputOutput.yesNoInput(tradeList.get(1).getName()+" do you accept the terms of trade? (y/n)", tradeList.get(1))) {
-			exchangeTradeItems();
-		}
-		else {
-			System.out.println("Trade has not been accepted by both parties");
-			return;
+
+			displayTradeItems();
+			//Trade Acceptance
+			if (InputOutput.yesNoInput(tradeList.get(0).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(0))
+					&& InputOutput.yesNoInput(tradeList.get(1).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(1))) {
+				exchangeTradeItems();
+			} else {
+				System.out.println("Trade has not been accepted by both parties");
+				return;
+			}
 		}
 	}
-
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
 	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		InputOutput.playerCanOwnInfo(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
+			if(Checks.isPlayerOwner((CanOwn)InputOutput.propertyInput(bankruptPlayer, "trade"),bankruptPlayer)){
 
+			}
 		}
 		else{
 			System.out.println("No players are willing to trade");
