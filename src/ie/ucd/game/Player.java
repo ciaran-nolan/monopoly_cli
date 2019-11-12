@@ -105,7 +105,8 @@ public class Player {
 		//Else you have enough money for paying the bill and so you can just reduce the money
 		else {
 			this.money-=money;
-			System.out.println("Remaining Funds: £"+this.money);
+			playerOwed.addMoney(money);
+			System.out.println(this.name+", remaining Funds: £"+this.money);
 		}
 	}
 	

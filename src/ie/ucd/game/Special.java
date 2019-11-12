@@ -41,7 +41,6 @@ public class Special extends Square {
 				System.out.println("You must pay tax of "+"£"+this.value);
 				//Null as you owe the bank if you cant pay
 				player.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
-				System.out.println("Your remaining funds £"+player.getMoney());
 				break; //Break the switch statement
 			case "GO":
 				System.out.println("You you have landed on GO, collect "+"£"+this.value);
@@ -56,8 +55,14 @@ public class Special extends Square {
 			case "FREE":
 				break; //THIS IS DONE FOR FREE PARKING
 			default:
-				Jail.sendToJail(player);
-				break; //FIXME Will need to be looking at the chance and community cards also
+				if(this.getLocation()==10){
+					break;
+				}
+				else {
+					Jail.sendToJail(player);
+					break;
+				}
+
 		}
 	}
 	

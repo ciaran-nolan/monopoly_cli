@@ -49,6 +49,7 @@ public class Dice {
 			else return true;
 
 		} else {
+			Dice.resetDuplicateRollCounter();
 			return false;
 		}
 	}
