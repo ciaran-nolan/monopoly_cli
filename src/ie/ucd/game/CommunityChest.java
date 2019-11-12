@@ -21,14 +21,19 @@ public class CommunityChest extends Card {
 				if(this.getCardValue() == 0) { 
 					player1.addMoney(200); //Add money as the user has gone to GO
 				}
+				break;
 			case "JAIL":
 				Jail.sendToJail(player1);
+				break;
 			case "PAY":
 				player1.reduceMoney(this.getCardValue(), null);
+				break;
 			case "INCOME":
 				player1.addMoney(this.getCardValue());
+				break;
 			case "GET_OUT_OF_JAIL":
 				player1.setJailFree(); //Increments the amount of jail free cards by 1
+				break;
 			case "CHOICE":
 				//We will need to take user input here
 				System.out.println(player1.getName()+": Would you like to: "+this.getCardDesc()+"?");
@@ -41,29 +46,9 @@ public class CommunityChest extends Card {
 				else{
 					player1.pickChanceCard();
 				}
-				//Have the input taken in ignoring the case
-				/*while(true) {
-					if(input == "FINE") {
-						player1.reduceMoney(this.getValue());
-						break;
-					}
-					else if(input == "CHANCE") {
-						//pick up a chance card
-						player1.pickChanceCard(BoardReader.getChances());
-						break;
-					}
-					else {
-						System.err.println("You have not chosen an option. Choose again!");
-					}
-				}*/
 				break;
 			default:
 				throw new IllegalStateException("Unexpected value: " + this.getCardType());
 		}
 	}
-	
-	
-	
-	
-
 }
