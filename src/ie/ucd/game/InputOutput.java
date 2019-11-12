@@ -37,7 +37,9 @@ public class InputOutput {
 			if(housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)){
 				houseHotelList.add(player.getTitleDeedList().get(i));
 			}
-			else System.out.println("["+i+"] "+player.getTitleDeedList().get(i).getCardDesc());
+			else if(!housesHotels){
+				System.out.println("["+i+"] "+player.getTitleDeedList().get(i).getCardDesc());
+			}
 		}
 		if(housesHotels){
 			for(int i=0; i<houseHotelList.size();i++){
