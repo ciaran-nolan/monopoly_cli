@@ -442,7 +442,7 @@ public class Player {
 			return true;
 		}
 		else {
-			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insuffiecient to cover your debt."+
+			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insufficient to cover your debt."+
                     "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
@@ -466,43 +466,6 @@ public class Player {
 			return false;
 		}
 	}
-		//Need to check if I can raise money by any method......
-		//I also need to continually check that the money raised is larger than the money to be paid
-		/*while(true) {
-			//Need to sell off all of the things in here
-			if(this.propertyList.size() > 0) {
-				//Step 1: Sell off the houses and hotels
-				
-				if(valOfHouseHotels > moneyNeedToRaise) {
-					for(CanOwn ownable:this.propertyList) {
-						if(ownable instanceof Property) {
-							this.addMoney(((Property)ownable).sellHouses(this,false,true)); //FIXME confirm parameters
-							this.addMoney(((Property)ownable).sellHotels(this,false,true));
-						}
-						//If they have raised sufficient money from sellingHouses
-						if(this.money - moneyNeedToRaise > 0) {
-							break;
-						}
-					}
-				}
-				//Step 2: Mortgage the properties
-				
-				
-				//Step 3: Sell off some properties
-				
-				return false;
-			}
-			//They own no physical assets and so cannot raise any money
-			else {
-				return false;
-			}
-		}
-		return true;
-	}*/
-	
-	//method to initiate a player to player transaction
-
-	
 	
 	public boolean checkBankrupt() {
 		return false;

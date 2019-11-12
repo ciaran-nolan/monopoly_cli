@@ -198,7 +198,9 @@ public class Transactions {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		InputOutput.playerCanOwnInfo(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
-			//FIXME please implement here
+			if(Checks.isPlayerOwner((CanOwn)InputOutput.propertyInput(bankruptPlayer, "trade"),bankruptPlayer)){
+
+			}
 		}
 		else{
 			System.out.println("No players are willing to trade");

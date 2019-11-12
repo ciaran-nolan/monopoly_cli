@@ -17,9 +17,10 @@ public class Checks {
 			if(null==((Property)currentSquare).getTitleDeedCard().getOwner()){
 				((Property)currentSquare).buy(player);
 			}
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		case SPECIAL:
 			((Special)currentSquare).implementSpecialSquare(player);
@@ -29,19 +30,20 @@ public class Checks {
 				((Train)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, can't pay rent for train or utility as input expects type CanOwn
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
-			
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		case UTILITY:
 			if(null==((Utility)currentSquare).getTitleDeedCard().getOwner()){
 				((Utility)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, cant pay rent for train or utility as input expects type CanOwn
-			else {
-				player.payRent((CanOwn)currentSquare);
+			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+				System.out.println("You own this property.");
 			}
+			else player.payRent((CanOwn)currentSquare);
 			break;
 		default:
 			break;	
@@ -200,7 +202,6 @@ public class Checks {
 	
 	public static int checkHouseHotelValue(Player player) {
 		int valOfHousesHotels = 0;
-		
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only analyse the type property
 			CanOwn currentOwnable = titleDeed.getOwnableSite();
