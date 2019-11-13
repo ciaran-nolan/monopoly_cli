@@ -73,7 +73,7 @@ public class BoardReader {
     	
     	for(int i=0; i<=1; i++) {
     		int[] rentIntArray = Arrays.stream(utilProp.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))), Integer.parseInt(utilProp.getProperty(("priceBuy"+i))), Integer.parseInt(utilProp.getProperty(("mortgage"+i))), rentIntArray, null);
+    		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))));
 			TitleDeed tempDeed = new TitleDeed("Title Deed", utilProp.getProperty(("title"+i)),0, null, Integer.parseInt((utilProp.getProperty(("priceBuy"+i)))), rentIntArray, 0, Integer.parseInt(utilProp.getProperty(("mortgage"+i))),null, temp);
     		temp.setTitleDeedCard(tempDeed);
 			utilities.add(temp);
@@ -179,7 +179,7 @@ public class BoardReader {
     	
     	for(int i=0; i<=3; i++) {
     		int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
-    		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))), Integer.parseInt(prop.getProperty(("priceBuy"+i))), Integer.parseInt(prop.getProperty(("mortgage"+i))), rentIntArray, null);
+    		Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))));
 			TitleDeed tempDeed = new TitleDeed("Title Deed", prop.getProperty(("title"+i)),0, null, Integer.parseInt((prop.getProperty(("priceBuy"+i)))), rentIntArray, 0, Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
     		temp.setTitleDeedCard(tempDeed);
 			trains.add(temp);

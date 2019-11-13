@@ -14,7 +14,7 @@ public class TitleDeed extends Card {
     private CanOwn ownableSite;
     //FIXME need to perhaps add mortgage to here or to another location on the title deed cards
     private int mortgage;
-    public TitleDeed(String cardType, String cardTitle, int cardValue, String squareColour, int priceBuy, int[] rents, int housePrice, int mortgage, Player owner,CanOwn ownableSite){
+    public TitleDeed(String cardType, String cardTitle, int cardValue, String squareColour, int priceBuy, int[] rents, int housePrice, int mortgage, Player owner, CanOwn ownableSite){
         super(cardType,cardTitle, 0);
         this.squareColour = squareColour;
         this.priceBuy = priceBuy;

@@ -23,7 +23,6 @@ class ChanceTest {
 
         int currLocation = playerTest.getLocation();
         chanceTest.dealWithCard(playerTest);
-        System.out.println(expectedValuePay);
         //PAY
         assertEquals(expectedValuePay, playerTest.getMoney(),"Check money is reduced from Player");
         //INCOME
@@ -34,12 +33,15 @@ class ChanceTest {
         //MOVE
         chanceTest.setCardType("MOVE");
         chanceTest.setCardValue(5);
+        chanceTest.dealWithCard(playerTest);
         assertEquals(currLocation+5,playerTest.getLocation(),"Checking a player can move squares");
         //GET OUT OF JAIL FREE
         chanceTest.setCardType("GET_OUT_OF_JAIL");
+        chanceTest.dealWithCard(playerTest);
         assertTrue(playerTest.getJailFreeNum()>0);
         //JAIL
         chanceTest.setCardType("JAIL");
+        chanceTest.dealWithCard(playerTest);
         assertTrue(playerTest.isInJail());
     }
 

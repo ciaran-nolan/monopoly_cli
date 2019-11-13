@@ -21,25 +21,32 @@ class CommunityChestTest {
         int initialMoney = playerTest.getMoney();
         int currLocation = playerTest.getLocation();
         //PAY
+        commChestTest.dealWithCard(playerTest);
         assertEquals(initialMoney-commChestTest.getCardValue(), playerTest.getMoney(),"Check money is reduced from Player");
         //INCOME
         commChestTest.setCardType("INCOME");
+        commChestTest.dealWithCard(playerTest);
         assertEquals(initialMoney+commChestTest.getCardValue(),playerTest.getMoney(),"Checking income works");
         //MOVE
         commChestTest.setCardType("MOVE");
         commChestTest.setCardValue(5);
+        commChestTest.dealWithCard(playerTest);
         assertEquals(currLocation+5,playerTest.getLocation(),"Checking a player can move squares");
         //GET OUT OF JAIL FREE
         commChestTest.setCardType("GET_OUT_OF_JAIL");
+        commChestTest.dealWithCard(playerTest);
         assertTrue(playerTest.getJailFreeNum()>0);
         //CHOICE CARD
         //Fine is input of 0 and Chance is input of 1
         //FIXME @@ciarannolan....unsure about how to process the choice on this
         commChestTest.setCardDesc("Pay fine of £25 or pick Chance card");
         commChestTest.setCardType("CHOICE");
+        commChestTest.dealWithCard(playerTest);
+        //Do it in the case of minusing the value
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
         //JAIL
         commChestTest.setCardType("JAIL");
+        commChestTest.dealWithCard(playerTest);
         assertTrue(playerTest.isInJail());
     }
 

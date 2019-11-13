@@ -1,23 +1,14 @@
 package ie.ucd.game;
 
 public class Utility extends PublicSquare {
-	private int[] rent; //Rent is size 2
+	//private int[] rent; //Rent is size 2
 	//The rents will be dealt with at a level above
 
-	public Utility(String name, int indexLocation, int buyPrice, int mortgage, int[] rent, Player owner) {
-		super(name, indexLocation, buyPrice, mortgage, owner, Square.SquareType.UTILITY);
-		this.rent = rent;
-	}
-	
-	public int[] getRent() {
-		return this.rent;
-	}
-	
-	public void setRent(int[] rent) {
-		this.rent = rent;
+	public Utility(String name, int indexLocation) {
+		super(name, indexLocation, Square.SquareType.UTILITY);
+		//this.rent = rent;
 	}
 
-	
 	public void buy(Player player) {
 		//check user has enough funds to purchase 
 		if(player.getMoney() < this.getTitleDeedCard().getPriceBuy()) {

@@ -64,6 +64,10 @@ public class Player {
 		this.name = name;
 	}
 
+	public void setMoney(int money){
+		this.money = money;
+	}
+
 	public int getJailMoves(){ return this.jailMoves;}
 	public void setJailMoves(int numJailMoves){ this.jailMoves=numJailMoves;}
 	
