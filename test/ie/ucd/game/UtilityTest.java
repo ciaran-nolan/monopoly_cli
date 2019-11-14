@@ -41,7 +41,7 @@ class UtilityTest {
         utilityNew.buy(player1);
 
         assertTrue(player1.getTitleDeedList().contains(utilityNew) == true);
-        player1.removeOwnedProperty(utilityNew);
+        player1.removeOwnedTitleDeed(utilityNew.getTitleDeedCard());
         player1.setMoney(150);
         utilityNew.buy(player1);
         assertFalse(player1.getTitleDeedList().contains(utilityNew) == true);

@@ -19,7 +19,6 @@ public class Jail {
 
     public static void handleJailFreeCardUsage(Player jailedPlayer){
         System.out.println("You have used a Get Out of Jail Free card to exit jail");
-        jailedPlayer.setJailFreeNum((jailedPlayer.getJailFreeNum()-1));
         //I now need to add the card back into the relevant array. I can see that by the Array that is less than 16
         if(jailedPlayer.getJailCard().get(0) instanceof CommunityChest) {
             jailedPlayer.getJailCard().remove(0);
@@ -34,7 +33,7 @@ public class Jail {
 
     public static void handleFinalRollAttempt(Player jailedPlayer){
         int jailExitChoice = 0;
-        if(jailedPlayer.getJailFreeNum()==0){
+        if(jailedPlayer.getJailCard().size()==0){
             System.out.println("You have rolled for the third time without getting doubles, you must pay the £50 fine");
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the jail fee");
@@ -67,7 +66,7 @@ public class Jail {
         //print jail status
         boolean doubleRoll;
         int jailExitChoice = 0;
-        System.out.println("You are in jail.\nYou have "+jailedPlayer.getJailFreeNum()+" get out of jail free cards"
+        System.out.println("You are in jail.\nYou have "+jailedPlayer.getJailCard().size()+" get out of jail free cards"
         +"\nYou have rolled "+jailedPlayer.getJailMoves()+" times, without rolling a double.");
 
         //check if user wants to try roll for doubles or exit jail immediately via fine or card
@@ -76,7 +75,7 @@ public class Jail {
         //for choosing what action from the integer menu
 
         //check if they have jail free card, if not, dont display the option to choose
-        if(jailedPlayer.getJailFreeNum()>0){
+        if(jailedPlayer.getJailCard().size()>0){
             System.out.println("[2]Use Get out of jail free card");
             jailExitChoice = InputOutput.integerMenu(0,2);
         }

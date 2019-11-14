@@ -35,7 +35,7 @@ class CommunityChestTest {
         //GET OUT OF JAIL FREE
         commChestTest.setCardType("GET_OUT_OF_JAIL");
         commChestTest.dealWithCard(playerTest);
-        assertTrue(playerTest.getJailFreeNum()>0);
+        assertTrue(playerTest.getJailCard().size()>0);
         //CHOICE CARD
         //Fine is input of 0 and Chance is input of 1
         //FIXME @@ciarannolan....unsure about how to process the choice on this

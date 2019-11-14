@@ -52,7 +52,6 @@ public class Chance extends Card {
 				break;
 			case "GET_OUT_OF_JAIL":
 				player.addJailCard(this);
-				player.setJailFree(); //Increments the amount of jail free cards by 1
 				break;
 			default:
 				throw new IllegalStateException("Unexpected value: " + this.getCardType());

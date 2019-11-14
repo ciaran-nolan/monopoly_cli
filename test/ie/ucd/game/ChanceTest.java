@@ -38,7 +38,7 @@ class ChanceTest {
         //GET OUT OF JAIL FREE
         chanceTest.setCardType("GET_OUT_OF_JAIL");
         chanceTest.dealWithCard(playerTest);
-        assertTrue(playerTest.getJailFreeNum()>0);
+        assertTrue(playerTest.getJailCard().size()>0);
         //JAIL
         chanceTest.setCardType("JAIL");
         chanceTest.dealWithCard(playerTest);
