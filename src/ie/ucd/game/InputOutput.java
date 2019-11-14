@@ -100,26 +100,11 @@ public class InputOutput {
 		clearScannerBuffer();
 		return choiceInput;
 	}
-	
-	public static Property propertyInput(Player player, String propAction) {
-		System.out.println("Please enter the name of the property you wish to "+ propAction);
-		String propName = input.nextLine();
-		Property property = Checks.isValidProp(propName, player);
-		if(null==property) {
-			if(InputOutput.yesNoInput("The property you have entered is not valid, would you like to try again? (y/n)", player)){
-				//restart pre-dice roll options
-				propertyInput(player, propAction);
-			}
-			return null;
-		}
-		else return property;
-		
-	}
 
 	public static void handleUserOption(Player currentPlayer,boolean doubleRoll) {
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
-						"|\t1: Mortgage a property\n" +
+						"|\t1: Mortgage/Demortgage a property\n" +
 						"|\t2: Build Houses/Hotels on Square\n" +
 						"|\t3: Buy/Sell Properties or Cards with other players");
 		
@@ -133,13 +118,25 @@ public class InputOutput {
 		
 		switch(choiceInput) {
 			case 1:
-				TitleDeed titleDeedToMortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
-				if(null == titleDeedToMortgage){
-					System.out.println("Cancelling Operation");
+				System.out.println("[0] Mortgage\n[1] Demortgage");
+				choiceInput = integerMenu(0,1);
+				if(choiceInput==0) {
+					TitleDeed titleDeedToMortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
+					if (null == titleDeedToMortgage) {
+						System.out.println("Cancelling Operation");
+					} else {
+						CanOwn propToMortgage = (titleDeedToMortgage.getOwnableSite());
+						propToMortgage.mortgage(currentPlayer);
+					}
 				}
-				else {
-					CanOwn propToMortgage = (titleDeedToMortgage.getOwnableSite());
-					propToMortgage.mortgage(currentPlayer);
+				else{
+					TitleDeed titleDeedToDemortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
+					if (null == titleDeedToDemortgage) {
+						System.out.println("Cancelling Operation");
+					} else {
+						CanOwn propToDemortgage = (titleDeedToDemortgage.getOwnableSite());
+						propToDemortgage.demortgage(false);
+					}
 				}
 				break;
 			case 2:
@@ -172,4 +169,20 @@ public class InputOutput {
             }
         }
     }
+
+    public static Player selectPlayerMenu (Player selectingPlayer){
+		System.out.println("Please select player you wish to interact with");
+		ArrayList<Player> playerList = Game.playerList;
+		int choiceInput;
+		for(int i = 0; i<playerList.size();i++){
+			if(playerList.get(i)==selectingPlayer){
+				playerList.remove(i);
+				if(i<playerList.size()) i--;
+			}
+			else System.out.println("["+i+"] "+playerList.get(i).getName());
+		}
+
+		choiceInput = integerMenu(0,playerList.size());
+		return playerList.get(choiceInput);
+	}
 }

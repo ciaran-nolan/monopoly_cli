@@ -8,7 +8,7 @@ public abstract class PublicSquare extends CanOwn {
 		super(name, indexLocation, type);
 	}
 
-	public  void buy(Player player, CanOwn publicProperty, List<Player> listPlayers){
+	public void buy(Player player, CanOwn publicProperty, List<Player> listPlayers){
 
 	}
 	

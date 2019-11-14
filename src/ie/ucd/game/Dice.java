@@ -13,7 +13,6 @@ public class Dice {
 	
 	public static void rollDice(){
 		Random rollGenerator = new Random();
-			
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
 		dice1 = rollGenerator.nextInt(6)+1; 
 		dice2 = rollGenerator.nextInt(6)+1;
@@ -30,10 +29,10 @@ public class Dice {
 	}
 
 	public static boolean isThirdDouble(Player player){
-		if (Dice.getDuplicateRollCounter() == 3) {
+		if (duplicateRollCounter == 3) {
 			System.out.println("You have rolled doubles for the third time.");
 			Jail.sendToJail(player);
-			Dice.resetDuplicateRollCounter();
+			duplicateRollCounter = 0;
 			return true;
 		}
 		return false;
@@ -41,7 +40,7 @@ public class Dice {
 	public static boolean handlePlayerRoll(Player player){
 		rollDice();
 		if (isDoubleRoll()) {
-			Dice.incrementDuplicateRollCounter();
+			duplicateRollCounter++;
 			if(isThirdDouble(player)){
 				//player is in jail and cant roll again
 				return false;
@@ -49,19 +48,8 @@ public class Dice {
 			else return true;
 
 		} else {
-			Dice.resetDuplicateRollCounter();
+			duplicateRollCounter = 0;
 			return false;
 		}
 	}
-
-	public static int getDuplicateRollCounter() {
-		return duplicateRollCounter;
-	}
-	public static void resetDuplicateRollCounter() {
-		duplicateRollCounter = 0;
-	}
-	public static void incrementDuplicateRollCounter(){
-		duplicateRollCounter++;	
-	}
-	
 }

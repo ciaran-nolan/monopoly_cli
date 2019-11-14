@@ -58,7 +58,7 @@ public class Checks {
     }
 	
 	public static void playerStatus(Player player) {
-		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailFreeNum()
+		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
 
@@ -218,13 +218,21 @@ public class Checks {
 		
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only add the value of properties that are not currently mortgaged
-			if(!titleDeed.getMortgageStatus()) {
+			if(!titleDeed.getMortgageStatus() && titleDeed.getBankruptcyTradeStatus().isEmpty()) {
 				mortgageValue += (titleDeed.getPriceBuy() / 2);
 			}
 		}
 		return mortgageValue;
 	}
-	
+	public static int checkBankruptcyTradeValue(Player player){
+		int valOfTrades = 0;
+		for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
+			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
+				valOfTrades += (int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0];
+			}
+		}
+		return  valOfTrades;
+	}
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs

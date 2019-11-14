@@ -32,7 +32,7 @@ public class CommunityChest extends Card {
 				player1.addMoney(this.getCardValue());
 				break;
 			case "GET_OUT_OF_JAIL":
-				player1.setJailFree(); //Increments the amount of jail free cards by 1
+				player1.addJailCard(this); //Increments the amount of jail free cards by 1
 				break;
 			case "CHOICE":
 				//We will need to take user input here

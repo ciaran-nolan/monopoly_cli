@@ -65,27 +65,5 @@ public class Special extends Square {
 
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//THIS WILL BE IMPLEMENTED IN SQUARE
-	/*public int getLocation() {
-		return super.indexLocation;
-	}
-	
-	public void setLocation(int location) {
-		this.indexLocation = location;
-	}*/
-	
-	
-	
-	
-	
 }
 

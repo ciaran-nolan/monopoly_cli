@@ -45,7 +45,7 @@ public class Property extends CanOwn {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
                         +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
-				this.playerAuction();
+				titleDeedCard.playerAuction(false);
 
 			}
 			//the case of the owner should be handled in check square
@@ -59,9 +59,9 @@ public class Property extends CanOwn {
 
 				player.reduceMoney(titleDeedCard.getPriceBuy(), null);
 				//add property to users property list
-				player.addPurchasedCard(this);
+				player.addPurchasedTitleDeed(titleDeedCard);
 			}
-			else this.playerAuction();
+			else titleDeedCard.playerAuction(false);
 			
 			}
 	@Override
@@ -267,24 +267,6 @@ public class Property extends CanOwn {
 			Game.setRemainingHouses(Game.getRemainingHouses()-4);
 			return this.getTitleDeedCard().getHousePrice()/2;
 		}
-	}
-	
-	//method to determine the value of a player's houses/hotels
-	public static int playerHouseHotelEval(Player player) {
-		int houseHotelVal=0;
-		for(TitleDeed titleDeed:player.getTitleDeedList()) {
-			CanOwn ownable = titleDeed.getOwnableSite();
-			if(ownable instanceof Property) {
-				if(((Property) ownable).getNumHotels()==0){
-					//if there are no houses on the property, this will not increment by anything
-				houseHotelVal+=((titleDeed.getHousePrice())*((Property) ownable).getNumHouses())/2;
-				}
-				else {
-					houseHotelVal+=((titleDeed.getHousePrice())*(5))/2;
-				}
-			}
-		}
-		return houseHotelVal;
 	}
 }
 	
