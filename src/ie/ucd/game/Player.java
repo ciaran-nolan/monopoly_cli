@@ -68,7 +68,7 @@ public class Player {
 	
 	public void addMoney(int money) {
 		this.money+= money;
-		System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
+		if(money>0) System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
 	}
 	
 	public void setLocation(int index) {
@@ -84,7 +84,7 @@ public class Player {
 		if(playerOwed == null){
 			//can the player afford to pay the bank
 			if(money > this.money) {
-				if(saveFromBankruptcy(money)){
+				if(saveFromBankruptcy(money-this.money)){
 					this.money -= money;
 					System.out.println(this.name+", remaining Funds: £"+this.money);
 				}
@@ -444,9 +444,11 @@ public class Player {
 		boolean mustMortgage=false;
 
 		int valOfHouseHotels = Checks.checkHouseHotelValue(this);
+		System.out.println(valOfHouseHotels +" "+ moneyNeedToRaise);
 		if(valOfHouseHotels > moneyNeedToRaise) mustSellHouseHotels = true;
-		
+
 		int valOfMortgage = Checks.checkMortgagingValue(this);
+		System.out.println(valOfMortgage);
 		if (valOfHouseHotels + valOfMortgage > moneyNeedToRaise) mustMortgage = true;
 		
 		if(mustSellHouseHotels) {
@@ -466,6 +468,7 @@ public class Player {
                     Transactions.saveFromBankruptcyTrade(this);
                     valOfMortgage = Checks.checkMortgagingValue(this);
                     int valOfBankruptcyTrade = Checks.checkBankruptcyTradeValue(this);
+                    System.out.println((valOfBankruptcyTrade+valOfMortgage+valOfHouseHotels));
                     if(valOfHouseHotels+valOfMortgage+valOfBankruptcyTrade>moneyNeedToRaise){
                     	System.out.println("With the preliminary trades you have made, you have raised enough money to avoid bankruptcy");
                     	continueTrade=false;
