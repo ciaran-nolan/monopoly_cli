@@ -11,11 +11,6 @@ public class InputOutput {
 	public static void clearScannerBuffer(){
 		input.nextLine();
 	}
-	
-	public static void displayPlayerPosition(Player player) {
-		System.out.println(player.getName()+" you are currently on square "+player.getLocation()+" - "
-	+ board.get(player.getLocation()).getName());
-	}
 
 	public static boolean yesNoInput(String message,Player player) {
 		System.out.println(message);
@@ -34,6 +29,9 @@ public class InputOutput {
 		int choiceInput;
 
 		for(int i=0; i<player.getTitleDeedList().size() ;i++){
+		    if(!player.getTitleDeedList().get(i).getBankruptcyTradeStatus().isEmpty()){
+		        continue;
+            }
 			if(housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)){
 				houseHotelList.add(player.getTitleDeedList().get(i));
 			}
@@ -80,7 +78,6 @@ public class InputOutput {
             else{
                 System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
             }
-
 	}
 
 	public static int integerMenu(int lowerBound, int upperBound){
@@ -106,15 +103,16 @@ public class InputOutput {
 		System.out.println("----------------------------------------------------------------\n" +
 						"|\t1: Mortgage/Demortgage a property\n" +
 						"|\t2: Build Houses/Hotels on Square\n" +
-						"|\t3: Buy/Sell Properties or Cards with other players");
+						"|\t3: Buy/Sell Properties or Cards with other players\n" +
+                        "|\t4: Player Status");
 		
-		if(doubleRoll) System.out.println("|\t4: Roll Dice\n"+
+		if(doubleRoll) System.out.println("|\t5: Roll Dice\n"+
 				"----------------------------------------------------------------\n");
-		else System.out.println("|\t4: Exit\n"+
+		else System.out.println("|\t5: Exit\n"+
 				"----------------------------------------------------------------\n");
 			
 		
-		int choiceInput = InputOutput.integerMenu(1, 4);
+		int choiceInput = InputOutput.integerMenu(1, 5);
 		
 		switch(choiceInput) {
 			case 1:
@@ -126,7 +124,7 @@ public class InputOutput {
 						System.out.println("Cancelling Operation");
 					} else {
 						CanOwn propToMortgage = (titleDeedToMortgage.getOwnableSite());
-						propToMortgage.mortgage(currentPlayer);
+						propToMortgage.mortgage(currentPlayer, false);
 					}
 				}
 				else{
@@ -147,13 +145,17 @@ public class InputOutput {
 				//This is for buying a property
 				Transactions.playerToPlayerTrade(currentPlayer);
 				break;
-			case 4: 
+			case 4:
+			     Checks.playerStatus(currentPlayer);
+			     Checks.playerPropertyStatus(currentPlayer);
 				 break;
+            case 5:
+                break;
 			default:
 				System.out.println("Your input did not correspond to any provided actions");
 				break;
 		}
-		if((choiceInput<4) && doubleRoll && InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
+		if((choiceInput<5) && doubleRoll && InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer)) {
 			handleUserOption(currentPlayer, true);
 		}
 	}

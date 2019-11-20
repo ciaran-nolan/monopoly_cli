@@ -67,7 +67,7 @@ public class BuildHousesTest {
 		//Property.buildHousesHotels(p1);
 		//Property.buildHousesHotels(p1);
 
-		properties.get(0).mortgage(p1);
+		properties.get(0).mortgage(p1, false);
 
 		System.out.println(properties.get(0).getNumHouses());
 		System.out.println(properties.get(1).getNumHouses());

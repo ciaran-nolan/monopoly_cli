@@ -268,7 +268,7 @@ public class Player {
 			//Bank owed
 			//Get rid of jail free card
 			if(this.jailCards.size()> 0) {
-				//Need to transfer the get out of jail card to the playerOwed
+				//Need to transfer the get out of jail card to the playerOiwed
 				for(Card card:this.jailCards) {
 					//Remove it and then send to the new owner
 					this.jailCards.remove(card);
@@ -301,7 +301,7 @@ public class Player {
 				//Remove the property from their List of Owned properties and now the bank will auction the property
 				this.titleDeedCardList.remove(titleDeedCard);
 				System.out.println("Property will now be auctioned");
-				titleDeedCard.playerAuction(false); //FIXME Need a list of players to be global
+				titleDeedCard.playerAuction(this); //FIXME Need a list of players to be global
 			}
 			Game.playerList.remove(this); //FIXME need to remove the player from the game
 			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
@@ -309,8 +309,22 @@ public class Player {
 			return true; //FIXME can see if this is needed
 		}
 		else {
-			//You owe a player for all of the loans
-			//FIXME needs to be implemented for a player
+			System.out.println("You are bankrupt to "+playerOwed.getName());
+			if(this.money > 0){
+				playerOwed.addMoney(this.money);
+			}
+			if(this.titleDeedCardList.size()>0){
+				for(TitleDeed currentTitleDeed:this.titleDeedCardList){
+					this.titleDeedCardList.remove(currentTitleDeed);
+					playerOwed.addPurchasedTitleDeed(currentTitleDeed);
+				}
+			}
+			if(this.jailCards.size()>0){
+				for(Card jailCard: this.jailCards){
+					playerOwed.addJailCard(jailCard);
+				}
+			}
+			Checks.playerStatus(playerOwed);
 			return true;
 		}
 	
@@ -406,7 +420,7 @@ public class Player {
 		for(TitleDeed toMortgage:this.titleDeedCardList) {
 			if(toMortgage.getBankruptcyTradeStatus().isEmpty() && !toMortgage.getMortgageStatus()) {
 				CanOwn ownable = toMortgage.getOwnableSite();
-				ownable.mortgage(this);
+				ownable.mortgage(this,true);
 				if (this.money - moneyNeedToRaise > 0) {
 					//exit the method as soon as the limit has been reached
 					return;
@@ -461,7 +475,7 @@ public class Player {
 			return true;
 		}
 		else {
-			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insufficient to cover your debt."+
+			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insufficient to cover your debt ("+moneyNeedToRaise+")"+
                     "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {

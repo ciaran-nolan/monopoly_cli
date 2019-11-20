@@ -51,6 +51,7 @@ public class Game {
                     //This is here for doubles being rolled so you can do as much things as you want
                     while (doubleRoll) {
                         //This is where to get a correct input from the user
+						Checks.playerStatus(currentPlayer);
                         InputOutput.handleUserOption(currentPlayer, doubleRoll);
 
                         //Roll the dice regardless after they have done all of their things
@@ -71,7 +72,7 @@ public class Game {
                         if (!doubleRoll) {
                             break;
                         } else {
-                            System.out.print("\n"+currentPlayer.getName() + ", you have rolled doubles, you will roll again");
+                            System.out.println("\n"+currentPlayer.getName() + ", you have rolled doubles, you will roll again");
                         }
                     }
                 }

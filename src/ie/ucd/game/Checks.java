@@ -17,7 +17,7 @@ public class Checks {
 			if(null==((Property)currentSquare).getTitleDeedCard().getOwner()){
 				((Property)currentSquare).buy(player);
 			}
-			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+			else if(isPlayerOwner(((Property) currentSquare).getTitleDeedCard(),player)) {
 				System.out.println("You own this property.");
 			}
 			else player.payRent((CanOwn)currentSquare);
@@ -30,7 +30,7 @@ public class Checks {
 				((Train)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, can't pay rent for train or utility as input expects type CanOwn
-			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+			else if(isPlayerOwner(((Train) currentSquare).getTitleDeedCard(),player)) {
 				System.out.println("You own this property.");
 			}
 			else player.payRent((CanOwn)currentSquare);
@@ -40,7 +40,7 @@ public class Checks {
 				((Utility)currentSquare).buy(player);
 			}
 			//FIXME Type mismatch, cant pay rent for train or utility as input expects type CanOwn
-			else if(isPlayerOwner((CanOwn)currentSquare,player)) {
+			else if(isPlayerOwner(((Utility) currentSquare).getTitleDeedCard(),player)) {
 				System.out.println("You own this property.");
 			}
 			else player.payRent((CanOwn)currentSquare);
@@ -49,10 +49,7 @@ public class Checks {
 			break;	
 		}
 	}
-	public static boolean hasPassedGo(int startIndex, int endIndex) {
-        return startIndex > endIndex;
-    }
-	
+
 	public static boolean enoughFunds(Player player, int price) {
         return player.getMoney() >= price;
     }
@@ -61,42 +58,33 @@ public class Checks {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
+	public static void playerPropertyStatus(Player player){
+	    System.out.println(player.getName() + " - Property Status: \n");
+	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
+	        System.out.println(currentTitleDeed.getCardDesc()+" ("+currentTitleDeed.getSquareColour()+")");
+	        if(currentTitleDeed.getOwnableSite() instanceof Property) {
+                System.out.println("Number of houses: "+((Property)currentTitleDeed.getOwnableSite()).getNumHouses()+
+                        "\nNumber of Hotels: "+((Property)currentTitleDeed.getOwnableSite()).getNumHotels());
+	        }
+        }
+    }
 
-	public static boolean canBuy(CanOwn ownableCard, Player player) {
-        return null == ownableCard.getTitleDeedCard().getOwner();
+	public static boolean canBuy(TitleDeed titleDeed, Player player) {
+        return null == titleDeed.getOwner();
 		}
 	
-	public static boolean isPlayerOwner(CanOwn ownableCard, Player player){
-		if(null == ownableCard.getTitleDeedCard().getOwner()){
+	public static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
+		if(null == ownableCard.getOwner()){
 			return false;
 		}
-		if(ownableCard.getTitleDeedCard().getOwner().getName().equals(player.getName())) {
+		if(ownableCard.getOwner().getName().equals(player.getName())) {
 			return true;
 		}
 		else {
 			return false;
 		}
 	}
-	
-	public static Property isValidProp(String name, Player player) {
-		for(Property currentProp: BoardReader.properties) {
-				//compare square colour with the specified property
-				if(currentProp.getName().equals(name)){
-					return currentProp;
-				}
-		}
-		return null;
-	}
 
-	public static Player isValidPlayer(String playerName) {
-		for(int i=0; i<Game.playerList.size(); i++) {
-			if(Game.playerList.get(i).getName().equalsIgnoreCase(playerName)) {
-				return Game.playerList.get(i);
-			}
-		}
-		return null;
-	}
-	
 	//method to check if a player owns all the properties in a given colour group.
 	public static ArrayList<Property> ownAllColour(Player player, Property property) {
 		if(null == property){
@@ -123,7 +111,7 @@ public class Checks {
 				//compare square colour with the specified property
 				if(((Property) currentOwnable).getSquareColour().equals(property.getSquareColour())) {	
 					//add the property to the list if there is a colour group match
-					propertyList.add((Property) currentOwnable);
+					propertyList.add((Property)currentOwnable);
 					colourCounter++;
 				}
 			}
@@ -151,7 +139,8 @@ public class Checks {
 		for(int i=0; i<colourGroup.size();i++) {
 			if(colourGroup.get(i).getName().equals(propertyToAlterHouses.getName())) {
                 for (Property property : colourGroup) {
-                    if (!((colourGroup.get(i).getNumHouses() - property.getNumHouses() >= houseDifferentialBounds[0]) && (colourGroup.get(i).getNumHouses() - property.getNumHouses() <= houseDifferentialBounds[1]))) {
+                    if (!(((colourGroup.get(i).getNumHouses() - property.getNumHouses() >= houseDifferentialBounds[0])
+							&& (colourGroup.get(i).getNumHouses() - property.getNumHouses() <= houseDifferentialBounds[1])))) {
                         return false;
                     }
                 }
@@ -160,13 +149,7 @@ public class Checks {
 		return true;
 	}
 
-	public static boolean canBuildHouses(CanOwn ownableCard) {
-		//only cards of type property can have houses
-        return ownableCard instanceof Property;
-	}
-	
 	public static int canBuildHousesHotels(Property propToBuild, Player player){
-
 		// Status codes:
 		// - 1 - attempt again
 		// - 2 - exit without building
@@ -177,7 +160,7 @@ public class Checks {
 			}
 			else return -2;
 		}
-		else if(!(Checks.isPlayerOwner(propToBuild, player))){
+		else if(!(Checks.isPlayerOwner(propToBuild.getTitleDeedCard(), player))){
 			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)) {
 				//restart pre-dice roll options
 				return -1;

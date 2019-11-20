@@ -20,7 +20,7 @@ public class BankruptcyTest {
         BoardReader.properties.get(2).buy(Game.playerList.get(0));
 
         Property.buildHousesHotels(Game.playerList.get(0));
-        BoardReader.properties.get(2).mortgage(Game.playerList.get(0));
+        BoardReader.properties.get(2).mortgage(Game.playerList.get(0),false);
 
         Game.playerList.get(0).reduceMoney(2500,null);
     }

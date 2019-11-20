@@ -3,6 +3,7 @@ package ie.ucd.game;
 //Thus, mortgage and priceBuy will now be moved from CanOwn to their title deed card
 //The title deed card will be associated with the Square of the Property or Utility
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -108,12 +109,19 @@ public class TitleDeed extends Card {
         return this.bankruptcyTradeStatus;
     }
 
-    public void playerAuction(boolean bankruptcy) {
+    public void playerAuction(Player bankruptPlayer) {
 
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
+        if(bankruptPlayer!=null){
+            for(Player currentPlayer: biddingPlayers){
+                if(currentPlayer==bankruptPlayer){
+                    biddingPlayers.remove(currentPlayer);
+                }
+            }
+        }
         int[] currentAuctionDetails = new int[] {0,0};
         Scanner auctionScanner = new Scanner(System.in);
-        int biddingPoolSize = Game.playerList.size();
+        int biddingPoolSize = biddingPlayers.size();
 
         while(biddingPoolSize > 1){
             //update the bidding pool size
@@ -201,7 +209,7 @@ public class TitleDeed extends Card {
             }
             //only one player remaining in bid pool, assign property to winner
             if (biddingPoolSize == 1) {
-                if(bankruptcy){
+                if(bankruptPlayer!=null){
                     System.out.println(this.getCardDesc()+" has been won successfully in the preliminary bankruptcy auction by"+biddingPlayers.get(0));
                     this.bankruptcyTradeStatus.put(currentAuctionDetails[0],  biddingPlayers.get(0));
                 }

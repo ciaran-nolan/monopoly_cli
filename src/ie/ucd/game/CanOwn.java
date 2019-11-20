@@ -19,16 +19,18 @@ public abstract class CanOwn extends Square {
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
 	public abstract void buy(Player player);
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
-	
 
-	public abstract void sell(Player player, CanOwn siteToSell, List<Player> listPlayers);
-	
-	public void mortgage(Player player) {
+	public void mortgage(Player player, boolean bankruptcy) {
 		if (this.titleDeedCard.getOwner() == player) {
 			if(this instanceof Property) {
 				if(((Property)this).getNumHouses() == 0 && ((Property)this).getNumHotels() == 0) {
 					if(this.titleDeedCard.getMortgageStatus() == true){
 						System.err.println("This property is already mortgaged!");
+					}
+					else if(bankruptcy){
+						this.titleDeedCard.setMortgageStatus(true);
+						player.addMoney(this.titleDeedCard.getMortgage());
+						System.out.println("Successfully mortgaged "+this.getName());
 					}
 					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n)", player)) {
 						this.titleDeedCard.setMortgageStatus(true);

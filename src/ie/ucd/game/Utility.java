@@ -15,7 +15,7 @@ public class Utility extends PublicSquare {
 			System.err.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
 					+player.getMoney()+"\nProperty Price: "+this.getTitleDeedCard().getPriceBuy());
 			//player does not have enough funds to buy property, automatically enter auction
-			this.getTitleDeedCard().playerAuction(false);
+			this.getTitleDeedCard().playerAuction(null);
 		}
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "+this.getName()
 				+" for £"+this.getTitleDeedCard().getPriceBuy()+"?", player)) {
@@ -26,7 +26,7 @@ public class Utility extends PublicSquare {
 				System.out.println("You have purchased "+this.getName()+" for "+this.getTitleDeedCard().getPriceBuy());
 		}
 		else{
-			this.getTitleDeedCard().playerAuction(false);
+			this.getTitleDeedCard().playerAuction(null);
 		}
 	}
 }

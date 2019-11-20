@@ -172,13 +172,14 @@ public class Transactions {
 			}
 		}
 	}
+
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
 	public static boolean saveFromBankruptcyTrade(Player bankruptPlayer) {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		InputOutput.playerCanOwnInfo(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
 			TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
-			tradeItem.playerAuction(true);
+			tradeItem.playerAuction(bankruptPlayer);
 			return true;
 		}
 		else{

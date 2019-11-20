@@ -18,9 +18,6 @@ public class CommunityChest extends Card {
 		switch(this.getCardType()) {
 			case "MOVE":
 				player1.moveToSquare(this.getCardValue());
-				if(this.getCardValue() == 0) { 
-					player1.addMoney(200); //Add money as the user has gone to GO
-				}
 				break;
 			case "JAIL":
 				Jail.sendToJail(player1);
