@@ -9,13 +9,13 @@ import ie.ucd.game.*;
 public class BuildHousesTest {
 	public static void main(String[] args) throws IOException { 
 	
-		BoardReader.readProperties();
-		BoardReader.readSpecialSquares();
-		BoardReader.readUtilities();
-		BoardReader.readCommunityChests();
-		BoardReader.readChances();
+		Board.readProperties();
+		Board.readSpecialSquares();
+		Board.readUtilities();
+		Board.readCommunityChests();
+		Board.readChances();
 		
-		 ArrayList<Property> properties = BoardReader.getProperties();
+		 ArrayList<Property> properties = Board.getProperties();
 		 
 		 Player p1 = new Player("p1", "thing1");
 		 Player p2 = new Player("p2", "thing2");

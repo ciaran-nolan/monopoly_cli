@@ -120,7 +120,6 @@ public class Player {
 		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
-            System.out.println(this.indexLocation + (moves-40));
 			this.indexLocation += (moves-40);
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
 			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
@@ -139,15 +138,15 @@ public class Player {
 
 	public void pickCommChestCard() {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
-		CommunityChest pickedCard = BoardReader.communityChests.get(0);
+		CommunityChest pickedCard = Board.communityChests.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
 		if(!pickedCard.getCardType().equals("GET_OUT_OF_JAIL")) {
-			BoardReader.communityChests.remove(0);
-			BoardReader.communityChests.add(pickedCard);
+			Board.communityChests.remove(0);
+			Board.communityChests.add(pickedCard);
 		}
 		else {
 			//Remove the get out of jail card from the pile
-			BoardReader.communityChests.remove(0);
+			Board.communityChests.remove(0);
 			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
@@ -156,15 +155,15 @@ public class Player {
 	
 	public void pickChanceCard() {
 		//The card deck will be shuffled and so I will need to take this card and then call the 
-		Chance pickedCard = BoardReader.chances.get(0);
+		Chance pickedCard = Board.chances.get(0);
 		//If it is a get out of jail card, keep it and don't return to the pile
 		if(!pickedCard.getCardType().equals("GET_OUT_OF_JAIL")) {
-			BoardReader.chances.remove(0);
-			BoardReader.chances.add(pickedCard);
+			Board.chances.remove(0);
+			Board.chances.add(pickedCard);
 		}
 		else {
 			//Remove the get out of jail card from the pile
-			BoardReader.chances.remove(0);
+			Board.chances.remove(0);
 			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
@@ -273,10 +272,10 @@ public class Player {
 					//Remove it and then send to the new owner
 					this.jailCards.remove(card);
 					if(card instanceof CommunityChest) {
-						BoardReader.communityChests.add((CommunityChest)card);
+						Board.communityChests.add((CommunityChest)card);
 					}
 					else {
-						BoardReader.chances.add((Chance)card);
+						Board.chances.add((Chance)card);
 					}
 					//Need to check that the card was actually removed
 					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
@@ -324,7 +323,7 @@ public class Player {
 					playerOwed.addJailCard(jailCard);
 				}
 			}
-			Checks.playerStatus(playerOwed);
+			Checks.checkPlayerStatus(playerOwed);
 			return true;
 		}
 	
@@ -447,7 +446,7 @@ public class Player {
 		for(TitleDeed currentTitleDeed: titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
 				currentTitleDeed.setOwner(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]));
-				currentTitleDeed.getOwner().reduceMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0], this);
+				currentTitleDeed.getBankruptcyTradeStatus().clear();
 			}
 		}
 	}
@@ -475,7 +474,8 @@ public class Player {
 			return true;
 		}
 		else {
-			if(InputOutput.yesNoInput("The combined value of mortgaging all properties and selling all houses is insufficient to cover your debt ("+moneyNeedToRaise+")"+
+			if(InputOutput.yesNoInput("The combined value of mortgaging all properties ("+valOfMortgage
+					+") and selling all houses ("+valOfHouseHotels+") is insufficient to cover your debt ("+moneyNeedToRaise+")"+
                     "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
@@ -489,6 +489,7 @@ public class Player {
                     	savedFromBankruptcy = true;
 					}
                     else if (!InputOutput.yesNoInput("You still do not have enough funds to prevent bankruptcy."+
+							"Outstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
 							"Would you like to make another trade? (y/n)", this)) {
                     	continueTrade=false;
                     }
@@ -511,6 +512,8 @@ public class Player {
 	public void clearBankruptcyTradeStatus(){
 		for(TitleDeed currentTitleDeed: this.titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
+				//give money back
+				currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]).addMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]);
 				currentTitleDeed.getBankruptcyTradeStatus().clear();
 			}
 		}

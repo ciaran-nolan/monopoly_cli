@@ -3,7 +3,7 @@ package ie.ucd.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static ie.ucd.game.BoardReader.board;
+import static ie.ucd.game.Board.board;
 
 public class InputOutput {
 	private static Scanner input = new Scanner(System.in);
@@ -146,8 +146,8 @@ public class InputOutput {
 				Transactions.playerToPlayerTrade(currentPlayer);
 				break;
 			case 4:
-			     Checks.playerStatus(currentPlayer);
-			     Checks.playerPropertyStatus(currentPlayer);
+			     Checks.checkPlayerStatus(currentPlayer);
+			     Checks.checkPlayerCanOwnStatus(currentPlayer);
 				 break;
             case 5:
                 break;

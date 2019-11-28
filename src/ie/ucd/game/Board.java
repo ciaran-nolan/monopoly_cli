@@ -10,7 +10,7 @@ import java.util.*;
 
 
 
-public class BoardReader {
+public class Board {
 
 	public static ArrayList<Property> properties = new ArrayList<Property>(22);
 	public static ArrayList<Utility> utilities = new ArrayList<Utility>(6);
@@ -20,10 +20,8 @@ public class BoardReader {
 	public static ArrayList<Train> trains = new ArrayList<Train>(2);
 	public static ArrayList<Square> board = new ArrayList<Square>(Collections.nCopies(40, null));
 	
-	
-	
-	
-    public static void readProperties() throws FileNotFoundException { 	
+	//Methods read in each square type on the monopoly board into their respective arraylists
+    public static void readProperties() throws FileNotFoundException {
     	try {
     		Properties prop = new Properties();
     		//define properties list to hold the .properties file
@@ -31,7 +29,7 @@ public class BoardReader {
     		//define the location of the prop file
     		String propFileName = "ie/ucd/gameConfigurations/property.properties";
     		//define the input stream for the prop file
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		//check that the prop file location is valid
     		if (inputStream != null) {
@@ -62,15 +60,9 @@ public class BoardReader {
     	try {
     		Properties utilProp = new Properties();
     		String propFileName = "ie/ucd/gameConfigurations/utilities.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
-    		
-    		if (inputStream != null) {
-    			utilProp.load(inputStream);
-				
-			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-			}
-    	
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
+    		utilProp.load(inputStream);
+
     	for(int i=0; i<=1; i++) {
     		int[] rentIntArray = Arrays.stream(utilProp.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
     		Utility temp = new Utility(utilProp.getProperty(("title"+i)), Integer.parseInt(utilProp.getProperty(("squareNum"+i))));
@@ -92,7 +84,7 @@ public class BoardReader {
     		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/specialSquares.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -119,7 +111,7 @@ public class BoardReader {
     		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/communityChest.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -146,7 +138,7 @@ public class BoardReader {
     		
     		//location of prop file
     		String propFileName = "ie/ucd/gameConfigurations/chance.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(propFileName);
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -169,7 +161,7 @@ public class BoardReader {
     	try {
     		Properties prop = new Properties();
     		String trainFileName = "ie/ucd/gameConfigurations/train.properties";
-    		InputStream inputStream = BoardReader.class.getClassLoader().getResourceAsStream(trainFileName);
+    		InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(trainFileName);
     		
     		if (inputStream != null) {
 				prop.load(inputStream);
@@ -184,17 +176,13 @@ public class BoardReader {
     		temp.setTitleDeedCard(tempDeed);
 			trains.add(temp);
     		board.set(temp.getLocation(),temp);
-    		//System.out.println(board.get(temp.getLocation()).getName());
     	}
     	
     	} catch (Exception e) {
 			System.out.println("Exception: " + e);
 			}
     }
-    
-    public static void initialiseChanceComChestSquares() {
-    	
-    }
+
     public static void initialiseBoard() {
 		try {
 			readProperties();
@@ -209,28 +197,18 @@ public class BoardReader {
     	
 		
 	}
-    
-    public static void outputBoard() {
-    	for(int i=0;i<board.size();i++) {
-    		System.out.println(board.get(i).getName());
-    	}
-    }
-    
+
     public static ArrayList<Utility> getUtilities(){
     	return utilities;
-    	
     }
     public static ArrayList<Property> getProperties(){
     	return properties;
-    	
     }
-    public static ArrayList<Special> getSpecials(){
-    	return specials;
-    }
-    public static ArrayList<CommunityChest> getCommunityChests(){
+
+    static ArrayList<CommunityChest> getCommunityChests(){
     	return communityChests;
     }
-    public static ArrayList<Chance> getChances(){
+    static ArrayList<Chance> getChances(){
     	return chances;
     }
 }

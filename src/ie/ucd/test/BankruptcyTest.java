@@ -10,17 +10,17 @@ public class BankruptcyTest {
        Game.playerList = Player.createListPlayers();
 
 
-        BoardReader.initialiseBoard();
-        System.out.println(BoardReader.properties.size()+" "+Game.playerList.size());
+        Board.initialiseBoard();
+        System.out.println(Board.properties.size()+" "+Game.playerList.size());
 
 
 
-        BoardReader.properties.get(0).buy(Game.playerList.get(0));
-        BoardReader.properties.get(1).buy(Game.playerList.get(0));
-        BoardReader.properties.get(2).buy(Game.playerList.get(0));
+        Board.properties.get(0).buy(Game.playerList.get(0));
+        Board.properties.get(1).buy(Game.playerList.get(0));
+        Board.properties.get(2).buy(Game.playerList.get(0));
 
         Property.buildHousesHotels(Game.playerList.get(0));
-        BoardReader.properties.get(2).mortgage(Game.playerList.get(0),false);
+        Board.properties.get(2).mortgage(Game.playerList.get(0),false);
 
         Game.playerList.get(0).reduceMoney(2500,null);
     }

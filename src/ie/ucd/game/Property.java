@@ -66,7 +66,6 @@ public class Property extends CanOwn {
 
 	
 	public static void buildHousesHotels(Player player) {
-		Scanner input = new Scanner(System.in);
 		boolean isHotel = false;
 
 		//System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");

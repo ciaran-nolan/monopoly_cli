@@ -4,13 +4,11 @@ package ie.ucd.game;
 //import java.util.Scanner;
 import java.util.*;
 
-import ie.ucd.game.*;
-
 
 public class Checks {
 	
 	public static void checkSquare(int index, Player player) {
-		Square currentSquare = BoardReader.board.get(index);
+		Square currentSquare = Board.board.get(index);
 		
 		switch(currentSquare.getSquareType()) {
 		case PROPERTY:
@@ -50,20 +48,20 @@ public class Checks {
 		}
 	}
 
-	public static boolean enoughFunds(Player player, int price) {
+	static boolean enoughFunds(Player player, int price) {
         return player.getMoney() >= price;
     }
 	
-	public static void playerStatus(Player player) {
+    static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
-	public static void playerPropertyStatus(Player player){
+	static void checkPlayerCanOwnStatus(Player player){
 	    System.out.println(player.getName() + " - Property Status: \n");
 	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
-	        System.out.println(currentTitleDeed.getCardDesc()+" ("+currentTitleDeed.getSquareColour()+")");
+	        System.out.println(currentTitleDeed.getCardDesc());
 	        if(currentTitleDeed.getOwnableSite() instanceof Property) {
-                System.out.println("Number of houses: "+((Property)currentTitleDeed.getOwnableSite()).getNumHouses()+
+                System.out.println("("+currentTitleDeed.getSquareColour()+")\n"+"Number of houses: "+((Property)currentTitleDeed.getOwnableSite()).getNumHouses()+
                         "\nNumber of Hotels: "+((Property)currentTitleDeed.getOwnableSite()).getNumHotels());
 	        }
         }

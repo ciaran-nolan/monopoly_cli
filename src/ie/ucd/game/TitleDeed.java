@@ -81,7 +81,7 @@ public class TitleDeed extends Card {
     //FIXME buy will now be associated with the square........will still be in practice and implemented in the square.......
     //FIXME but instead the card will be handed over
     public boolean getMortgageStatus(){
-        //If the card is faced down, it is
+        //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
     }
 
@@ -110,6 +110,7 @@ public class TitleDeed extends Card {
     }
 
     public void playerAuction(Player bankruptPlayer) {
+        int[] currentAuctionDetails = new int[] {0,0};
 
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
         if(bankruptPlayer!=null){
@@ -119,8 +120,8 @@ public class TitleDeed extends Card {
                 }
             }
         }
-        int[] currentAuctionDetails = new int[] {0,0};
-        Scanner auctionScanner = new Scanner(System.in);
+
+
         int biddingPoolSize = biddingPlayers.size();
 
         while(biddingPoolSize > 1){
@@ -161,28 +162,20 @@ public class TitleDeed extends Card {
                     System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 
                     //read in user bid
-                    int temporaryBid = auctionScanner.nextInt();
+                    int temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
 
                     //check the user's bid is greater than current highest bid or that they do not have enough money to make the specified bid
-                    while(temporaryBid <= currentAuctionDetails[0] || biddingPlayers.get(i).getMoney() < temporaryBid) {
+                    while(temporaryBid <= currentAuctionDetails[0]) {
                         //bid is less than current highest bid, prompt for intention to re input bid
                         if(temporaryBid <= currentAuctionDetails[0]) {
                             System.out.println(biddingPlayers.get(i).getName() +
                                     " your bid must be greater than the current bid of: "+currentAuctionDetails[0]);
                         }
-                        //user does not have the specified funds to make bid, prompt for intention to rebid
-                        else if(biddingPlayers.get(i).getMoney() < temporaryBid) {
-                            System.out.println(biddingPlayers.get(i).getName() + " you do not have enough funds to make this bid.");
-                            System.out.println("\nYour bid: "+temporaryBid+"\nYour Funds:"+biddingPlayers.get(i).getMoney()+
-                                    "\nCurrent winning bid: "+currentAuctionDetails[0]+" by: "+biddingPlayers.get(currentAuctionDetails[1]).getName());
-
-                        }
-
                         //check if user has confirmed intention to bid again
                         if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
                             System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
                             //read in new bid
-                            temporaryBid = auctionScanner.nextInt();
+                            temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
                         }
                         //user has declared intention to NOT bid again, remove from list of current users in auction
                         else {
@@ -212,6 +205,7 @@ public class TitleDeed extends Card {
                 if(bankruptPlayer!=null){
                     System.out.println(this.getCardDesc()+" has been won successfully in the preliminary bankruptcy auction by"+biddingPlayers.get(0));
                     this.bankruptcyTradeStatus.put(currentAuctionDetails[0],  biddingPlayers.get(0));
+                    biddingPlayers.get(0).reduceMoney(currentAuctionDetails[0],null);
                 }
                 else {
                     System.out.println(biddingPlayers.get(0).getName()+" has successfully won "+this.getCardDesc()+" at auction for: "+currentAuctionDetails[0]);

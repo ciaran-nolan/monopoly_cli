@@ -1,7 +1,5 @@
 package ie.ucd.game;
 
-import java.util.ArrayList;
-
 public class Jail {
 
     public static void sendToJail(Player jailedPlayer){
@@ -22,11 +20,11 @@ public class Jail {
         //I now need to add the card back into the relevant array. I can see that by the Array that is less than 16
         if(jailedPlayer.getJailCard().get(0) instanceof CommunityChest) {
             jailedPlayer.getJailCard().remove(0);
-            BoardReader.getCommunityChests().add((CommunityChest)jailedPlayer.getJailCard().get(0));
+            Board.getCommunityChests().add((CommunityChest)jailedPlayer.getJailCard().get(0));
         }
         else{
             jailedPlayer.getJailCard().remove(0);
-            BoardReader.getChances().add((Chance)jailedPlayer.getJailCard().get(0));
+            Board.getChances().add((Chance)jailedPlayer.getJailCard().get(0));
         }
         removeFromJail(jailedPlayer);
     }

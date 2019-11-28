@@ -2,15 +2,15 @@ package ie.ucd.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 import ie.ucd.game.*;
 
 public class AuctionTest {
 	public static void main(String[] args) throws IOException {
 		
 		//Property testProp = new Property(int 0,"Red","Test",int 50,int [10,20,50], 25, 25,)
-	BoardReader.readProperties();
-	ArrayList<Property> properties = BoardReader.getProperties();
+	Board.readProperties();
+	ArrayList<Property> properties = Board.getProperties();
 	 
 	Player p1 = new Player("p1", "thing1");
 	Player p2 = new Player("p2", "thing2");

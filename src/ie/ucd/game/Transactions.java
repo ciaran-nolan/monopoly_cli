@@ -1,5 +1,7 @@
 package ie.ucd.game;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -72,7 +74,6 @@ public class Transactions {
 		//prompt the user who has initiated the desire to trade, to select who they wish to trade with
 		Player chosenPlayer = InputOutput.selectPlayerMenu(initiatingPlayer);
 		tradeList.add(chosenPlayer);
-		
 	}
 	
 	public static void playerToPlayerTrade(Player initiatingPlayer) {
@@ -88,7 +89,7 @@ public class Transactions {
 			boolean finishedTrade = false;
 
 			while (!finishedTrade) {
-				Checks.playerStatus(tradeList.get(i));
+				Checks.checkPlayerStatus(tradeList.get(i));
 				System.out.println("Please select what you wish to trade:\n[0]Cancel Trade\n[1]Jail Free Card\n[2]Property\n[3]Cash");
 				transactionChoice = InputOutput.integerMenu(0,3);
 
@@ -160,31 +161,52 @@ public class Transactions {
 					finishedTrade = true;
 				}
 			}
-
-			displayTradeItems();
-			//Trade Acceptance
-			if (InputOutput.yesNoInput(tradeList.get(0).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(0))
-					&& InputOutput.yesNoInput(tradeList.get(1).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(1))) {
-				exchangeTradeItems();
-			} else {
-				System.out.println("Trade has not been accepted by both parties");
-				return;
-			}
+		}
+		displayTradeItems();
+		//Trade Acceptance
+		if (InputOutput.yesNoInput(tradeList.get(0).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(0))
+				&& InputOutput.yesNoInput(tradeList.get(1).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(1))) {
+			exchangeTradeItems();
+		} else {
+			System.out.println("Trade has not been accepted by both parties");
+			return;
 		}
 	}
-
+	public static void bankruptcySingleTransaction(Player bankruptPlayer, Player purchasingPlayer, TitleDeed tradeItem){
+		System.out.println(purchasingPlayer.getName()+" please enter the amount to purchase "+ tradeItem.getCardDesc());
+		int purchaseAmount = InputOutput.integerMenu(1,purchasingPlayer.getMoney());
+		while(!InputOutput.yesNoInput(bankruptPlayer.getName()+" do you accept this trade amount?",bankruptPlayer)){
+			if(InputOutput.yesNoInput("Do you want to attempt to trade again, "+purchasingPlayer.getName()+"?",purchasingPlayer)){
+				purchaseAmount = InputOutput.integerMenu(1,purchasingPlayer.getMoney());
+			}
+			else break;
+		}
+		tradeItem.setBankruptcyTradeStatus(purchaseAmount,  purchasingPlayer);
+		purchasingPlayer.reduceMoney(purchaseAmount,null);
+	}
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
-	public static boolean saveFromBankruptcyTrade(Player bankruptPlayer) {
+	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
-		InputOutput.playerCanOwnInfo(bankruptPlayer);
+		Checks.checkPlayerCanOwnStatus(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
-			TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
-			tradeItem.playerAuction(bankruptPlayer);
-			return true;
+			if(Game.playerList.size()==2){
+				Player purchasingPlayer = InputOutput.selectPlayerMenu(bankruptPlayer);
+				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
+				bankruptcySingleTransaction(bankruptPlayer, purchasingPlayer, tradeItem);
+
+			}
+			else {
+				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
+				System.out.println("here");
+				if(tradeItem == null){
+					System.out.println("Trade has been cancelled.");
+
+				}
+				tradeItem.playerAuction(bankruptPlayer);
+			}
 		}
 		else{
 			System.out.println("No players are willing to trade");
-			return false;
 		}
 	}
 }

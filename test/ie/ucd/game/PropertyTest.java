@@ -13,25 +13,25 @@ class PropertyTest {
 
     @BeforeAll
     public static void setup(){
-        BoardReader.initialiseBoard();
+        Board.initialiseBoard();
     }
 
     @Test
     void getNumHotels() {
-        Property testprop = BoardReader.properties.get(0);
+        Property testprop = Board.properties.get(0);
         assertEquals(0,testprop.getNumHotels());
     }
 
     @Test
     void getNumHouses() {
-        Property testprop = BoardReader.properties.get(0);
+        Property testprop = Board.properties.get(0);
         assertEquals(0,testprop.getNumHouses());
 
     }
 
     @Test
     void setNumHouses() {
-        Property testprop = BoardReader.properties.get(0);
+        Property testprop = Board.properties.get(0);
         testprop.setNumHouses(2);
         assertEquals(2,testprop.getNumHouses());
         testprop.setNumHouses(0);
@@ -39,15 +39,15 @@ class PropertyTest {
 
     @Test
     void setNumHotels() {
-        Property testprop = BoardReader.properties.get(0);
+        Property testprop = Board.properties.get(0);
         testprop.setNumHotels(1);
         assertEquals(1,testprop.getNumHotels());
         testprop.setNumHotels(0);
     }
     @Test
     void getSquareColour() {
-        Property testprop = BoardReader.properties.get(0);
-        System.out.println(BoardReader.properties.get(0).getSquareColour());
+        Property testprop = Board.properties.get(0);
+        System.out.println(Board.properties.get(0).getSquareColour());
         assertTrue(testprop.getSquareColour().equals("Purple"));
     }
 
@@ -57,9 +57,9 @@ class PropertyTest {
         String input = "y";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        BoardReader.properties.get(0).buy(player);
+        Board.properties.get(0).buy(player);
         //BoardReader.properties.get(1).buy(player);
-        assertTrue(player.getTitleDeedList().contains(BoardReader.properties.get(0).getTitleDeedCard()));
+        assertTrue(player.getTitleDeedList().contains(Board.properties.get(0).getTitleDeedCard()));
     }
 
     @Test
@@ -67,8 +67,8 @@ class PropertyTest {
         String input = "0\r\n0\r\ny\r\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
-        player.addPurchasedTitleDeed(BoardReader.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Property testProp =(Property)player.getTitleDeedList().get(0).getOwnableSite();
         testProp.setNumHouses(0);
         testProp.setNumHotels(0);
@@ -81,8 +81,8 @@ class PropertyTest {
         String input = "n\r\n" ;
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
-        player.addPurchasedTitleDeed(BoardReader.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
 
         Property testProp1 = (Property)player.getTitleDeedList().get(0).getOwnableSite();
         Property testProp2 = (Property)player.getTitleDeedList().get(1).getOwnableSite();
@@ -97,8 +97,8 @@ class PropertyTest {
         String input = "n\r\n" ;
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
-        player.addPurchasedTitleDeed(BoardReader.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Property testProp1 = (Property)player.getTitleDeedList().get(0).getOwnableSite();
         Property testProp2 = (Property)player.getTitleDeedList().get(1).getOwnableSite();
         testProp1.setNumHotels(1);

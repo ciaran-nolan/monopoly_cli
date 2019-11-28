@@ -3,7 +3,7 @@ package ie.ucd.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ie.ucd.game.BoardReader;
+import ie.ucd.game.Board;
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 import ie.ucd.game.Property;
@@ -12,13 +12,13 @@ import ie.ucd.game.Transactions;
 public class PlayerToPlayerTest {
 	public static void main(String[] args) throws IOException { 
 		
-		BoardReader.readProperties();
-		BoardReader.readSpecialSquares();
-		BoardReader.readUtilities();
-		BoardReader.readCommunityChests();
-		BoardReader.readChances();
+		Board.readProperties();
+		Board.readSpecialSquares();
+		Board.readUtilities();
+		Board.readCommunityChests();
+		Board.readChances();
 		
-		 ArrayList<Property> properties = BoardReader.getProperties();
+		 ArrayList<Property> properties = Board.getProperties();
 		 
 		 Player p1 = new Player("p1", "thing1");
 		 Player p2 = new Player("p2", "thing2");
