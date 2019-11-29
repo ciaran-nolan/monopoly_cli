@@ -6,6 +6,12 @@ import java.util.*;
 
 
 public class Checks {
+	public static boolean checkIfValidGame(){
+		if(Game.playerList.size()==1 || Game.numPlayersBankrupt >=2){
+			return false;
+		}
+		else return true;
+	}
 	
 	public static void checkSquare(int index, Player player) {
 		Square currentSquare = Board.board.get(index);
@@ -218,31 +224,36 @@ public class Checks {
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
 	public static void checkWinner() {
-		int totalValue=0;
-		ArrayList<Integer> valueArray = new ArrayList<>();
-		int maxValue, maxIndex;
-		
-		for(Player player:Game.playerList) {
-			totalValue += player.getMoney();
-			for(TitleDeed titleDeed:player.getTitleDeedList()) {
-				CanOwn ownable = titleDeed.getOwnableSite();
-				if(ownable instanceof Property) {
-					totalValue += ((Property)ownable).getNumHouses()*titleDeed.getHousePrice();
-					totalValue += ((Property)ownable).getNumHotels()*titleDeed.getHousePrice()*5; //A Hotel is 5 times the price of a house
-				}
-				totalValue+= titleDeed.getPriceBuy();
-				valueArray.add(totalValue);
-				System.out.println("Player: "+player.getName()+" has Total Asset value of �"+totalValue);
-			}
-			//Zero the local variable for use with next player
-			totalValue=0;
+		if(Game.playerList.size()==1){
+			System.out.println(Game.playerList.get(0).getName()+" has won the game");
 		}
-		maxValue = Collections.max(valueArray);
-		maxIndex = valueArray.indexOf(maxValue);
-		System.out.println("The richest player and winner of the game is: "+(Game.playerList.get(maxIndex).getName()+" with a Total Asset Value of �"+maxValue));
-		System.out.println("The game has been won! It is now over");
-		System.exit(1);
-	}
+		else {
+			int totalValue = 0;
+			ArrayList<Integer> valueArray = new ArrayList<>();
+			int maxValue, maxIndex;
+
+			for (Player player : Game.playerList) {
+				totalValue += player.getMoney();
+				for (TitleDeed titleDeed : player.getTitleDeedList()) {
+					CanOwn ownable = titleDeed.getOwnableSite();
+					if (ownable instanceof Property) {
+						totalValue += ((Property) ownable).getNumHouses() * titleDeed.getHousePrice();
+						totalValue += ((Property) ownable).getNumHotels() * titleDeed.getHousePrice() * 5; //A Hotel is 5 times the price of a house
+					}
+					totalValue += titleDeed.getPriceBuy();
+					valueArray.add(totalValue);
+					System.out.println("Player: " + player.getName() + " has Total Asset value of �" + totalValue);
+				}
+				//Zero the local variable for use with next player
+				totalValue = 0;
+			}
+			maxValue = Collections.max(valueArray);
+			maxIndex = valueArray.indexOf(maxValue);
+			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of �" + maxValue));
+			System.out.println("The game has been won! It is now over");
+			System.exit(1);
+		}
+		}
 	
 }
 		

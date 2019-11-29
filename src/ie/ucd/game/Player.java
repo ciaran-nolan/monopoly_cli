@@ -79,37 +79,37 @@ public class Player {
 	public void reduceMoney(int money, Player playerOwed) {
 		//Reduce money needs to see if there is enough money to do everything
 		//This is if you are owing money to the bank......if you can raise enough, you can get around it
-
-		//check who is owed first
-		if(playerOwed == null){
-			//can the player afford to pay the bank
-			if(money > this.money) {
-				if(saveFromBankruptcy(money-this.money)){
+		//if there is no money to add, do nothing
+		if(money!=0) {
+			//check who is owed first
+			if (playerOwed == null) {
+				//can the player afford to pay the bank
+				if (money > this.money) {
+					//save from bankruptcy handles the reduction of money
+					if (saveFromBankruptcy(money - this.money)) {
+						System.out.println(this.name + ", remaining Funds: £" + this.money);
+					}
+					//cant afford, player is bankrupt
+					else this.bankrupt(null);
+				} else {
+					//can afford, pay the amount
 					this.money -= money;
-					System.out.println(this.name+", remaining Funds: £"+this.money);
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
 				}
-				//cant afford, player is bankrupt
-				else this.isBankrupt(null);
 			}
-			else{
-				//can afford, pay the amount
-				this.money -= money;
-				System.out.println(this.name+", remaining Funds: £"+this.money);
-			}
-		}
-		//a player is owed
-		else{
-			//can the player afford to pay the payee
-			if(money > this.money) {
-				//they are bankrupt to another player
-				this.isBankrupt(playerOwed);
-			}
-			else{
-				//can afford to pay, reduce payer's money
-				this.money-=money;
-				System.out.println(this.name+", remaining Funds: £"+this.money);
-				//increment payees money
-				playerOwed.addMoney(money);
+			//a player is owed
+			else {
+				//can the player afford to pay the payee
+				if (money > this.money) {
+					//they are bankrupt to another player
+					this.bankrupt(playerOwed);
+				} else {
+					//can afford to pay, reduce payer's money
+					this.money -= money;
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
+					//increment payees money
+					playerOwed.addMoney(money);
+				}
 			}
 		}
 	}
@@ -258,75 +258,76 @@ public class Player {
 		return listPlayers;
 	}
 	
-	//This function will see if a player is bankrupt.
-	//FIXME this is very much a temporary thing until we get the bankrupt functions looking to see if they can pay rent the whole time etc
-	public boolean isBankrupt(Player playerOwed) {
+	//
+	public void bankrupt(Player playerOwed) {
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
-		if(playerOwed == null) {
-			//Bank owed
-			//Get rid of jail free card
-			if(this.jailCards.size()> 0) {
-				//Need to transfer the get out of jail card to the playerOiwed
-				for(Card card:this.jailCards) {
-					//Remove it and then send to the new owner
-					this.jailCards.remove(card);
-					if(card instanceof CommunityChest) {
-						Board.communityChests.add((CommunityChest)card);
-					}
-					else {
-						Board.chances.add((Chance)card);
-					}
-					//Need to check that the card was actually removed
-					System.out.println("Bankrupt player Jail Card array now of size: "+this.jailCards.size());
-				}
-			}
-
-			for(TitleDeed titleDeedCard:this.titleDeedCardList){
-				CanOwn property = titleDeedCard.getOwnableSite();
-				if(property instanceof Property) {
-					if(((Property)property).getNumHouses()>0) {
-						Game.setRemainingHouses(Game.getRemainingHouses()+((Property)property).getNumHouses());
-						((Property)property).setNumHouses(0);
-					}
-					else if (((Property)property).getNumHotels()>0) {
-						Game.setRemainingHotels(Game.getRemainingHotels()+((Property)property).getNumHotels());
-						((Property)property).setNumHotels(0);
-					}
-					else {
-						System.out.println("There is no hotels or houses on this property to be sold!");
-					}	
-				}
-				//Remove the property from their List of Owned properties and now the bank will auction the property
-				this.titleDeedCardList.remove(titleDeedCard);
-				System.out.println("Property will now be auctioned");
-				titleDeedCard.playerAuction(this); //FIXME Need a list of players to be global
-			}
-			Game.playerList.remove(this); //FIXME need to remove the player from the game
-			System.out.println("Bankrupt player, "+this.getName()+", has retired from the game!");
-			Game.numPlayersBankrupt++; //Increase the number of players bankrupt
-			return true; //FIXME can see if this is needed
+		Game.playerList.remove(this);
+		if(!Checks.checkIfValidGame()){
+			Checks.checkWinner();
 		}
 		else {
-			System.out.println("You are bankrupt to "+playerOwed.getName());
-			if(this.money > 0){
-				playerOwed.addMoney(this.money);
-			}
-			if(this.titleDeedCardList.size()>0){
-				for(TitleDeed currentTitleDeed:this.titleDeedCardList){
-					this.titleDeedCardList.remove(currentTitleDeed);
-					playerOwed.addPurchasedTitleDeed(currentTitleDeed);
+			if (playerOwed == null) {
+				//Bank owed
+				//Get rid of jail free card
+				if (this.jailCards.size() > 0) {
+					//Need to transfer the get out of jail card to the playerOwed
+					for (Card card : this.jailCards) {
+						//Remove it and then send to the new owner
+						this.jailCards.remove(card);
+						if (card instanceof CommunityChest) {
+							Board.communityChests.add((CommunityChest) card);
+						} else {
+							Board.chances.add((Chance) card);
+						}
+						//Need to check that the card was actually removed
+						System.out.println("Bankrupt player Jail Card array now of size: " + this.jailCards.size());
+					}
 				}
-			}
-			if(this.jailCards.size()>0){
-				for(Card jailCard: this.jailCards){
-					playerOwed.addJailCard(jailCard);
+				for (int i = 0; i < titleDeedCardList.size(); i++) {
+					CanOwn property = titleDeedCardList.get(i).getOwnableSite();
+					if (property instanceof Property) {
+						if (((Property) property).getNumHouses() > 0) {
+							Game.setRemainingHouses(Game.getRemainingHouses() + ((Property) property).getNumHouses());
+							((Property) property).setNumHouses(0);
+						} else if (((Property) property).getNumHotels() > 0) {
+							Game.setRemainingHotels(Game.getRemainingHotels() + ((Property) property).getNumHotels());
+							((Property) property).setNumHotels(0);
+						} else {
+							System.out.println("There is no hotels or houses on this property to be sold!");
+						}
+					}
+
+					//Remove the property from their List of Owned properties and now the bank will auction the property
+					this.titleDeedCardList.get(i).setOwner(null);
+					this.titleDeedCardList.remove(i);
+					i--;
+					System.out.println("Property will now be auctioned");
+					property.getTitleDeedCard().playerAuction(null);
 				}
+
+				System.out.println("Bankrupt player, " + this.getName() + ", has retired from the game!");
+				Game.numPlayersBankrupt++; //Increase the number of players bankrupt
+
+			} else {
+				System.out.println("You are bankrupt to " + playerOwed.getName());
+				if (this.money > 0) {
+					playerOwed.addMoney(this.money);
+				}
+				if (this.titleDeedCardList.size() > 0) {
+					for (TitleDeed currentTitleDeed : this.titleDeedCardList) {
+						this.titleDeedCardList.remove(currentTitleDeed);
+						playerOwed.addPurchasedTitleDeed(currentTitleDeed);
+					}
+				}
+				if (this.jailCards.size() > 0) {
+					for (Card jailCard : this.jailCards) {
+						playerOwed.addJailCard(jailCard);
+					}
+				}
+				Checks.checkPlayerStatus(playerOwed);
 			}
-			Checks.checkPlayerStatus(playerOwed);
-			return true;
 		}
-	
 	}
 		
 
@@ -445,7 +446,9 @@ public class Player {
 	public void completeBankruptcyTrade(){
 		for(TitleDeed currentTitleDeed: titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
+				this.reduceMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0],null);
 				currentTitleDeed.setOwner(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]));
+				System.out.println(currentTitleDeed.getOwner().getName());
 				currentTitleDeed.getBankruptcyTradeStatus().clear();
 			}
 		}
@@ -463,7 +466,7 @@ public class Player {
 		int valOfMortgage = Checks.checkMortgagingValue(this);
 		System.out.println(valOfMortgage);
 		if (valOfHouseHotels + valOfMortgage > moneyNeedToRaise) mustMortgage = true;
-		
+
 		if(mustSellHouseHotels) {
 			bankruptcySellHousesHotels(moneyNeedToRaise);
 			return true;
@@ -479,18 +482,21 @@ public class Player {
                     "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
+
                     Transactions.saveFromBankruptcyTrade(this);
                     valOfMortgage = Checks.checkMortgagingValue(this);
+
                     int valOfBankruptcyTrade = Checks.checkBankruptcyTradeValue(this);
-                    System.out.println((valOfBankruptcyTrade+valOfMortgage+valOfHouseHotels));
+
                     if(valOfHouseHotels+valOfMortgage+valOfBankruptcyTrade>moneyNeedToRaise){
                     	System.out.println("With the preliminary trades you have made, you have raised enough money to avoid bankruptcy");
                     	continueTrade=false;
                     	savedFromBankruptcy = true;
 					}
                     else if (!InputOutput.yesNoInput("You still do not have enough funds to prevent bankruptcy."+
-							"Outstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
-							"Would you like to make another trade? (y/n)", this)) {
+							"\nOutstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
+							"\nWould you like to make another trade? (y/n)", this)) {
+
                     	continueTrade=false;
                     }
                     else continue;

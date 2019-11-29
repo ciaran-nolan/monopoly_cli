@@ -120,7 +120,6 @@ public class Transactions {
 						break;
 					case 2:
 						TitleDeed titleDeedToTrade = InputOutput.titleDeedOperationMenu(tradeList.get(i),"trade",false);
-
 						if (null == titleDeedToTrade) {
 							if (InputOutput.yesNoInput("You have cancelled this operation. Would you like to trade something else? (y/n)", tradeList.get(i))) {
 								continue;
@@ -189,15 +188,15 @@ public class Transactions {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		Checks.checkPlayerCanOwnStatus(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
+
 			if(Game.playerList.size()==2){
 				Player purchasingPlayer = InputOutput.selectPlayerMenu(bankruptPlayer);
 				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
 				bankruptcySingleTransaction(bankruptPlayer, purchasingPlayer, tradeItem);
-
+				System.out.println(Game.playerList.size());
 			}
 			else {
 				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
-				System.out.println("here");
 				if(tradeItem == null){
 					System.out.println("Trade has been cancelled.");
 

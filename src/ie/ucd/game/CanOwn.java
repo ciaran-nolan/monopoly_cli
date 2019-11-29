@@ -66,7 +66,7 @@ public abstract class CanOwn extends Square {
 				if(this instanceof PublicSquare && this.titleDeedCard.getMortgageStatus() == false) {
 					this.titleDeedCard.setMortgageStatus(true);
 					player.addMoney(this.titleDeedCard.getMortgage());
-					System.out.println("Successfully mortgaged "+this.getName()+"\nCurrent Funds: £"+player.getMoney());
+					System.out.println("Successfully mortgaged "+this.getName());
 				}
 				else {
 					System.out.println("This property is non-ownable or has been mortgaged already!");

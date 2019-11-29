@@ -35,7 +35,7 @@ public class Jail {
             System.out.println("You have rolled for the third time without getting doubles, you must pay the £50 fine");
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the jail fee");
-                jailedPlayer.isBankrupt(null);
+                jailedPlayer.bankrupt(null);
             }
             else {
                 jailedPlayer.reduceMoney(50,null);

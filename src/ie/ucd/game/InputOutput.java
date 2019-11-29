@@ -174,17 +174,17 @@ public class InputOutput {
 
     public static Player selectPlayerMenu (Player selectingPlayer){
 		System.out.println("Please select player you wish to interact with");
-		ArrayList<Player> playerList = Game.playerList;
+		ArrayList<Player> playerMenu = new ArrayList<>(Game.playerList);
 		int choiceInput;
-		for(int i = 0; i<playerList.size();i++){
-			if(playerList.get(i)==selectingPlayer){
-				playerList.remove(i);
-				if(i<playerList.size()) i--;
+		for(int i = 0; i<playerMenu.size();i++){
+			if(playerMenu.get(i)==selectingPlayer){
+				playerMenu.remove(i);
+				if(i<playerMenu.size()) i--;
 			}
-			else System.out.println("["+i+"] "+playerList.get(i).getName());
+			else System.out.println("["+i+"] "+playerMenu.get(i).getName());
 		}
 
-		choiceInput = integerMenu(0,playerList.size());
-		return playerList.get(choiceInput);
+		choiceInput = integerMenu(0,playerMenu.size());
+		return playerMenu.get(choiceInput);
 	}
 }

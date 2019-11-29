@@ -30,7 +30,7 @@ public class Game {
 		Board.initialiseBoard();
 
 		//end game when 2 players have become bankrupt
-		while(numPlayersBankrupt < 2) {
+		while(Checks.checkIfValidGame()) {
 			//Loop through the players of the game to handle their turn
 			for(Player currentPlayer:playerList) {
 

@@ -21,6 +21,7 @@ public class Chance extends Card {
 				}
 				//player1.setLocation(this.getCardValue());
 				player.moveToSquare(this.getCardValue());
+				Checks.checkSquare(player.getLocation(), player);
 				break;
 			case "JAIL":
 				Jail.sendToJail(player);

@@ -6,6 +6,7 @@ package ie.ucd.game;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class TitleDeed extends Card {
@@ -111,23 +112,24 @@ public class TitleDeed extends Card {
 
     public void playerAuction(Player bankruptPlayer) {
         int[] currentAuctionDetails = new int[] {0,0};
-
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
+        Iterator<Player> it = biddingPlayers.iterator();
         if(bankruptPlayer!=null){
-            for(Player currentPlayer: biddingPlayers){
+            while(it.hasNext()){
+                Player currentPlayer = it.next();
                 if(currentPlayer==bankruptPlayer){
-                    biddingPlayers.remove(currentPlayer);
+                    it.remove();
                 }
             }
         }
-
-
         int biddingPoolSize = biddingPlayers.size();
 
         while(biddingPoolSize > 1){
             //update the bidding pool size
             for (int i = 0; i< biddingPoolSize; i++) {
-
+                if(biddingPoolSize==1 && currentAuctionDetails[0]>0){
+                    break;
+                }
                 //check user has enough funds to create a larger bid than the current highest
                 if(biddingPlayers.get(i).getMoney()<= currentAuctionDetails[0]) {
                     //user does not have enough funds to make a winning bid, remove them from the auction pool
@@ -139,7 +141,7 @@ public class TitleDeed extends Card {
                     //update building pool size for while loop
                     biddingPoolSize = biddingPlayers.size();
                     //index of user with winning needs to be reduced by one
-                    currentAuctionDetails[1] -= 1;
+                    currentAuctionDetails[1] --;
 
                     //if there is only one player remaining, the auction is over and they win, so break from loop
                     if(currentAuctionDetails[0] > 0 && biddingPoolSize == 1) {
@@ -179,8 +181,12 @@ public class TitleDeed extends Card {
                         }
                         //user has declared intention to NOT bid again, remove from list of current users in auction
                         else {
+                            if(i<currentAuctionDetails[1]){
+                                currentAuctionDetails[1] --;
+                            }
                             biddingPlayers.remove(i);
                             i --;
+                            biddingPoolSize=biddingPlayers.size();
                             //reset temporary bid back to highest bid so it is not overwritten
                             temporaryBid = currentAuctionDetails[0];
                             break;
@@ -194,8 +200,12 @@ public class TitleDeed extends Card {
                 }
                 //user has indicated intention to not make a bid, remove from pool and update
                 else {
+                    if(i<currentAuctionDetails[1]){
+                        currentAuctionDetails[1] --;
+                    }
                     biddingPlayers.remove(i);
                     i --;
+                    biddingPoolSize=biddingPlayers.size();
                 }
                 //updating bidding pool size
                 biddingPoolSize = biddingPlayers.size();
@@ -203,7 +213,7 @@ public class TitleDeed extends Card {
             //only one player remaining in bid pool, assign property to winner
             if (biddingPoolSize == 1) {
                 if(bankruptPlayer!=null){
-                    System.out.println(this.getCardDesc()+" has been won successfully in the preliminary bankruptcy auction by"+biddingPlayers.get(0));
+                    System.out.println(this.getCardDesc()+" has been won successfully in the preliminary bankruptcy auction by"+biddingPlayers.get(0).getName());
                     this.bankruptcyTradeStatus.put(currentAuctionDetails[0],  biddingPlayers.get(0));
                     biddingPlayers.get(0).reduceMoney(currentAuctionDetails[0],null);
                 }
