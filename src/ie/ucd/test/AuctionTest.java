@@ -10,7 +10,7 @@ public class AuctionTest {
 		
 		//Property testProp = new Property(int 0,"Red","Test",int 50,int [10,20,50], 25, 25,)
 	Board.readProperties();
-	ArrayList<Property> properties = Board.getProperties();
+	ArrayList<Property> properties = Board.properties;
 	 
 	Player p1 = new Player("p1", "thing1");
 	Player p2 = new Player("p2", "thing2");

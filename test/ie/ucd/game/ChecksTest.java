@@ -26,9 +26,9 @@ class ChecksTest {
     @Test
     void canBuy() {
       TitleDeed testTitleDeed = Board.properties.get(0).getTitleDeedCard();
-      assertTrue(Checks.canBuy(testTitleDeed, player));
+      assertTrue(Checks.canBuy(testTitleDeed));
       player.addPurchasedTitleDeed(testTitleDeed);
-      assertFalse(Checks.canBuy(testTitleDeed,player));
+      assertFalse(Checks.canBuy(testTitleDeed));
     }
 
     @Test

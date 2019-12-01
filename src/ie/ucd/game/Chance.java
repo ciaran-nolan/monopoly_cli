@@ -6,29 +6,36 @@ public class Chance extends Card {
 	public Chance(String cardType, String cardDesc, int cardValue) {
 		super(cardType, cardDesc, cardValue);
 	}
-	
-	public void dealWithCard(Player player) {
-		//From here I need to deal with a card produced from a deck of cards
 
+	//method to deal with a card from one of the game's decks
+	public void dealWithCard(Player player) {
 		ArrayList<TitleDeed> titleDeedList = player.getTitleDeedList();
+
+		//print card details for the user
 		System.out.println("The chance card reads: "+this.getCardDesc());
+		//implement the card
 		switch(this.getCardType()) {
 			case "MOVE":
-				//case where players move backwards and not to a specific property
+				//cover case where players move backwards
 				if(this.getCardValue()<0){
 					player.moveToSquare(player.getLocation()+this.getCardValue());
 					Checks.checkSquare(player.getLocation(), player);
 				}
-				//player1.setLocation(this.getCardValue());
-				player.moveToSquare(this.getCardValue());
-				Checks.checkSquare(player.getLocation(), player);
+				//move player forwards
+				else {
+					player.moveToSquare(this.getCardValue());
+					Checks.checkSquare(player.getLocation(), player);
+				}
 				break;
 			case "JAIL":
+				//send player to jail
 				Jail.sendToJail(player);
 				break;
 			case "PAY":
+				//pay a fine
+				//check if the fine is per house/hotel
 				if(this.getCardDesc().contains("repairs")) {
-					//In this case I need to get how many houses or hotels are on each site
+					//Check number of houses and hotels to accumulate in the payment for each ownable site
 					for(TitleDeed titleDeed : titleDeedList) {
 						CanOwn property = titleDeed.getOwnableSite();
 						if(property instanceof Property) {
@@ -36,22 +43,21 @@ public class Chance extends Card {
 							player.reduceMoney(this.getCardValue()*((Property) property).getNumHouses(),null);
 							player.reduceMoney(4*this.getCardValue()*((Property) property).getNumHotels(),null);
 							//If there is no hotels, it will not take any money away at all
-							//FIXME
-							System.out.println(property.getLocation());
-						}
-						else {
-							continue;
 						}
 					}
+					break;
 				}
 				else {
+					//reduce the amount of the fine
 					player.reduceMoney(this.getCardValue(), null);
 					break;
 				}
 			case "INCOME":
+				//add money to the player
 				player.addMoney(this.getCardValue());
 				break;
 			case "GET_OUT_OF_JAIL":
+				//add get out of jail free card
 				player.addJailCard(this);
 				break;
 			default:

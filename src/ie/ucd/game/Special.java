@@ -7,9 +7,7 @@ package ie.ucd.game;
 public class Special extends Square {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
-	
-	//private String description; //FIXME This has been passed up to the Square level
-	
+
 	public Special(String name, int indexLocation, boolean canBuy, String type, int value, SquareType squareType) {
 		super(name, indexLocation, canBuy, squareType); //Nobody owns it
 		this.type = type;
@@ -34,7 +32,7 @@ public class Special extends Square {
 	//For special square, the community chest and chance ones will implement
 	//the dealWithCard(Player) function from which a card can be produced from the deck
 	// and then used to perform a function
-	public void implementSpecialSquare(Player player) {
+	void implementSpecialSquare(Player player) {
 
 		switch(this.type) {
 			case "TAX":

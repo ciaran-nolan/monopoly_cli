@@ -40,15 +40,13 @@ public class TitleDeed extends Card {
         return this.ownableSite;
     }
     //FIXME change out of property
-    public int getHousePrice(){
+    int getHousePrice(){
         return this.housePrice;
     }
 
-    public void setHousePrice(int price){
-        this.housePrice = price;
-    }
+    public void setHousePrice(int price){ this.housePrice = price; }
 
-    public int getPriceBuy(){
+    int getPriceBuy(){
         return this.priceBuy;
     }
 
@@ -56,15 +54,15 @@ public class TitleDeed extends Card {
         this.priceBuy = price;
     }
     //FIXME change out of Property
-    public int[] getRents(){
+    int[] getRents(){
         return this.rents;
     }
 
-    public void setRents(int[] rents){
+    void setRents(int[] rents){
         this.rents = rents;
     }
     //FIXME change out of Property
-    public String getSquareColour(){
+    String getSquareColour(){
         return this.squareColour;
     }
 
@@ -72,21 +70,21 @@ public class TitleDeed extends Card {
         this.squareColour = squareColour;
     }
     //FIXME change out of CanOwn
-    public Player getOwner(){
+    Player getOwner(){
         return this.owner;
     }
 
-    public void setOwner(Player newOwner){
+    void setOwner(Player newOwner){
         this.owner = newOwner;
     }
     //FIXME buy will now be associated with the square........will still be in practice and implemented in the square.......
     //FIXME but instead the card will be handed over
-    public boolean getMortgageStatus(){
+    boolean getMortgageStatus(){
         //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
     }
 
-    public void setMortgageStatus(boolean newStatus){
+    void setMortgageStatus(boolean newStatus){
         this.mortgageStatus = newStatus;
     }
 
@@ -100,17 +98,15 @@ public class TitleDeed extends Card {
     //FIXME isMortgage will no longer be passed in when you check whether to sell houses
     //This is the title deed card which extends Card
 
-    public void setBankruptcyTradeStatus (int agreedPrice, Player recipient){
+    void setBankruptcyTradeStatus(int agreedPrice, Player recipient){
         bankruptcyTradeStatus.put(agreedPrice, recipient);
     }
-    public void clearBankruptcyTradeStatus(){
-        bankruptcyTradeStatus.clear();
-    }
-    public HashMap<Integer, Player> getBankruptcyTradeStatus(){
+
+    HashMap<Integer, Player> getBankruptcyTradeStatus(){
         return this.bankruptcyTradeStatus;
     }
 
-    public void playerAuction(Player bankruptPlayer) {
+    void playerAuction(Player bankruptPlayer) {
         int[] currentAuctionDetails = new int[] {0,0};
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
         Iterator<Player> it = biddingPlayers.iterator();

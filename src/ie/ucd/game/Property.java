@@ -1,16 +1,13 @@
 package ie.ucd.game;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 
 public class Property extends CanOwn {
 	private String squareColour;
 	private int numHouses;
 	private int numHotels;
 	
-	public int getNumHotels() {
+	int getNumHotels() {
 		return this.numHotels;
 	}
 	
@@ -18,11 +15,11 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
-	public void setNumHouses(int numHouses) {
+	void setNumHouses(int numHouses) {
 		this.numHouses = numHouses;
 	}
 	
-	public void setNumHotels(int numHotels) {
+	void setNumHotels(int numHotels) {
 		this.numHotels = numHotels;
 	}
 
@@ -49,7 +46,7 @@ public class Property extends CanOwn {
 
 			}
 			//the case of the owner should be handled in check square
-			else if(!(Checks.canBuy(this.getTitleDeedCard(), player))){
+			else if(!(Checks.canBuy(this.getTitleDeedCard()))){
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
@@ -111,10 +108,8 @@ public class Property extends CanOwn {
 			if (isHotel) {
 				if (Game.getRemainingHotels() == 0) {
 					System.out.println("The maximum number of hotels on the board has been reached, a hotel cannot currently be purchased for " + propToBuild.getName());
-					return;
 				} else if (propToBuild.numHouses != 4) {
 					System.out.println("You must have 4 houses on this property to purchase a hotel");
-					return;
 				} else if (Checks.evenHouseDistribution(Checks.ownAllColour(player, propToBuild), propToBuild, true)) {
 					//remove all houses from attribute as hotel is being built
 					propToBuild.numHouses = 0;
@@ -132,7 +127,6 @@ public class Property extends CanOwn {
 			} else {
 				if (Game.getRemainingHouses() == 0) {
 					System.out.println("The maximum number of houses on the board has been reached, a house cannot currently be purchased for " + propToBuild.getName());
-					return;
 				}
 
 				//If there are four houses, they have reached the max number. Offer to purchase a hotel
@@ -163,7 +157,7 @@ public class Property extends CanOwn {
 		
 	
 	//method to sell houses on a property
-	public int sellHouses(Player player, boolean isMortgage, boolean isBankrupt) {
+	int sellHouses(Player player, boolean isMortgage, boolean isBankrupt) {
 	
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 	if(colourGroup==null) {
@@ -216,7 +210,7 @@ public class Property extends CanOwn {
 		}
 	}
 	
-	public int sellHotels (Player player, boolean isMortgage, boolean isBankrupt) {
+	int sellHotels(Player player, boolean isMortgage, boolean isBankrupt) {
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 		if(isMortgage||isBankrupt) {
 			int valOfSoldHouses = 0;

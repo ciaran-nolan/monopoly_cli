@@ -6,16 +6,19 @@ import java.util.Scanner;
 import static ie.ucd.game.Board.board;
 
 public class InputOutput {
+	//single scanner for project
 	private static Scanner input = new Scanner(System.in);
 	
-	public static void clearScannerBuffer(){
+	private static void clearScannerBuffer(){
 		input.nextLine();
 	}
 
+	//method to handle yes/no inputs
 	public static boolean yesNoInput(String message,Player player) {
 		System.out.println(message);
 		String acknowledgement = input.nextLine();
-		
+
+		//ensure the player enters a valid response
 		while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
 			System.out.println(player.getName()+", please enter a valid response (y/n)");
 			acknowledgement = input.nextLine();
@@ -23,22 +26,28 @@ public class InputOutput {
 		return acknowledgement.equalsIgnoreCase("y");
 	}
 
-	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
+	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
+	//house hotels arguemnet ensures only instances of property are shown when true
+	static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
 		System.out.println("Please select the title deed card you wish to "+operation);
 		ArrayList<TitleDeed>houseHotelList = new ArrayList<>();
 		int choiceInput;
 
+		//loop thrugh available title deeds
 		for(int i=0; i<player.getTitleDeedList().size() ;i++){
 		    if(!player.getTitleDeedList().get(i).getBankruptcyTradeStatus().isEmpty()){
 		        continue;
             }
+		    //if house and hotels is true so store only instances of property
 			if(housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)){
 				houseHotelList.add(player.getTitleDeedList().get(i));
 			}
+			//not a house or hotel operation so print any titledeed
 			else if(!housesHotels){
 				System.out.println("["+i+"] "+player.getTitleDeedList().get(i).getCardDesc());
 			}
 		}
+		//print house hotel list
 		if(housesHotels){
 			for(int i=0; i<houseHotelList.size();i++){
 				System.out.println("["+i+"] "+houseHotelList.get(i).getCardDesc());
@@ -50,37 +59,42 @@ public class InputOutput {
 			}
 			else return houseHotelList.get(choiceInput);
 		}
+		//print cancel at the end for normal operation and receive user choice
 		else{
 			System.out.println("["+(player.getTitleDeedList().size())+"] Cancel");
 			choiceInput = integerMenu(0,player.getTitleDeedList().size());
+			//cancel has been chosen so return null
 			if(choiceInput == player.getTitleDeedList().size()){
 				return null;
 			}
+			//a titledeed has been selected so return
 			else return player.getTitleDeedList().get(choiceInput);
 		}
 	}
 
-	public static void squareInformation(int index){
+	//display information about a square
+	static void squareInformation(int index){
 
-            if(board.get(index) instanceof CanOwn){
-                System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
-                if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
-                    System.out.println("Owner: None") ;
-                }
-                else{
-                    System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
-                }
-                if (board.get(index) instanceof Property) {
-                    System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
-                            +((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
-                }
-            }
-            else{
-                System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
-            }
+		//type canown requires additional information
+		if(board.get(index) instanceof CanOwn){
+			System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
+			if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
+				System.out.println("Owner: None") ;
+			}
+			else{
+				System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
+			}
+			if (board.get(index) instanceof Property) {
+				System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
+						+((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
+			}
+		}
+		else{
+			System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
+		}
 	}
 
-	public static int integerMenu(int lowerBound, int upperBound){
+	static int integerMenu(int lowerBound, int upperBound){
 		int choiceInput;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 
@@ -98,7 +112,7 @@ public class InputOutput {
 		return choiceInput;
 	}
 
-	public static void handleUserOption(Player currentPlayer,boolean doubleRoll) {
+	static void handleUserOption(Player currentPlayer, boolean doubleRoll) {
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
 						"|\t1: Mortgage/Demortgage a property\n" +
@@ -160,19 +174,7 @@ public class InputOutput {
 		}
 	}
 
-	public static void playerCanOwnInfo (Player player){
-	    System.out.println(player.getName()+"'s current property/utility/train status:");
-	    for (TitleDeed titleDeed : player.getTitleDeedList()){
-			CanOwn currentProperty = titleDeed.getOwnableSite();
-	    	System.out.println("Name:"+titleDeed.getCardDesc()+"\nIs Mortgaged?: "+titleDeed.getMortgageStatus());
-	        if(currentProperty instanceof Property){
-	            System.out.println("Colour: "+((Property) currentProperty).getSquareColour()+"\nHouses: "
-                        +((Property) currentProperty).getNumHouses()+"\nHotels: "+((Property) currentProperty).getNumHotels());
-            }
-        }
-    }
-
-    public static Player selectPlayerMenu (Player selectingPlayer){
+    static Player selectPlayerMenu(Player selectingPlayer){
 		System.out.println("Please select player you wish to interact with");
 		ArrayList<Player> playerMenu = new ArrayList<>(Game.playerList);
 		int choiceInput;

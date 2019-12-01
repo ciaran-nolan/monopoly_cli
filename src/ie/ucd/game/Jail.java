@@ -2,34 +2,35 @@ package ie.ucd.game;
 
 public class Jail {
 
-    public static void sendToJail(Player jailedPlayer){
+    //FIXME fix jail condition with immediate exit
+    static void sendToJail(Player jailedPlayer){
         System.out.println("You have been sent to Jail.");
         //set location to 10, they will not pass go with this method
         jailedPlayer.setInJail(true);
         jailedPlayer.setLocation(10);
     }
 
-    public static void removeFromJail(Player jailedPlayer){
+    private static void removeFromJail(Player jailedPlayer){
         jailedPlayer.setInJail(false);
         jailedPlayer.movePlayer(Dice.getDieVals());
         Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer);
     }
 
-    public static void handleJailFreeCardUsage(Player jailedPlayer){
+    private static void handleJailFreeCardUsage(Player jailedPlayer){
         System.out.println("You have used a Get Out of Jail Free card to exit jail");
         //I now need to add the card back into the relevant array. I can see that by the Array that is less than 16
         if(jailedPlayer.getJailCard().get(0) instanceof CommunityChest) {
             jailedPlayer.getJailCard().remove(0);
-            Board.getCommunityChests().add((CommunityChest)jailedPlayer.getJailCard().get(0));
+            Board.communityChests.add((CommunityChest)jailedPlayer.getJailCard().get(0));
         }
         else{
             jailedPlayer.getJailCard().remove(0);
-            Board.getChances().add((Chance)jailedPlayer.getJailCard().get(0));
+            Board.chances.add((Chance)jailedPlayer.getJailCard().get(0));
         }
         removeFromJail(jailedPlayer);
     }
 
-    public static void handleFinalRollAttempt(Player jailedPlayer){
+    private static void handleFinalRollAttempt(Player jailedPlayer){
         int jailExitChoice = 0;
         if(jailedPlayer.getJailCard().size()==0){
             System.out.println("You have rolled for the third time without getting doubles, you must pay the £50 fine");

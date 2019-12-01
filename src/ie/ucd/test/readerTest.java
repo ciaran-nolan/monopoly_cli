@@ -11,9 +11,5 @@ public class readerTest {
 	Board.readUtilities();
 	Board.readCommunityChests();
 	Board.readChances();
-	
-	for(int i = 0; i< Board.getUtilities().size(); i++) {
-		System.out.println(Board.getUtilities().get(i).getName());
-	}
 	}
 }

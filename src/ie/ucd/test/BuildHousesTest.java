@@ -8,21 +8,16 @@ import ie.ucd.game.*;
 
 public class BuildHousesTest {
 	public static void main(String[] args) throws IOException { 
-	
-		Board.readProperties();
-		Board.readSpecialSquares();
-		Board.readUtilities();
-		Board.readCommunityChests();
-		Board.readChances();
-		
-		 ArrayList<Property> properties = Board.getProperties();
+
+		Board.initialiseBoard();
+		ArrayList<Property> properties = Board.properties;
 		 
-		 Player p1 = new Player("p1", "thing1");
-		 Player p2 = new Player("p2", "thing2");
-		 Player p3 = new Player("p3", "thing3");
-		 Game.playerList.add(p1);
-		 Game.playerList.add(p2);
-		 Game.playerList.add(p3);
+		Player p1 = new Player("p1", "thing1");
+		Player p2 = new Player("p2", "thing2");
+		Player p3 = new Player("p3", "thing3");
+		Game.playerList.add(p1);
+		Game.playerList.add(p2);
+		Game.playerList.add(p3);
 		//test 1
 		 
 		/* p1.addMoney(10000);

@@ -1,23 +1,19 @@
 package ie.ucd.game;
 
-import org.omg.PortableInterceptor.INACTIVE;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Transactions {
 	
-	public static int traderOneJailFree = 0;
-	public static int traderOneCash = 0;
-	public static HashMap<String,TitleDeed> traderOnePropsToTrade = new HashMap<String, TitleDeed>();
-	
-	public static int traderTwoJailFree = 0;
-	public static int traderTwoCash = 0;
-	public static HashMap<String,TitleDeed> traderTwoPropsToTrade = new HashMap<String, TitleDeed>();
-	public static ArrayList<Player> tradeList = new ArrayList<Player>(2);
-	
-	public static void displayTradeItems(){
+	private static int traderOneJailFree = 0;
+	private static int traderOneCash = 0;
+	private static HashMap<String,TitleDeed> traderOnePropsToTrade = new HashMap<>();
+	private static int traderTwoJailFree = 0;
+	private static int traderTwoCash = 0;
+	private static HashMap<String,TitleDeed> traderTwoPropsToTrade = new HashMap<>();
+	private static ArrayList<Player> tradeList = new ArrayList<>(2);
+
+	private static void displayTradeItems(){
 		//show each players trades
 		
 	    //Player One
@@ -36,7 +32,7 @@ public class Transactions {
 		
 	}
 	
-	public static void exchangeTradeItems() {
+	private static void exchangeTradeItems() {
 		Player traderOne = tradeList.get(0);
 		Player traderTwo = tradeList.get(1);
 		//trade property Lists
@@ -54,7 +50,7 @@ public class Transactions {
 		traderOne.reduceMoney(traderOneCash, traderTwo);
 		traderTwo.reduceMoney(traderTwoCash, traderOne);
 	
-		//trade Jail Free Cards - FIXME
+		//trade Jail Free Cards
 		if(traderOneJailFree>0){
 			for(int i=0;i<traderOneJailFree;i++){
 				traderTwo.addJailCard(traderOne.getJailCard().get(i));
@@ -69,7 +65,7 @@ public class Transactions {
 		}
 	}
 	
-	public static void initiateTrade(Player initiatingPlayer) {
+	private static void initiateTrade(Player initiatingPlayer) {
 		tradeList.add(initiatingPlayer);
 		//prompt the user who has initiated the desire to trade, to select who they wish to trade with
 		Player chosenPlayer = InputOutput.selectPlayerMenu(initiatingPlayer);
@@ -168,10 +164,9 @@ public class Transactions {
 			exchangeTradeItems();
 		} else {
 			System.out.println("Trade has not been accepted by both parties");
-			return;
 		}
 	}
-	public static void bankruptcySingleTransaction(Player bankruptPlayer, Player purchasingPlayer, TitleDeed tradeItem){
+	private static void bankruptcySingleTransaction(Player bankruptPlayer, Player purchasingPlayer, TitleDeed tradeItem){
 		System.out.println(purchasingPlayer.getName()+" please enter the amount to purchase "+ tradeItem.getCardDesc());
 		int purchaseAmount = InputOutput.integerMenu(1,purchasingPlayer.getMoney());
 		while(!InputOutput.yesNoInput(bankruptPlayer.getName()+" do you accept this trade amount?",bankruptPlayer)){
@@ -184,7 +179,7 @@ public class Transactions {
 		purchasingPlayer.reduceMoney(purchaseAmount,null);
 	}
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
-	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
+	static void saveFromBankruptcyTrade(Player bankruptPlayer) {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		Checks.checkPlayerCanOwnStatus(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){

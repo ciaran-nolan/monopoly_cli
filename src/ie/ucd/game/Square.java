@@ -29,7 +29,7 @@ public abstract class Square  {
 		return this.indexLocation;
 	}
 	
-	public boolean getBuyStatus() {
+	boolean getBuyStatus() {
 		return this.canBuy;
 	}
 	
@@ -37,19 +37,19 @@ public abstract class Square  {
 		return this.name;
 	}
 	
-	public SquareType getSquareType() {
+	SquareType getSquareType() {
 		return this.squareType;
 	}
 	
-	public void setSquareType(SquareType squareType) {
+	void setSquareType(SquareType squareType) {
 		this.squareType = squareType;
 	}
 	
-	public void setLocation(int location) {
+	void setLocation(int location) {
 		this.indexLocation = location;
 	}
 	
-	public void setBuyStatus(boolean canBuy) {
+	void setBuyStatus(boolean canBuy) {
 		this.canBuy = canBuy;
 	}
 	

@@ -178,33 +178,6 @@ public class Player {
     }
 	
 
-	//Functions to consider: FIXME
-		//Remove player from the game 
-		//isBankrupt function 
-		//buying a square from another player
-		//toString
-	
-	/*public void removePlayer(ArrayList<Player> playerList) {
-		 int indexPlayer = playerList.indexOf(this);
-		 if(indexPlayer >= 0) {
-			 System.out.println("Removing Player at Index "+indexPlayer+" from game!");
-			 playerList.remove(indexPlayer);
-		 }
-		 else {
-			 System.out.println("This player is not part of the Player List");
-		 }
-	}*/
-	
-	public void addPlayer(ArrayList<Player> playerList) {
-		if(!playerList.contains(this)) {
-			System.out.println("Adding Player to Player List");
-			playerList.add(this);
-		}
-		else {
-			System.out.println("Player is already a member of the Player List");
-		}
-	}
-
 	public static ArrayList<Player> createListPlayers(){
 		ArrayList<Player> listPlayers = new ArrayList<Player>();
 		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));

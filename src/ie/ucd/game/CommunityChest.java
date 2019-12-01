@@ -8,12 +8,13 @@ public class CommunityChest extends Card {
 	//
 	//ArrayList<Card> communityChestDeck = new ArrayList<Card>();
 	
-	public CommunityChest(String cardType, String cardDesc, int cardValue) {
+	CommunityChest(String cardType, String cardDesc, int cardValue) {
 		super(cardType, cardDesc, cardValue);
 	}
 	
 	public void dealWithCard(Player player1) {
-		//From here I need to deal with a card produced from a deck of cards
+		//deal with a community chest card
+		//rit details of card to player
 		System.out.println("The community chest card reads: "+this.getCardDesc());
 		switch(this.getCardType()) {
 			case "MOVE":
@@ -32,11 +33,11 @@ public class CommunityChest extends Card {
 				player1.addJailCard(this); //Increments the amount of jail free cards by 1
 				break;
 			case "CHOICE":
-				//We will need to take user input here
+				//ask user for choice
 				System.out.println(player1.getName()+": Would you like to: "+this.getCardDesc()+"?");
 				System.out.println("Please use the integers provided to select\n FINE[0]\nCHANCE[1]");
 				int choice = InputOutput.integerMenu(0,1);
-
+				//implement choice
 				if(choice==0){
 					player1.reduceMoney(this.getCardValue(), null);
 				}

@@ -7,17 +7,17 @@ public class Game {
 	private static int remainingHouses=32;
 	private static int remainingHotels=12;
     public static ArrayList<Player> playerList = new ArrayList<Player>();
-	public static int numPlayersBankrupt=0;
-	public static int getRemainingHouses() {
+	static int numPlayersBankrupt=0;
+	static int getRemainingHouses() {
 		return remainingHouses;
 	}
-	public static int getRemainingHotels() {
+	static int getRemainingHotels() {
 		return remainingHotels;
 	}
-	public static void setRemainingHouses(int newHouseCount) {
+	static void setRemainingHouses(int newHouseCount) {
 		remainingHouses = newHouseCount;
 	}
-	public static void setRemainingHotels(int newHotelCount) {
+	static void setRemainingHotels(int newHotelCount) {
 		remainingHotels = newHotelCount;
 	}
 	
@@ -43,7 +43,7 @@ public class Game {
 					//marker to track double rolls
                     boolean doubleRoll = true;
                     //Loop to maintain a player's turn if they roll a double
-                    while (doubleRoll) {
+                    while(true) {
                         //Check user status and handle input
 						Checks.checkPlayerStatus(currentPlayer);
                         InputOutput.handleUserOption(currentPlayer, doubleRoll);

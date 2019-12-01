@@ -1,13 +1,10 @@
 package ie.ucd.game;
 
-import java.util.List;
-
 public class Train extends PublicSquare {
-	//private int[] rent; //Rent for a train is Size 4
 	
 	public Train(String name, int indexLocation) {
 		super(name, indexLocation, Square.SquareType.TRAIN);
-		//this.rent = rent;
+
 	}
 
 	public void buy(Player player) {
@@ -20,7 +17,7 @@ public class Train extends PublicSquare {
 			this.getTitleDeedCard().playerAuction(null);
 		}
 		//Property is already owned
-		else if(!(Checks.canBuy(this.getTitleDeedCard(), player))){
+		else if(!(Checks.canBuy(this.getTitleDeedCard()))){
 			System.err.println("This property is already owned!");
 		}
 		//They can purchase it
