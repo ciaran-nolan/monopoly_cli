@@ -1,7 +1,8 @@
-package ie.ucd.game;
 
+package ie.ucd.test;
+
+import ie.ucd.game.*;
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -10,28 +11,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
     private Player player = new Player("P1","Red");
     @Test
-    void getName() {
+    void testGetName() {
         assertTrue(player.getName().equals("P1"));
     }
 
     @Test
-    void getToken() {
+    void testGetToken() {
         assertTrue(player.getToken().equals("Red"));
     }
 
     @Test
-    void getMoney() {
+    void testGetMoney() {
         assertEquals(1500,player.getMoney());
     }
 
     @Test
-    void getLocation() {
+    void testGetLocation() {
         player.setLocation(20);
         assertEquals(20,player.getLocation());
     }
 
     @Test
-    void getTitleDeedList() {
+    void testGetTitleDeedList() {
         Board.initialiseBoard();
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         assertEquals(1,player.getTitleDeedList().size());
@@ -40,96 +41,96 @@ class PlayerTest {
     }
 
     @Test
-    void getJailCard() {
+    void testGetJailCard() {
     }
 
     @Test
-    void addJailCard() {
+    void testAddJailCard() {
     }
 
     @Test
-    void setName() {
+    void testSetName() {
     }
 
     @Test
-    void setMoney() {
+    void testSetMoney() {
         player.setMoney(2000);
         assertEquals(2000,player.getMoney());
     }
 
     @Test
-    void getJailMoves() {
+    void testGetJailMoves() {
         assertEquals(0, player.getJailMoves());
     }
 
     @Test
-    void setJailMoves() {
+    void testSetJailMoves() {
         player.setJailMoves(2);
         assertEquals(2, player.getJailMoves());
     }
 
     @Test
-    void setToken() {
+    void testSetToken() {
         player.setToken("Green");
         assertEquals("Green", player.getToken());
     }
 
     @Test
-    void addMoney() {
+    void testAddMoney() {
         player.addMoney(1000);
         assertEquals(2500,player.getMoney());
 
     }
 
     @Test
-    void setLocation() {
+    void testSetLocation() {
         player.setLocation(25);
         assertEquals(25,player.getLocation());
     }
 
     @Test
-    void reduceMoney() {
+    void testReduceMoney() {
         player.reduceMoney(100,null);
         assertEquals(1400, player.getMoney());
     }
 
     @Test
-    void movePlayer() {
+    void testMovePlayer() {
         player.movePlayer(10);
         assertEquals(10,player.getLocation());
     }
 
     @Test
-    void moveToSquare() {
+    void testMoveToSquare() {
         player.moveToSquare(25);
         assertEquals(25,player.getLocation());
     }
 
     @Test
-    void pickCommChestCard() {
+    void testPickCommChestCard() {
 
     }
 
     @Test
-    void pickChanceCard() {
+    void testPickChanceCard() {
     }
 
     @Test
-    void isInJail() {
+    void testIsInJail() {
         assertFalse(player.isInJail());
         player.setInJail(true);
         assertTrue(player.isInJail());
     }
 
     @Test
-    void setInJail() {
+    void testSetInJail() {
         player.setInJail(true);
         assertTrue(player.isInJail());
     }
 
 
     @Test
-    void createListPlayers() {
+    void testCSreateListPlayers() {
 //        String input = "2\r\nr,red\r\nb,blue\r\n";
 //        InputStream in = new ByteArrayInputStream(input.getBytes());
 //        System.setIn(in);
@@ -137,18 +138,18 @@ class PlayerTest {
     }
 
     @Test
-    void bankrupt() {
+    void testBankrupt() {
     }
 
     @Test
-    void addPurchasedTitleDeed() {
+    void testAddPurchasedTitleDeed() {
         Board.initialiseBoard();
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         assertEquals(1,player.getTitleDeedList().size());
     }
 
     @Test
-    void removeOwnedTitleDeed() {
+    void testRemoveOwnedTitleDeed() {
         Board.initialiseBoard();
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         assertEquals(1,player.getTitleDeedList().size());
@@ -157,27 +158,27 @@ class PlayerTest {
     }
 
     @Test
-    void payRent() {
+    void testPayRent() {
 
     }
 
     @Test
-    void bankruptcyMortgage() {
+    void testBankruptcyMortgage() {
     }
 
     @Test
-    void bankruptcySellHousesHotels() {
+    void testBankruptcySellHousesHotels() {
     }
 
     @Test
-    void completeBankruptcyTrade() {
+    void testCompleteBankruptcyTrade() {
     }
 
     @Test
-    void saveFromBankruptcy() {
+    void testSaveFromBankruptcy() {
     }
 
     @Test
-    void clearBankruptcyTradeStatus() {
+    void testClearBankruptcyTradeStatus() {
     }
 }

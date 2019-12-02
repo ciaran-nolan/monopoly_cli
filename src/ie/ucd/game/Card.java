@@ -12,7 +12,7 @@ public abstract class Card {
 		this.cardValue = cardValue;	
 	}
 	
-	String getCardType() {
+	public String getCardType() {
 		return this.cardType;
 	}
 	
@@ -20,19 +20,19 @@ public abstract class Card {
 		return this.cardDesc;
 	}
 	
-	int getCardValue() {
+	public int getCardValue() {
 		return this.cardValue;
 	}
 	
-	void setCardType(String cardType) {
+	public void setCardType(String cardType) {
 		this.cardType = cardType;
 	}
 	
-	void setCardDesc(String cardDesc) {
+	public void setCardDesc(String cardDesc) {
 		this.cardDesc = cardDesc;
 	}
 	
-	void setCardValue(int cardValue) {
+	public void setCardValue(int cardValue) {
 		this.cardValue = cardValue;
 	}
 	

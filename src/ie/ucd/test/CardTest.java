@@ -1,10 +1,11 @@
-package ie.ucd.game;
+package ie.ucd.test;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import ie.ucd.game.*;
 
 class CardTest {
     private Card commChestTest;
@@ -20,7 +21,7 @@ class CardTest {
     }
 
     @Test
-    void getCardType() {
+    void testGetCardType() {
         String cardTypeTest = "PAY";
         assertEquals(cardTypeTest, commChestTest.getCardType(),"Checking Card Type");
         cardTypeTest = "INCOME";
@@ -28,7 +29,7 @@ class CardTest {
     }
 
     @Test
-    void getCardDesc() {
+    void testGetCardDesc() {
         String cardDescTest = "Pay";
         assertNotEquals(cardDescTest,commChestTest.getCardDesc(),"Checking Card Description");
         cardDescTest = "Pay £100 in taxes";
@@ -36,7 +37,7 @@ class CardTest {
     }
 
     @Test
-    void getCardValue() {
+    void testGetCardValue() {
         int cardValueTest = 50;
         assertNotEquals(cardValueTest,commChestTest.getCardValue(),"Checking card value different");
         cardValueTest = 100;
@@ -44,33 +45,28 @@ class CardTest {
     }
 
     @Test
-    void setCardType() {
+    void testSetCardType() {
         chanceTest.setCardType("PAY");
         assertEquals("PAY",chanceTest.getCardType(),"Checking Card type can be changed");
     }
 
     @Test
-    void setCardDesc() {
+    void testSetCardDesc() {
         chanceTest.setCardDesc("You won £20");
         assertEquals("You won £20", chanceTest.getCardDesc(),"Checking card description can be changed");
     }
 
     @Test
-    void setCardValue() {
+    void testSetCardValue() {
         chanceTest.setCardValue(20);
         assertEquals(20,chanceTest.getCardValue(),"Checking card value can be set to £20");
     }
 
     //FIXME could change this to be tested in the card class itselg
     @Test
-    void dealWithCard() {
+    void testDealWithCard() {
     }
-    //FIXME not really needed to be tested
-    @Test
-    void testToString() {
-
-    }
-
+    
     @AfterEach
     void tearDown() {
         commChestTest = null;

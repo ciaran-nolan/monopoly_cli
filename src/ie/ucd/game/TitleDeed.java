@@ -40,13 +40,13 @@ public class TitleDeed extends Card {
         return this.ownableSite;
     }
     //FIXME change out of property
-    int getHousePrice(){
+    public int getHousePrice(){
         return this.housePrice;
     }
 
     public void setHousePrice(int price){ this.housePrice = price; }
 
-    int getPriceBuy(){
+    public int getPriceBuy(){
         return this.priceBuy;
     }
 
@@ -54,15 +54,15 @@ public class TitleDeed extends Card {
         this.priceBuy = price;
     }
     //FIXME change out of Property
-    int[] getRents(){
+    public int[] getRents(){
         return this.rents;
     }
 
-    void setRents(int[] rents){
+    public void setRents(int[] rents){
         this.rents = rents;
     }
     //FIXME change out of Property
-    String getSquareColour(){
+    public String getSquareColour(){
         return this.squareColour;
     }
 
@@ -70,21 +70,21 @@ public class TitleDeed extends Card {
         this.squareColour = squareColour;
     }
     //FIXME change out of CanOwn
-    Player getOwner(){
+    public Player getOwner(){
         return this.owner;
     }
 
-    void setOwner(Player newOwner){
+    public void setOwner(Player newOwner){
         this.owner = newOwner;
     }
     //FIXME buy will now be associated with the square........will still be in practice and implemented in the square.......
     //FIXME but instead the card will be handed over
-    boolean getMortgageStatus(){
+    public boolean getMortgageStatus(){
         //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
     }
 
-    void setMortgageStatus(boolean newStatus){
+    public void setMortgageStatus(boolean newStatus){
         this.mortgageStatus = newStatus;
     }
 
@@ -98,15 +98,15 @@ public class TitleDeed extends Card {
     //FIXME isMortgage will no longer be passed in when you check whether to sell houses
     //This is the title deed card which extends Card
 
-    void setBankruptcyTradeStatus(int agreedPrice, Player recipient){
+    public void setBankruptcyTradeStatus(int agreedPrice, Player recipient){
         bankruptcyTradeStatus.put(agreedPrice, recipient);
     }
 
-    HashMap<Integer, Player> getBankruptcyTradeStatus(){
+    public HashMap<Integer, Player> getBankruptcyTradeStatus(){
         return this.bankruptcyTradeStatus;
     }
 
-    void playerAuction(Player bankruptPlayer) {
+    public void playerAuction(Player bankruptPlayer) {
         int[] currentAuctionDetails = new int[] {0,0};
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
         Iterator<Player> it = biddingPlayers.iterator();
@@ -197,10 +197,10 @@ public class TitleDeed extends Card {
                 //user has indicated intention to not make a bid, remove from pool and update
                 else {
                     if(i<currentAuctionDetails[1]){
-                        currentAuctionDetails[1] --;
+                        currentAuctionDetails[1]--;
                     }
                     biddingPlayers.remove(i);
-                    i --;
+                    i--;
                     biddingPoolSize=biddingPlayers.size();
                 }
                 //updating bidding pool size

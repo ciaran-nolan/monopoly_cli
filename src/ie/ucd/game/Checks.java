@@ -8,12 +8,12 @@ import java.util.*;
 public class Checks {
 
 	//check if the game can still continue
-	static boolean checkIfValidGame(){
+	public static boolean checkIfValidGame(){
 		return Game.playerList.size() != 1 && Game.numPlayersBankrupt < 2;
 	}
 
 	//check the square the player has landed on
-	static void checkSquare(int index, Player player) {
+	public static void checkSquare(int index, Player player) {
 		//get the current square
 		Square currentSquare = Board.board.get(index);
 		//check the square type
@@ -64,17 +64,17 @@ public class Checks {
 	}
 
 	//check if the player has enough funds to complete a particular action
-	static boolean enoughFunds(Player player, int price) {
+	public static boolean enoughFunds(Player player, int price) {
         return player.getMoney() >= price;
     }
 
     //reveal the current status of a player
-    static void checkPlayerStatus(Player player) {
+    public static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
 	//reveal the status of a players CanOwn list
-	static void checkPlayerCanOwnStatus(Player player){
+	public static void checkPlayerCanOwnStatus(Player player){
 	    System.out.println(player.getName() + " - Property Status: \n");
 	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
 	        System.out.println(currentTitleDeed.getCardDesc());
@@ -85,11 +85,11 @@ public class Checks {
         }
     }
 	//check if a particular property is available for purchase
-	static boolean canBuy(TitleDeed titleDeed) {
+	public static boolean canBuy(TitleDeed titleDeed) {
         return null == titleDeed.getOwner();
 		}
 
-	static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
+	public static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
 		if(null == ownableCard.getOwner()){
 			return false;
 		}
@@ -97,7 +97,7 @@ public class Checks {
 	}
 
 	//method to check if a player owns all the properties in a given colour group.
-	static ArrayList<Property> ownAllColour(Player player, Property property) {
+	public static ArrayList<Property> ownAllColour(Player player, Property property) {
 		if(null == property){
 			return null;
 		}
@@ -135,7 +135,7 @@ public class Checks {
 	}
 
 	//check that the distribution of houses remains even in the case of buying or selling a house
-	static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
+	public static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
 		int[] houseDifferentialBounds = new int[2];
 		if(buyOrSell) {
 			//when buying a house the must only be a difference of 0 or -1 between the chosen property and all other property's house numbers
@@ -162,7 +162,7 @@ public class Checks {
 	}
 
 	//check if a property is eligible to be improved
-	static int canBuildHousesHotels(Property propToBuild, Player player){
+	public static int canBuildHousesHotels(Property propToBuild, Player player){
 		// Status codes:
 		// - 1 - attempt again
 		// - 2 - exit without building
@@ -197,7 +197,7 @@ public class Checks {
 	}
 
 	//check the combined value of all houses and hotels for a player
-	static int checkHouseHotelValue(Player player) {
+	public static int checkHouseHotelValue(Player player) {
 		int valOfHousesHotels = 0;
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
 			//only analyse the type property
@@ -211,7 +211,7 @@ public class Checks {
 	}
 
 	//check the value that mortgaging all properties of a player will return
-	static int checkMortgagingValue(Player player) {
+	public static int checkMortgagingValue(Player player) {
 		int mortgageValue = 0;
 		
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
@@ -223,7 +223,7 @@ public class Checks {
 		return mortgageValue;
 	}
 	//check the value of the current negotiated provisional trades a bankrupt player has
-	static int checkBankruptcyTradeValue(Player player){
+	public static int checkBankruptcyTradeValue(Player player){
 		int valOfTrades = 0;
 		for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
@@ -235,7 +235,7 @@ public class Checks {
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
 	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
-	static void checkWinner() {
+	public static void checkWinner() {
 		if(Game.playerList.size()==1){
 			System.out.println(Game.playerList.get(0).getName()+" has won the game");
 		}
@@ -265,7 +265,7 @@ public class Checks {
 			System.out.println("The game has been won! It is now over");
 			System.exit(1);
 		}
-		}
+	}
 	
 }
 		

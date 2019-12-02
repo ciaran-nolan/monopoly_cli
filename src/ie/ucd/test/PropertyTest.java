@@ -1,5 +1,6 @@
-package ie.ucd.game;
+package ie.ucd.test;
 
+import ie.ucd.game.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -17,20 +18,20 @@ class PropertyTest {
     }
 
     @Test
-    void getNumHotels() {
+    void testGetNumHotels() {
         Property testprop = Board.properties.get(0);
         assertEquals(0,testprop.getNumHotels());
     }
 
     @Test
-    void getNumHouses() {
+    void testGetNumHouses() {
         Property testprop = Board.properties.get(0);
         assertEquals(0,testprop.getNumHouses());
 
     }
 
     @Test
-    void setNumHouses() {
+    void testSetNumHouses() {
         Property testprop = Board.properties.get(0);
         testprop.setNumHouses(2);
         assertEquals(2,testprop.getNumHouses());
@@ -38,21 +39,21 @@ class PropertyTest {
     }
 
     @Test
-    void setNumHotels() {
+    void testSetNumHotels() {
         Property testprop = Board.properties.get(0);
         testprop.setNumHotels(1);
         assertEquals(1,testprop.getNumHotels());
         testprop.setNumHotels(0);
     }
     @Test
-    void getSquareColour() {
+    void testGetSquareColour() {
         Property testprop = Board.properties.get(0);
         System.out.println(Board.properties.get(0).getSquareColour());
         assertTrue(testprop.getSquareColour().equals("Purple"));
     }
 
     @Test
-    void buy() {
+    void testBuy() {
         //player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
         String input = "y";
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -63,7 +64,7 @@ class PropertyTest {
     }
 
     @Test
-    void buildHousesHotels() {
+    void testBuildHousesHotels() {
         String input = "0\r\n0\r\ny\r\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -77,7 +78,7 @@ class PropertyTest {
     }
 
     @Test
-    void sellHouses() {
+    void testSellHouses() {
         String input = "n\r\n" ;
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -93,7 +94,7 @@ class PropertyTest {
     }
 
     @Test
-    void sellHotels() {
+    void testSellHotels() {
         String input = "n\r\n" ;
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);

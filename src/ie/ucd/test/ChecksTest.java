@@ -1,5 +1,6 @@
-package ie.ucd.game;
+package ie.ucd.test;
 
+import ie.ucd.game.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class ChecksTest {
     }
 
     @Test
-    void enoughFunds() {
+    void testEnoughFunds() {
         player.setMoney(10);
         assertFalse(Checks.enoughFunds(player,100));
         player.setMoney(200);
@@ -24,7 +25,7 @@ class ChecksTest {
     }
 
     @Test
-    void canBuy() {
+    void testCanBuy() {
       TitleDeed testTitleDeed = Board.properties.get(0).getTitleDeedCard();
       assertTrue(Checks.canBuy(testTitleDeed));
       player.addPurchasedTitleDeed(testTitleDeed);
@@ -32,13 +33,13 @@ class ChecksTest {
     }
 
     @Test
-    void isPlayerOwner() {
+    void testIsPlayerOwner() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         assertTrue(Checks.isPlayerOwner(player.getTitleDeedList().get(0), player));
     }
 
     @Test
-    void ownAllColour() {
+    void testOwnAllColour() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         assertFalse(Checks.ownAllColour(player,(Property)player.getTitleDeedList().get(0).getOwnableSite())==null);
@@ -47,7 +48,7 @@ class ChecksTest {
     }
 
     @Test
-    void evenHouseDistribution() {
+    void testEvenHouseDistribution() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         ArrayList<Property> colourGroup = Checks.ownAllColour(player, (Property)player.getTitleDeedList().get(0).getOwnableSite());
@@ -57,14 +58,14 @@ class ChecksTest {
     }
 
     @Test
-    void canBuildHousesHotels() {
+    void testCanBuildHousesHotels() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         assertEquals(0, Checks.canBuildHousesHotels((Property)player.getTitleDeedList().get(0).getOwnableSite(),player));
     }
 
     @Test
-    void checkHouseHotelValue() {
+    void testCheckHouseHotelValue() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Board.properties.get(0).setNumHouses(4);
@@ -73,13 +74,13 @@ class ChecksTest {
     }
 
     @Test
-    void checkMortgagingValue() {
+    void testCheckMortgagingValue() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         assertEquals(60, Checks.checkMortgagingValue(player));
     }
 
     @Test
-    void checkBankruptcyTradeValue() {
+    void testCheckBankruptcyTradeValue() {
     }
 }

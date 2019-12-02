@@ -7,7 +7,7 @@ public class Property extends CanOwn {
 	private int numHouses;
 	private int numHotels;
 	
-	int getNumHotels() {
+	public int getNumHotels() {
 		return this.numHotels;
 	}
 	
@@ -15,11 +15,11 @@ public class Property extends CanOwn {
 		return this.numHouses;
 	}
 	
-	void setNumHouses(int numHouses) {
+	public void setNumHouses(int numHouses) {
 		this.numHouses = numHouses;
 	}
 	
-	void setNumHotels(int numHotels) {
+	public void setNumHotels(int numHotels) {
 		this.numHotels = numHotels;
 	}
 
@@ -157,60 +157,58 @@ public class Property extends CanOwn {
 		
 	
 	//method to sell houses on a property
-	int sellHouses(Player player, boolean isMortgage, boolean isBankrupt) {
+	public int sellHouses(Player player, boolean isMortgage, boolean isBankrupt) {
 	
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
-	if(colourGroup==null) {
-		System.out.println("You do not own all the properties in this colour");
-		return 0;
-	}
-	else if(isMortgage||isBankrupt) {
-		int valOfSoldHouses = 0;
-		for (Property property : colourGroup) {
-			if (isMortgage) {
-				player.addMoney((property.numHouses * this.getTitleDeedCard().getHousePrice()) / 2);
-			}
-			else{
-				valOfSoldHouses += (property.numHouses * this.getTitleDeedCard().getHousePrice()) / 2;
-			}
-			System.out.println(property.numHouses+" house(s) sold for: "+property.getName());
-			Game.setRemainingHouses(Game.getRemainingHouses() + property.numHouses);
-			property.numHouses = 0;
+		if(colourGroup==null) {
+			System.out.println("You do not own all the properties in this colour");
+			return 0;
 		}
-		return valOfSoldHouses;
-	}
-	else if(this.numHouses==0) {
-		System.out.println("There are no houses on "+this.getName());
-		return 0;
-	}
-	else if(Checks.evenHouseDistribution(colourGroup, this, false)) {
-
-		player.addMoney(this.getTitleDeedCard().getHousePrice()/2);
-		this.numHouses--;
-		Game.setRemainingHouses(Game.getRemainingHouses()+1);
-		System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n");
-			
-		//print house distribution to screen
-		for (Property property : colourGroup) {
-			System.out.println(property.getName() + ": " + property.numHouses + "\n");
+		else if(isMortgage||isBankrupt) {
+			int valOfSoldHouses = 0;
+			for (Property property : colourGroup) {
+				if (isMortgage) {
+					player.addMoney((property.numHouses * this.getTitleDeedCard().getHousePrice()) / 2);
+				}
+				else {
+					valOfSoldHouses += (property.numHouses * this.getTitleDeedCard().getHousePrice()) / 2;
+				}
+				System.out.println(property.numHouses+" house(s) sold for: "+property.getName());
+				Game.setRemainingHouses(Game.getRemainingHouses() + property.numHouses);
+				property.numHouses = 0;
+			}
+			return valOfSoldHouses;
 		}
+		else if(this.numHouses==0) {
+			System.out.println("There are no houses on "+this.getName());
+			return 0;
+		}
+		else if(Checks.evenHouseDistribution(colourGroup, this, false)) {
+			player.addMoney(this.getTitleDeedCard().getHousePrice()/2);
+			this.numHouses--;
+			Game.setRemainingHouses(Game.getRemainingHouses()+1);
+			System.out.println("House successfully sold.\n\nCurrent Houses Distribution for colour group "+ this.getSquareColour()+":\n");
+				
+			//print house distribution to screen
+			for (Property property : colourGroup) {
+				System.out.println(property.getName() + ": " + property.numHouses + "\n");
+			}
 			//check if they would like to sell another house
-		if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player)){
-			sellHouses(player, false, false);
-		}
-		return this.getTitleDeedCard().getHousePrice()/2;
-		}
-			
-	else {
-		System.out.println("The current distribution of your houses do not allow you to sell a house on "+this.getName());
-		for (Property property : colourGroup) {
-			System.out.println(property.getName() + ": " + property.numHouses + "\n");
-		}
-		return 0;
+			if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player))	{
+				sellHouses(player, false, false);
+			}
+			return this.getTitleDeedCard().getHousePrice()/2;
+		}		
+		else {
+			System.out.println("The current distribution of your houses do not allow you to sell a house on "+this.getName());
+			for (Property property : colourGroup) {
+				System.out.println(property.getName() + ": " + property.numHouses + "\n");
+			}
+			return 0;
 		}
 	}
 	
-	int sellHotels(Player player, boolean isMortgage, boolean isBankrupt) {
+	public int sellHotels(Player player, boolean isMortgage, boolean isBankrupt) {
 		ArrayList<Property> colourGroup = Checks.ownAllColour(player, this);
 		if(isMortgage||isBankrupt) {
 			int valOfSoldHouses = 0;

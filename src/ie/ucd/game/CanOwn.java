@@ -11,7 +11,7 @@ public abstract class CanOwn extends Square {
 		return this.titleDeedCard;
 	}
 
-	void setTitleDeedCard(TitleDeed card){
+	public void setTitleDeedCard(TitleDeed card){
 		this.titleDeedCard = card;
 	}
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
@@ -85,7 +85,7 @@ public abstract class CanOwn extends Square {
 	}
 
 	//boolean arguemnet ensures that the a buyer of a mortgaged property immediately pays the 10% charge
-	void demortgage(boolean demortgageOnSale) {
+	public void demortgage(boolean demortgageOnSale) {
 		//check that the property is mortgaged
 		if(this.getTitleDeedCard().getMortgageStatus()) {
 			//if the property must be demortgaged on sale

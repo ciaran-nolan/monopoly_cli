@@ -1,6 +1,7 @@
-package ie.ucd.game;
+package ie.ucd.test;
 
-import org.junit.jupiter.api.AfterAll;
+import ie.ucd.game.*;
+//import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,19 +16,19 @@ class SquareTest {
     }
 
     @Test
-    void getLocation() {
+    void testGetLocation() {
         int expectedLocation = 5;
         assertEquals(expectedLocation,squareNew.getLocation(),"Checking location as Square 5");
     }
 
     @Test
-    void getBuyStatus() {
+    void testGetBuyStatus() {
         boolean testStatus = true;
         assertEquals(testStatus,squareNew.getBuyStatus(),"Checking if True");
     }
 
     @Test
-    void getName() {
+    void testGetName() {
         String nameTest = "Ealing Broadway";
         assertSame(nameTest,squareNew.getName(),"Checking name is correct");
         nameTest = "Piccadilly";
@@ -35,35 +36,35 @@ class SquareTest {
     }
 
     @Test
-    void getSquareType() {
+    void testGetSquareType() {
         assertEquals(Square.SquareType.PROPERTY, squareNew.getSquareType(),"Checking Square type is property");
     }
 
     @Test
-    void setSquareType() {
+    void testSetSquareType() {
         squareNew.setSquareType(Square.SquareType.UTILITY);
         assertEquals(Square.SquareType.UTILITY, squareNew.getSquareType(),"Checking it can be set to UTILITY");
     }
 
     @Test
-    void setLocation() {
+    void testSetLocation() {
         squareNew.setLocation(10);
         assertEquals(10,squareNew.getLocation(),"Checking Location is 10");
     }
 
     @Test
-    void setBuyStatus() {
+    void testSetBuyStatus() {
         squareNew.setBuyStatus(false);
         assertEquals(false, squareNew.getBuyStatus(), "Checking buy status can be set to false");
     }
 
     @Test
-    void setName() {
+    void testSetName() {
         squareNew.setName("Park Lane");
         assertSame("Park Lane", squareNew.getName(),"Checking name can be changed");
     }
 
-    @AfterAll
+    @AfterEach
     void tearDown() {
         squareNew = null;
     }

@@ -8,7 +8,7 @@ public class CommunityChest extends Card {
 	//
 	//ArrayList<Card> communityChestDeck = new ArrayList<Card>();
 	
-	CommunityChest(String cardType, String cardDesc, int cardValue) {
+	public CommunityChest(String cardType, String cardDesc, int cardValue) {
 		super(cardType, cardDesc, cardValue);
 	}
 	
