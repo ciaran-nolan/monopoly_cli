@@ -26,17 +26,19 @@ class CanOwnTest {
 
     @Test
     public void testMortgage() {
-        Board.properties.get(0).mortgage(p1,false);
-        assertTrue(Board.properties.get(0).getTitleDeedCard().getMortgageStatus());
+    	Board.properties.get(3).getTitleDeedCard().setOwner(p1);
+        Board.properties.get(3).mortgage(p1,false);
+        assertTrue(Board.properties.get(3).getTitleDeedCard().getMortgageStatus());
     }
 
     @Test
     public void testDemortgage() {
-        Board.properties.get(0).mortgage(p1,false);
-        assertTrue(Board.properties.get(0).getTitleDeedCard().getMortgageStatus());
-        Board.properties.get(0).demortgage(false);
-        assertFalse(Board.properties.get(0).getTitleDeedCard().getMortgageStatus());
-
+    	Board.properties.get(4).getTitleDeedCard().setOwner(p1);
+        Board.properties.get(4).mortgage(p1,false);
+        assertTrue(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
+        Board.properties.get(4).demortgage(false);
+        System.out.println(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
+        assertFalse(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
     }
 	@AfterEach
 	void tearDown() throws Exception {

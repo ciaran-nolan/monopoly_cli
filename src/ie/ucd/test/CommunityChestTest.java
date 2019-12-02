@@ -23,6 +23,7 @@ class CommunityChestTest {
         commChestTest.dealWithCard(playerTest);
         assertEquals(initialMoney-commChestTest.getCardValue(), playerTest.getMoney(),"Check money is reduced from Player");
     }  
+    @Test
     public void testDealWithCardINCOME() {
         //INCOME
     	int initialMoney = playerTest.getMoney();
@@ -30,6 +31,7 @@ class CommunityChestTest {
         commChestTest.dealWithCard(playerTest);
         assertEquals(initialMoney+commChestTest.getCardValue(),playerTest.getMoney(),"Checking income works");
     }  
+    @Test
     public void testDealWithCardMOVE() {
        //MOVE
     	int currLocation = playerTest.getLocation();
@@ -38,12 +40,14 @@ class CommunityChestTest {
         commChestTest.dealWithCard(playerTest);
         assertEquals(currLocation+5,playerTest.getLocation(),"Checking a player can move squares");
     }
+    @Test
     public void testDealWithCardGETOUTOFJAIL() {
         //GET OUT OF JAIL FREE
         commChestTest.setCardType("GET_OUT_OF_JAIL");
         commChestTest.dealWithCard(playerTest);
         assertTrue(playerTest.getJailCard().size()>0);
     }
+    @Test
     public void testDealWithCardCHOICE() {
         //CHOICE CARD
         //Fine is input of 0 and Chance is input of 1
@@ -55,6 +59,7 @@ class CommunityChestTest {
         //Do it in the case of minusing the value
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
     }
+    @Test
     public void testDealWithCardJAIL() {
         //JAIL
         commChestTest.setCardType("JAIL");

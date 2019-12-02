@@ -27,6 +27,7 @@ class ChanceTest {
         //PAY
         assertEquals(expectedValuePay, playerTest.getMoney(),"Check money is reduced from Player");
     }
+    @Test
     void testDealWithCardINCOME() {
         //INCOME
     	int initialMoney = playerTest.getMoney();
@@ -36,6 +37,7 @@ class ChanceTest {
         chanceTest.dealWithCard(playerTest);
         assertEquals(expectedValueIncome,playerTest.getMoney(),"Checking income works");
     }
+    @Test
     void testDealWithCardMOVE() {
         //MOVE
     	int currLocation = playerTest.getLocation();
@@ -44,12 +46,14 @@ class ChanceTest {
         chanceTest.dealWithCard(playerTest);
         assertEquals(currLocation+5,playerTest.getLocation(),"Checking a player can move squares");
     }
+    @Test
     void testDealWithCardGETOUTOFJAIL() {
         //GET OUT OF JAIL FREE
         chanceTest.setCardType("GET_OUT_OF_JAIL");
         chanceTest.dealWithCard(playerTest);
         assertTrue(playerTest.getJailCard().size() > 0);
     }
+    @Test
     void testDealWithCardJAIL() {
         //JAIL
         chanceTest.setCardType("JAIL");

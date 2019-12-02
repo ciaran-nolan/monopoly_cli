@@ -67,14 +67,13 @@ public abstract class CanOwn extends Square {
 			}
 			//not an instanc eof property, cannot be upgraded so immediately mortgage
 			else {
-				if(this instanceof PublicSquare && !this.titleDeedCard.getMortgageStatus()) {
+				if((this instanceof Utility || this instanceof Train) && !this.titleDeedCard.getMortgageStatus()) {
 					this.titleDeedCard.setMortgageStatus(true);
 					player.addMoney(this.titleDeedCard.getMortgage());
 					System.out.println("Successfully mortgaged "+this.getName());
 				}
 				else {
 					System.out.println("This property is non-ownable or has been mortgaged already!");
-					this.titleDeedCard.setMortgageStatus(false);
 				}
 			}
 		}
@@ -95,8 +94,10 @@ public abstract class CanOwn extends Square {
 				//If they dont have enough money to pay off mortgage
 				if (this.titleDeedCard.getMortgage() > this.titleDeedCard.getOwner().getMoney()) {
 					System.err.println("You don't have enough money to demortgage this property now!");
-				} else {
+				} 
+				else {
 					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null);
+					this.titleDeedCard.setMortgageStatus(false);
 				}
 			}
 			//property has not been sold, just demortgaged
@@ -108,6 +109,7 @@ public abstract class CanOwn extends Square {
 				else {
 					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null); //Paying price of mortgage
 					this.titleDeedCard.getOwner().reduceMoney((int) (0.01 * this.titleDeedCard.getMortgage()), null); //Paying interest
+					this.titleDeedCard.setMortgageStatus(false);
 					System.out.println(this.titleDeedCard.getCardDesc() + " has been successfully demortgaged.");
 				}
 			}
