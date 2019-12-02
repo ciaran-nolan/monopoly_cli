@@ -32,11 +32,11 @@
 	    * Square defines any square type on the board. It has a number of child classes: Special, CanOwn (Property, PublicSquare(Train, Utility))
 		
 ### Notes on Teamwork
-* Ciaran and I initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code
-* We started off with a number of whiteboard meetings in the Library to decide on our class structure, class variables and initial class methods for each
-* We use Trello to assign ourselves debugging tasks, merge requests from other branches (also assigned through Gitlab) and setting out tasks for each of us
-	* Through Trello, we can gain an insight into what each other is doing but also ensures that we are not doing the same tasks twice
-* We also consistently meet up in the Engineering building to see what each other has done and how we can progress with the project as a whole 
+* Ciaran and I initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code.
+* We started off with a number of white board meetings in the Library to decide on our class structure, class variables and initial class methods for each.
+* We use Trello to assign ourselves debugging tasks, merge requests from other branches (also assigned through Gitlab) and setting out tasks for each of us.
+* Through Trello, we can gain an insight into what each other is doing but also ensures that we are not doing the same tasks twice.
+* We also consistently meet up in the Engineering building to see what each other has done and how we can progress with the project as a whole.
 * Once we were finished with a class, we would meet up and review the code. From here, we could make judgements on areas where we could improve or optimise the speed of our program. 
 
 
