@@ -147,7 +147,6 @@ public class Player {
 		else {
 			//Remove the get out of jail card from the pile
 			Board.communityChests.remove(0);
-			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
 		pickedCard.dealWithCard(this);
@@ -164,7 +163,6 @@ public class Player {
 		else {
 			//Remove the get out of jail card from the pile
 			Board.chances.remove(0);
-			this.addJailCard(pickedCard);
 		}
 		//This will implement the card
 		pickedCard.dealWithCard(this);
