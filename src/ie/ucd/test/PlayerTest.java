@@ -267,7 +267,7 @@ class PlayerTest {
     void testBankruptcyMortgage() {
     	Board.initialiseBoard();
     	player.getTitleDeedList().clear();
-    	player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+    	player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
     	player.setMoney(5);
     	player.bankruptcyMortgage(10);
     	//Should be mortgaged as the value is high

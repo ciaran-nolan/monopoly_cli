@@ -4,7 +4,6 @@ public class Train extends PublicSquare {
 	
 	public Train(String name, int indexLocation) {
 		super(name, indexLocation, Square.SquareType.TRAIN);
-
 	}
 
 	public void buy(Player player) {

@@ -118,6 +118,7 @@ public class TitleDeed extends Card {
                 }
             }
         }
+        
         int biddingPoolSize = biddingPlayers.size();
 
         while(biddingPoolSize > 1){
