@@ -157,7 +157,25 @@ class TitleDeedTest {
 	//FIXME think about us testing this @@ciarannolan??
 	@Test
 	void testPlayerAuction() {
-		fail("Not yet implemented");
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
+		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
+		Game.playerList = Player.createListPlayers();
+		System.out.println("Please follow these instructions:");
+		System.out.println("Rob Enter bid of 30, Ciaran then bid of 50, Rob then bid again at 60, Ciaran then leave bidding");
+		t1.playerAuction(null);
+		
+	}
+	
+	@Test
+	void testPlayerAuctionNO_BIDS() {
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
+		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
+		Game.playerList = Player.createListPlayers();
+		System.out.println("Please follow these instructions:");
+		System.out.println("Nobody Bidding");
+		t1.playerAuction(null);
 	}
 
 }
