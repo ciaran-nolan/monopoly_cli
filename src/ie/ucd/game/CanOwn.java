@@ -77,20 +77,21 @@ public abstract class CanOwn extends Square {
 				}
 			}
 		}
-		//plyaer does not own the property
+		//player does not own the property
 		else {
 			System.err.println("You cannot mortgage this property as you do not own it!");
 		}
 	}
 
-	//boolean arguemnet ensures that the a buyer of a mortgaged property immediately pays the 10% charge
+	//boolean argument ensures that the a buyer of a mortgaged property immediately pays the 10% charge
 	public void demortgage(boolean demortgageOnSale) {
-		//check that the property is mortgaged
+		//Check property is mortgaged
 		if(this.getTitleDeedCard().getMortgageStatus()) {
 			//if the property must be demortgaged on sale
+			//Pay 10% plus value of mortgage
 			if (demortgageOnSale) {
 				//Automatically set 10% interest to paying
-				this.titleDeedCard.getOwner().reduceMoney((int) (0.01 * this.titleDeedCard.getMortgage()), null);
+				this.titleDeedCard.getOwner().reduceMoney((int) (0.1 * this.titleDeedCard.getMortgage()), null);
 				//If they dont have enough money to pay off mortgage
 				if (this.titleDeedCard.getMortgage() > this.titleDeedCard.getOwner().getMoney()) {
 					System.err.println("You don't have enough money to demortgage this property now!");
@@ -98,17 +99,18 @@ public abstract class CanOwn extends Square {
 				else {
 					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null);
 					this.titleDeedCard.setMortgageStatus(false);
+					System.out.println(this.titleDeedCard.getCardDesc() + " has been successfully demortgaged.");
 				}
 			}
 			//property has not been sold, just demortgaged
 			else {
 				//check owner has required funds to demortgage
-				if ((this.titleDeedCard.getMortgage() + 0.01 * this.titleDeedCard.getMortgage()) > this.titleDeedCard.getOwner().getMoney()) {
+				if ((this.titleDeedCard.getMortgage() + 0.1 * this.titleDeedCard.getMortgage()) > this.titleDeedCard.getOwner().getMoney()) {
 					System.err.println("You don't have enough money to demortgage this property now!");
 				}
 				else {
 					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null); //Paying price of mortgage
-					this.titleDeedCard.getOwner().reduceMoney((int) (0.01 * this.titleDeedCard.getMortgage()), null); //Paying interest
+					this.titleDeedCard.getOwner().reduceMoney((int) (0.1 * this.titleDeedCard.getMortgage()), null); //Paying interest
 					this.titleDeedCard.setMortgageStatus(false);
 					System.out.println(this.titleDeedCard.getCardDesc() + " has been successfully demortgaged.");
 				}

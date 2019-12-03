@@ -7,10 +7,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.*;
 
 class TitleDeedTest {
 	private  Player p1 = new Player("P1","red");
 	private  Player p2 = new Player("P2","blue");
+	private Property prop1 = new Property(10,"orange", "Test");
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
@@ -18,12 +20,21 @@ class TitleDeedTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		
+		Board.initialiseBoard();
 	}
 
 	@Test
 	void testTitleDeed() {
-		fail("Not yet implemented");
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+		assertEquals("Title Deed", t1.getCardType(),"Checking card Type");
+		assertEquals("Test", t1.getCardDesc(),"Checking Card Desc");
+		assertEquals(0,t1.getCardValue(),"Checking card value");
+		assertEquals("orange", t1.getSquareColour(),"Checking Square Colour");
+		assertEquals(100,t1.getPriceBuy(),"Checking Buy Price");
+		assertEquals(10,t1.getHousePrice(),"Checking House Price");
+		assertEquals(50,t1.getMortgage(),"Checking mortgage value");
+		assertEquals(p1,t1.getOwner(),"Checking owner");
+		assertEquals(prop1,t1.getOwnableSite(),"Checking ownable site");
 	}
 
 	@Test
@@ -47,6 +58,7 @@ class TitleDeedTest {
 
 	@Test
 	void testGetPriceBuy() {
+		Board.properties.get(3).getTitleDeedCard().setpriceBuy(100);
 		int buyPrice = Board.properties.get(3).getTitleDeedCard().getPriceBuy();
 		assertEquals(100,buyPrice,"Checking buy price is gotten as £100");
 	}
@@ -82,6 +94,7 @@ class TitleDeedTest {
 	@Test
 	void testSetSquareColour() {
 		String setColour = "Dark blue";
+		Board.properties.get(3).getTitleDeedCard().setSquareColour(setColour);
 		String colour = Board.properties.get(3).getTitleDeedCard().getSquareColour();
 		assertEquals(setColour,colour,"Checking setSquareColour gives \"Dark blue\"");
 	}
@@ -115,25 +128,33 @@ class TitleDeedTest {
 
 	@Test
 	void testGetMortgage() {
-		int mortgage 
-		fail("Not yet implemented");
+		Board.properties.get(3).getTitleDeedCard().setMortgage(50);
+		int mortgage = Board.properties.get(3).getTitleDeedCard().getMortgage();
+		assertEquals(50, mortgage, "Checking getMortgage returns £50");
 	}
 
 	@Test
 	void testSetMortgage() {
-		fail("Not yet implemented");
+		Board.properties.get(3).getTitleDeedCard().setMortgage(20);
+		int mortgage = Board.properties.get(3).getTitleDeedCard().getMortgage();
+		assertEquals(20, mortgage, "Checking setMortgage set to £20");
 	}
 
 	@Test
 	void testSetBankruptcyTradeStatus() {
-		fail("Not yet implemented");
+		Board.properties.get(3).getTitleDeedCard().setBankruptcyTradeStatus(50, p2);
+		Set<Integer> status = Board.properties.get(3).getTitleDeedCard().getBankruptcyTradeStatus().keySet();
+		//Check whether the keyset is empty
+		assertFalse(status.isEmpty());
 	}
 
 	@Test
 	void testGetBankruptcyTradeStatus() {
-		fail("Not yet implemented");
+		Board.properties.get(3).getTitleDeedCard().setBankruptcyTradeStatus(50, p2);
+		Set<Integer> status = Board.properties.get(3).getTitleDeedCard().getBankruptcyTradeStatus().keySet();
+		assertTrue(status.contains(50));
 	}
-
+	//FIXME think about us testing this @@ciarannolan??
 	@Test
 	void testPlayerAuction() {
 		fail("Not yet implemented");
