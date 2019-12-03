@@ -5,7 +5,7 @@
 package ie.ucd.game;
 import java.util.Random;
 
-class Dice {
+public final class Dice {
 
 	private static int dice1;
 	private static int dice2;
@@ -30,7 +30,11 @@ class Dice {
 		//return object containing both die values
 		return (dice1 + dice2);
 	}
-
+	public static void setDieVals() {
+		//return object containing both die values
+		dice1 = 2;
+		dice2 = 3;
+	}
 	//check if the third double ha been rolled
 	private static boolean isThirdDouble(Player player){
 		if (duplicateRollCounter == 3) {

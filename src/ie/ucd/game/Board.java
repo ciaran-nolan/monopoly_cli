@@ -13,8 +13,10 @@ import java.util.*;
 public class Board {
 
 	public static ArrayList<Property> properties = new ArrayList<>(22);
-	static ArrayList<CommunityChest> communityChests = new ArrayList<>();
-	static ArrayList<Chance> chances = new ArrayList<>();
+	public static ArrayList<Train> trains = new ArrayList<>(4);
+	public static ArrayList<Utility> utilities = new ArrayList<>(2);
+	public static ArrayList<CommunityChest> communityChests = new ArrayList<>();
+	public static ArrayList<Chance> chances = new ArrayList<>();
 	public static ArrayList<Square> board = new ArrayList<>(Collections.nCopies(40, null));
 	//define properties list to hold the .properties file
 	private static Properties prop = new Properties();
@@ -71,6 +73,7 @@ public class Board {
 						null, Integer.parseInt((prop.getProperty(("priceBuy"+i)))),
 						rentIntArray, 0, Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
     			temp.setTitleDeedCard(tempDeed);
+    			utilities.add(temp);
     			board.set(temp.getLocation(),temp);
     		}
     	}
@@ -142,6 +145,7 @@ public class Board {
     			Train temp = new Train(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))));
 				TitleDeed tempDeed = new TitleDeed("Title Deed", prop.getProperty(("title"+i)),0, null, Integer.parseInt((prop.getProperty(("priceBuy"+i)))), rentIntArray, 0, Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
     			temp.setTitleDeedCard(tempDeed);
+    			trains.add(temp);
     			board.set(temp.getLocation(),temp);
     		}
     	}

@@ -34,7 +34,7 @@ class UtilityTest {
         //This should fail as i cant overfill the array
         utilityNew.getTitleDeedCard().setRents(overfillRent);
         //Shouldn't be able to overfill re(expectedRent, not(equalTo()));
-        assertTrue(expectedRent.equals(utilityNew.getTitleDeedCard().getRents()) == false);
+        assertFalse(expectedRent.equals(utilityNew.getTitleDeedCard().getRents()));
     }
 
     @Test
