@@ -57,7 +57,7 @@ public class Transactions {
 				traderOne.getJailCard().remove(i);
 			}
 		}
-		else if(traderTwoJailFree>0){
+		if(traderTwoJailFree>0){
 			for(int i=0;i<traderTwoJailFree;i++){
 				traderOne.addJailCard(traderTwo.getJailCard().get(i));
 				traderTwo.getJailCard().remove(i);
