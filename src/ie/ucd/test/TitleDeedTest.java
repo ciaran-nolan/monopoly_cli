@@ -20,7 +20,7 @@ class TitleDeedTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		Board.initialiseBoard();
+		 Game.playerList = null;
 	}
 
 	@Test
@@ -162,20 +162,23 @@ class TitleDeedTest {
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
 		Game.playerList = Player.createListPlayers();
 		System.out.println("Please follow these instructions:");
-		System.out.println("Rob Enter bid of 30, Ciaran then bid of 50, Rob then bid again at 60, Ciaran then leave bidding");
+		System.out.println("Rob Enter bid of 30, Ciaran then bid of 50, Rob then bid again at 6, Rob then bid again at 60, Ciaran then leave bidding");
 		t1.playerAuction(null);
+		assertTrue(Game.playerList.get(0).getTitleDeedList().contains(t1));
 		
 	}
 	
 	@Test
-	void testPlayerAuctionNO_BIDS() {
-		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+	void testPlayerAuctionNO_BIDS_OR_OWNER() {
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,null,prop1);
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
 		Game.playerList = Player.createListPlayers();
 		System.out.println("Please follow these instructions:");
-		System.out.println("Nobody Bidding");
+		System.out.println("Nobody bids. Both press n");
 		t1.playerAuction(null);
+		assertTrue(t1.getOwner()==null);
+		//assertTrue(Game.playerList.get(1).getTitleDeedList().isEmpty());
 	}
 
 }
