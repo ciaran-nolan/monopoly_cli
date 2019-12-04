@@ -27,6 +27,10 @@ class ChecksTest {
     	//Property
     	
     	//Unowned - buy property
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Board.properties.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(1, player);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.properties.get(0).getTitleDeedCard().getCardDesc()));
@@ -37,6 +41,10 @@ class ChecksTest {
     	Checks.checkSquare(1,player);
     	
     	//owned by a different player
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Player player2 = new Player("P2","Green");
     	player.getTitleDeedList().get(0).setOwner(player2);
     	player.getTitleDeedList().clear();
@@ -51,6 +59,10 @@ class ChecksTest {
     	//Utility
     	
     	//Unowned - buy property
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Board.utilities.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(12, player);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.utilities.get(0).getTitleDeedCard().getCardDesc()));
@@ -61,6 +73,10 @@ class ChecksTest {
     	Checks.checkSquare(12,player);
     	
     	//owned by a different player
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
@@ -76,6 +92,10 @@ class ChecksTest {
     	//Utility
     	
     	//Unowned - buy property
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Board.trains.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(5, player);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.trains.get(0).getTitleDeedCard().getCardDesc()));
@@ -86,6 +106,10 @@ class ChecksTest {
     	Checks.checkSquare(5,player);
     	
     	//owned by a different player
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
@@ -171,18 +195,43 @@ class ChecksTest {
         assertEquals(0, Checks.canBuildHousesHotels((Property)player.getTitleDeedList().get(0).getOwnableSite(),player));
         player.getTitleDeedList().remove(0);
         //Don't own all the properties in this group, don't try again
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "n ENTER"
+				);
         assertEquals(-2, Checks.canBuildHousesHotels(Board.properties.get(0),player));
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
         //Don't own all the properties in this group, try again
         assertEquals(-1,Checks.canBuildHousesHotels(((Property)player.getTitleDeedList().get(0).getOwnableSite()),player));  
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "n ENTER"
+				);
         //Null property, don't try again
         assertEquals(-2,  Checks.canBuildHousesHotels(null,player));
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
         //Null property, try again
         assertEquals(-1,  Checks.canBuildHousesHotels(null,player));
         
         player.getTitleDeedList().clear();
         Board.properties.get(0).getTitleDeedCard().setOwner(null);
+        
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "n ENTER"
+				);
         //don't try again
         assertEquals(-2,Checks.canBuildHousesHotels(Board.properties.get(0),player));
+        System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
         //try again
         assertEquals(-1,Checks.canBuildHousesHotels(Board.properties.get(0),player));
     
@@ -221,6 +270,10 @@ class ChecksTest {
     void testCheckBankruptcyTradeValue() {
     	Player player2 = new Player("P2","Green");
     	Board.properties.get(3).getTitleDeedCard().setOwner(null);
+    	System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "y ENTER"
+				);
     	Board.properties.get(3).buy(player);
     	player.getTitleDeedList().get(0).setBankruptcyTradeStatus(1000, player2);
     	assertEquals(1000,Checks.checkBankruptcyTradeValue(player));

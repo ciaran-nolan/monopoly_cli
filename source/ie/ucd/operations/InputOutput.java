@@ -33,7 +33,7 @@ public class InputOutput {
 	}
 
 	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
-	//house hotels arguemnet ensures only instances of property are shown when true
+	//house hotels argument ensures only instances of property are shown when true
 	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
 		System.out.println("Please select the title deed card you wish to "+operation);
 		ArrayList<TitleDeed>houseHotelList = new ArrayList<>();
