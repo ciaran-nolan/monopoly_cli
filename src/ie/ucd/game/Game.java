@@ -1,23 +1,26 @@
 package ie.ucd.game;
 
 import java.util.*;
+
+import ie.ucd.operations.Checks;
+import ie.ucd.operations.InputOutput;
 //This will be the file that reads the configuration of the board and asks for user input
 //It is a main file
 public class Game {
 	private static int remainingHouses=32;
 	private static int remainingHotels=12;
     public static ArrayList<Player> playerList = new ArrayList<Player>();
-	static int numPlayersBankrupt=0;
-	static int getRemainingHouses() {
+	public static int numPlayersBankrupt=0;
+	public static int getRemainingHouses() {
 		return remainingHouses;
 	}
-	static int getRemainingHotels() {
+	public static int getRemainingHotels() {
 		return remainingHotels;
 	}
-	static void setRemainingHouses(int newHouseCount) {
+	public static void setRemainingHouses(int newHouseCount) {
 		remainingHouses = newHouseCount;
 	}
-	static void setRemainingHotels(int newHotelCount) {
+	public static void setRemainingHotels(int newHotelCount) {
 		remainingHotels = newHotelCount;
 	}
 	

@@ -1,5 +1,7 @@
 package ie.ucd.test;
+import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.*;
+import ie.ucd.squares.Property;
 
 import static org.junit.jupiter.api.Assertions.*;
 

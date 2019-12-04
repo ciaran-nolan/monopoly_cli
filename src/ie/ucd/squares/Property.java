@@ -1,6 +1,13 @@
-package ie.ucd.game;
+package ie.ucd.squares;
 
 import java.util.ArrayList;
+
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.game.Game;
+import ie.ucd.game.Player;
+import ie.ucd.operations.Checks;
+import ie.ucd.operations.InputOutput;
+import ie.ucd.squares.Square.SquareType;
 
 public class Property extends CanOwn {
 	private String squareColour;

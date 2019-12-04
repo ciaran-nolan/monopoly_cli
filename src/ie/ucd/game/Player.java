@@ -1,5 +1,17 @@
 package ie.ucd.game;
 import java.util.*;
+
+import ie.ucd.cards.Card;
+import ie.ucd.cards.Chance;
+import ie.ucd.cards.CommunityChest;
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.operations.Checks;
+import ie.ucd.operations.InputOutput;
+import ie.ucd.operations.Transactions;
+import ie.ucd.squares.CanOwn;
+import ie.ucd.squares.Property;
+import ie.ucd.squares.Train;
+import ie.ucd.squares.Utility;
 /*
  * This is the class for representing a player and contains all of the code and methods necessary to represent a player
  */

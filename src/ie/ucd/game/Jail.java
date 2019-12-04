@@ -1,5 +1,10 @@
 package ie.ucd.game;
 
+import ie.ucd.cards.Chance;
+import ie.ucd.cards.CommunityChest;
+import ie.ucd.operations.Checks;
+import ie.ucd.operations.InputOutput;
+
 public class Jail {
 
     //FIXME fix jail condition with immediate exit

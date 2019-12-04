@@ -1,4 +1,6 @@
 package ie.ucd.test;
+import ie.ucd.cards.Card;
+import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.*;
 
 import org.junit.jupiter.api.BeforeEach;

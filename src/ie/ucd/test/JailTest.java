@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ie.ucd.cards.CommunityChest;
 import ie.ucd.game.*;
 
 class JailTest {

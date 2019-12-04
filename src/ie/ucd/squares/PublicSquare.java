@@ -1,5 +1,6 @@
-package ie.ucd.game;
+package ie.ucd.squares;
 
+import ie.ucd.squares.Square.SquareType;
 
 public abstract class PublicSquare extends CanOwn {
 

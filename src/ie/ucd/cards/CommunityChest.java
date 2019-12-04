@@ -1,6 +1,8 @@
-package ie.ucd.game;
+package ie.ucd.cards;
 
-import java.util.*;
+import ie.ucd.game.Jail;
+import ie.ucd.game.Player;
+import ie.ucd.operations.InputOutput;
 
 //This is how to sort out the handling of a community chest card that is picked from a deck
 //It is not to denote a communitychest square. That is handled by the Special.java file

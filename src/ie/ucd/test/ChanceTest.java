@@ -1,5 +1,6 @@
 package ie.ucd.test;
 
+import ie.ucd.cards.Chance;
 import ie.ucd.game.*;
 import org.junit.jupiter.api.AfterEach;
 

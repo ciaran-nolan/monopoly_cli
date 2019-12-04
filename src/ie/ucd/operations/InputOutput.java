@@ -1,7 +1,13 @@
-package ie.ucd.game;
+package ie.ucd.operations;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.game.Game;
+import ie.ucd.game.Player;
+import ie.ucd.squares.CanOwn;
+import ie.ucd.squares.Property;
 
 import static ie.ucd.game.Board.board;
 
@@ -28,7 +34,7 @@ public class InputOutput {
 
 	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
 	//house hotels arguemnet ensures only instances of property are shown when true
-	static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
+	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
 		System.out.println("Please select the title deed card you wish to "+operation);
 		ArrayList<TitleDeed>houseHotelList = new ArrayList<>();
 		int choiceInput;
@@ -73,7 +79,7 @@ public class InputOutput {
 	}
 
 	//display information about a square
-	static void squareInformation(int index){
+	public static void squareInformation(int index){
 
 		//type canown requires additional information
 		if(board.get(index) instanceof CanOwn){
@@ -94,7 +100,7 @@ public class InputOutput {
 		}
 	}
 
-	static int integerMenu(int lowerBound, int upperBound){
+	public static int integerMenu(int lowerBound, int upperBound){
 		int choiceInput;
 		System.out.println("Please enter a choice of a number between "+lowerBound+" and "+upperBound+":");
 
@@ -112,7 +118,7 @@ public class InputOutput {
 		return choiceInput;
 	}
 
-	static void handleUserOption(Player currentPlayer, boolean doubleRoll) {
+	public static void handleUserOption(Player currentPlayer, boolean doubleRoll) {
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
 						"|\t1: Mortgage/Demortgage a property\n" +
@@ -174,7 +180,7 @@ public class InputOutput {
 		}
 	}
 
-    static Player selectPlayerMenu(Player selectingPlayer){
+    public static Player selectPlayerMenu(Player selectingPlayer){
 		System.out.println("Please select player you wish to interact with");
 		ArrayList<Player> playerMenu = new ArrayList<>(Game.playerList);
 		int choiceInput;

@@ -1,4 +1,7 @@
-package ie.ucd.game;
+package ie.ucd.squares;
+
+import ie.ucd.game.Player;
+import ie.ucd.operations.InputOutput;
 
 public class Utility extends PublicSquare {
 	//private int[] rent; //Rent is size 2

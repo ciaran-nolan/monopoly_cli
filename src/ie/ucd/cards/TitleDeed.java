@@ -1,4 +1,4 @@
-package ie.ucd.game;
+package ie.ucd.cards;
 //In the case of a purchase, the title deed card will be transferred to the user who now owns the property.
 //Thus, mortgage and priceBuy will now be moved from CanOwn to their title deed card
 //The title deed card will be associated with the Square of the Property or Utility
@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import ie.ucd.game.Game;
+import ie.ucd.game.Player;
+import ie.ucd.operations.InputOutput;
+import ie.ucd.squares.CanOwn;
 
 public class TitleDeed extends Card {
     //This is the title deed card which extends Card

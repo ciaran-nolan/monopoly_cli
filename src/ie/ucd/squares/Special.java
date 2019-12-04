@@ -1,4 +1,9 @@
-package ie.ucd.game;
+package ie.ucd.squares;
+
+import ie.ucd.game.Jail;
+import ie.ucd.game.Player;
+import ie.ucd.squares.Square.SquareType;
+
 /*
  * This Special Square contains the methods for Tax, Jail, Go and Free Parking 
  * It will work off the index of the properties file inside of specialSquares.configurations

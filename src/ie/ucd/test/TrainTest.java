@@ -1,6 +1,7 @@
 package ie.ucd.test;
 
 import ie.ucd.game.*;
+import ie.ucd.squares.Train;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,6 +1,8 @@
 package ie.ucd.test;
 
 import ie.ucd.game.*;
+import ie.ucd.squares.Property;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

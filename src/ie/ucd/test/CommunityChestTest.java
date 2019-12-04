@@ -1,6 +1,7 @@
 package ie.ucd.test;
 
 
+import ie.ucd.cards.CommunityChest;
 import ie.ucd.game.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

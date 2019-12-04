@@ -1,5 +1,11 @@
-package ie.ucd.game;
+package ie.ucd.cards;
 import java.util.*;
+
+import ie.ucd.game.Jail;
+import ie.ucd.game.Player;
+import ie.ucd.operations.Checks;
+import ie.ucd.squares.CanOwn;
+import ie.ucd.squares.Property;
 
 public class Chance extends Card {
 	

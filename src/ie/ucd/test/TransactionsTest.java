@@ -6,11 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ie.ucd.cards.CommunityChest;
 import ie.ucd.game.Board;
-import ie.ucd.game.CommunityChest;
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
-import ie.ucd.game.Transactions;
+import ie.ucd.operations.Transactions;
 
 class TransactionsTest {
 	private CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);

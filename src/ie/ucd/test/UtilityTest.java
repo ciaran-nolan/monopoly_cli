@@ -1,7 +1,10 @@
 
 package ie.ucd.test;
 
+import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.*;
+import ie.ucd.squares.Utility;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.*;

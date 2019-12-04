@@ -8,6 +8,15 @@ package ie.ucd.game;
 import java.io.*;
 import java.util.*;
 
+import ie.ucd.cards.Chance;
+import ie.ucd.cards.CommunityChest;
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.squares.Property;
+import ie.ucd.squares.Special;
+import ie.ucd.squares.Square;
+import ie.ucd.squares.Train;
+import ie.ucd.squares.Utility;
+
 
 
 public class Board {

@@ -1,4 +1,9 @@
-package ie.ucd.game;
+package ie.ucd.squares;
+
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.game.Player;
+import ie.ucd.operations.Checks;
+import ie.ucd.operations.InputOutput;
 
 public class Train extends PublicSquare {
 	

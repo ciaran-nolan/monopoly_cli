@@ -1,4 +1,4 @@
-package ie.ucd.game;
+package ie.ucd.squares;
 /*
  * This is the class that defines a Square. 
  * I will need to populate the derived classes such as Property, Utility and Special Squares later (Incl. Community Chest 

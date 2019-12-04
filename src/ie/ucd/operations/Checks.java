@@ -1,8 +1,19 @@
-package ie.ucd.game;
+package ie.ucd.operations;
 
 //import java.util.ArrayList;
 //import java.util.Scanner;
 import java.util.*;
+
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.game.Board;
+import ie.ucd.game.Game;
+import ie.ucd.game.Player;
+import ie.ucd.squares.CanOwn;
+import ie.ucd.squares.Property;
+import ie.ucd.squares.Special;
+import ie.ucd.squares.Square;
+import ie.ucd.squares.Train;
+import ie.ucd.squares.Utility;
 
 
 public class Checks {

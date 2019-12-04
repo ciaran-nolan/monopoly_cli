@@ -1,7 +1,11 @@
-package ie.ucd.game;
+package ie.ucd.operations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import ie.ucd.cards.TitleDeed;
+import ie.ucd.game.Game;
+import ie.ucd.game.Player;
 
 public class Transactions {
 	

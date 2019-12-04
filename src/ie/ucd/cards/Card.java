@@ -1,4 +1,6 @@
-package ie.ucd.game;
+package ie.ucd.cards;
+
+import ie.ucd.game.Player;
 
 public abstract class Card {
 	private String cardType;
