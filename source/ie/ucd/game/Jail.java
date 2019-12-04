@@ -15,9 +15,12 @@ public class Jail {
         jailedPlayer.setLocation(10);
     }
 
-    public static void removeFromJail(Player jailedPlayer){
+    public static void removeFromJail(Player jailedPlayer, boolean rolledDouble){
         jailedPlayer.setInJail(false);
-        jailedPlayer.setJailMoves(0);    
+        jailedPlayer.setJailMoves(0);
+        if(!rolledDouble) {
+        	Dice.rollDice();
+        }
         jailedPlayer.movePlayer(Dice.getDieVals());
         Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer);
     }
@@ -33,7 +36,7 @@ public class Jail {
             jailedPlayer.getJailCard().remove(0);
             Board.chances.add((Chance)jailedPlayer.getJailCard().get(0));
         }
-        removeFromJail(jailedPlayer);
+        removeFromJail(jailedPlayer,false);
     }
 
     private static void handleFinalRollAttempt(Player jailedPlayer){
@@ -46,7 +49,7 @@ public class Jail {
             }
             else {
                 jailedPlayer.reduceMoney(50,null);
-                removeFromJail(jailedPlayer);
+                removeFromJail(jailedPlayer,false);
             }
         }
         else{
@@ -55,7 +58,7 @@ public class Jail {
                 System.out.println("You do not have enough funds to pay the fine, so you must use a get out of jail free card");
             }
             else{
-                System.out.println("You have rolled for the third time without getting doubles. Please Select an option:\n[0]Use get out of jail free card\n[1]Pay €50 fine");
+                System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay €50 fine");
                 jailExitChoice = InputOutput.integerMenu(0,1);
             }
             if(jailExitChoice==0){
@@ -63,7 +66,7 @@ public class Jail {
             }
             else{
                 jailedPlayer.reduceMoney(50,null);
-                removeFromJail(jailedPlayer);
+                removeFromJail(jailedPlayer,false);
             }
         }
     }
@@ -96,7 +99,7 @@ public class Jail {
             if(doubleRoll){
                 System.out.println("You have rolled doubles, you now exit jail and move "+Dice.getDieVals()+" places");
                 //take out of jail
-                removeFromJail(jailedPlayer);
+                removeFromJail(jailedPlayer,true);
             }
             else{
                 jailedPlayer.setJailMoves(jailedPlayer.getJailMoves()+1);
@@ -113,7 +116,7 @@ public class Jail {
                 jailedPlayer.setJailMoves(jailedPlayer.getJailMoves()+1);
                 if(doubleRoll){
                     System.out.println("You have rolled doubles, you now exit jail and move "+Dice.getDieVals()+" places");
-                    removeFromJail(jailedPlayer);
+                    removeFromJail(jailedPlayer,true);
                 }
                 else if(jailedPlayer.getJailMoves()==3){
                     handleFinalRollAttempt(jailedPlayer);
@@ -121,7 +124,7 @@ public class Jail {
             }
             else {
             	jailedPlayer.reduceMoney(50,null);
-            	removeFromJail(jailedPlayer);
+            	removeFromJail(jailedPlayer,false);
             }
         }
         else{

@@ -32,18 +32,27 @@ class JailTest {
 	void testRemoveFromJail() {
 		Jail.sendToJail(p1);
 		assertTrue(p1.isInJail());
-		Jail.removeFromJail(p1);
+		Jail.removeFromJail(p1,false);
 		assertFalse(p1.isInJail());
 	}
 
 	@Test
 	void testHandleJailMove() {
 		System.out.println("Exit Jail by paying Fine");
+		System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "5 ENTER 1 ENTER (If prompted to buy property) n ENTER"
+				);
 		Jail.sendToJail(p1);
 		Jail.handleJailMove(p1);
 		assertFalse(p1.isInJail());
 		
 		System.out.println("Exit Jail by using get out of jail card");
+		System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "5 ENTER 2 ENTER (If prompted to buy property) n ENTER"
+				);
+		
 		Jail.sendToJail(p1);
 		CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);
 		Board.communityChests.set(0, temp);
@@ -51,6 +60,9 @@ class JailTest {
 		Jail.handleJailMove(p1);
 		assertFalse(p1.isInJail());
 		
+		System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "5 ENTER 2 ENTER 1 ENTER (If prompted to buy property) n ENTER");
 		System.out.println("Test not enough money for fine");
 		Jail.sendToJail(p1);
 		p1.setMoney(40);
@@ -59,6 +71,10 @@ class JailTest {
 		p1.setInJail(false);
 		p1.setJailMoves(0);
 		
+		System.out.println("*********\n"+
+				"Player 1 Press:\n"
+				+ "5 ENTER 0 ENTER 5 ENTER 0 ENTER 5 ENTER (If prompted to buy property) n ENTER"
+				);
 		System.out.println("Roll three times, without double");
 		Jail.sendToJail(p1);
 		p1.setMoney(1500);

@@ -19,6 +19,7 @@ class ChecksTest {
         Board.initialiseBoard();
         player.getTitleDeedList().clear();
         player.setMoney(1500);
+        Game.playerList.clear();
     }
     
     @Test
