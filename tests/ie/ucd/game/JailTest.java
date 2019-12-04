@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ie.ucd.cards.CommunityChest;
-import ie.ucd.game.*;
+
 
 class JailTest {
 	private Player p1 = new Player("P1", "Red");

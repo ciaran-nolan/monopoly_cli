@@ -3,7 +3,6 @@ package ie.ucd.squares;
 import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.Player;
 import ie.ucd.operations.InputOutput;
-import ie.ucd.squares.Square.SquareType;
 
 public abstract class CanOwn extends Square {
 	private TitleDeed titleDeedCard;

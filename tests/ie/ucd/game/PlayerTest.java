@@ -4,7 +4,6 @@ package ie.ucd.game;
 import ie.ucd.cards.Card;
 import ie.ucd.cards.Chance;
 import ie.ucd.cards.TitleDeed;
-import ie.ucd.game.*;
 import ie.ucd.squares.Property;
 
 import org.junit.jupiter.api.AfterEach;

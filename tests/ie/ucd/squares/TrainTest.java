@@ -11,11 +11,10 @@ import org.junit.jupiter.api.Test;
 
 class TrainTest {
 	private Train train1;
-	private Player p1;
+	
 	private Player p2;
 	@BeforeEach
 	void setUp() throws Exception {
-		p1 = new Player("P1","red");
 		p2 = new Player("P2","blue");
 		Board.initialiseBoard();
 	}
@@ -23,7 +22,6 @@ class TrainTest {
 	@AfterEach
 	void tearDown() throws Exception {
 		train1 = null;
-		p1=null;
 		p2=null;
 	}
 

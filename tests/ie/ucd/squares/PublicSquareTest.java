@@ -1,7 +1,7 @@
 package ie.ucd.squares;
-import ie.ucd.game.*;
+
 import ie.ucd.squares.PublicSquare;
-import ie.ucd.squares.Square.SquareType;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

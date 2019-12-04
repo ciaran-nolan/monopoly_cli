@@ -7,12 +7,19 @@ import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 import ie.ucd.operations.Checks;
 import ie.ucd.operations.InputOutput;
-import ie.ucd.squares.Square.SquareType;
 
 public class Property extends CanOwn {
 	private String squareColour;
 	private int numHouses;
 	private int numHotels;
+	
+	public Property(int squareNum, String squareColour, String title) {
+		//owner will always be null at constructor since a property starts without an owner
+		super(title, squareNum, Square.SquareType.PROPERTY);
+		this.squareColour = squareColour;
+		this.numHotels = 0;
+		this.numHouses = 0;
+	}
 	
 	public int getNumHotels() {
 		return this.numHotels;
@@ -34,13 +41,6 @@ public class Property extends CanOwn {
 		return this.squareColour;
 	}
 
-	public Property(int squareNum, String squareColour, String title) {
-		//owner will always be null at constructor since a property starts without an owner
-		super(title, squareNum, Square.SquareType.PROPERTY);
-		this.squareColour = squareColour;
-		this.numHotels = 0;
-		this.numHouses = 0;
-	}
 	
 	public void buy(Player player) {
 			//check user has enough funds to purchase
