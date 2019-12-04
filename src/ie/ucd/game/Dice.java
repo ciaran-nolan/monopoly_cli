@@ -35,8 +35,15 @@ public final class Dice {
 		dice1 = dice1Val;
 		dice2 = dice2Val;
 	}
+	
+	public static void setDuplicateRollCounter(int rollCount) {
+		 duplicateRollCounter=rollCount;
+	}
+	public static int getDuplicateRollCounter() {
+		 return duplicateRollCounter;
+	}
 	//check if the third double ha been rolled
-	private static boolean isThirdDouble(Player player){
+	public static boolean isThirdDouble(Player player){
 		if (duplicateRollCounter == 3) {
 			//put player to jail on roll of the third double
 			System.out.println("You have rolled doubles for the third time.");
@@ -47,7 +54,7 @@ public final class Dice {
 		return false;
 	}
 	//method to handle a normal player roll
-	static boolean handlePlayerRoll(Player player){
+	public static boolean handlePlayerRoll(Player player){
 		rollDice();
 		if (isDoubleRoll()) {
 			duplicateRollCounter++;
