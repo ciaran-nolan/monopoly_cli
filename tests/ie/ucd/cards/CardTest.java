@@ -10,7 +10,6 @@ import ie.ucd.cards.Card;
 import ie.ucd.cards.Chance;
 import ie.ucd.cards.CommunityChest;
 import ie.ucd.cards.TitleDeed;
-import ie.ucd.game.*;
 
 class CardTest {
     private Card commChestTest;

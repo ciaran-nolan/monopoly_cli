@@ -1,7 +1,7 @@
 package ie.ucd.game;
 
 import static org.junit.jupiter.api.Assertions.*;
-import ie.ucd.game.*;
+
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

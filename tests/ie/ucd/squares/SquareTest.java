@@ -1,6 +1,6 @@
 package ie.ucd.squares;
 
-import ie.ucd.game.*;
+
 import ie.ucd.squares.Property;
 import ie.ucd.squares.Square;
 
