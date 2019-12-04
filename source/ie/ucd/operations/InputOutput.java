@@ -1,5 +1,8 @@
 package ie.ucd.operations;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,22 +17,30 @@ import static ie.ucd.game.Board.board;
 public class InputOutput {
 	//single scanner for project
 	private static Scanner input = new Scanner(System.in);
-	
+	private static BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+
 	private static void clearScannerBuffer(){
 		input.nextLine();
 	}
 
 	//method to handle yes/no inputs
 	public static boolean yesNoInput(String message,Player player) {
-		System.out.println(message);
-		String acknowledgement = input.nextLine();
 
-		//ensure the player enters a valid response
-		while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
-			System.out.println(player.getName()+", please enter a valid response (y/n)");
-			acknowledgement = input.nextLine();
+		System.out.println(message);
+		try {
+			String acknowledgement = userInput.readLine();
+
+			//ensure the player enters a valid response
+			while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
+				System.out.println(player.getName()+", please enter a valid response (y/n)");
+				acknowledgement = input.nextLine();
+			}
+			return acknowledgement.equalsIgnoreCase("y");
 		}
-		return acknowledgement.equalsIgnoreCase("y");
+		catch(Exception e){
+			System.out.println("Exception: "+e);
+			return false;
+		}
 	}
 
 	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
