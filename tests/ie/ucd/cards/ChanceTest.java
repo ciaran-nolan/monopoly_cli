@@ -11,10 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ChanceTest {
     private Chance chanceTest;
-    private Player playerTest = new Player("John", "blue");
+    private Player playerTest;
     @BeforeEach
     public void setUp() throws Exception {
         chanceTest = new Chance("PAY","Pay €100 in taxes",100);
+        playerTest = new Player("John", "blue");
     }
 
     @Test
@@ -32,8 +33,7 @@ class ChanceTest {
     void testDealWithCardINCOME() {
         //INCOME
     	int initialMoney = playerTest.getMoney();
-    	int expectedValuePay= initialMoney - chanceTest.getCardValue();
-        int expectedValueIncome = expectedValuePay + chanceTest.getCardValue();;
+        int expectedValueIncome = initialMoney + chanceTest.getCardValue();;
         chanceTest.setCardType("INCOME");
         chanceTest.dealWithCard(playerTest);
         assertEquals(expectedValueIncome,playerTest.getMoney(),"Checking income works");
@@ -65,5 +65,6 @@ class ChanceTest {
     @AfterEach
     void tearDown() throws Exception {
         chanceTest = null;
+        playerTest = null;
     }
 }

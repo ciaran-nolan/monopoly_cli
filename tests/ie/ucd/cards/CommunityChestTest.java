@@ -57,6 +57,9 @@ class CommunityChestTest {
     	commChestTest.setCardDesc("Pay fine of €25 or pick Chance card");
         commChestTest.setCardType("CHOICE");
         commChestTest.dealWithCard(playerTest);
+        System.out.println("\n***********************************");
+        System.out.println("TEST: PLEASE PRESS FINE");
+        System.out.println("***********************************\n");
         //Do it in the case of minusing the value
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
     }
