@@ -18,7 +18,7 @@ class TransactionsTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
-		System.out.println("Create 2 players");
+		System.out.println("Create 2/3 players");
 		Game.playerList = Player.createListPlayers();
 		
 	}
@@ -72,6 +72,12 @@ class TransactionsTest {
 		System.out.println("both players trade. PLayer two attempt to add jail free card that you do not have, player 1 DONT ACCEPT trade terms");
 		Transactions.playerToPlayerTrade(Game.playerList.get(0));
 		
+		Game.playerList.get(0).getTitleDeedList().clear();
+		Game.playerList.get(1).getTitleDeedList().clear();
+		
+		Game.playerList.get(0).getJailCard().clear();
+		Game.playerList.get(0).getJailCard().clear();
+		
 	}
 	@Test
 	void testPlayerToPlayerTrade3() {
@@ -81,8 +87,31 @@ class TransactionsTest {
 	
 	
 	@Test
-	void testSaveFromBankruptcyTrade() {
-		fail("Not yet implemented");
+	void testSaveFromBankruptcyTrade1() {
+		Player p1 = Game.playerList.get(0);
+		Player p2 = Game.playerList.get(1);
+		
+		Game.playerList.get(0).addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+		Game.playerList.get(0).addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+		
+		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
+		Transactions.saveFromBankruptcyTrade(p1);
+		
+	}
+	@Test
+	void testSaveFromBankruptcyTrade2() {
+		Player p1 = Game.playerList.get(0);
+		Player p2 = Game.playerList.get(1);
+		Player p3 = new Player("p3","Green");
+		Game.playerList.add(p3);
+		
+		Game.playerList.get(0).addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+		Game.playerList.get(0).addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+		
+		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
+		Transactions.saveFromBankruptcyTrade(p1);
 	}
 
 }

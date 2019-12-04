@@ -32,6 +32,16 @@ public class Transactions {
 		
 	}
 	
+	private static void resetTempValues() {
+		traderOneJailFree = 0;
+		traderOneCash = 0;
+		traderOnePropsToTrade.clear();
+		traderTwoJailFree = 0;
+		traderTwoCash = 0;
+		traderTwoPropsToTrade.clear();
+		tradeList.clear();
+	}
+	
 	private static void exchangeTradeItems() {
 		Player traderOne = tradeList.get(0);
 		Player traderTwo = tradeList.get(1);
@@ -63,6 +73,7 @@ public class Transactions {
 				traderTwo.getJailCard().remove(i);
 			}
 		}
+		resetTempValues();
 	}
 	
 	private static void initiateTrade(Player initiatingPlayer) {
@@ -93,7 +104,7 @@ public class Transactions {
 					case 0:
 						System.out.println(tradeList.get(i).getName() + " is exiting without trade. Nothing has been exchanged");
 						//return method without conducting a trade
-						break;
+						return;
 					case 1:
 						if (tradeList.get(i).getJailCard().size() == 0) {
 							if (InputOutput.yesNoInput("You do not have any get out of jail free cards.\n\nWould you like to trade something else? (y/n)", tradeList.get(i))) {
@@ -143,6 +154,7 @@ public class Transactions {
 					default:
 						throw new IllegalStateException("Unexpected value: " + transactionChoice);
 				}
+				
 				if (InputOutput.yesNoInput(tradeList.get(i).getName() + " are you finished making your trade? (y/n)", tradeList.get(i))) {
 					if (i == 0) {
 						traderOneCash = tempCash;
@@ -179,7 +191,7 @@ public class Transactions {
 		purchasingPlayer.reduceMoney(purchaseAmount,null);
 	}
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
-	static void saveFromBankruptcyTrade(Player bankruptPlayer) {
+	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		Checks.checkPlayerCanOwnStatus(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer)){
