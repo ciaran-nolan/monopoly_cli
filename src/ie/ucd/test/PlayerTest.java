@@ -255,7 +255,7 @@ class PlayerTest {
     	Board.utilities.get(0).getTitleDeedCard().setOwner(playerOwed);
     	playerOwed.addPurchasedTitleDeed(Board.utilities.get(0).getTitleDeedCard());
     	//Setting Dievals to 2 and 3 = 5 (rent will be 20)
-    	Dice.setDieVals();
+    	Dice.setDieVals(2,3);
     	//Paying rent on the ownable site
     	System.out.println("\n-----------------\nTEST: PAY RENT UTILITY\n Press y then ENTER\n-----------------");
     	player.payRent(Board.utilities.get(0));

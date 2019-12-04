@@ -30,10 +30,10 @@ public final class Dice {
 		//return object containing both die values
 		return (dice1 + dice2);
 	}
-	public static void setDieVals() {
+	public static void setDieVals(int dice1Val, int dice2Val) {
 		//return object containing both die values
-		dice1 = 2;
-		dice2 = 3;
+		dice1 = dice1Val;
+		dice2 = dice2Val;
 	}
 	//check if the third double ha been rolled
 	private static boolean isThirdDouble(Player player){
