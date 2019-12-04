@@ -22,8 +22,8 @@ public class Special extends Square {
 		return this.value;
 	}
 	
-	public void setType(String squareType) {
-		this.type = squareType;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	public void setValue(int value) {
@@ -32,7 +32,7 @@ public class Special extends Square {
 	//For special square, the community chest and chance ones will implement
 	//the dealWithCard(Player) function from which a card can be produced from the deck
 	// and then used to perform a function
-	void implementSpecialSquare(Player player) {
+	public void implementSpecialSquare(Player player) {
 
 		switch(this.type) {
 			case "TAX":
@@ -41,7 +41,7 @@ public class Special extends Square {
 				player.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
 				break; //Break the switch statement
 			case "GO":
-				System.out.println("You you have landed on GO, collect "+"£"+this.value);
+				System.out.println("You have landed on GO, collect "+"£"+this.value);
 				player.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
