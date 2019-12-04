@@ -12,7 +12,7 @@ public abstract class Square  {
 	private String name; //Could also be the description
 	
 	public enum SquareType {
-		PROPERTY, UTILITY, TRAIN, SPECIAL
+		PROPERTY, UTILITY, TRAIN, SPECIAL, PUBLIC
 	}
 	
 	private SquareType squareType;

@@ -48,16 +48,18 @@ class PropertyTest {
     @Test
     void testGetSquareColour() {
         Property testprop = Board.properties.get(0);
-        System.out.println(Board.properties.get(0).getSquareColour());
         assertTrue(testprop.getSquareColour().equals("Purple"));
     }
 
     @Test
     void testBuy() {
         //player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
-        String input = "y";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+//        String input = "y";
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
+    	System.out.println("\n-------------------------------");
+        System.out.println("TEST: Press y and ENTER");
+        System.out.println("-------------------------------");
         Board.properties.get(0).buy(player);
         //BoardReader.properties.get(1).buy(player);
         assertTrue(player.getTitleDeedList().contains(Board.properties.get(0).getTitleDeedCard()));
@@ -65,26 +67,31 @@ class PropertyTest {
 
     @Test
     void testBuildHousesHotels() {
-        String input = "0\r\n0\r\ny\r\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+//        String input = "0\r\n0\r\ny\r\n";
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Property testProp =(Property)player.getTitleDeedList().get(0).getOwnableSite();
         testProp.setNumHouses(0);
         testProp.setNumHotels(0);
+        System.out.println("\n-------------------------------");
+        System.out.println("TEST: Press 0, then 0 and then y");
+        System.out.println("-------------------------------");
         Property.buildHousesHotels(player);
         assertEquals(1,testProp.getNumHouses());
     }
 
     @Test
     void testSellHouses() {
-        String input = "n\r\n" ;
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+//        String input = "n\r\n" ;
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
-
+        System.out.println("\n-------------------------------");
+        System.out.println("TEST: Please enter n for NO");
+        System.out.println("-------------------------------");
         Property testProp1 = (Property)player.getTitleDeedList().get(0).getOwnableSite();
         Property testProp2 = (Property)player.getTitleDeedList().get(1).getOwnableSite();
         testProp1.setNumHouses(4);
@@ -95,15 +102,18 @@ class PropertyTest {
 
     @Test
     void testSellHotels() {
-        String input = "n\r\n" ;
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+//        String input = "n\r\n" ;
+//        InputStream in = new ByteArrayInputStream(input.getBytes());
+//        System.setIn(in);
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Property testProp1 = (Property)player.getTitleDeedList().get(0).getOwnableSite();
         Property testProp2 = (Property)player.getTitleDeedList().get(1).getOwnableSite();
         testProp1.setNumHotels(1);
         testProp2.setNumHouses(4);
+        System.out.println("\n-------------------------------");
+        System.out.println("TEST: Please enter n for NO");
+        System.out.println("-------------------------------");
         testProp1.sellHotels(player,false,false);
         assertEquals(4,testProp1.getNumHouses());
     }

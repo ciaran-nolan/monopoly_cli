@@ -15,8 +15,9 @@ public class Board {
 	public static ArrayList<Property> properties = new ArrayList<>(22);
 	public static ArrayList<Train> trains = new ArrayList<>(4);
 	public static ArrayList<Utility> utilities = new ArrayList<>(2);
-	public static ArrayList<CommunityChest> communityChests = new ArrayList<>();
-	public static ArrayList<Chance> chances = new ArrayList<>();
+	public static ArrayList<Special> specialSquares = new ArrayList<>(12);
+	public static ArrayList<CommunityChest> communityChests = new ArrayList<>(16);
+	public static ArrayList<Chance> chances = new ArrayList<>(16);
 	public static ArrayList<Square> board = new ArrayList<>(Collections.nCopies(40, null));
 	//define properties list to hold the .properties file
 	private static Properties prop = new Properties();
@@ -92,6 +93,7 @@ public class Board {
     		for(int i=0; i<=11; i++) {
     			Special temp = new Special(prop.getProperty(("squareName"+i)),Integer.parseInt(prop.getProperty(("squareNum"+i))),false, prop.getProperty("type"+i),Integer.parseInt(prop.getProperty("value"+i)),Square.SquareType.SPECIAL);
     			board.set(temp.getLocation(),temp);
+    			specialSquares.add(temp);
     		}
     	}
     	catch (Exception e) {
