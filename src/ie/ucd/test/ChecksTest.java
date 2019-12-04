@@ -59,7 +59,7 @@ class ChecksTest {
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
-    	Dice.setDieVals();
+    	Dice.setDieVals(2,3);
     	
     	Checks.checkSquare(12,player);
     	assertEquals(1480,player.getMoney());
@@ -84,7 +84,7 @@ class ChecksTest {
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
-    	Dice.setDieVals();
+    	Dice.setDieVals(2,3);
     	
     	Checks.checkSquare(5,player);
     	assertEquals(1475,player.getMoney());
@@ -215,8 +215,17 @@ class ChecksTest {
     @Test
     void testCheckBankruptcyTradeValue() {
     	Player player2 = new Player("P2","Green");
+    	Board.properties.get(3).getTitleDeedCard().setOwner(null);
     	Board.properties.get(3).buy(player);
     	player.getTitleDeedList().get(0).setBankruptcyTradeStatus(1000, player2);
     	assertEquals(1000,Checks.checkBankruptcyTradeValue(player));
     }
+    @Test
+    void testCheckIfValidGame() {
+    	Player player2 = new Player("P2","Green");
+    	Game.playerList.add(player);
+    	Game.playerList.add(player2);
+    	assertTrue(Checks.checkIfValidGame());
+    }
+
 }
