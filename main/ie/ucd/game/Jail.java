@@ -17,7 +17,7 @@ public class Jail {
 
     public static void removeFromJail(Player jailedPlayer){
         jailedPlayer.setInJail(false);
-        jailedPlayer.setJailMoves(0);
+        jailedPlayer.setJailMoves(0);    
         jailedPlayer.movePlayer(Dice.getDieVals());
         Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer);
     }

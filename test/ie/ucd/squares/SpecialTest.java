@@ -1,4 +1,4 @@
-package ie.ucd.test;
+package ie.ucd.squares;
 import ie.ucd.game.*;
 import ie.ucd.squares.Special;
 import ie.ucd.squares.Square.SquareType;

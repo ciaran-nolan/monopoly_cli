@@ -1,4 +1,4 @@
-package ie.ucd.test;
+package ie.ucd.cards;
 
 
 import ie.ucd.cards.CommunityChest;

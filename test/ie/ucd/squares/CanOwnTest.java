@@ -1,4 +1,4 @@
-package ie.ucd.test;
+package ie.ucd.squares;
 import ie.ucd.cards.Card;
 import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.*;

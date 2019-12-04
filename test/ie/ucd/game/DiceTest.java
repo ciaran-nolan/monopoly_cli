@@ -1,4 +1,4 @@
-package ie.ucd.test;
+package ie.ucd.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 import ie.ucd.game.*;

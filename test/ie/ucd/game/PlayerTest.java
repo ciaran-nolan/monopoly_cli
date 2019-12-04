@@ -1,5 +1,5 @@
 
-package ie.ucd.test;
+package ie.ucd.game;
 
 import ie.ucd.cards.Card;
 import ie.ucd.cards.Chance;

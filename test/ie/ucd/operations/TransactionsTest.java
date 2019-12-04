@@ -1,4 +1,4 @@
-package ie.ucd.test;
+package ie.ucd.operations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
