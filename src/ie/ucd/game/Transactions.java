@@ -200,13 +200,11 @@ public class Transactions {
 				Player purchasingPlayer = InputOutput.selectPlayerMenu(bankruptPlayer);
 				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
 				bankruptcySingleTransaction(bankruptPlayer, purchasingPlayer, tradeItem);
-				System.out.println(Game.playerList.size());
 			}
 			else {
 				TitleDeed tradeItem = InputOutput.titleDeedOperationMenu(bankruptPlayer, "trade", false);
 				if(tradeItem == null){
 					System.out.println("Trade has been cancelled.");
-
 				}
 				tradeItem.playerAuction(bankruptPlayer);
 			}

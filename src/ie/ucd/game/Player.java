@@ -322,6 +322,7 @@ public class Player {
 		//Going to take the ownable square and work with it from there
 		//Ask the player who owns it first whether they want to pay rent or not
 		Player owner = ownableSquare.getTitleDeedCard().getOwner();
+		System.out.println(owner.getName());
 		TitleDeed titleDeedCard = ownableSquare.getTitleDeedCard();
 		if(titleDeedCard.getMortgageStatus()) {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
@@ -366,7 +367,9 @@ public class Player {
 					//Rent payment for a utility
 					//Check the amount of utilities that an owner has
 					int numUtilities=0;
+					System.out.println(owner.getTitleDeedList().size());
 					for(TitleDeed titleDeedUtility:owner.getTitleDeedList()) {
+						
 						CanOwn ownedSquare = titleDeedUtility.getOwnableSite();
 						if(ownedSquare instanceof Utility) {
 							numUtilities++;

@@ -18,7 +18,7 @@ public class Utility extends PublicSquare {
 			this.getTitleDeedCard().playerAuction(null);
 		}
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "+this.getName()
-				+" for Â£"+this.getTitleDeedCard().getPriceBuy()+"?", player)) {
+				+" for £"+this.getTitleDeedCard().getPriceBuy()+"?", player)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
 				player.reduceMoney(this.getTitleDeedCard().getPriceBuy(), null);
 				//add property to users property list

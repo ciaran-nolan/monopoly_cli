@@ -88,6 +88,7 @@ class TransactionsTest {
 	
 	@Test
 	void testSaveFromBankruptcyTrade1() {
+		System.out.println("Make a normal Trade");
 		Player p1 = Game.playerList.get(0);
 		Player p2 = Game.playerList.get(1);
 		
@@ -101,6 +102,7 @@ class TransactionsTest {
 	}
 	@Test
 	void testSaveFromBankruptcyTrade2() {
+		System.out.println("Players two and three bid for chosen property, until one player decides to no longer bid");
 		Player p1 = Game.playerList.get(0);
 		Player p2 = Game.playerList.get(1);
 		Player p3 = new Player("p3","Green");

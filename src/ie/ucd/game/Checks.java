@@ -153,7 +153,7 @@ public class Checks {
                 for (Property property : colourGroup) {
                     if (!(((colourGroup.get(i).getNumHouses() - property.getNumHouses() >= houseDifferentialBounds[0])
 							&& (colourGroup.get(i).getNumHouses() - property.getNumHouses() <= houseDifferentialBounds[1])))) {
-                        return false;
+                    	return false;
                     }
                 }
 			}
@@ -185,7 +185,8 @@ public class Checks {
 			return -2;
 		}
 
-		if(null == Checks.ownAllColour(player,propToBuild)) {
+		else if(null == Checks.ownAllColour(player,propToBuild)) {
+			System.out.println(Checks.isPlayerOwner(propToBuild.getTitleDeedCard(), player));
 			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player)) {
 				//restart pre-dice roll options
 				return -1;
