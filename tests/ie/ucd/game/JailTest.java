@@ -62,7 +62,7 @@ class JailTest {
 		
 		System.out.println("*********\n"+
 				"Player 1 Press:\n"
-				+ "5 ENTER 2 ENTER 1 ENTER (If prompted to buy property) n ENTER");
+				+ "5 ENTER 1 ENTER(If prompted to buy property) n ENTER");
 		System.out.println("Test not enough money for fine");
 		Jail.sendToJail(p1);
 		p1.setMoney(40);
