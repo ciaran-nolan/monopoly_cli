@@ -36,12 +36,12 @@ public class Special extends Square {
 
 		switch(this.type) {
 			case "TAX":
-				System.out.println("You must pay tax of "+"£"+this.value);
+				System.out.println("You must pay tax of "+"€"+this.value);
 				//Null as you owe the bank if you cant pay
 				player.reduceMoney(this.value, null); //Reducing the money in a players account using the value given
 				break; //Break the switch statement
 			case "GO":
-				System.out.println("You have landed on GO, collect "+"£"+this.value);
+				System.out.println("You have landed on GO, collect "+"€"+this.value);
 				player.addMoney(this.value);
 				break;
 			case "COMMUNITY_CHEST":
