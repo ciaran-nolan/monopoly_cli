@@ -50,7 +50,7 @@ public class Property extends CanOwn {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
+                    +this.getName()+" for €"+titleDeedCard.getPriceBuy()+"?", player)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
 				System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
 

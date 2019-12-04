@@ -68,7 +68,7 @@ public class Player {
 	
 	public void addMoney(int money) {
 		this.money+= money;
-		if(money>0) System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
+		if(money>0) System.out.println(this.getName()+ ", remaining Funds : €"+this.money);
 	}
 	
 	public void setLocation(int index) {
@@ -87,14 +87,14 @@ public class Player {
 				if (money > this.money) {
 					//save from bankruptcy handles the reduction of money
 					if (saveFromBankruptcy(money - this.money)) {
-						System.out.println(this.name + ", remaining Funds: £" + this.money);
+						System.out.println(this.name + ", remaining Funds: €" + this.money);
 					}
 					//cant afford, player is bankrupt
 					else this.bankrupt(null);
 				} else {
 					//can afford, pay the amount
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: £" + this.money);
+					System.out.println(this.name + ", remaining Funds: €" + this.money);
 				}
 			}
 			//a player is owed
@@ -106,7 +106,7 @@ public class Player {
 				} else {
 					//can afford to pay, reduce payer's money
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: £" + this.money);
+					System.out.println(this.name + ", remaining Funds: €" + this.money);
 					//increment payees money
 					playerOwed.addMoney(money);
 				}
@@ -122,14 +122,14 @@ public class Player {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
 			this.addMoney(200); //Add $200 to the player's money because they have passed it
-			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
+			System.out.println("You have passed go, you collect €200\n\nYour funds: "+this.getMoney());
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
 	
 	public void moveToSquare(int squareNum) {
 		if(this.getLocation() > squareNum || this.indexLocation == 0) {
-		    System.out.println("You have passed go, collect £200.");
+		    System.out.println("You have passed go, collect €200.");
 			this.addMoney(200); //This implies that they have passed GO
 		}
 		this.indexLocation = squareNum;
