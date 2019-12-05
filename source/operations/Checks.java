@@ -52,7 +52,7 @@ public class Checks {
 		switch(currentSquare.getSquareType()) {
 		case PROPERTY:
 			//property has no owner, offer to buy
-			if(canBuy(((Property)currentSquare).getTitleDeedCard())){
+			if(((Property)currentSquare).canBuy()){
 				((Property)currentSquare).buy(player, userInput);
 			}
 			//player already owns the property
@@ -68,7 +68,7 @@ public class Checks {
 			break;
 		case TRAIN:
 			//no owner, offer to buy
-			if(canBuy(((Train)currentSquare).getTitleDeedCard())){
+			if(((Train)currentSquare).canBuy()){
 				((Train)currentSquare).buy(player, userInput);
 			}
 			//player is owner, no action required
@@ -80,7 +80,7 @@ public class Checks {
 			break;
 		case UTILITY:
 			//no owner, offer to buy
-			if(canBuy(((Utility)currentSquare).getTitleDeedCard())){
+			if(((Utility)currentSquare).canBuy()){
 				((Utility)currentSquare).buy(player, userInput);
 			}
 			//current player is owner, no action is required
@@ -108,39 +108,41 @@ public class Checks {
     //reveal the current status of a player
 	/**
 	 * Current status of a player which is printed to the screen. It prints the location of the player, how many jail free cards they have, owned properties and cash.
-	 * 
+	 *
 	 * @param player The Player object which will have its data printed to the screen
 	 */
     public static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
-		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
+				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
 	//reveal the status of a players CanOwn list
+	//FIXME
     /**
-     * Prints out the status of a Player object's CanOwn list or Title Deed list. These are the CanOwn object's that the Player owns due to them holding 
-     * the TitleDeed card. 
-     * If a property is in their list of TitleDeed cards, it also presents how many houses and hotels are on the Properties. 
+     * Prints out the status of a Player object's CanOwn list or Title Deed list. These are the CanOwn object's that the Player owns due to them holding
+     * the TitleDeed card.
+     * If a property is in their list of TitleDeed cards, it also presents how many houses and hotels are on the Properties.
      * @param player
      */
 	public static void checkPlayerCanOwnStatus(Player player){
-	    System.out.println(player.getName() + " - Property Status: \n");
+	    System.out.println(player.getName() + " - Title deed Status: \n");
 	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
-	        System.out.println(currentTitleDeed.getCardDesc());
-	        if(currentTitleDeed.getOwnableSite() instanceof Property) {
-                System.out.println("("+currentTitleDeed.getSquareColour()+")\n"+"Number of houses: "+((Property)currentTitleDeed.getOwnableSite()).getNumHouses()+
-                        "\nNumber of Hotels: "+((Property)currentTitleDeed.getOwnableSite()).getNumHotels());
-	        }
+	    	switch(currentTitleDeed.getOwnableSite().getClass().getSimpleName()){
+				case "Property":
+					((Property)currentTitleDeed.getOwnableSite()).printInstanceData();
+					break;
+				case "Train":
+					((Train)currentTitleDeed.getOwnableSite()).printInstanceData();
+					break;
+				case "Utility":
+					((Utility)currentTitleDeed.getOwnableSite()).printInstanceData();
+					break;
+				default:
+					break;
+			}
         }
     }
-	//check if a particular property is available for purchase
-	/**
-	 * This shows whether a CanOwn object with the TitleDeed card in the argument titleDeed is available for purchase
-	 * @param titleDeed TitleDeed card object of the CanOwn object being checked for purchase
-	 * @return 1 if no owner, 0 if there is an owner
-	 */
-	public static boolean canBuy(TitleDeed titleDeed) {
-        return null == titleDeed.getOwner();
-		}
+
+
 
 	/**
 	 * This method is used to check if the TitleDeed card provided is owned by the Player object given as an argument

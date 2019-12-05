@@ -2,12 +2,15 @@ package operations;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import cards.TitleDeed;
 import game.Game;
 import game.Player;
+import squares.Printable;
+
 /**
  * The Transactions class handles all of the transactions between Player objects when they want to trade and during bankruptcy (and saving from
  * bankruptcy)
@@ -286,4 +289,6 @@ public class Transactions {
 			System.out.println("No players are willing to trade");
 		}
 	}
+
+
 }

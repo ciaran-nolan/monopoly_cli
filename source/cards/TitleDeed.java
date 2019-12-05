@@ -13,6 +13,8 @@ import game.Game;
 import game.Player;
 import operations.InputOutput;
 import squares.CanOwn;
+import squares.Printable;
+
 /**
  * The Title Deed class descirbes the title deed card of a property, train station or utility site such as a Water Works.
  * This title deed card is exactly the same as you would have in a real game of Monopoly if you owned one of these sites.
@@ -20,7 +22,7 @@ import squares.CanOwn;
  * @author Robert Keenan & Ciaran Nolan
  *
  */
-public class TitleDeed extends Card {
+public class TitleDeed extends Card implements Printable {
     //These are the variables
     private String squareColour; 		//Colour of square
     private int priceBuy;				//Buy Price
@@ -273,5 +275,15 @@ public class TitleDeed extends Card {
         if(this.getOwner() == null) {
             System.out.println("There was no winning bid. "+this.getCardDesc()+" remains unpurchased");
         }
+    }
+
+    @Override
+    public void printInstanceData() {
+        System.out.println("Mortgage Status: "+this.getMortgageStatus()+"\nBase Value: "+this.getPriceBuy());
+    }
+
+    @Override
+    public boolean canBuy() {
+        return null == this.getOwner();
     }
 }

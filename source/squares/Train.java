@@ -13,7 +13,7 @@ import operations.InputOutput;
  * @author Robert Keenan & Ciaran Nolan
  *
  */
-public class Train extends CanOwn {
+public class Train extends CanOwn implements Printable {
 	/**
 	 * Class constructor which takes 2 arguments and passes them up to Square.java overall parent class
 	 * @param name The name of the train station as a String
@@ -43,7 +43,7 @@ public class Train extends CanOwn {
 			this.getTitleDeedCard().playerAuction(null, userInput);
 		}
 		//Property is already owned
-		else if(!(Checks.canBuy(this.getTitleDeedCard()))){
+		else if(this.canBuy()){
 			System.err.println("This property is already owned!");
 		}
 		//They can purchase it
@@ -61,4 +61,14 @@ public class Train extends CanOwn {
 		}
 	}
 
+	@Override
+	public void printInstanceData() {
+		System.out.println("Train, "+this.getName()+": \nLocation: Square "+this.getLocation()+"\nMortgage Status: ");
+		this.getTitleDeedCard().printInstanceData();
+	}
+
+	@Override
+	public boolean canBuy() {
+		 return !this.getTitleDeedCard().canBuy();
+	}
 }

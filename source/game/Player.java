@@ -9,10 +9,7 @@ import cards.TitleDeed;
 import operations.Checks;
 import operations.InputOutput;
 import operations.Transactions;
-import squares.CanOwn;
-import squares.Property;
-import squares.Train;
-import squares.Utility;
+import squares.*;
 /*
  * This is the class for representing a player and contains all of the code and methods necessary to represent a player
  */
@@ -268,6 +265,10 @@ public class Player {
 	 * Used to see if the player is in jail
 	 * @return inJail, jail status
 	 */
+
+
+
+
 	public boolean isInJail() {
 		return inJail; //Return inJail status
 	}
@@ -278,6 +279,8 @@ public class Player {
 	public void setInJail(boolean jailStatus){
 	    this.inJail = jailStatus;
     }
+
+
 
 	public void bankrupt(Player playerOwed) {
 		//Need to check if it is a player that you owe money to. 
@@ -349,7 +352,7 @@ public class Player {
 			}
 		}
 	}
-		
+
 	/**
 	 * Adding a purchased title deed card to the title deed card list of the Player objet and setting the owner of the Title Deed
 	 * card to be the player object
@@ -596,5 +599,4 @@ public class Player {
 				"\nToken: "+this.token+"\nMoney: "+this.money+"\nSquare Location: "+this.indexLocation+
 				"\nIs In Jail?: "+this.inJail+"\n Title Deed Card List"+this.titleDeedCardList;
 	}
-	
 }

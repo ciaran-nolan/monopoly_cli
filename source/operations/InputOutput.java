@@ -11,8 +11,8 @@ import java.util.Arrays;
 import cards.TitleDeed;
 import game.Game;
 import game.Player;
-import squares.CanOwn;
-import squares.Property;
+import squares.*;
+
 /**
  * The Input/Output class handles all of the inputs from the user that are used continuously. 
  * These include Yes/no inputs, a title deed operation menu , information about the square a player object is on, an integer menu to make 
@@ -125,26 +125,38 @@ public class InputOutput {
 	 * @param index The index on the board of the square
 	 */
 	public static void squareInformation(int index){
-
 		//type canown requires additional information
-		if(board.get(index) instanceof CanOwn){
-			System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
-			if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
-				System.out.println("Owner: None") ;
-			}
-			//Print more details
-			else{
-				System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
-			}
-			//If its a property, I can print the colour and number of houses/hotels
-			if (board.get(index) instanceof Property) {
-				System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
-						+((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
-			}
+		System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
+		switch (board.get(index).getClass().getSimpleName()){
+			case "Property":
+				((Property)board.get(index)).printInstanceData();
+				break;
+			case "Train":
+				((Train)board.get(index)).printInstanceData();
+				break;
+			case "Utility":
+				((Utility)board.get(index)).printInstanceData();
+			default:
+				break;
 		}
-		else{
-			System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
-		}
+//		if(board.get(index) instanceof CanOwn){
+//			System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
+//			if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
+//				System.out.println("Owner: None") ;
+//			}
+//			//Print more details
+//			else{
+//				System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
+//			}
+//			//If its a property, I can print the colour and number of houses/hotels
+//			if (board.get(index) instanceof Property) {
+//				System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
+//						+((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
+//			}
+//		}
+//		else{
+//			System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
+//		}
 	}
 	/**
 	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with

@@ -17,7 +17,7 @@ import operations.InputOutput;
  * @author Robert Keenan & Ciaran Nolan
  *
  */
-public class Property extends CanOwn {
+public class Property extends CanOwn implements Printable {
 	//Class variables
 	private String squareColour;	//The colour of the property square
 	private int numHouses;			//The number of houses currently on the site
@@ -82,7 +82,7 @@ public class Property extends CanOwn {
 
 			}
 			//the case of the owner should be handled in check square
-			else if(!(Checks.canBuy(this.getTitleDeedCard()))){
+			else if(this.canBuy()){
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
@@ -308,6 +308,18 @@ public class Property extends CanOwn {
 			Game.setRemainingHouses(Game.getRemainingHouses()-4);
 			return this.getTitleDeedCard().getHousePrice()/2;
 		}
+	}
+
+	@Override
+	public void printInstanceData() {
+		System.out.println("Property, "+this.getName()+"("+this.getSquareColour()+"): \nLocation: Square "+this.getLocation());
+		this.getTitleDeedCard().printInstanceData();
+		System.out.println("Number of houses: "+this.getNumHouses()+ "\nNumber of Hotels: "+this.getNumHotels());
+	}
+
+	@Override
+	public boolean canBuy() {
+		return !this.getTitleDeedCard().canBuy();
 	}
 }
 	

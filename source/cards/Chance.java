@@ -54,7 +54,10 @@ public class Chance extends Card {
 				//move player forwards
 				else {
 					player.moveToSquare(this.getCardValue());
-					Checks.checkSquare(player.getLocation(), player, userInput);
+					if(player.getLocation()==0){
+						break;
+					}
+					else Checks.checkSquare(player.getLocation(), player, userInput);
 				}
 				break;
 			case "JAIL":

@@ -15,7 +15,7 @@ import game.Player;
  * @author Robert Keenan & Ciaran Nolan
  *
  */
-public class Special extends Square {
+public class Special extends Square implements Printable {
 	private String type; //This defines the type of the square
 	private int value; //This defines the value if they have any......like Tax, or Go
 
@@ -98,6 +98,16 @@ public class Special extends Square {
 					break;
 				}
 		}
+	}
+
+	@Override
+	public void printInstanceData() {
+		System.out.println("Special, "+this.getName());
+	}
+
+	@Override
+	public boolean canBuy() {
+		return false;
 	}
 }
 
