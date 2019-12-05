@@ -1,18 +1,13 @@
-
 package game;
 
+import cards.*;
+import operations.InputOutput;
 import squares.Property;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cards.Card;
-import cards.Chance;
-import game.Board;
-import game.Dice;
-import game.Player;
-import operations.InputOutput;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -24,21 +19,22 @@ class PlayerTest {
     private Player player;
     private Player playerOwed;
     private InputStream instructionInputStream;
-    
+
     @BeforeEach
     void setUp() throws Exception {
     	Board.initialiseBoard();
     	player = new Player("P1","red");
     	playerOwed = new Player("P2","blue");
     }
-    
+
     @AfterEach
     void tearDown() throws Exception {
         Board.clearBoard();
+        Game.playerList.clear();
     	player = null;
     	playerOwed = null;
     }
-    
+
     @Test
     void testGetName() {
         assertTrue(player.getName().equals("P1"));
@@ -129,7 +125,7 @@ class PlayerTest {
     }
 
     @Test
-    void testReduceMoney() { 
+    void testReduceMoney() {
     	//Testing owing the bank
         player.reduceMoney(100,null);
         assertEquals(1400, player.getMoney());
@@ -157,22 +153,41 @@ class PlayerTest {
         assertEquals(25,player.getLocation());
     }
 
-/*    @Test
+    @Test
     void testPickCommChestCard() {
-//    	Board.initialiseBoard();
-//    	//First card in deck is random each time
-    	player.pickCommChestCard();
+        Board.communityChests.get(0).setCardType("PAY");
+        Board.communityChests.get(0).setCardValue(20);
+        Board.communityChests.get(0).setCardDesc("TEST: You owe 20");
+        player.pickCommChestCard();
+        //Player will have 1480 now
+        assertEquals(1480, player.getMoney(), "Checking pay feature");
+        Board.communityChests.get(0).setCardType("INCOME");
+        Board.communityChests.get(0).setCardDesc("TEST: You get 20");
+        player.pickCommChestCard();
+        assertEquals(1500, player.getMoney(), "Checking income feature");
+        Board.communityChests.get(0).setCardType("JAIL");
+        Board.communityChests.get(0).setCardDesc("TEST: Sent to Jail");
+        player.pickCommChestCard();
+        assertTrue(player.isInJail());
     }
 
     @Test
     void testPickChanceCard() {
-//    	Board.initialiseBoard();
-//    	//First card is random each time
-        String instruction = "y\r\n";
-        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
-        System.setIn(instructionInputStream);
-    	player.pickChanceCard();
-    }*/
+        Board.chances.get(0).setCardType("PAY");
+        Board.chances.get(0).setCardValue(20);
+        Board.chances.get(0).setCardDesc("TEST: You owe 20");
+        player.pickChanceCard();
+        //Player will have 1480 now
+        assertEquals(1480, player.getMoney(), "Checking pay feature");
+        Board.chances.get(0).setCardType("INCOME");
+        Board.chances.get(0).setCardDesc("TEST: You get 20");
+        player.pickChanceCard();
+        assertEquals(1500, player.getMoney(), "Checking income feature");
+        Board.chances.get(0).setCardType("JAIL");
+        Board.chances.get(0).setCardDesc("TEST: Sent to Jail");
+        player.pickChanceCard();
+        assertTrue(player.isInJail());
+    }
 
     @Test
     void testIsInJail() {
@@ -204,6 +219,25 @@ class PlayerTest {
 
     @Test
     void testBankrupt() {
+        String instruction = "n\r\nn\r\nn\r\nn\r\nn\r\nn\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
+
+        Game.playerList.add(player);
+        Game.playerList.add(playerOwed);
+        Player p3 = new Player("P3","Green");
+        Game.playerList.add(p3);
+
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+        Board.properties.get(0).setNumHouses(4);
+        Board.properties.get(1).setNumHotels(1);
+        CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);
+        Board.communityChests.set(0, temp);
+        player.pickCommChestCard();
+
+        player.bankrupt(null);
     }
 
     @Test
@@ -290,19 +324,42 @@ class PlayerTest {
     	player.getTitleDeedList().clear();
     }
 
-    @Test
-    void testBankruptcySellHousesHotels() {
-    }
-
-    @Test
-    void testCompleteBankruptcyTrade() {
-    }
 
     @Test
     void testSaveFromBankruptcy() {
+        String instruction = "y\r\ny\r\n0\r\n0\r\n1500\r\ny\rn\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
+        Game.playerList.add(player);
+        Game.playerList.add(playerOwed);
+
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+        Board.properties.get(0).setNumHouses(1);
+        Board.properties.get(2).getTitleDeedCard().setMortgageStatus(true);
+        Game.playerList.get(0).reduceMoney(2500,null);
     }
 
     @Test
     void testClearBankruptcyTradeStatus() {
+        String instruction = "y\r\ny\r\n0\r\n0\r\n1500\r\ny\rn\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
+        Game.playerList.add(player);
+        Game.playerList.add(playerOwed);
+
+
+
+        player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+        player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+        Board.properties.get(0).setNumHouses(1);
+        Board.properties.get(2).getTitleDeedCard().setMortgageStatus(true);
+        Board.properties.get(1).getTitleDeedCard().setBankruptcyTradeStatus(1000,playerOwed);
+
+        player.clearBankruptcyTradeStatus();
+        assertEquals(2500,playerOwed.getMoney());
+
     }
 }

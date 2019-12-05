@@ -2,14 +2,12 @@ package operations;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import cards.TitleDeed;
 import game.Game;
 import game.Player;
-import squares.Printable;
 
 /**
  * The Transactions class handles all of the transactions between Player objects when they want to trade and during bankruptcy (and saving from
@@ -264,10 +262,11 @@ public class Transactions {
 	 * If there are only 2 oeople in the playerList, then the single transaction is enacted between them.
 	 * Otherwise, if there are no other players who wish to trade then it goes to auction
 	 * @param bankruptPlayer The player object who is bankrupt and wishes to trade to gain money
+	 * @param userInput
 	 */
 
-	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
-		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+	public static void saveFromBankruptcyTrade(Player bankruptPlayer, BufferedReader userInput) {
+		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");
 		Checks.checkPlayerCanOwnStatus(bankruptPlayer);
 		if(InputOutput.yesNoInput("Is there a player who is willing to make a trade with you?(y/n)", bankruptPlayer, userInput)){
