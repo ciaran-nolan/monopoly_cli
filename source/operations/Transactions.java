@@ -8,17 +8,26 @@ import java.util.HashMap;
 import cards.TitleDeed;
 import game.Game;
 import game.Player;
-
+/**
+ * The Transactions class handles all of the transactions between Player objects when they want to trade and during bankruptcy (and saving from
+ * bankruptcy)
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class Transactions {
-	
-	private static int traderOneJailFree = 0;
-	private static int traderOneCash = 0;
-	private static HashMap<String,TitleDeed> traderOnePropsToTrade = new HashMap<>();
-	private static int traderTwoJailFree = 0;
-	private static int traderTwoCash = 0;
-	private static HashMap<String,TitleDeed> traderTwoPropsToTrade = new HashMap<>();
-	private static ArrayList<Player> tradeList = new ArrayList<>(2);
+	//Initialising variables
+	private static int traderOneJailFree = 0; //Trading jail free card first player
+	private static int traderOneCash = 0;	  //Trading cash first player
+	private static HashMap<String,TitleDeed> traderOnePropsToTrade = new HashMap<>(); //Trading properties 1st player
+	private static int traderTwoJailFree = 0; //Trading 2nd player jail free cards
+	private static int traderTwoCash = 0;     //Trading 2nd player cash
+	private static HashMap<String,TitleDeed> traderTwoPropsToTrade = new HashMap<>(); //Trading properties 2nd plaer
+	private static ArrayList<Player> tradeList = new ArrayList<>(2);		//A large trade list of players taking part
 
+	/**
+	 * Method to display the trade items and the terms of the trade.
+	 * This includes what is included in the trade such as Jail free cards, Properties, Cash etc and what each player is offering each other
+	 */
 	private static void displayTradeItems(){
 		//show each players trades
 		
@@ -35,9 +44,11 @@ public class Transactions {
 			System.out.println(key);
 		}
 		System.out.println("Cash: "+traderTwoCash);
-		
 	}
 	
+	/**
+	 * Method to reset all of the class variables which are used in the trade
+	 */
 	private static void resetTempValues() {
 		traderOneJailFree = 0;
 		traderOneCash = 0;
@@ -47,6 +58,11 @@ public class Transactions {
 		traderTwoPropsToTrade.clear();
 		tradeList.clear();
 	}
+	/**
+	 * Initiates a trade between 2 people, initiates their title deed card lists and trades it over to the other player.
+	 * It does this for jail free cards and cash too and these are all updated using the static class variables
+	 */
+
 	public static void handleMortgagedTitledeed(Player player, TitleDeed mortgagedTitledeed, BufferedReader userInput){
 		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(mortgagedTitledeed.getCardDesc()+" which "+player.getName()+" has received in trade or auction is mortgaged\n"
@@ -66,7 +82,7 @@ public class Transactions {
 		traderOne.reduceMoney(traderOneCash, traderTwo);
 		traderTwo.reduceMoney(traderTwoCash, traderOne);
 
-		//trade property Lists
+        //trade property Lists -  Trade a property from player 1 to player 2 etc and vice versa
 		for(TitleDeed currentTitleDeed: traderOnePropsToTrade.values()) {
 
 			traderOne.removeOwnedTitleDeed(currentTitleDeed);
@@ -95,9 +111,16 @@ public class Transactions {
 				traderTwo.getJailCard().remove(i);
 			}
 		}
+		//Resetting the trade values
 		resetTempValues();
 	}
 	
+	/**
+	 * Initiating a trade between a player and another player. It asks the initiatingPlayer what Player they want to trade with and this is
+	 * received using InputOutput.selectPlayerMenu. This 2nd player is then added to the tradeList class variable of this class
+	 * @param initiatingPlayer The Player object initiating the trade
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	private static void initiateTrade(Player initiatingPlayer, BufferedReader userInput) {
 		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
 		tradeList.add(initiatingPlayer);
@@ -105,7 +128,14 @@ public class Transactions {
 		Player chosenPlayer = InputOutput.selectPlayerMenu(initiatingPlayer, userInput);
 		tradeList.add(chosenPlayer);
 	}
-	
+	/**
+	 * This class handles all of the player to player trading. It calls initiateTrade() from this trade with another player and then proceeds to iterate over both players.
+	 * It asks the user's what they want to trade first of all such as Jail Free card, Property, Cash or to leave the trade. It will then check whether the user has entered a valid
+	 * entry such as them not having any jail free cards but still wanting to trade one.
+	 * It goes through these cases until both players decide they are finished trading all of the items they want to. It will then ask both users to accept the terms of the trade and if they do,
+	 * it will complete the relevant trades of assets.
+	 * @param initiatingPlayer The Player Object wishing to initiate a trade
+	 */
 	public static void playerToPlayerTrade(Player initiatingPlayer) {
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		initiateTrade(initiatingPlayer, userInput);
@@ -201,6 +231,16 @@ public class Transactions {
 			System.out.println("Trade has not been accepted by both parties");
 		}
 	}
+
+	/**
+	 * This method is used for a player who is bankrupt and a single transaction is made with another player. THe trade item can be passed in as a TitleDeed
+	 * card if the trade is with a CanOwn item. It will then ask purchasing player if they want to accept the trade and if they do, the trade will
+	 * be processed.
+	 * @param bankruptPlayer The player object bankrupt who wants to trade with another
+	 * @param purchasingPlayer The purchasing player of an asset from the bankrupt player
+	 * @param tradeItem The item to be traded in TitleDeed object form
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	private static void bankruptcySingleTransaction(Player bankruptPlayer, Player purchasingPlayer, TitleDeed tradeItem, BufferedReader userInput){
 		if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(purchasingPlayer.getName()+" please enter the amount to purchase "+ tradeItem.getCardDesc());
@@ -215,6 +255,14 @@ public class Transactions {
 		purchasingPlayer.reduceMoney(purchaseAmount,null);
 	}
 	//to save from bankruptcy, the player must exchange cards/properties for cash only
+	/**
+	 * To the save from bankruptcy in terms of trading, we can use this method to trade cards or properties which checks whether there is a player
+	 * willing to make a trade with the bankrupt player.
+	 * If there are only 2 oeople in the playerList, then the single transaction is enacted between them.
+	 * Otherwise, if there are no other players who wish to trade then it goes to auction
+	 * @param bankruptPlayer The player object who is bankrupt and wishes to trade to gain money
+	 */
+
 	public static void saveFromBankruptcyTrade(Player bankruptPlayer) {
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(bankruptPlayer.getName()+" is at risk of bankruptcy");

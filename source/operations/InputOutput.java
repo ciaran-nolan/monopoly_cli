@@ -21,41 +21,51 @@ import squares.Property;
  *
  */
 public class InputOutput {
-	//single scanner for project
 
-	//public static BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
-
-//	public static void clearScannerBuffer(){
-//		try {
-//			while (userInput.readLine() != null) {
-//				userInput.readLine();
-//			}
-//		}
-//		catch (Exception e){}
-//	}
 
 	//method to handle yes/no inputs
+	/**
+	 * This method handles any times that a yes or no input is used which is taken in the form of a single character "y" or "n".
+	 * It reads in the user input and returns the the acknowledgement or no acknowledgement
+	 * @param message The message which is to be presented to the user
+	 * @param player The Player object which is making the input
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 * @return
+	 */
 	public static boolean yesNoInput(String message, Player player, BufferedReader userInput) {
+		//If no buffered reader given, then we can create one
 		if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
+		//Print the message to the screen
 		System.out.println(message);
 		try {
+			//Read the user's input
 			String acknowledgement = userInput.readLine();
 			//ensure the player enters a valid response
 			while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
 				System.out.println(player.getName()+", please enter a valid response (y/n)");
 				acknowledgement = userInput.readLine();
 			}
+			//Return a y
 			return acknowledgement.equalsIgnoreCase("y");
 		}
 		catch(Exception e){
 			System.out.println("Exception: "+e);
-
 			return yesNoInput(message,player, null);
 		}
 	}
 
 	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
 	//house hotels argument ensures only instances of property are shown when true
+	/**
+	 * This is used for Player objects to select a TitleDeed card to conduct an operation such as mortgaging that CanOwn object associated with the 
+	 * TitleDeed card or perhaps build on the site. It loops through the player object's title deed cards to check if they can mortgage or improve the given object 
+	 * It then can decide what the type of operation is such as houses or hotels
+	 * @param player The player object which is acting on this method
+	 * @param operation The operation the player object wishes to do 
+	 * @param housesHotels Boolean to determine if it is related to houses or hotels
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 * @return
+	 */
 	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels, BufferedReader userInput){
 		try {
 			if(userInput==null) userInput=new BufferedReader(new InputStreamReader(System.in));
@@ -109,6 +119,11 @@ public class InputOutput {
 	}
 
 	//display information about a square
+	/**
+	 * This method is used to print a number of details about the current square that a Player object is on on the board and may influence their decision in what they do
+	 * next
+	 * @param index The index on the board of the square
+	 */
 	public static void squareInformation(int index){
 
 		//type canown requires additional information
@@ -117,9 +132,11 @@ public class InputOutput {
 			if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
 				System.out.println("Owner: None") ;
 			}
+			//Print more details
 			else{
 				System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
 			}
+			//If its a property, I can print the colour and number of houses/hotels
 			if (board.get(index) instanceof Property) {
 				System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
 						+((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
@@ -133,6 +150,7 @@ public class InputOutput {
 	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with
 	 * Name,token. The token has to be a colour which are printed on the screen. It then creates Player objects for each of the players entered with
 	 * minimum 2 players to maximum 6.
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 * @return listPlayers, an ArrayList of type Player with the Players for the game
 	 */
 	public static ArrayList<Player> createListPlayers(BufferedReader userInput) {
@@ -192,7 +210,14 @@ public class InputOutput {
 		}
 	}
 
-
+	/**
+	 * This integer menu is used for when you are given a choice and the you can provide upper and lower bounds when choosing the input.
+	 * It presents the user on the command with a statement of a range of digits and you enter the relevant number. 
+	 * @param lowerBound The lower bound of the integer menu as an integer
+	 * @param upperBound The lower bound of the integer menu as an integer
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 * @return
+	 */
 	public static int integerMenu(int lowerBound, int upperBound, BufferedReader userInput){
 		try {
 			if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
@@ -214,6 +239,14 @@ public class InputOutput {
 		}
 	}
 
+	/**
+	 * This class handles the user option from the integer menu. When an Integer menu number is entered by the user, it is interpreted by this method and actions are
+	 * carried out as a result such as mortgaging, building, buying/selling or just printing a player's status.
+	 * These choices are handled by a switch statement.
+	 * @param currentPlayer The current player object which entered the options
+	 * @param doubleRoll Whether a double has been rolled
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	public static void handleUserOption(Player currentPlayer, boolean doubleRoll, BufferedReader userInput) {
 		if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
 		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
@@ -276,7 +309,13 @@ public class InputOutput {
 			handleUserOption(currentPlayer, true,userInput);
 		}
 	}
-
+	/**
+	 * This is a method that handles the interaction between 2 players. The player who wants to interact must specify the player object as an argument and then 
+	 * we can search through the global playerList to find the player they wish to interact with. 
+	 * @param selectingPlayer The Player who is selecting a player to interact with
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 * @return playerMenu.get(choiceInput), The player object you wish to interact with
+	 */
     public static Player selectPlayerMenu(Player selectingPlayer, BufferedReader userInput){
 		if(userInput==null){
 			userInput = new BufferedReader(new InputStreamReader(System.in));
