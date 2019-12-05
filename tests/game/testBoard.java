@@ -3,7 +3,6 @@ package game;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import game.Board;
@@ -14,6 +13,13 @@ class testBoard {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		Board.board.clear();
+		Board.properties.clear();
+		Board.trains.clear();
+		Board.utilities.clear();
+		Board.specialSquares.clear();
+		Board.communityChests.clear();
+		Board.chances.clear();
 	}
 	//This is testing all of the other methods in the class as Board.initiliaseBoard calls all of them
 	@Test

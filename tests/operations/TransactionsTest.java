@@ -174,7 +174,6 @@ class TransactionsTest {
 				+ "n ENTER");
 		
 		Player p1 = Game.playerList.get(0);
-		Player p2 = Game.playerList.get(1);
 		Player p3 = new Player("p3","Green");
 		Game.playerList.add(p3);
 		

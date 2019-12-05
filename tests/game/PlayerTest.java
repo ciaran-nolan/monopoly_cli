@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import cards.Card;
 import cards.Chance;
-import cards.TitleDeed;
 import game.Board;
 import game.Dice;
 import game.Player;
@@ -24,8 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
     private Player player;
     private Player playerOwed;
-    private Property prop1;
-    private TitleDeed t1;
     private InputStream instructionInputStream;
     
     @BeforeEach
@@ -33,8 +30,6 @@ class PlayerTest {
     	Board.initialiseBoard();
     	player = new Player("P1","red");
     	playerOwed = new Player("P2","blue");
-    	prop1 = new Property(10,"orange", "Test");
-    	t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4,5,6}, 10,50,player,prop1);
     }
     
     @AfterEach
@@ -42,8 +37,6 @@ class PlayerTest {
         Board.clearBoard();
     	player = null;
     	playerOwed = null;
-    	prop1 = null;
-    	t1 = null;
     }
     
     @Test
