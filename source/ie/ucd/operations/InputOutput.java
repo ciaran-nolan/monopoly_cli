@@ -57,19 +57,23 @@ public class InputOutput {
 
 	//menu to allow players to select a titledeed card to conduct an operation (mortgage/improve etc)
 	//house hotels argument ensures only instances of property are shown when true
-	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels){
+	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels, BufferedReader userInput){
 		try {
+			if(userInput==null) userInput=new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Please select the title deed card you wish to " + operation);
 			ArrayList<TitleDeed> houseHotelList = new ArrayList<>();
 			int choiceInput;
 
-			//loop thrugh available title deeds
+			//loop through available title deeds
+
 			for (int i = 0; i < player.getTitleDeedList().size(); i++) {
 				if (!player.getTitleDeedList().get(i).getBankruptcyTradeStatus().isEmpty()) {
 					continue;
 				}
 				//if house and hotels is true so store only instances of property
+				System.out.println("Property "+player.getTitleDeedList().get(i).getOwnableSite().getName());
 				if (housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)) {
+
 					houseHotelList.add(player.getTitleDeedList().get(i));
 				}
 				//not a house or hotel operation so print any titledeed
@@ -83,7 +87,7 @@ public class InputOutput {
 					System.out.println("[" + i + "] " + houseHotelList.get(i).getCardDesc());
 				}
 				System.out.println("[" + (houseHotelList.size()) + "] Cancel");
-				choiceInput = integerMenu(0, houseHotelList.size(), null);
+				choiceInput = integerMenu(0, houseHotelList.size(), userInput);
 				if (choiceInput == houseHotelList.size()) {
 					return null;
 				} else return houseHotelList.get(choiceInput);
@@ -91,7 +95,7 @@ public class InputOutput {
 			//print cancel at the end for normal operation and receive user choice
 			else {
 				System.out.println("[" + (player.getTitleDeedList().size()) + "] Cancel");
-				choiceInput = integerMenu(0, player.getTitleDeedList().size(), null);
+				choiceInput = integerMenu(0, player.getTitleDeedList().size(), userInput);
 				//cancel has been chosen so return null
 				if (choiceInput == player.getTitleDeedList().size()) {
 					return null;
@@ -232,9 +236,9 @@ public class InputOutput {
 		switch(choiceInput) {
 			case 1:
 				System.out.println("[0] Mortgage\n[1] Demortgage");
-				choiceInput = integerMenu(0,1, null);
+				choiceInput = integerMenu(0,1, userInput);
 				if(choiceInput==0) {
-					TitleDeed titleDeedToMortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
+					TitleDeed titleDeedToMortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false, null);
 					if (null == titleDeedToMortgage) {
 						System.out.println("Cancelling Operation");
 					} else {
@@ -243,7 +247,7 @@ public class InputOutput {
 					}
 				}
 				else{
-					TitleDeed titleDeedToDemortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false);
+					TitleDeed titleDeedToDemortgage = titleDeedOperationMenu(currentPlayer, "mortgage", false, null);
 					if (null == titleDeedToDemortgage) {
 						System.out.println("Cancelling Operation");
 					} else {
@@ -270,12 +274,15 @@ public class InputOutput {
 				System.out.println("Your input did not correspond to any provided actions");
 				break;
 		}
-		if((choiceInput<5) && doubleRoll && InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer, null)) {
+		if((choiceInput<5) && doubleRoll && InputOutput.yesNoInput("Would you like to do an additional action before rolling the dice? (y/n)", currentPlayer, userInput)) {
 			handleUserOption(currentPlayer, true,userInput);
 		}
 	}
 
-    public static Player selectPlayerMenu(Player selectingPlayer){
+    public static Player selectPlayerMenu(Player selectingPlayer, BufferedReader userInput){
+		if(userInput==null){
+			userInput = new BufferedReader(new InputStreamReader(System.in));
+		}
 		System.out.println("Please select player you wish to interact with");
 		ArrayList<Player> playerMenu = new ArrayList<>(Game.playerList);
 		int choiceInput;
@@ -287,7 +294,7 @@ public class InputOutput {
 			else System.out.println("["+i+"] "+playerMenu.get(i).getName());
 		}
 
-		choiceInput = integerMenu(0,playerMenu.size(), null);
+		choiceInput = integerMenu(0,playerMenu.size(), userInput);
 		return playerMenu.get(choiceInput);
 	}
 }

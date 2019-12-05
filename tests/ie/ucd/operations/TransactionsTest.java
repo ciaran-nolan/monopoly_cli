@@ -11,12 +11,19 @@ import ie.ucd.game.Board;
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 class TransactionsTest {
 	private CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);
+	private InputStream instructionInputStream;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
+		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		System.setIn(instructionInputStream);
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
 		Game.playerList = InputOutput.createListPlayers(null);
@@ -25,10 +32,16 @@ class TransactionsTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		Board.clearBoard();
+		Game.playerList.clear();
 	}
 
 	@Test
 	void testPlayerToPlayerTrade1() {
+
+		String instruction = "0\r\n2\r\n0\r\nn\r\n2\r\n0\r\ny\r\n2\r\n2\r\ny\r\n1\r\nn\r\n1\r\ny\r\n3\r\n10\r\ny\r\n2\r\n0\r\nn\r\n1\r\nn\r\n3\r\n10\r\ny\r\ny\r\ny\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
 		
 		Board.communityChests.set(0, temp);
 		Board.communityChests.set(1, temp);
@@ -53,6 +66,7 @@ class TransactionsTest {
 		+ "0 ENTER 2 ENTER 0 ENTER n ENTER 2 ENTER 0 ENTER y ENTER 2 ENTER 2 ENTER y ENTER 1 ENTER n ENTER 1 ENTER y ENTER 3 ENTER 10 ENTER y ENTER"
 		+ "\nPlayer 2 Press:\n"
 		+ "2 ENTER 0 ENTER n ENTER 1 ENTER n ENTER 3 ENTER 10 ENTER y ENTER y ENTER y ENTER");
+
 		Transactions.playerToPlayerTrade(p1);
 		assertTrue(p1.getTitleDeedList().contains(Board.properties.get(2).getTitleDeedCard()));
 
@@ -65,7 +79,11 @@ class TransactionsTest {
 	
 	@Test
 	void testPlayerToPlayerTrade2() {
-		
+		String instruction = "0\r\n2\r\n0\r\nn\r\n3\r\n10\r\ny\r\n1\r\ny\r\n2\r\n0\r\ny\r\ny\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
+
+
 		Board.communityChests.set(0, temp);
 		Board.communityChests.set(1, temp);
 		
@@ -95,9 +113,14 @@ class TransactionsTest {
 	}
 	@Test
 	void testPlayerToPlayerTrade3() {
-	System.out.println("Player 1 immediately cancel trade");
-	Transactions.playerToPlayerTrade(Game.playerList.get(0));
-	System.out.println("*********\n"+
+		System.out.println("Player 1 immediately cancel trade");
+
+		String instruction = "0\r\n0\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
+
+		Transactions.playerToPlayerTrade(Game.playerList.get(0));
+		System.out.println("*********\n"+
 			"Player 1 Press:\n"
 			+ "0 ENTER 0 ENTER");
 	}
@@ -105,6 +128,10 @@ class TransactionsTest {
 	
 	@Test
 	void testSaveFromBankruptcyTrade1() {
+		String instruction = "y\r\n0\r\n0\r\n500\r\ny\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
+
 		System.out.println("Make a normal Trade");
 		System.out.println("*********\n"+
 				"Player 1 Press:\n"
@@ -127,6 +154,9 @@ class TransactionsTest {
 	}
 	@Test
 	void testSaveFromBankruptcyTrade2() {
+		String instruction = "y\r\n1\r\ny\r\n200\r\ny\r\n250\r\ny\r\n300\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
 		System.out.println("Players two and three bid for chosen property, until one player decides to no longer bid");
 		
 		System.out.println("*********\n"+

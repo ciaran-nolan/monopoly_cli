@@ -1,5 +1,7 @@
 package ie.ucd.squares;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import ie.ucd.cards.TitleDeed;
@@ -67,14 +69,16 @@ public class Property extends CanOwn {
 	 * If none of these cases are satisfied, the property goes to auction.
 	 * @param player A player object who wants to buy the Property object
 	 */
-	public void buy(Player player) {
+
+	public void buy(Player player, BufferedReader userInput) {
+		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 			//check user has enough funds to purchase
 			TitleDeed titleDeedCard = this.getTitleDeedCard();
 			if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
                         +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
-				titleDeedCard.playerAuction( null);
+				titleDeedCard.playerAuction(null, userInput);
 
 			}
 			//the case of the owner should be handled in check square
@@ -82,7 +86,7 @@ public class Property extends CanOwn {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for €"+titleDeedCard.getPriceBuy()+"?", player, null)) {
+                    +this.getName()+" for €"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
 				System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
 
@@ -90,7 +94,7 @@ public class Property extends CanOwn {
 				//add property to users property list
 				player.addPurchasedTitleDeed(titleDeedCard);
 			}
-			else titleDeedCard.playerAuction(null);
+			else titleDeedCard.playerAuction(null, userInput);
 			}
 
 	/**
@@ -101,6 +105,7 @@ public class Property extends CanOwn {
 	 * @param player A player who wants to build a house or hotel on the site
 	 */
 	public static void buildHousesHotels(Player player) {
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		boolean isHotel = false;
 
 		//System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");
@@ -108,7 +113,7 @@ public class Property extends CanOwn {
 
 
 		//Property propToBuild = Checks.isValidProp(propName, player);
-		TitleDeed titleDeedToBuild = InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true);
+		TitleDeed titleDeedToBuild = InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true, userInput);
 		if(null == titleDeedToBuild){
 			System.out.println("Cancelling operation.");
 		}
@@ -130,7 +135,7 @@ public class Property extends CanOwn {
 			}
 
 			System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
-			int choiceInput = InputOutput.integerMenu(0, 1, null);
+			int choiceInput = InputOutput.integerMenu(0, 1, userInput);
 			if (choiceInput == 1) {
 				isHotel = true;
 			}
@@ -170,14 +175,14 @@ public class Property extends CanOwn {
 
 				//If there are four houses, they have reached the max number. Offer to purchase a hotel
 				else if (propToBuild.numHouses == 4) {
-					if (InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player, null)) {
+					if (InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player, userInput)) {
 						buildHousesHotels(player);
 					}
 				}
 				//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses
 				else if (Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
 					// y/n input to confirm intention to build house
-					if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player, null)) {
+					if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player, userInput)) {
 						if (propToBuild.getTitleDeedCard().getHousePrice() > player.getMoney()) {
 							System.err.println("You cannot afford to purchase a house");
 						} else {

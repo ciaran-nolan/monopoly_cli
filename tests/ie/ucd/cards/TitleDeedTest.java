@@ -23,12 +23,12 @@ class TitleDeedTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
-		System.setIn(instructionInputStream);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		 Game.playerList = null;
+		Board.clearBoard();
+		Game.playerList.clear();
 	}
 
 	@Test
@@ -183,7 +183,7 @@ class TitleDeedTest {
 
 		instructionInputStream =  new ByteArrayInputStream(Instruction2.getBytes());
 		System.setIn(instructionInputStream);
-		t1.playerAuction(null);
+		t1.playerAuction(null, null);
 		assertTrue(Game.playerList.get(0).getTitleDeedList().contains(t1));
 
 	}
@@ -204,7 +204,7 @@ class TitleDeedTest {
 		System.setIn(instructionInputStream2);
 		System.out.println("Please follow these instructions:");
 		System.out.println("Nobody bids. Both press n");
-		t1.playerAuction(null);
+		t1.playerAuction(null, null);
 
 		assertTrue(t1.getOwner()==null);
 

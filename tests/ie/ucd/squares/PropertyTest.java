@@ -1,9 +1,10 @@
 package ie.ucd.squares;
 
 import ie.ucd.game.*;
-import ie.ucd.squares.Property;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -13,10 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PropertyTest {
     private Player player = new Player("P1","Red");
+    private InputStream instructionInputStream;
 
-    @BeforeAll
-    public static void setup(){
+    @BeforeEach
+    public void setup(){
         Board.initialiseBoard();
+    }
+
+    @AfterEach
+    public void tearDown(){
+        Board.clearBoard();
     }
 
     @Test
@@ -27,8 +34,9 @@ class PropertyTest {
 
     @Test
     void testGetNumHouses() {
+        Board.properties.get(0).setNumHouses(3);
         Property testprop = Board.properties.get(0);
-        assertEquals(0,testprop.getNumHouses());
+        assertEquals(3,testprop.getNumHouses());
 
     }
 
@@ -56,24 +64,29 @@ class PropertyTest {
     @Test
     void testBuy() {
         //player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
-//        String input = "y";
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
+        String instruction = "y\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	System.out.println("\n-------------------------------");
         System.out.println("TEST: Press y and ENTER");
         System.out.println("-------------------------------");
-        Board.properties.get(0).buy(player);
+        Board.properties.get(0).getTitleDeedCard().setOwner(null);
+        Board.properties.get(0).buy(player, null);
         //BoardReader.properties.get(1).buy(player);
         assertTrue(player.getTitleDeedList().contains(Board.properties.get(0).getTitleDeedCard()));
     }
 
     @Test
     void testBuildHousesHotels() {
-//        String input = "0\r\n0\r\ny\r\n";
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
+
+        String instruction = "0\r\n0\r\ny\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
+        Board.properties.get(1).setNumHouses(0);
+
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
+        System.out.println(player.getTitleDeedList().size());
         Property testProp =(Property)player.getTitleDeedList().get(0).getOwnableSite();
         testProp.setNumHouses(0);
         testProp.setNumHotels(0);
@@ -86,9 +99,10 @@ class PropertyTest {
 
     @Test
     void testSellHouses() {
-//        String input = "n\r\n" ;
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
+
+        String instruction = "n\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         System.out.println("\n-------------------------------");
@@ -104,9 +118,11 @@ class PropertyTest {
 
     @Test
     void testSellHotels() {
-//        String input = "n\r\n" ;
-//        InputStream in = new ByteArrayInputStream(input.getBytes());
-//        System.setIn(in);
+
+        String instruction = "n\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
+
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         Property testProp1 = (Property)player.getTitleDeedList().get(0).getOwnableSite();

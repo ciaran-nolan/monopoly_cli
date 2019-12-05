@@ -241,7 +241,7 @@ public class Player {
 			Board.communityChests.remove(0);
 		}
 		//This will implement the card
-		pickedCard.dealWithCard(this);
+		pickedCard.dealWithCard(this, null);
 	}
 	/**
 	 * Picking a Chance card from the top of the deck or the start of the chances ArrayList
@@ -261,7 +261,7 @@ public class Player {
 			Board.chances.remove(0);
 		}
 		//This will implement the card
-		pickedCard.dealWithCard(this);
+		pickedCard.dealWithCard(this, null);
 	}
 	/**
 	 * Used to see if the player is in jail
@@ -322,7 +322,7 @@ public class Player {
 					this.titleDeedCardList.remove(i);
 					i--;
 					System.out.println("Property will now be auctioned");
-					property.getTitleDeedCard().playerAuction(null);
+					property.getTitleDeedCard().playerAuction(null, null);
 				}
 
 				System.out.println("Bankrupt player, " + this.getName() + ", has retired from the game!");

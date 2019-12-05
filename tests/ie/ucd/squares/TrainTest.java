@@ -1,7 +1,6 @@
 package ie.ucd.squares;
 
 import ie.ucd.game.*;
-import ie.ucd.squares.Train;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,8 +8,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 class TrainTest {
 	private Train train1;
+	private InputStream instructionInputStream;
 	
 	private Player p2;
 	@BeforeEach
@@ -27,15 +30,21 @@ class TrainTest {
 
 	@Test
 	void testBuyPlayerNO_OWNER() {
+		String instruction = "y\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
 		System.out.println("\n------------\nTEST: PLEASE ENTER y to BUY TRAIN\n------------");
-		Board.trains.get(0).buy(p2);
+		Board.trains.get(0).buy(p2, null);
 		assertTrue(p2.getTitleDeedList().contains(Board.trains.get(0).getTitleDeedCard()));
 	}
 	
 	@Test
 	void testBuyPlayerOWNER() {
+		String instruction = "y\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+		System.setIn(instructionInputStream);
 		System.out.println("\n------------\nTEST: PLEASE ENTER y to BUY TRAIN\n------------");
-		Board.trains.get(1).buy(p2);
+		Board.trains.get(1).buy(p2, null);
 		assertTrue(p2.getTitleDeedList().contains(Board.trains.get(1).getTitleDeedCard()));
 	}
 

@@ -1,5 +1,7 @@
 package ie.ucd.game;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import ie.ucd.operations.Checks;
@@ -26,7 +28,7 @@ public class Game {
 	
 
 	public static void main(String[] args){
-
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		//Create player list
 		playerList = InputOutput.createListPlayers(null);
 		//initialise board
@@ -49,7 +51,7 @@ public class Game {
                     while(true) {
                         //Check user status and handle input
 						Checks.checkPlayerStatus(currentPlayer);
-                        InputOutput.handleUserOption(currentPlayer, doubleRoll, null);
+                        InputOutput.handleUserOption(currentPlayer, doubleRoll, userInput);
 
                         //roll the dice once they have finished their operations
                         //check if a double has been rolled
@@ -59,10 +61,10 @@ public class Game {
 						//Display information about the square
 						InputOutput.squareInformation(currentPlayer.getLocation());
 						//handle the required action on the square
-						Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
+						Checks.checkSquare(currentPlayer.getLocation(), currentPlayer, userInput);
                         //Check if further operations after dice roll are required
-                        while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer,null)) {
-                            InputOutput.handleUserOption(currentPlayer, false, null);
+                        while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer,userInput)) {
+                            InputOutput.handleUserOption(currentPlayer, false, userInput);
                         }
                         //end turn if doubles not rolled, repeat if doubles rolled
                         if (!doubleRoll) {

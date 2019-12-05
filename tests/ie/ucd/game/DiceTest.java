@@ -14,10 +14,12 @@ class DiceTest {
 	private Player player = new Player("P1","Red");
 	@BeforeEach
 	void setUp() throws Exception {
+		Board.initialiseBoard();
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
+		Board.clearBoard();
 	}
 
 	@Test

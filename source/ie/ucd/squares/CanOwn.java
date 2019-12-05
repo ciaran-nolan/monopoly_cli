@@ -3,6 +3,9 @@ package ie.ucd.squares;
 import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.Player;
 import ie.ucd.operations.InputOutput;
+
+import java.io.BufferedReader;
+
 /**
  * This is the CanOwn class. This is to do with Squares that can be owned by a player such as Properties, Train Stations and Utilities.
  * They have an associated Title Deed card and you can see that functionality in TitleDeed.java.
@@ -40,6 +43,9 @@ public abstract class CanOwn extends Square {
 	public void setTitleDeedCard(TitleDeed card){
 		this.titleDeedCard = card;
 	}
+	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
+	public abstract void buy(Player player, BufferedReader userInput);
+	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	/**
 	 * Abstract method for buying a CanOwn property and this is implemented in the child classes
 	 * @param player The player who wishes to buy a CanOwn object
