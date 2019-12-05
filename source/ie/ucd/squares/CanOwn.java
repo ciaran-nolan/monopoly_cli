@@ -44,13 +44,13 @@ public abstract class CanOwn extends Square {
 		this.titleDeedCard = card;
 	}
 	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
-	public abstract void buy(Player player, BufferedReader userInput);
+
 	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
 	/**
 	 * Abstract method for buying a CanOwn property and this is implemented in the child classes
 	 * @param player The player who wishes to buy a CanOwn object
 	 */
-	public abstract void buy(Player player);
+	public abstract void buy(Player player, BufferedReader userInput);
 
 
 	/**
