@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="false" dependencies="true" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="cards.CommunityChest" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/cards/CommunityChest.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-518" y="-63"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="cards.Card" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/cards/Card.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-511" y="-564"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="cards.TitleDeed" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/cards/TitleDeed.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1302" y="672"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="cards.Chance" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/cards/Chance.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-814" y="-65"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="game.Jail" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/game/Jail.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="298" y="-617"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="game.Dice" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/game/Dice.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="585" y="-563"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="game.Player" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/game/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-1276" y="-332"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="game.Game" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/game/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="830" y="-589"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="game.Board" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/game/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-2" y="-577"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="operations.Checks" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/operations/Checks.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1153" y="-535"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="operations.Transactions" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/operations/Transactions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1589" y="-554"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="operations.InputOutput" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/operations/InputOutput.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1155" y="-244"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="squares.Train" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Train.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-414" y="763"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="squares.Special" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Special.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="345" y="469"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="squares.Square" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Square.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="22" y="21"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="16" language="java" name="squares.Square.SquareType" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Square.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="281" y="12"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="17" language="java" name="squares.Utility" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Utility.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-126" y="763"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="squares.CanOwn" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/CanOwn.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-70" y="436"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="squares.Property" project="sw_engineering_monopoly" 
+    file="/sw_engineering_monopoly/source/squares/Property.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="229" y="859"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="20">    
+    <bendpoint x="502" y="-85"/>    
+    <bendpoint x="511" y="855"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="21" name="properties">        
+        <position height="0" width="0" x="-2084" y="-281"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2084" y="-281"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <bendpoint x="-646" y="667"/>    
+    <bendpoint x="-651" y="846"/>    
+    <bendpoint x="-423" y="846"/>    
+    <bendpoint x="-292" y="849"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="24" name="utilities">        
+        <position height="0" width="0" x="-2182" y="-278"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2182" y="-278"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <bendpoint x="1592" y="-801"/>    
+    <bendpoint x="724" y="-803"/>    
+    <bendpoint x="-1286" y="-790"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="27" name="tradeList">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <bendpoint x="64" y="532"/>    
+    <bendpoint x="71" y="727"/>    
+    <bendpoint x="81" y="1116"/>    
+    <bendpoint x="-578" y="1116"/>    
+    <bendpoint x="-927" y="1116"/>    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="30" name="titleDeedCard">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <bendpoint x="-504" y="1060"/>    
+    <bendpoint x="28" y="1057"/>    
+    <bendpoint x="22" y="788"/>    
+    <bendpoint x="22" y="659"/>    
+    <bendpoint x="22" y="588"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="33" name="ownableSite">        
+        <position height="0" width="0" x="-2278" y="-392"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-2278" y="-392"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <bendpoint x="-376" y="67"/>    
+    <bendpoint x="-692" y="66"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="36" name="chances">        
+        <position height="0" width="0" x="-319" y="-364"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-319" y="-364"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="39" name="bankruptcyTradeStatus">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="41">    
+    <bendpoint x="827" y="-775"/>    
+    <bendpoint x="-1174" y="-758"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="42" name="playerList">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </attribute>      
+      <multiplicity id="43" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <bendpoint x="-1176" y="85"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="45" name="owner">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-2058" y="-990"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="47">    
+    <bendpoint x="-1000" y="-197"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="49">    
+    <bendpoint x="-1429" y="391"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="50" name="titleDeedCardList">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="53" name="trains">        
+        <position height="0" width="0" x="-2230" y="-278"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-2230" y="-278"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="55">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="56">    
+    <bendpoint x="1344" y="-54"/>    
+    <bendpoint x="1344" y="1200"/>    
+    <bendpoint x="-114" y="1198"/>    
+    <bendpoint x="-1002" y="1208"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="57" name="traderTwoPropsToTrade">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </attribute>      
+      <multiplicity id="58" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="59">    
+    <bendpoint x="207" y="70"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="16"/>  
+  </nesting>  
+  <association id="60">    
+    <bendpoint x="387" y="-64"/>    
+    <bendpoint x="393" y="152"/>    
+    <bendpoint x="396" y="259"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="61" name="specialSquares">        
+        <position height="0" width="0" x="-1375" y="-377"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-1375" y="-377"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="63">    
+    <bendpoint x="-588" y="-113"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="64">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="65" name="board">        
+        <position height="0" width="0" x="-1998" y="-540"/>      
+      </attribute>      
+      <multiplicity id="66" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-1998" y="-540"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="68" name="communityChests">        
+        <position height="0" width="0" x="-99" y="-578"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-99" y="-578"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <bendpoint x="-1166" y="-560"/>    
+    <bendpoint x="-1126" y="-560"/>    
+    <bendpoint x="-1058" y="-559"/>    
+    <bendpoint x="-898" y="-560"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="71" name="jailCards">        
+        <position height="0" width="0" x="-588" y="-642"/>      
+      </attribute>      
+      <multiplicity id="72" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-588" y="-642"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="73">    
+    <bendpoint x="1584" y="1518"/>    
+    <bendpoint x="-4" y="1516"/>    
+    <bendpoint x="-1016" y="1520"/>    
+    <bendpoint x="-1296" y="1522"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="74" name="traderOnePropsToTrade">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </attribute>      
+      <multiplicity id="75" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-1182" y="-262"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <generalization id="78">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <association id="79">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="80" name="squareType">        
+        <position height="0" width="0" x="-1703" y="-816"/>      
+      </attribute>      
+      <multiplicity id="81" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-1703" y="-816"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="82">    
+    <bendpoint x="170" y="440"/>    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="false"/>
+</class-diagram>

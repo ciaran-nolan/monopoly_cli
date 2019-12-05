@@ -7,21 +7,18 @@ import org.junit.jupiter.api.Test;
 import cards.Card;
 import cards.Chance;
 import cards.CommunityChest;
-import cards.TitleDeed;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
     private Card commChestTest;
     private Card chanceTest;
-    private Card titleDeedTest;
     @BeforeEach
     void setUp() {
         //In this I will set up a Community Chest, Chance and Title Deed Card
         commChestTest = new CommunityChest("PAY","Pay £100 in taxes", 100);
         chanceTest = new Chance("INCOME", "You won £100", 100);
-        titleDeedTest = new TitleDeed("Title Deed","Piccadilly",0,"Orange", 200,
-                new int[]{4,10,20,30}, 15,20,null, null);
     }
 
     @Test
@@ -65,16 +62,10 @@ class CardTest {
         chanceTest.setCardValue(20);
         assertEquals(20,chanceTest.getCardValue(),"Checking card value can be set to £20");
     }
-
-    //FIXME could change this to be tested in the card class itselg
-    @Test
-    void testDealWithCard() {
-    }
     
     @AfterEach
     void tearDown() {
         commChestTest = null;
         chanceTest = null;
-        titleDeedTest = null;
     }
 }
