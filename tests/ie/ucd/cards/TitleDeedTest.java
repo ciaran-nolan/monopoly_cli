@@ -48,28 +48,28 @@ class TitleDeedTest {
 	@Test
 	void testGetHousePrice() {
 		int housePrice = Board.properties.get(3).getTitleDeedCard().getHousePrice();
-		assertEquals(50,housePrice, "Checking house price is equal to €50 for getter");
+		assertEquals(50,housePrice, "Checking house price is equal to £50 for getter");
 	}
 
 	@Test
 	void testSetHousePrice() {
 		Board.properties.get(3).getTitleDeedCard().setHousePrice(25);
 		int housePrice = Board.properties.get(3).getTitleDeedCard().getHousePrice();
-		assertEquals(25,housePrice,"Checking set house price to €25");
+		assertEquals(25,housePrice,"Checking set house price to £25");
 	}
 
 	@Test
 	void testGetPriceBuy() {
 		Board.properties.get(3).getTitleDeedCard().setpriceBuy(100);
 		int buyPrice = Board.properties.get(3).getTitleDeedCard().getPriceBuy();
-		assertEquals(100,buyPrice,"Checking buy price is gotten as €100");
+		assertEquals(100,buyPrice,"Checking buy price is gotten as £100");
 	}
 
 	@Test
 	void testSetpriceBuy() {
 		Board.properties.get(3).getTitleDeedCard().setpriceBuy(125);
 		int buyPrice = Board.properties.get(3).getTitleDeedCard().getPriceBuy();
-		assertEquals(125,buyPrice,"Checking buy price has been set as €125");
+		assertEquals(125,buyPrice,"Checking buy price has been set as £125");
 	}
 
 	@Test
@@ -132,14 +132,14 @@ class TitleDeedTest {
 	void testGetMortgage() {
 		Board.properties.get(3).getTitleDeedCard().setMortgage(50);
 		int mortgage = Board.properties.get(3).getTitleDeedCard().getMortgage();
-		assertEquals(50, mortgage, "Checking getMortgage returns €50");
+		assertEquals(50, mortgage, "Checking getMortgage returns £50");
 	}
 
 	@Test
 	void testSetMortgage() {
 		Board.properties.get(3).getTitleDeedCard().setMortgage(20);
 		int mortgage = Board.properties.get(3).getTitleDeedCard().getMortgage();
-		assertEquals(20, mortgage, "Checking setMortgage set to €20");
+		assertEquals(20, mortgage, "Checking setMortgage set to £20");
 	}
 
 	@Test

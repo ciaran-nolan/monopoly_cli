@@ -14,7 +14,7 @@ class ChanceTest {
     private Player playerTest;
     @BeforeEach
     public void setUp() throws Exception {
-        chanceTest = new Chance("PAY","Pay €100 in taxes",100);
+        chanceTest = new Chance("PAY","Pay £100 in taxes",100);
         playerTest = new Player("John", "blue");
     }
 

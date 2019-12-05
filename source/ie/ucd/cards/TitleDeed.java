@@ -13,19 +13,40 @@ import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 import ie.ucd.operations.InputOutput;
 import ie.ucd.squares.CanOwn;
-
+/**
+ * The Title Deed class descirbes the title deed card of a property, train station or utility site such as a Water Works. 
+ * This title deed card is exactly the same as you would have in a real game of Monopoly if you owned one of these sites. 
+ * It includes details such as the square's colour, the price of buying the site and what site it is linked to on the board
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class TitleDeed extends Card {
-    //This is the title deed card which extends Card
-    private String squareColour;
-    private int priceBuy;
-    private int[] rents;
-    private int housePrice; //In the case of a train or water works, this will be set to Null
-    private Player owner;
-    private boolean mortgageStatus;
-    private CanOwn ownableSite;
+    //These are the variables
+    private String squareColour; 		//Colour of square
+    private int priceBuy;				//Buy Price
+    private int[] rents;				//Array of rents
+    private int housePrice; 			//Only applicable to properties
+    private Player owner;				//The current owner
+    private boolean mortgageStatus;		//Whether there is a mortgage
+    private CanOwn ownableSite;			//The site its linked to
     private HashMap<Integer, Player> bankruptcyTradeStatus = new HashMap<>();
-    //FIXME need to perhaps add mortgage to here or to another location on the title deed cards
-    private int mortgage;
+    private int mortgage;				//Value of mortgage
+    
+    /** 
+     * The class constructor is what we use to create the title deed card and it takes a lot of arguments to the higher parent 
+     * class of Card but also edits the class variables unique to the Title Deed card
+     * 
+     * @param cardType This is given as a string "Title Deed"
+     * @param cardTitle This is given as the name of the Property, Train Station or Water Works which it belongs to
+     * @param cardValue This is set to zero as it has no value 
+     * @param squareColour This is the colour of the square. Valid for properties only
+     * @param priceBuy The price to buy this Title Deed card's site
+     * @param rents An array of rents depending on how many houses/hotels you have on a site or how many sites of a certain colour you own
+     * @param housePrice The price of building a house on the site
+     * @param mortgage The value of the mortgage for the site
+     * @param owner A Player type which is used as the owner of this card and thus, the site
+     * @param ownableSite The site which this Title Deed card is associated with such as a Property or Train Station
+     */
     public TitleDeed(String cardType, String cardTitle, int cardValue, String squareColour, int priceBuy, int[] rents, int housePrice, int mortgage, Player owner, CanOwn ownableSite){
         super(cardType,cardTitle, 0);
         this.squareColour = squareColour;
@@ -37,19 +58,24 @@ public class TitleDeed extends Card {
         this.mortgageStatus = false;
         this.ownableSite = ownableSite;
     }
+    //Can ignore as I needed to override it to implement it
     @Override
     public void dealWithCard(Player player1) {
 
     }
+    
+    //Setters and Getters for all of the variables
     public CanOwn getOwnableSite(){
         return this.ownableSite;
     }
-    //FIXME change out of property
+    
     public int getHousePrice(){
         return this.housePrice;
     }
 
-    public void setHousePrice(int price){ this.housePrice = price; }
+    public void setHousePrice(int price){ 
+    	this.housePrice = price; 
+    }
 
     public int getPriceBuy(){
         return this.priceBuy;
@@ -58,7 +84,7 @@ public class TitleDeed extends Card {
     public void setpriceBuy(int price){
         this.priceBuy = price;
     }
-    //FIXME change out of Property
+    
     public int[] getRents(){
         return this.rents;
     }
@@ -66,7 +92,7 @@ public class TitleDeed extends Card {
     public void setRents(int[] rents){
         this.rents = rents;
     }
-    //FIXME change out of Property
+    
     public String getSquareColour(){
         return this.squareColour;
     }
@@ -74,7 +100,7 @@ public class TitleDeed extends Card {
     public void setSquareColour(String squareColour){
         this.squareColour = squareColour;
     }
-    //FIXME change out of CanOwn
+    
     public Player getOwner(){
         return this.owner;
     }
@@ -82,8 +108,7 @@ public class TitleDeed extends Card {
     public void setOwner(Player newOwner){
         this.owner = newOwner;
     }
-    //FIXME buy will now be associated with the square........will still be in practice and implemented in the square.......
-    //FIXME but instead the card will be handed over
+    
     public boolean getMortgageStatus(){
         //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
@@ -100,9 +125,13 @@ public class TitleDeed extends Card {
     public void setMortgage(int mortgage){
         this.mortgage = mortgage;
     }
-    //FIXME isMortgage will no longer be passed in when you check whether to sell houses
-    //This is the title deed card which extends Card
 
+    /** 
+     * This is used to determine the trade status of the site associated with this title deed card and whether it will be enough to make the player not bankrupt
+     * A player is agreed with to provisionally receive the property
+     * @param agreedPrice The agreed price to pay for the property by the recipient
+     * @param recipient The Player object which is given the property if the owner achieves saving themselves from bankruptcy
+     */
     public void setBankruptcyTradeStatus(int agreedPrice, Player recipient){
         bankruptcyTradeStatus.put(agreedPrice, recipient);
     }
@@ -111,9 +140,20 @@ public class TitleDeed extends Card {
         return this.bankruptcyTradeStatus;
     }
 
+    /** 
+     * This is the player auction method which initiates an auction between a number of players and the owner of the property.
+     * It increases the bidding pool size and then a number of Player objects can go into a bidding war with each other.
+     * The auction ends when somebody enters a value to pay which all of the remaining players in the bidding war don't want to bid against by 
+     * entering "n" instead of "y"
+     * If you enter a lower bid than the current highest bit, it will prompt you to enter a new bid as yours is lower than the current highest
+     * 
+     * @param bankruptPlayer The bankrupt player object who owns the property which is being auctioned off
+     */
     public void playerAuction(Player bankruptPlayer) {
         int[] currentAuctionDetails = new int[] {0,0};
+        //Adds bidding players
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
+        //Iterator to go through the bidding players
         Iterator<Player> it = biddingPlayers.iterator();
         if(bankruptPlayer!=null){
             while(it.hasNext()){
@@ -123,7 +163,7 @@ public class TitleDeed extends Card {
                 }
             }
         }
-        
+        //Initiate a bidding pool size
         int biddingPoolSize = biddingPlayers.size();
 
         while(biddingPoolSize > 1){
@@ -138,12 +178,10 @@ public class TitleDeed extends Card {
                     System.out.println(biddingPlayers.get(i).getName()+" does not have enough funds to make a winning bid on "+this.getCardDesc()
                             +"\nCurrent bid: "+currentAuctionDetails[0]+"\nYour Funds: "+biddingPlayers.get(i).getMoney());
                     biddingPlayers.remove(i);
-                    //reduce index as pool size has decreased
-                    i --;
-                    //update building pool size for while loop
-                    biddingPoolSize = biddingPlayers.size();
-                    //index of user with winning needs to be reduced by one
-                    currentAuctionDetails[1] --;
+                    i --;	//reduce index as pool size has decreased
+                    
+                    biddingPoolSize = biddingPlayers.size(); //update building pool size for while loop
+                    currentAuctionDetails[1]--;			 //index of user with winning needs to be reduced by one
 
                     //if there is only one player remaining, the auction is over and they win, so break from loop
                     if(currentAuctionDetails[0] > 0 && biddingPoolSize == 1) {
@@ -187,7 +225,7 @@ public class TitleDeed extends Card {
                                 currentAuctionDetails[1] --;
                             }
                             biddingPlayers.remove(i);
-                            i --;
+                            i--;
                             biddingPoolSize=biddingPlayers.size();
                             //reset temporary bid back to highest bid so it is not overwritten
                             temporaryBid = currentAuctionDetails[0];

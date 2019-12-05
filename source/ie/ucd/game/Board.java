@@ -18,18 +18,34 @@ import ie.ucd.squares.Train;
 import ie.ucd.squares.Utility;
 
 
-
+/**
+ * This class reads the configuration for the properties, trains, utilities, special squares and cards from the configuration files 
+ * in the gameConfigurations package which we built to self contain the project. 
+ * It reads in all of the data, creates instances of each class from the particular configuration file and adds these to static ArrayList's 
+ * As a result, the property "Park Lane" for example is created once and only once once we use the function initialiseBoard from this class. 
+ * It then creates the Board structure using these ArrayLists so that when a player moves, they are on the correct square. 
+ * 
+ * We used the BoardReader example from CSMoodle as inspiration for this class and its implementation.
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class Board {
 
-	public static ArrayList<Property> properties = new ArrayList<>(22);
-	public static ArrayList<Train> trains = new ArrayList<>(4);
-	public static ArrayList<Utility> utilities = new ArrayList<>(2);
-	public static ArrayList<Special> specialSquares = new ArrayList<>(12);
-	public static ArrayList<CommunityChest> communityChests = new ArrayList<>(16);
-	public static ArrayList<Chance> chances = new ArrayList<>(16);
-	public static ArrayList<Square> board = new ArrayList<>(Collections.nCopies(40, null));
-	//define properties list to hold the .properties file
+	public static ArrayList<Property> properties = new ArrayList<>(22); 	//Properties list
+	public static ArrayList<Train> trains = new ArrayList<>(4);				//Trains list
+	public static ArrayList<Utility> utilities = new ArrayList<>(2);		//Utilities list
+	public static ArrayList<Special> specialSquares = new ArrayList<>(12);	//Special Squares list
+	public static ArrayList<CommunityChest> communityChests = new ArrayList<>(16);		//Community Chest list
+	public static ArrayList<Chance> chances = new ArrayList<>(16);						//Chances list
+	public static ArrayList<Square> board = new ArrayList<>(Collections.nCopies(40, null)); //The board itself
+	
 	private static Properties prop = new Properties();
+	
+	/**
+	 * The input stream is setup for a reading in particular configuration file
+	 * @param propFileName The Relative path to the configuration file from this Board.java file
+	 * @return inputStream
+	 */
 
 	//set up input stream for each property file
 	private static InputStream setupInputStream(String propFileName) {
@@ -45,9 +61,13 @@ public class Board {
 		return null;
 	}
 
-	//Methods read in each square type on the monopoly board into their respective arraylists
+	//Methods read in each square type on the monopoly board into their respective Arraylists
 
-	//read properties
+	/**
+	 * Reads in the Properties' configurations from their respective configuration file.
+	 * It then creates a new Property instance for each of these and their corresponding Title Deed card.
+	 * It then puts the respective property into the static properties Array list which is used to populate the board. 
+	 */
     public static void readProperties(){
     	try {
     		//define the location of the prop file
@@ -69,21 +89,29 @@ public class Board {
     		System.out.println("Exception: " + e);
     	}
     }
-    
+    /**
+	 * Reads in the Utilities' configurations from their respective configuration file.
+	 * It then creates a new Utility instance for each of these and their corresponding Title Deed card.
+	 * It then puts the respective utility into the static utilities Array list which is used to populate the board. 
+	 */
     public static void readUtilities() {
     	try {
     		String propFileName = "ie/ucd/gameConfigurations/utilities.properties";
-    		InputStream inputStream = setupInputStream(propFileName);
+    		setupInputStream(propFileName);
 
     		//recursively read utilities
     		for(int i=0; i<=1; i++) {
     			int[] rentIntArray = Arrays.stream(prop.getProperty(("rents"+i)).split(",")).mapToInt(Integer::parseInt).toArray();
+    			//Create new instance utility object
     			Utility temp = new Utility(prop.getProperty(("title"+i)), Integer.parseInt(prop.getProperty(("squareNum"+i))));
 				TitleDeed tempDeed = new TitleDeed("Title Deed", prop.getProperty(("title"+i)),0,
 						null, Integer.parseInt((prop.getProperty(("priceBuy"+i)))),
 						rentIntArray, 0, Integer.parseInt(prop.getProperty(("mortgage"+i))),null, temp);
-    			temp.setTitleDeedCard(tempDeed);
+    			//Set the title deed card for the property
+				temp.setTitleDeedCard(tempDeed);
+				//Add to the arraylist
     			utilities.add(temp);
+    			//Set in board arraylist
     			board.set(temp.getLocation(),temp);
     		}
     	}
@@ -91,7 +119,11 @@ public class Board {
 			System.out.println("Exception: " + e);
     	}
 	}
-    
+    /**
+	 * Reads in the Special Squares' configurations from their respective configuration file.
+	 * It then creates a new special square instance for each of these.
+	 * It then puts the respective special square into the static specialSquares Array list which is used to populate the board. 
+	 */
     public static void readSpecialSquares() {
     	try {
     		//location of prop file
@@ -109,7 +141,11 @@ public class Board {
 			System.out.println("Exception: " + e);
     	}
     }
-    
+    /**
+	 * Reads in the Community Chests' configurations from their respective configuration file.
+	 * It then creates a new community chest card instance for each of these.
+	 * It then puts the respective community chest card into the static communityChests Array list which is shuffled when it is populated
+	 */
     public static void readCommunityChests(){
     	try {
     		//location of prop file
@@ -128,6 +164,12 @@ public class Board {
     	}
     }
     
+    /**
+	 * Reads in the Chance cards' configurations from their respective configuration file.
+	 * It then creates a new chance card instance for each of these.
+	 * It then puts the respective chance card into the static chances Array list which is shuffled when it is populated
+	 */
+    
     public static void readChances() {
     	try {
     		//location of prop file
@@ -145,6 +187,12 @@ public class Board {
 			System.out.println("Exception: " + e);
     	}
     }
+    
+    /**
+	 * Reads in the Trains' configurations from their respective configuration file.
+	 * It then creates a new Train instance for each of these and their corresponding Title Deed card.
+	 * It then puts the respective utility into the static trains Array list which is used to populate the board. 
+	 */
    
     public static void readTrains(){
     	try {
@@ -165,9 +213,12 @@ public class Board {
     	}
     }
 
-    //set up the board for the game
+    /**
+     * This sets up the board for a game by running all of the set up methods inside of the Board.java class
+     */
     public static void initialiseBoard() {
 		try {
+			//Runs all of the methods inside of class
 			readProperties();
 			readUtilities();
 			readSpecialSquares();
