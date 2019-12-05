@@ -4,13 +4,13 @@ package ie.ucd.game;
 import ie.ucd.cards.Card;
 import ie.ucd.cards.Chance;
 import ie.ucd.cards.TitleDeed;
+import ie.ucd.operations.InputOutput;
 import ie.ucd.squares.Property;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -192,7 +192,7 @@ class PlayerTest {
     void testCreateListPlayers() {
     	System.out.println("\n-----------------\nTEST: CREATE LIST OF PLAYERS\nPlease enter the following:");
     	System.out.println("2 (PRESS ENTER) Rob,red (PRESS ENTER) Bob,blue (PRESS ENTER)\n-----------------");
-        ArrayList<Player> playerList = Player.createListPlayers();
+        ArrayList<Player> playerList = InputOutput.createListPlayers(null);
         assertEquals("Rob", playerList.get(0).getName(),"Checking Name entered");
         assertEquals("red", playerList.get(0).getToken(),"Checking Token");
         assertEquals("Bob", playerList.get(1).getName(), "Checking Name is Ciaran");

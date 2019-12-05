@@ -28,7 +28,7 @@ public class Game {
 	public static void main(String[] args){
 
 		//Create player list
-		playerList = Player.createListPlayers();
+		playerList = InputOutput.createListPlayers(null);
 		//initialise board
 		Board.initialiseBoard();
 
@@ -49,7 +49,7 @@ public class Game {
                     while(true) {
                         //Check user status and handle input
 						Checks.checkPlayerStatus(currentPlayer);
-                        InputOutput.handleUserOption(currentPlayer, doubleRoll);
+                        InputOutput.handleUserOption(currentPlayer, doubleRoll, null);
 
                         //roll the dice once they have finished their operations
                         //check if a double has been rolled
@@ -61,8 +61,8 @@ public class Game {
 						//handle the required action on the square
 						Checks.checkSquare(currentPlayer.getLocation(), currentPlayer);
                         //Check if further operations after dice roll are required
-                        while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer)) {
-                            InputOutput.handleUserOption(currentPlayer, false);
+                        while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer,null)) {
+                            InputOutput.handleUserOption(currentPlayer, false, null);
                         }
                         //end turn if doubles not rolled, repeat if doubles rolled
                         if (!doubleRoll) {

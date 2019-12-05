@@ -39,7 +39,7 @@ public class CommunityChest extends Card {
 			// ask user for choice
 			System.out.println(player1.getName() + ": Would you like to: " + this.getCardDesc() + "?");
 			System.out.println("Please use the integers provided to select\n FINE[0]\nCHANCE[1]");
-			int choice = InputOutput.integerMenu(0, 1);
+			int choice = InputOutput.integerMenu(0, 1, null);
 			// implement choice
 			if (choice == 0) {
 				player1.reduceMoney(this.getCardValue(), null);

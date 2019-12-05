@@ -179,13 +179,13 @@ public class Checks {
 		// - 2 - exit without building
 		// return 0 - valid
 		if(null==propToBuild) {
-			if (InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player, null)) {
 				return -1;
 			}
 			else return -2;
 		}
 		else if(!(Checks.isPlayerOwner(propToBuild.getTitleDeedCard(), player))){
-			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player, null)) {
 				//restart pre-dice roll options
 				return -1;
 			} else return -2;
@@ -197,7 +197,7 @@ public class Checks {
 		}
 
 		else if(null == Checks.ownAllColour(player,propToBuild)) {
-			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player, null)) {
 				//restart pre-dice roll options
 				return -1;
 			} else return -2;

@@ -3,11 +3,11 @@ package ie.ucd.cards;
 //Thus, mortgage and priceBuy will now be moved from CanOwn to their title deed card
 //The title deed card will be associated with the Square of the Property or Utility
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
@@ -112,6 +112,7 @@ public class TitleDeed extends Card {
     }
 
     public void playerAuction(Player bankruptPlayer) {
+        BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
         int[] currentAuctionDetails = new int[] {0,0};
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
         Iterator<Player> it = biddingPlayers.iterator();
@@ -161,12 +162,12 @@ public class TitleDeed extends Card {
                 }
 
                 //user has indicated intention to bid
-                if(InputOutput.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getCardDesc()+"? (y/n)"), biddingPlayers.get(i))) {
+                if(InputOutput.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getCardDesc()+"? (y/n)"), biddingPlayers.get(i), userInput)) {
                     //prompt user to enter a bid
                     System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 
                     //read in user bid
-                    int temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
+                    int temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney(), userInput);
 
                     //check the user's bid is greater than current highest bid or that they do not have enough money to make the specified bid
                     while(temporaryBid <= currentAuctionDetails[0]) {
@@ -176,10 +177,10 @@ public class TitleDeed extends Card {
                                     " your bid must be greater than the current bid of: "+currentAuctionDetails[0]);
                         }
                         //check if user has confirmed intention to bid again
-                        if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
+                        if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i), userInput)) {
                             System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
                             //read in new bid
-                            temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
+                            temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney(), userInput);
                         }
                         //user has declared intention to NOT bid again, remove from list of current users in auction
                         else {

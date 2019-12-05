@@ -41,7 +41,7 @@ public abstract class CanOwn extends Square {
 						System.out.println("Successfully mortgaged "+this.getName());
 					}
 					//confirm mortgage
-					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n)", player)) {
+					else if(InputOutput.yesNoInput("This property is unimproved: "+this.getName()+"\nWould you still like to mortgage this property? (y/n)", player, null)) {
 						this.titleDeedCard.setMortgageStatus(true);
 						player.addMoney(this.titleDeedCard.getMortgage());
 						System.out.println("Successfully mortgaged "+this.getName());
@@ -58,7 +58,7 @@ public abstract class CanOwn extends Square {
 					//To mortgage it first, you must sell the houses
 					if(InputOutput.yesNoInput("This property is improved: "+this.getName()
 							+"\nMortgaging this property will sell all houses/hotels in this colour group: "+((Property) this).getSquareColour()
-							+"\nWould you still like to mortgage this property? (y/n))", player)) {
+							+"\nWould you still like to mortgage this property? (y/n))", player, null)) {
 
 						((Property) this).sellHouses(player, true, false);
 						((Property) this).sellHotels(player, true, false);

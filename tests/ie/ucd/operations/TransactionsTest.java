@@ -10,7 +10,6 @@ import ie.ucd.cards.CommunityChest;
 import ie.ucd.game.Board;
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
-import ie.ucd.operations.Transactions;
 
 class TransactionsTest {
 	private CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);
@@ -20,7 +19,7 @@ class TransactionsTest {
 		Board.initialiseBoard();
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
-		Game.playerList = Player.createListPlayers();
+		Game.playerList = InputOutput.createListPlayers(null);
 		
 	}
 

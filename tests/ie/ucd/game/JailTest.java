@@ -8,14 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import ie.ucd.cards.CommunityChest;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 
 class JailTest {
 	private Player p1 = new Player("P1", "Red");
-	
+	private InputStream instructionInputStream;
 	
 	@BeforeEach
 	void setup(){
 		Board.initialiseBoard();
+		System.setIn(instructionInputStream);
 	}
 	@AfterEach
     void tearDown() throws Exception {
@@ -37,13 +42,18 @@ class JailTest {
 	}
 
 	@Test
-	void testHandleJailMove() {
+	void testHandleJailMove() throws IOException {
 		System.out.println("Exit Jail by paying Fine");
 		System.out.println("*********\n"+
 				"Player 1 Press:\n"
 				+ "5 ENTER 1 ENTER (If prompted to buy property) n ENTER"
 				);
 		Jail.sendToJail(p1);
+
+		String Instruction1 = "5\r\n1\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		System.setIn(instructionInputStream);
+
 		Jail.handleJailMove(p1);
 		assertFalse(p1.isInJail());
 		
@@ -57,6 +67,11 @@ class JailTest {
 		CommunityChest temp = new CommunityChest("GET_OUT_OF_JAIL","Get out of jail free. This card may be kept until needed or sold",0);
 		Board.communityChests.set(0, temp);
 		p1.pickCommChestCard();
+
+		String Instruction2 = "5\r\n2\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction2.getBytes());
+		System.setIn(instructionInputStream);
+
 		Jail.handleJailMove(p1);
 		assertFalse(p1.isInJail());
 		
@@ -66,6 +81,11 @@ class JailTest {
 		System.out.println("Test not enough money for fine");
 		Jail.sendToJail(p1);
 		p1.setMoney(40);
+
+		String Instruction3 = "5\r\n1\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction3.getBytes());
+		System.setIn(instructionInputStream);
+
 		Jail.handleJailMove(p1);
 		assertTrue(p1.isInJail());
 		p1.setInJail(false);
@@ -78,8 +98,14 @@ class JailTest {
 		System.out.println("Roll three times, without double");
 		Jail.sendToJail(p1);
 		p1.setMoney(1500);
+		String Instruction4 = "5\r\n0\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction4.getBytes());
+		System.setIn(instructionInputStream);
+
 		Jail.handleJailMove(p1);
+		System.in.reset();
 		Jail.handleJailMove(p1);
+		System.in.reset();
 		Jail.handleJailMove(p1);
 		assertFalse(p1.isInJail());
 	}

@@ -26,7 +26,7 @@ public class Train extends PublicSquare {
 		}
 		//They can purchase it
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-				+this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
+				+this.getName()+" for â‚¬"+titleDeedCard.getPriceBuy()+"?", player, null)) {
 			//user has passed all necessary checks to purchase a property, reduce the price from users funds
 			System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
 			player.reduceMoney(titleDeedCard.getPriceBuy(), null);

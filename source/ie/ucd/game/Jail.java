@@ -5,6 +5,9 @@ import ie.ucd.cards.CommunityChest;
 import ie.ucd.operations.Checks;
 import ie.ucd.operations.InputOutput;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 public class Jail {
 
     //FIXME fix jail condition with immediate exit
@@ -59,7 +62,7 @@ public class Jail {
             }
             else{
                 System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay €50 fine");
-                jailExitChoice = InputOutput.integerMenu(0,1);
+                jailExitChoice = InputOutput.integerMenu(0,1, null);
             }
             if(jailExitChoice==0){
                 handleJailFreeCardUsage(jailedPlayer);
@@ -71,6 +74,7 @@ public class Jail {
         }
     }
     public static void handleJailMove(Player jailedPlayer){
+        BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
         //print jail status
         boolean doubleRoll;
         int jailExitChoice = 0;
@@ -78,17 +82,17 @@ public class Jail {
         +"\nYou have rolled "+jailedPlayer.getJailMoves()+" times, without rolling a double.");
 
         //check if user wants to try roll for doubles or exit jail immediately via fine or card
-        InputOutput.handleUserOption(jailedPlayer,false);
+        InputOutput.handleUserOption(jailedPlayer,false, userInput);
         System.out.println("Would you like to:\n[0] attempt to roll the dice\n[1] exit jail by paying a fine");
         //for choosing what action from the integer menu
 
         //check if they have jail free card, if not, dont display the option to choose
         if(jailedPlayer.getJailCard().size()>0){
             System.out.println("[2]Use Get out of jail free card");
-            jailExitChoice = InputOutput.integerMenu(0,2);
+            jailExitChoice = InputOutput.integerMenu(0,2, userInput);
         }
         else{
-            jailExitChoice = InputOutput.integerMenu(0,1);
+            jailExitChoice = InputOutput.integerMenu(0,1, userInput);
         }
 
         if(jailExitChoice==0){

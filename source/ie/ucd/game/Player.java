@@ -188,60 +188,7 @@ public class Player {
     }
 	
 
-	public static ArrayList<Player> createListPlayers(){
-		ArrayList<Player> listPlayers = new ArrayList<Player>();
-		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-			System.out.println("How many players will be playing the game(In range 2-6)?");
-			int numPlayers = InputOutput.integerMenu(2, 6);
-			System.out.println("You have specified "+numPlayers+" players to play the game");
-			//Get the players to be entered by the user -> Have a loop that asks for that number of players.
-			if(numPlayers >= 2 && numPlayers <= 6) {
-				for(int i=0; i < numPlayers; i++) {
-					String line;
-					String[] lineVector = new String[2];
-					String name, token;
-					while(true) {
-						System.out.println("Please enter the relevant details for each player in the format below:");
-						System.out.println("\t\t\tName, Token");
-						System.out.println("Token picked must be one of the following: "+tokenList+
-								"\n----------------------------------------------------------------");
-						line = scanner.nextLine();
-						//Trim the whitespace first before splitting
-						if(!line.contains(","))	System.err.println("Please use a comma (,) to separate input");
-						else{
-							lineVector = line.split(",");
-							name = lineVector[0].trim();
-							token = lineVector[1].trim();
-							if (!tokenList.contains(token)) {
-								System.err.println("Token not part of list. Enter details of Player again!");
-								continue;
-							}
-							else if (name.length() == 0) {
-								System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
-								continue;
-							}
-							else {
-								//Remove token from the array
-								tokenList.remove(token);
-								//Do I need to access them using the index though. I suppose I will go through them in
-								listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
-								//I have added each player in the range of numPlayers to be in the listPlayers array.
-								//Running this will return the list of players which I can set in main
-								break;
-							}
-						}
-					}
-				}
-			}
-			
-		
-		//Inside of the main, we will return this list of players
-		return listPlayers;
-	}
-	
-	//
+
 	public void bankrupt(Player playerOwed) {
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
@@ -340,7 +287,7 @@ public class Player {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
 		}
 		else {
-			if(InputOutput.yesNoInput("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?", owner)) {
+			if(InputOutput.yesNoInput("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?", owner,null)) {
 				//This means i need to claim rent from the user
 				//Need to check what type of property it is followed by how much rent they will need to pay
 				if(ownableSquare instanceof Property) {
@@ -465,7 +412,7 @@ public class Player {
 		else {
 			if(InputOutput.yesNoInput("The combined value of mortgaging all properties ("+valOfMortgage
 					+") and selling all houses ("+valOfHouseHotels+") is insufficient to cover your debt ("+moneyNeedToRaise+")"+
-                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
+                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this, null)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
 
@@ -481,7 +428,7 @@ public class Player {
 					}
                     else if (!InputOutput.yesNoInput("You still do not have enough funds to prevent bankruptcy."+
 							"\nOutstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
-							"\nWould you like to make another trade? (y/n)", this)) {
+							"\nWould you like to make another trade? (y/n)", this, null)) {
 
                     	continueTrade=false;
                     }
