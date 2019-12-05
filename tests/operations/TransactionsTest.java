@@ -10,8 +10,6 @@ import cards.CommunityChest;
 import game.Board;
 import game.Game;
 import game.Player;
-import operations.InputOutput;
-import operations.Transactions;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -150,7 +148,7 @@ class TransactionsTest {
 		
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
-		Transactions.saveFromBankruptcyTrade(p1);
+		Transactions.saveFromBankruptcyTrade(p1, null);
 		assertEquals(1000, p2.getMoney());
 		
 	}
@@ -182,7 +180,7 @@ class TransactionsTest {
 		
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
-		Transactions.saveFromBankruptcyTrade(p1);
+		Transactions.saveFromBankruptcyTrade(p1, null);
 	}
 
 }

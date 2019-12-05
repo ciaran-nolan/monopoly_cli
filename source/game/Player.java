@@ -1,5 +1,7 @@
 package game;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import cards.Card;
@@ -164,7 +166,7 @@ public class Player {
 				//can the player afford to pay the bank
 				if (money > this.money) {
 					//save from bankruptcy handles the reduction of money
-					if (saveFromBankruptcy(money - this.money)) {
+					if (saveFromBankruptcy(money - this.money, null)) {
 						System.out.println(this.name + ", remaining Funds: £" + this.money);
 					}
 					//cant afford, player is bankrupt
@@ -283,6 +285,7 @@ public class Player {
 
 
 	public void bankrupt(Player playerOwed) {
+		BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
 		Game.playerList.remove(this);
@@ -293,20 +296,18 @@ public class Player {
 			if (playerOwed == null) {
 				//Bank owed
 				//Get rid of jail free card
-				if (this.jailCards.size() > 0) {
-					//Need to transfer the get out of jail card to the playerOwed
-					for (Card card : this.jailCards) {
-						//Remove it and then send to the new owner
-						this.jailCards.remove(card);
-						if (card instanceof CommunityChest) {
-							Board.communityChests.add((CommunityChest) card);
+				while (this.jailCards.size() > 0) {
+
+						Card tempJail = this.jailCards.get(0);
+						this.jailCards.remove(0);
+						if (tempJail instanceof CommunityChest) {
+							Board.communityChests.add((CommunityChest) tempJail);
 						} else {
-							Board.chances.add((Chance) card);
+							Board.chances.add((Chance) tempJail);
 						}
 						//Need to check that the card was actually removed
-						System.out.println("Bankrupt player Jail Card array now of size: " + this.jailCards.size());
-					}
 				}
+				System.out.println("Bankrupt player Jail Card array now of size: " + this.jailCards.size());
 				for (int i = 0; i < titleDeedCardList.size(); i++) {
 					CanOwn property = titleDeedCardList.get(i).getOwnableSite();
 					if (property instanceof Property) {
@@ -326,7 +327,7 @@ public class Player {
 					this.titleDeedCardList.remove(i);
 					i--;
 					System.out.println("Property will now be auctioned");
-					property.getTitleDeedCard().playerAuction(null, null);
+					property.getTitleDeedCard().playerAuction(null, userInput);
 				}
 
 				System.out.println("Bankrupt player, " + this.getName() + ", has retired from the game!");
@@ -490,16 +491,17 @@ public class Player {
 
 	/**
 	 * Complete the trade of a CanOwn object's TitleDeed card when in bankruptcy in order to raise money
+	 * @param userInput
 	 */
-	public void completeBankruptcyTrade(){
+	public void completeBankruptcyTrade(BufferedReader userInput){
+		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 		for(TitleDeed currentTitleDeed: titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
-				currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]).reduceMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0],null);
 				this.addMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]);
 				currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]).addPurchasedTitleDeed(currentTitleDeed);
 
 				if(currentTitleDeed.getMortgageStatus()){
-					Transactions.handleMortgagedTitledeed(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]),currentTitleDeed,null);
+					Transactions.handleMortgagedTitledeed(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]),currentTitleDeed,userInput);
 				}
 				currentTitleDeed.getBankruptcyTradeStatus().clear();
 			}
@@ -517,7 +519,8 @@ public class Player {
 	 * If not, it clears the bankruptcy status and everything is handled by the bank in terms of selling houses/hotels and then auctioning of CanOwn TitleDeed cards
 	 * @return true if saved, false if not
 	 */
-	public boolean saveFromBankruptcy(int moneyNeedToRaise) {
+	public boolean saveFromBankruptcy(int moneyNeedToRaise, BufferedReader userInput) {
+		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 		boolean savedFromBankruptcy = false;
 		boolean mustSellHouseHotels=false;
 		boolean mustMortgage=false;
@@ -542,11 +545,11 @@ public class Player {
 		else {
 			if(InputOutput.yesNoInput("The combined value of mortgaging all properties ("+valOfMortgage
 					+") and selling all houses ("+valOfHouseHotels+") is insufficient to cover your debt ("+moneyNeedToRaise+")"+
-                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this, null)){
+                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this, userInput)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
 
-                    Transactions.saveFromBankruptcyTrade(this);
+                    Transactions.saveFromBankruptcyTrade(this, userInput);
                     valOfMortgage = Checks.checkMortgagingValue(this);
 
                     int valOfBankruptcyTrade = Checks.checkBankruptcyTradeValue(this);
@@ -558,7 +561,7 @@ public class Player {
 					}
                     else if (!InputOutput.yesNoInput("You still do not have enough funds to prevent bankruptcy."+
 							"\nOutstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
-							"\nWould you like to make another trade? (y/n)", this, null)) {
+							"\nWould you like to make another trade? (y/n)", this, userInput)) {
 
                     	continueTrade=false;
                     }
@@ -568,7 +571,7 @@ public class Player {
 			if(savedFromBankruptcy){
 				bankruptcySellHousesHotels(moneyNeedToRaise);
 				bankruptcyMortgage(moneyNeedToRaise);
-				completeBankruptcyTrade();
+				completeBankruptcyTrade(userInput);
 				return true;
 			}
 			else {
