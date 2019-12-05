@@ -157,22 +157,79 @@ class PlayerTest {
         assertEquals(25,player.getLocation());
     }
 
-/*    @Test
+    @Test
     void testPickCommChestCard() {
-//    	Board.initialiseBoard();
-//    	//First card in deck is random each time
+    	//Checking PAY
+    	Board.communityChests.get(0).setCardType("PAY");
+    	Board.communityChests.get(0).setCardValue(20);
+    	Board.communityChests.get(0).setCardDesc("TEST: You owe 20");
     	player.pickCommChestCard();
+    	//Player will have 1480 now
+    	assertEquals(1480, player.getMoney(), "Checking pay feature");
+    	
+    	//Checking Income
+    	Board.communityChests.get(0).setCardType("INCOME");
+    	Board.communityChests.get(0).setCardValue(20);
+    	Board.communityChests.get(0).setCardDesc("TEST: You get 20");
+    	player.pickCommChestCard();
+    	assertEquals(1500, player.getMoney(), "Checking income feature");
+    	
+    	//Checking MOVE
+    	Board.communityChests.get(0).setCardType("MOVE");
+    	Board.communityChests.get(0).setCardValue(4);
+    	Board.communityChests.get(0).setCardDesc("TEST: You move to square 4");
+    	player.pickCommChestCard();
+    	assertEquals(4, player.getLocation(), "Checking location is 4");
+    	
+    	//Get out of jail free
+    	Board.communityChests.get(0).setCardType("GET_OUT_OF_JAIL");
+    	Board.communityChests.get(0).setCardDesc("TEST: Get out of jail");
+    	player.pickCommChestCard();
+    	assertEquals(1, player.getJailCard().size(), "Jail card array is size 1"); //Checking the jail free is in list
+    	
+    	//Checking Jail
+    	Board.communityChests.get(0).setCardType("JAIL");
+    	Board.communityChests.get(0).setCardDesc("TEST: Sent to Jail");
+    	player.pickCommChestCard();
+    	assertTrue(player.isInJail());	
     }
 
     @Test
     void testPickChanceCard() {
-//    	Board.initialiseBoard();
-//    	//First card is random each time
-        String instruction = "y\r\n";
-        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
-        System.setIn(instructionInputStream);
+    	//Checking pay
+    	Board.chances.get(0).setCardType("PAY");
+    	Board.chances.get(0).setCardValue(20);
+    	Board.chances.get(0).setCardDesc("TEST: You owe 20");
     	player.pickChanceCard();
-    }*/
+    	//Player will have 1480 now
+    	assertEquals(1480, player.getMoney(), "Checking pay feature");
+    	
+    	//Checking Income
+    	Board.chances.get(0).setCardType("INCOME");
+    	Board.chances.get(0).setCardValue(20);
+    	Board.chances.get(0).setCardDesc("TEST: You get 20");
+    	player.pickChanceCard();
+    	assertEquals(1500, player.getMoney(), "Checking income feature");
+    	
+    	//Checking MOVE
+    	Board.chances.get(0).setCardType("MOVE");
+    	Board.chances.get(0).setCardValue(4);
+    	Board.chances.get(0).setCardDesc("TEST: You move to square 4");
+    	player.pickChanceCard();
+    	assertEquals(4, player.getLocation(), "Checking location is 4");
+    	
+    	//Get out of jail free
+    	Board.chances.get(0).setCardType("GET_OUT_OF_JAIL");
+    	Board.chances.get(0).setCardDesc("TEST: Get out of jail");
+    	player.pickChanceCard();
+    	assertEquals(1, player.getJailCard().size(), "Jail card array is size 1"); //Checking the jail free is in list
+    	
+    	//Checking Jail
+    	Board.chances.get(0).setCardType("JAIL");
+    	Board.chances.get(0).setCardDesc("TEST: Sent to Jail");
+    	player.pickChanceCard();
+    	assertTrue(player.isInJail());
+    }
 
     @Test
     void testIsInJail() {
