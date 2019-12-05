@@ -14,7 +14,7 @@ class CommunityChestTest {
     private Player playerTest = new Player("John", "blue");
     @BeforeEach
     void setUp() {
-        commChestTest = new CommunityChest("PAY","Pay doctor's fees of €20", 20);
+        commChestTest = new CommunityChest("PAY","Pay doctor's fees of £20", 20);
     }
 
     @Test
@@ -54,12 +54,12 @@ class CommunityChestTest {
         //Fine is input of 0 and Chance is input of 1
         //FIXME @@ciarannolan....unsure about how to process the choice on this
     	int initialMoney = playerTest.getMoney();
-    	commChestTest.setCardDesc("Pay fine of €25 or pick Chance card");
+    	commChestTest.setCardDesc("Pay fine of £25 or pick Chance card");
         commChestTest.setCardType("CHOICE");
-        commChestTest.dealWithCard(playerTest);
         System.out.println("\n***********************************");
         System.out.println("TEST: PLEASE PRESS FINE");
         System.out.println("***********************************\n");
+        commChestTest.dealWithCard(playerTest);
         //Do it in the case of minusing the value
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
     }

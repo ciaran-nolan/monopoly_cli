@@ -141,7 +141,7 @@ class PlayerTest {
         int initialPlayer1 = player.getMoney();
         player.reduceMoney(100, playerOwed);
         assertEquals(initialPlayer1-100,player.getMoney(), "Player should have less money");
-        assertEquals(initialPlayer2+100, playerOwed.getMoney(), "Player owed should have gained €100");
+        assertEquals(initialPlayer2+100, playerOwed.getMoney(), "Player owed should have gained £100");
     }
 
     @Test
@@ -151,7 +151,7 @@ class PlayerTest {
         player.setLocation(38);
         int money = player.getMoney();
         player.movePlayer(5);
-        assertEquals(money+200,player.getMoney(),"Checking €200 given for passing GO");
+        assertEquals(money+200,player.getMoney(),"Checking £200 given for passing GO");
     }
 
     @Test

@@ -7,13 +7,32 @@ import ie.ucd.operations.Checks;
 import ie.ucd.squares.CanOwn;
 import ie.ucd.squares.Property;
 
+/**
+ * The Chance class extends the Card class as its parent. This Class implements the abstract method dealWithCard for Chance cards
+ * of different types
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
+
 public class Chance extends Card {
 	
+	/** 
+	 * This is the Constructor which has the same arguments of its parent class of type, description and value
+	 * @param cardType The type of card such as MOVE, PAY, INCOME
+	 * @param cardDesc The actual text on the card
+	 * @param cardValue The value of the card such as how many spaces to move or how much money you have received
+	 */
 	public Chance(String cardType, String cardDesc, int cardValue) {
 		super(cardType, cardDesc, cardValue);
 	}
 
-	//method to deal with a card from one of the game's decks
+	/** 
+	 * Deal with card function which takes an input of player object and either reduces the money of player (PAY), gives money 
+	 * to player (INCOME), sends them to Jail (JAIL) or gives them a Get out of Jail card (GET_OUT_OF_JAIL) depending on a switch statement
+	 * determined by the card's type
+	 * 
+	 * @param player A player object which these actions can be applied to
+	 */
 	public void dealWithCard(Player player) {
 		ArrayList<TitleDeed> titleDeedList = player.getTitleDeedList();
 

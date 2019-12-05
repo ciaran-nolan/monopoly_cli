@@ -18,8 +18,8 @@ class CardTest {
     @BeforeEach
     void setUp() {
         //In this I will set up a Community Chest, Chance and Title Deed Card
-        commChestTest = new CommunityChest("PAY","Pay €100 in taxes", 100);
-        chanceTest = new Chance("INCOME", "You won €100", 100);
+        commChestTest = new CommunityChest("PAY","Pay £100 in taxes", 100);
+        chanceTest = new Chance("INCOME", "You won £100", 100);
         titleDeedTest = new TitleDeed("Title Deed","Piccadilly",0,"Orange", 200,
                 new int[]{4,10,20,30}, 15,20,null, null);
     }
@@ -36,7 +36,7 @@ class CardTest {
     void testGetCardDesc() {
         String cardDescTest = "Pay";
         assertNotEquals(cardDescTest,commChestTest.getCardDesc(),"Checking Card Description");
-        cardDescTest = "Pay €100 in taxes";
+        cardDescTest = "Pay £100 in taxes";
         assertEquals(cardDescTest,commChestTest.getCardDesc(),"Checking Card Description Same");
     }
 
@@ -56,14 +56,14 @@ class CardTest {
 
     @Test
     void testSetCardDesc() {
-        chanceTest.setCardDesc("You won €20");
-        assertEquals("You won €20", chanceTest.getCardDesc(),"Checking card description can be changed");
+        chanceTest.setCardDesc("You won £20");
+        assertEquals("You won £20", chanceTest.getCardDesc(),"Checking card description can be changed");
     }
 
     @Test
     void testSetCardValue() {
         chanceTest.setCardValue(20);
-        assertEquals(20,chanceTest.getCardValue(),"Checking card value can be set to €20");
+        assertEquals(20,chanceTest.getCardValue(),"Checking card value can be set to £20");
     }
 
     //FIXME could change this to be tested in the card class itselg

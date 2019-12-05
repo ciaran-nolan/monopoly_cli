@@ -8,9 +8,22 @@ import ie.ucd.operations.InputOutput;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * This is the Jail class and handles all of the interactions of a player with the jail square such as sending to Jail, removing from jail,
+ * using a get out of jail free card, handling a jail move such as when you are leaving
+ * It has no class variables and is purely an implementation class of methods
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class Jail {
 
+
     //FIXME fix jail condition with immediate exit
+	/**
+	 * The method which sends a player to jail in the argument. It prints that the player has been sent to jail.
+	 * It then uses the player method setInJail to change their jail status and set their location to square number 10(Jail)
+	 * @param jailedPlayer The player object to be jailed
+	 */
     public static void sendToJail(Player jailedPlayer){
         System.out.println("You have been sent to Jail.");
         //set location to 10, they will not pass go with this method
@@ -18,16 +31,28 @@ public class Jail {
         jailedPlayer.setLocation(10);
     }
 
+    /**
+     * Removing a player from jail.If they didn't roll a double, they can roll the dice and move to that square. Then we perform CheckSquare
+     * @param jailedPlayer The player that is jailed and will now be freed from jail
+     * @param rolledDouble Whether or not the player has rolled a double to free them from jail
+     */
     public static void removeFromJail(Player jailedPlayer, boolean rolledDouble){
-        jailedPlayer.setInJail(false);
+        jailedPlayer.setInJail(false); //They are now no longer in Jail
         jailedPlayer.setJailMoves(0);
         if(!rolledDouble) {
         	Dice.rollDice();
         }
-        jailedPlayer.movePlayer(Dice.getDieVals());
-        Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer);
+        jailedPlayer.movePlayer(Dice.getDieVals());		//Move them by that number of spaces
+        Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer); //Run checksquare
     }
 
+
+    /**
+     * This handles using a get out of jail free card to leave jail. It will check what pile of cards it came from, either community chest or chance, add it back to
+     * those piles of cards and then remove it from the Arraylist of jail free cards that the jailedPlayer object possesses.
+     * It then calls removeFromJail() to remove them from jail
+     * @param jailedPlayer The player who is jailed who is using the get out of jail free card
+     */
     private static void handleJailFreeCardUsage(Player jailedPlayer){
         System.out.println("You have used a Get Out of Jail Free card to exit jail");
         //I now need to add the card back into the relevant array. I can see that by the Array that is less than 16
@@ -41,11 +66,17 @@ public class Jail {
         }
         removeFromJail(jailedPlayer,false);
     }
-
+    /**
+     * This handles the rolls a player makes when in jail. They can either pay the fine (if they have enough money), use a get out of jail free
+     * card if they have one or if they do not have enough for a fine, they will go bankrupt
+     * @param jailedPlayer
+     */
     private static void handleFinalRollAttempt(Player jailedPlayer){
         int jailExitChoice = 0;
+        //If they don't have get out of jail free card
+        //Check if they can afford the fine and if not, deem them bankrupt and try raise money as they owe the bank
         if(jailedPlayer.getJailCard().size()==0){
-            System.out.println("You have rolled for the third time without getting doubles, you must pay the €50 fine");
+            System.out.println("You have rolled for the third time without getting doubles, you must pay the £50 fine");
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the jail fee");
                 jailedPlayer.bankrupt(null);
@@ -55,6 +86,7 @@ public class Jail {
                 removeFromJail(jailedPlayer,false);
             }
         }
+        //They have a get out of jail free card and are given the option of a fine or using a get out of jail free card
         else{
             System.out.println("You have rolled for the third time without getting doubles.");
             if(!Checks.enoughFunds(jailedPlayer, 50)) {
@@ -65,14 +97,21 @@ public class Jail {
                 jailExitChoice = InputOutput.integerMenu(0,1, null);
             }
             if(jailExitChoice==0){
+            	//If they choose to use their get out of jail free card
                 handleJailFreeCardUsage(jailedPlayer);
             }
             else{
+            	//If they choose to pay the fine
                 jailedPlayer.reduceMoney(50,null);
                 removeFromJail(jailedPlayer,false);
             }
         }
     }
+    /**
+     * This method handles the moves they make while the jailedPlayer object is in jail such as rolling to see can they roll a double
+     * ,paying their fine or using a get out of jail free card
+     * @param jailedPlayer The player who is currently in jail who is asked to either roll a dice, pay a fine or use a get out of jail free card if they have one
+     */
     public static void handleJailMove(Player jailedPlayer){
         BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
         //print jail status
@@ -94,7 +133,7 @@ public class Jail {
         else{
             jailExitChoice = InputOutput.integerMenu(0,1, userInput);
         }
-
+        //Decide to roll the dice
         if(jailExitChoice==0){
             //they have decided to roll the dice
             Dice.rollDice();
@@ -112,25 +151,30 @@ public class Jail {
                 }
             }
         }
+        //Pay the fine if they can
         else if(jailExitChoice == 1){
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the fine, you must roll");
                 Dice.rollDice();
                 doubleRoll=Dice.isDoubleRoll();
                 jailedPlayer.setJailMoves(jailedPlayer.getJailMoves()+1);
+                //If they roll a double they can leave jail
                 if(doubleRoll){
                     System.out.println("You have rolled doubles, you now exit jail and move "+Dice.getDieVals()+" places");
                     removeFromJail(jailedPlayer,true);
                 }
+                //If they have stayed in jail for 3 rounds
                 else if(jailedPlayer.getJailMoves()==3){
                     handleFinalRollAttempt(jailedPlayer);
                 }
             }
+            //They decide to pay the fine and are removed from jail
             else {
             	jailedPlayer.reduceMoney(50,null);
             	removeFromJail(jailedPlayer,false);
             }
         }
+        //Use their get out of jail free card if they can
         else{
             handleJailFreeCardUsage(jailedPlayer);
         }

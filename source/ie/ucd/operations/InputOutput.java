@@ -13,7 +13,13 @@ import ie.ucd.squares.CanOwn;
 import ie.ucd.squares.Property;
 
 import static ie.ucd.game.Board.board;
-
+/**
+ * The Input/Output class handles all of the inputs from the user that are used continuously. 
+ * These include Yes/no inputs, a title deed operation menu , information about the square a player object is on, an integer menu to make 
+ * choices numerically, handling user options when they land on a square and a menu for a player to select another player to interact with
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class InputOutput {
 	//single scanner for project
 
@@ -121,7 +127,12 @@ public class InputOutput {
 			System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
 		}
 	}
-
+	/**
+	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with
+	 * Name,token. The token has to be a colour which are printed on the screen. It then creates Player objects for each of the players entered with
+	 * minimum 2 players to maximum 6.
+	 * @return listPlayers, an ArrayList of type Player with the Players for the game
+	 */
 	public static ArrayList<Player> createListPlayers(BufferedReader userInput) {
 		try {
 			if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
