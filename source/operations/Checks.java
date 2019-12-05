@@ -1,7 +1,5 @@
 package operations;
 
-//import java.util.ArrayList;
-//import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -17,15 +15,33 @@ import squares.Square;
 import squares.Train;
 import squares.Utility;
 
-
+/**
+ * This is the Checks class. We built this class as we had a lot of checking being made on inputs and different conditions inside methods of core classes.
+ * We found that it would be better to locate them here instead. 
+ * @author Robert Keenan & Ciaran Nolan
+ *
+ */
 public class Checks {
 
 	//check if the game can still continue
+	/**
+	 * Method to check if a game can still continue
+	 * @return 1 if playerList.size()>1 and numPlayersBankrupt < 2, 0 otherwise
+	 */
 	public static boolean checkIfValidGame(){
 		return Game.playerList.size() != 1 && Game.numPlayersBankrupt < 2;
 	}
 
 	//check the square the player has landed on
+	/**
+	 * This is used to check the square that a player object lands on and handles whether you can buy it, if they are the owner already or 
+	 * needing to pay rent.
+	 * If it's a Special Square, it uses the implementSpecialSquare function, and Property, Train and Utility have similar functionality in terms of rent,
+	 * building (Property only) and mortgaging
+	 * @param index The index location on the board of the square
+	 * @param player The Player object currently on that square
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	public static void checkSquare(int index, Player player, BufferedReader userInput) {
 		if(userInput==null){
 			userInput = new BufferedReader(new InputStreamReader(System.in));
@@ -79,17 +95,33 @@ public class Checks {
 		}
 	}
 
-	//check if the player has enough funds to complete a particular action
+	/**
+	 * Method to check if a player has enough funds to complete a specific action
+	 * @param player The Player object in question
+	 * @param price The amount of money needed to pay for the action
+	 * @return 1 if they can pay, 0 if they can't
+	 */
 	public static boolean enoughFunds(Player player, int price) {
         return player.getMoney() >= price;
     }
 
     //reveal the current status of a player
+	/**
+	 * Current status of a player which is printed to the screen. It prints the location of the player, how many jail free cards they have, owned properties and cash.
+	 * 
+	 * @param player The Player object which will have its data printed to the screen
+	 */
     public static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 		+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
 	//reveal the status of a players CanOwn list
+    /**
+     * Prints out the status of a Player object's CanOwn list or Title Deed list. These are the CanOwn object's that the Player owns due to them holding 
+     * the TitleDeed card. 
+     * If a property is in their list of TitleDeed cards, it also presents how many houses and hotels are on the Properties. 
+     * @param player
+     */
 	public static void checkPlayerCanOwnStatus(Player player){
 	    System.out.println(player.getName() + " - Property Status: \n");
 	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
@@ -101,10 +133,21 @@ public class Checks {
         }
     }
 	//check if a particular property is available for purchase
+	/**
+	 * This shows whether a CanOwn object with the TitleDeed card in the argument titleDeed is available for purchase
+	 * @param titleDeed TitleDeed card object of the CanOwn object being checked for purchase
+	 * @return 1 if no owner, 0 if there is an owner
+	 */
 	public static boolean canBuy(TitleDeed titleDeed) {
         return null == titleDeed.getOwner();
 		}
 
+	/**
+	 * This method is used to check if the TitleDeed card provided is owned by the Player object given as an argument
+	 * @param ownableCard TitleDeed card which is being checked
+	 * @param player The Player object being checked 
+	 * @return true if player is owner, false if ownableCard has no owner or player is not owner
+	 */
 	public static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
 		if(null == ownableCard.getOwner()){
 			return false;
@@ -113,6 +156,14 @@ public class Checks {
 	}
 
 	//method to check if a player owns all the properties in a given colour group.
+	/**
+	 * This method is used to check if the Player object owns all Properties of a certain colour group which can be used for obtaining higher rent
+	 * and building on these properties.
+	 * It loops through the Player object's TitleDeed card searching for each owned site and their colour.
+	 * @param player The Player Object being checked for owning all of a colour group
+	 * @param property The type of property which is being checked which can be used to find the right colours
+	 * @return null if no property provided or counter not satisifed, propertyList if they own all colours
+	 */
 	public static ArrayList<Property> ownAllColour(Player player, Property property) {
 		if(null == property){
 			return null;
@@ -151,6 +202,14 @@ public class Checks {
 	}
 
 	//check that the distribution of houses remains even in the case of buying or selling a house
+	/**
+	 * This checks for an even house distribution across the colour group of Properties. There cannot be greater than 1 house difference between properties 
+	 * in the same colour group and this method checks that this is the case. 
+	 * @param colourGroup The Colour group of Property objects
+	 * @param propertyToAlterHouses A Property object which you want to alter 
+	 * @param buyOrSell Buying or selling houses boolean
+	 * @return true if even house distribution, false if not
+	 */
 	public static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
 		int[] houseDifferentialBounds = new int[2];
 		if(buyOrSell) {
@@ -178,6 +237,13 @@ public class Checks {
 	}
 
 	//check if a property is eligible to be improved
+	/**
+	 * To check if a Property object can be built on with houses and hotels. It checks whether the Property is owned by the Player and whether the Player 
+	 * has enough money. It then has to check if the Player owns all the Properties in a colour group 
+	 * @param propToBuild The Property object to build on
+	 * @param player The Player object who wants to build on propToBuild
+	 * @return -1 attempt again, -2 exit without building anything, 0 you can build on this
+	 */
 	public static int canBuildHousesHotels(Property propToBuild, Player player){
 		// Status codes:
 		// - 1 - attempt again
@@ -213,6 +279,12 @@ public class Checks {
 	}
 
 	//check the combined value of all houses and hotels for a player
+	/**
+	 * This method checks all of the combined value of hotels and houses and is particularly useful at the end of the game when we are checking
+	 * who won the game because of asset value
+	 * @param player The Player object who we are checking the house and hotel value for 
+	 * @return valOfHousesHotels, the total value of all houses and hotels on owned sites
+	 */
 	public static int checkHouseHotelValue(Player player) {
 		int valOfHousesHotels = 0;
 		for(TitleDeed titleDeed : player.getTitleDeedList()) {
@@ -227,6 +299,12 @@ public class Checks {
 	}
 
 	//check the value that mortgaging all properties of a player will return
+	/**
+	 * Check the value of mortgaging CanOwn objects in the Player object's title deed list. 
+	 * Useful for when we are checking how much money a player object needs to raise to get out of bankruptcy. 
+	 * @param player Player who we are checking the value of their CanOwn objects' mortgages
+	 * @return mortgageValue, total mortgage value of all of these
+	 */
 	public static int checkMortgagingValue(Player player) {
 		int mortgageValue = 0;
 		
@@ -239,6 +317,12 @@ public class Checks {
 		return mortgageValue;
 	}
 	//check the value of the current negotiated provisional trades a bankrupt player has
+	/**
+	 * This is used in the bankruptcy operation when a Player object is trying to obtain more money to pay off debts. This method
+	 * checks the total value of a currently negotiated provisional trade with another player
+	 * @param player Player object who has negotiated a provisional trade
+	 * @return valOfTrades, total value of provisional trades
+	 */
 	public static int checkBankruptcyTradeValue(Player player){
 		int valOfTrades = 0;
 		for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
@@ -249,36 +333,48 @@ public class Checks {
 		return  valOfTrades;
 	}
 	//This function will check the winner of the game by looping through the player list and checking who has the most money
-	//Will return the player object that is the winner and then the main class will finish the game
 	//Check winner will be called when the 2nd bankruptcy of the group of players occurs
+	/**
+	 * This method determines the winner of the game when 2 players in the game have gone bankrupt. 
+	 * If there is only one player left in the player list, then that player is declared the winner automatically. 
+	 * If not, the method runs through each player in the player list and combines the value of all of their houses and hotels on sites 
+	 * at their original buy price and also the value of all CanOwn objects owned (TitleDeed cards of these).
+	 * 
+	 * It will then compare the other players' net worth and whoever is highest wins the game and their total asset value is printed to the screen
+	 */
 	public static void checkWinner() {
 		if(Game.playerList.size()==1){
-			System.out.println(Game.playerList.get(0).getName()+" has won the game");
+			System.out.println(Game.playerList.get(0).getName()+" has won the game!");
 		}
+		//More than one player left
 		else {
 			int totalValue = 0;
 			ArrayList<Integer> valueArray = new ArrayList<>();
 			int maxValue, maxIndex;
-
+			//Loop through remaining players and calculate their net worth
 			for (Player player : Game.playerList) {
 				totalValue += player.getMoney();
 				for (TitleDeed titleDeed : player.getTitleDeedList()) {
 					CanOwn ownable = titleDeed.getOwnableSite();
 					if (ownable instanceof Property) {
+						//Value of houses and hotels
 						totalValue += ((Property) ownable).getNumHouses() * titleDeed.getHousePrice();
 						totalValue += ((Property) ownable).getNumHotels() * titleDeed.getHousePrice() * 5; //A Hotel is 5 times the price of a house
 					}
+					//Value of CanOwn objects
 					totalValue += titleDeed.getPriceBuy();
 					valueArray.add(totalValue);
-					System.out.println("Player: " + player.getName() + " has Total Asset value of �" + totalValue);
+					System.out.println("Player: " + player.getName() + " has Total Asset value of £" + totalValue);
 				}
 				//Zero the local variable for use with next player
 				totalValue = 0;
 			}
+			//Find max Asset value
 			maxValue = Collections.max(valueArray);
 			maxIndex = valueArray.indexOf(maxValue);
-			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of �" + maxValue));
-			System.out.println("The game has been won! It is now over");
+			//Winner determined
+			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of £" + maxValue));
+			System.out.println("The Game has been won! It is now over!");
 			System.exit(1);
 		}
 	}
