@@ -46,7 +46,7 @@ public class Utility extends CanOwn implements Printable {
 			this.getTitleDeedCard().playerAuction(null, userInput);
 		}
 		//Property is already owned
-		else if(this.canBuy()){
+		else if(!this.canBuy()){
 			System.err.println("This property is already owned!");
 		}
 		//They can purchase it
@@ -72,6 +72,6 @@ public class Utility extends CanOwn implements Printable {
 
 	@Override
 	public boolean canBuy() {
-		return !this.getTitleDeedCard().canBuy();
+		return this.getTitleDeedCard().canBuy();
 	}
 }

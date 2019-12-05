@@ -281,7 +281,6 @@ class PlayerTest {
     @Test
     void testBankruptcyMortgage() {
     	Board.initialiseBoard();
-    	player.getTitleDeedList().clear();
     	player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
     	player.setMoney(5);
     	player.bankruptcyMortgage(10);

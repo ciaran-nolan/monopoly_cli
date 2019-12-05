@@ -82,7 +82,7 @@ public class Property extends CanOwn implements Printable {
 
 			}
 			//the case of the owner should be handled in check square
-			else if(this.canBuy()){
+			else if(!this.canBuy()){
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
@@ -319,7 +319,7 @@ public class Property extends CanOwn implements Printable {
 
 	@Override
 	public boolean canBuy() {
-		return !this.getTitleDeedCard().canBuy();
+		return this.getTitleDeedCard().canBuy();
 	}
 }
 	
