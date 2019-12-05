@@ -3,14 +3,17 @@
 ## Team members: Robert Keenan & Ciaran Nolan
 ## Team ID: 11
 
-* The aim of this assignment is to create a fully functional version of the board game Monopoly using Java
-* This repository will contain all the functional code required to run this game
-* The objective of this variant of Monopoly is to own as much land as possible and be the richest person in the game
+* The aim of this assignment is to create a fully functional version of the board game Monopoly using Java.
+* This repository will contain all the functional code required to run this game.
+* The objective of this variant of Monopoly is to own as much land as possible and be the richest person in the game.
+* With respect to property names and chance and community chest cards, we implemented the UK version of the game. 
 * Please see our JavaDoc in our repository for more in-depth details into the structure of our project and the implementation for all methods and classes
-### Structure of the Repository
-* The repository is firstly split into 2 main folders:
+## Structure of the Repository
+
+* The repository is firstly split into 2 main folders of Java code:
 	* source: Contains all of the source code in a number of packages.
 	* tests: Contains all of our unit tests for each one of our source code classes in the source/ folder.
+* There are a number of other folders such as UML Diagrams and Images
 #### Source Code 
 * Each one of these 2 main folders is split into a number of packages which are described below in terms of why we structured them that way:
 	* **cards: The *cards* package contains all of the relevant cards to play the game. These are the cards that will be physically used in the game and the Card parent class**
@@ -50,22 +53,20 @@
 	* Class Diagram: For the whole structure of our code
 	* Sequence Diagram: FIXME
 	* Use Case Diagram: FIXME
+#### Images
+* FIXME
 #### Reason for Configuration files
 * We implemented configuration files in a set format or structure as we wanted our code and project to be as transferable as possible so that a user could perhaps use their own configuration files for their own custom version of Monopoly. This could include our code being used for the Irish, UK and US versions of Monopoly with only a few simple changes needed. We used this as a motivation to demonstrate the extensibility and user-friendliness of our code base. 
 
-
-
-### How to play the game
-
+## How to run the project successfully
 		
-### Teamwork
-* Ciaran and I initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code.
-* We started off with a number of white board meetings in the Library to decide on our class structure, class variables and initial class methods for each.
-* We use Trello to assign ourselves debugging tasks, merge requests from other branches (also assigned through Gitlab) and setting out tasks for each of us.
+## Teamwork
+* We initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code.
+* We started off with a number of white board meetings in the Library to decide on our class structure, class variables, initial class methods for each and our design methods.
+* We use Trello to assign ourselves debugging tasks, merge requests from other branches (also assigned through Gitlab) and setting out tasks for each of us. We found this is an extremely good tool to use when we are working remotely away from each other and we have both used it in a professional setting before so we were quite familiar with its advanced features.
 * Through Trello, we can gain an insight into what each other is doing but also ensures that we are not doing the same tasks twice.
-* We also consistently meet up in the Engineering building to see what each other has done and how we can progress with the project as a whole.
-* Once we were finished with a class, we would meet up and review the code. From here, we could make judgements on areas where we could improve or optimise the speed of our program. 
-
-
+* We also consistently meet up in the Engineering building to see what each other has done and how we can progress with the project as a whole. We actually sit beside each other in the ME Project Lab in the Engineering building so it is easy for us 
+* Once we were finished with a class, we would meet up and review the code. From here, we could make judgements on areas where we could improve, optimise the speed of our program or simplify the structure.
+* As you may have noticed from our Gitlab repository, there is a large nimber of commits. We have obviously seen in this Software Engineering module just how important Agile methodologies are to the efficient performance of a software development team. We emphasised incremental improvements with many commits a day. This meant that there was a minimal amount of times where we had merge conflicts or encountered issues in our workflow and this is definitely something we prioritised throughout the project
 
 		
