@@ -12,9 +12,10 @@ import org.junit.jupiter.api.Test;
 import game.Board;
 import game.Player;
 
+
 class InputOutputTest {
 	private InputStream answerInputStream;
-	 private Player player;
+	private Player player;
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
@@ -38,32 +39,7 @@ class InputOutputTest {
 	}
 
 	@Test
-	void testTitleDeedOperationMenu() {
-		String answer = "a\r\ny\r\n";
-	    answerInputStream = new ByteArrayInputStream(answer.getBytes());
-	    System.setIn(answerInputStream);
-	    player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
-	    InputOutput.titleDeedOperationMenu(player, "" , housesHotels, userInput);
-	}
-
-	@Test
 	void testSquareInformation() {
-		
+		InputOutput.squareInformation(5);
 	}
-
-	@Test
-	void testIntegerMenu() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testHandleUserOption() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSelectPlayerMenu() {
-		fail("Not yet implemented");
-	}
-
 }

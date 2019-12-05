@@ -139,24 +139,6 @@ public class InputOutput {
 			default:
 				break;
 		}
-//		if(board.get(index) instanceof CanOwn){
-//			System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
-//			if(null == (((CanOwn) board.get(index)).getTitleDeedCard().getOwner())){
-//				System.out.println("Owner: None") ;
-//			}
-//			//Print more details
-//			else{
-//				System.out.println("Owner: "+(((CanOwn) board.get(index)).getTitleDeedCard().getOwner().getName())) ;
-//			}
-//			//If its a property, I can print the colour and number of houses/hotels
-//			if (board.get(index) instanceof Property) {
-//				System.out.println("Colour: "+((Property) board.get(index)).getSquareColour()+"\nHouses: "
-//						+((Property) board.get(index)).getNumHouses()+"\nHotels: "+((Property) board.get(index)).getNumHotels());
-//			}
-//		}
-//		else{
-//			System.out.println("You have landed on "+ board.get(index).getName()+" (Index: "+index+")");
-//		}
 	}
 	/**
 	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with
