@@ -179,9 +179,9 @@ class ChecksTest {
     void testOwnAllColour() {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
-        assertFalse(Checks.ownAllColour(player,(Property)player.getTitleDeedList().get(0).getOwnableSite())==null);
+        assertNotEquals(null, Checks.ownAllColour(player,(Property)player.getTitleDeedList().get(0).getOwnableSite()));
         player.removeOwnedTitleDeed(player.getTitleDeedList().get(0));
-        assertTrue(Checks.ownAllColour(player,(Property)player.getTitleDeedList().get(0).getOwnableSite())==null);
+        assertEquals(null,Checks.ownAllColour(player,(Property)player.getTitleDeedList().get(0).getOwnableSite()));
         assertEquals(null,Checks.ownAllColour(player, null));
     }
 

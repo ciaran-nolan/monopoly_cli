@@ -208,10 +208,7 @@ class TitleDeedTest {
 		System.out.println("Nobody bids. Both press n");
 		t1.playerAuction(null, null);
 
-		assertTrue(t1.getOwner()==null);
-
-		//assertTrue(Game.playerList.get(1).getTitleDeedList().isEmpty());
-
+		assertEquals(null, t1.getOwner(), "Checking owner is Null");
 	}
 
 }
