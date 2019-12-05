@@ -108,11 +108,6 @@ public class Property extends CanOwn {
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		boolean isHotel = false;
 
-		//System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");
-		//String propName = input.nextLine();
-
-
-		//Property propToBuild = Checks.isValidProp(propName, player);
 		TitleDeed titleDeedToBuild = InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true, userInput);
 		if(null == titleDeedToBuild){
 			System.out.println("Cancelling operation.");

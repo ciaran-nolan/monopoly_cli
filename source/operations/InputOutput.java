@@ -40,7 +40,6 @@ public class InputOutput {
 		System.out.println(message);
 		try {
 			String acknowledgement = userInput.readLine();
-			System.out.println(acknowledgement);
 			//ensure the player enters a valid response
 			while(!(acknowledgement.equalsIgnoreCase("y") || acknowledgement.equalsIgnoreCase("n"))) {
 				System.out.println(player.getName()+", please enter a valid response (y/n)");
@@ -71,7 +70,6 @@ public class InputOutput {
 					continue;
 				}
 				//if house and hotels is true so store only instances of property
-				System.out.println("Property "+player.getTitleDeedList().get(i).getOwnableSite().getName());
 				if (housesHotels && (player.getTitleDeedList().get(i).getOwnableSite() instanceof Property)) {
 
 					houseHotelList.add(player.getTitleDeedList().get(i));
@@ -252,7 +250,7 @@ public class InputOutput {
 						System.out.println("Cancelling Operation");
 					} else {
 						CanOwn propToDemortgage = (titleDeedToDemortgage.getOwnableSite());
-						propToDemortgage.demortgage(false);
+						propToDemortgage.demortgage(false,false);
 					}
 				}
 				break;

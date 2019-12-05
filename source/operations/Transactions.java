@@ -23,14 +23,14 @@ public class Transactions {
 		//show each players trades
 		
 	    //Player One
-		System.out.println("Terms of trade:\n\n"+tradeList.get(0).getName()+"\n\nJail free Cards: "+traderOneJailFree+"\nProperties:");
+		System.out.println("Terms of trade:\n\n"+tradeList.get(0).getName()+":\nJail free Cards: "+traderOneJailFree+"\nProperties:");
 		for(String key: traderOnePropsToTrade.keySet()) {
 			System.out.println(key);
 		}
 		System.out.println("Cash: "+traderOneCash);
 
 		//PLayer Two
-		System.out.println("\n"+tradeList.get(1).getName()+"\n\nJail free Cards: "+traderTwoJailFree+"\nProperties:");
+		System.out.println("\n"+tradeList.get(1).getName()+":\nJail free Cards: "+traderTwoJailFree+"\nProperties:");
 		for(String key: traderTwoPropsToTrade.keySet()) {
 			System.out.println(key);
 		}
@@ -47,24 +47,40 @@ public class Transactions {
 		traderTwoPropsToTrade.clear();
 		tradeList.clear();
 	}
-	
-	private static void exchangeTradeItems() {
+	public static void handleMortgagedTitledeed(Player player, TitleDeed mortgagedTitledeed, BufferedReader userInput){
+		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println(mortgagedTitledeed.getCardDesc()+" which "+player.getName()+" has received in trade or auction is mortgaged\n"
+		+player.getName()+", do you wish to: \n[0]demortgage now\n[1]Pay 10% Interest and demortgage at another time");
+		int choiceInput = InputOutput.integerMenu(0,1,userInput);
+		if(choiceInput==0){
+			mortgagedTitledeed.getOwnableSite().demortgage(true,true);
+		}
+		else mortgagedTitledeed.getOwnableSite().demortgage(false,true);
+	}
+
+	private static void exchangeTradeItems(BufferedReader userInput) {
+		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
 		Player traderOne = tradeList.get(0);
 		Player traderTwo = tradeList.get(1);
+		//trade money
+		traderOne.reduceMoney(traderOneCash, traderTwo);
+		traderTwo.reduceMoney(traderTwoCash, traderOne);
+
 		//trade property Lists
 		for(TitleDeed currentTitleDeed: traderOnePropsToTrade.values()) {
+
 			traderOne.removeOwnedTitleDeed(currentTitleDeed);
 			traderTwo.addPurchasedTitleDeed(currentTitleDeed);
+			if(currentTitleDeed.getMortgageStatus()) handleMortgagedTitledeed(traderTwo, currentTitleDeed,userInput);
 		}
 	
 		for(TitleDeed currentTitleDeed: traderTwoPropsToTrade.values()) {
 			traderTwo.removeOwnedTitleDeed(currentTitleDeed);
 			traderOne.addPurchasedTitleDeed(currentTitleDeed);
+			if(currentTitleDeed.getMortgageStatus()) handleMortgagedTitledeed(traderOne, currentTitleDeed,userInput);
 		}
 		
-		//trade money
-		traderOne.reduceMoney(traderOneCash, traderTwo);
-		traderTwo.reduceMoney(traderTwoCash, traderOne);
+
 	
 		//trade Jail Free Cards
 		if(traderOneJailFree>0){
@@ -180,7 +196,7 @@ public class Transactions {
 		//Trade Acceptance
 		if (InputOutput.yesNoInput(tradeList.get(0).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(0), userInput)
 				&& InputOutput.yesNoInput(tradeList.get(1).getName() + " do you accept the terms of trade? (y/n)", tradeList.get(1), userInput)) {
-			exchangeTradeItems();
+			exchangeTradeItems(userInput);
 		} else {
 			System.out.println("Trade has not been accepted by both parties");
 		}

@@ -30,7 +30,7 @@ public class Game {
 	public static void main(String[] args){
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		//Create player list
-		playerList = InputOutput.createListPlayers(null);
+		playerList = InputOutput.createListPlayers(userInput);
 		//initialise board
 		Board.initialiseBoard();
 

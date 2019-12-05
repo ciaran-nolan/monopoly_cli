@@ -53,7 +53,7 @@ class CanOwnTest {
     	Board.properties.get(4).getTitleDeedCard().setOwner(p1);
         Board.properties.get(4).mortgage(p1,false);
         assertTrue(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
-        Board.properties.get(4).demortgage(false);
+        Board.properties.get(4).demortgage(false,false);
         System.out.println(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
         assertFalse(Board.properties.get(4).getTitleDeedCard().getMortgageStatus());
     }

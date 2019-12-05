@@ -138,31 +138,26 @@ public abstract class CanOwn extends Square {
 	 * Reduces the money for the owner depending on whether they demortgage on sale or not.
 	 * It then sets the mortgage status to false and prints to the screen
 	 * It follows the same type of pattern for the property if it has not been sold and is being un-mortgaged after a number of rounds
-	 * @param demortgageOnSale This is to check if the property is being de-mortgaged immediately or not which determines the charge
+	 * @param InstantDemortgageOnSale This is to check if the property is being de-mortgaged immediately or not which determines the charge
 	 */
-	public void demortgage(boolean demortgageOnSale) {
+	public void demortgage(boolean InstantDemortgageOnSale, boolean demortgagedTrade) {
 		//Check property is mortgaged
 		if(this.getTitleDeedCard().getMortgageStatus()) {
 			//if the property must be de-mortgaged on sale
 			//Pay 10% plus value of mortgage
-			if (demortgageOnSale) {
+			if (!InstantDemortgageOnSale && demortgagedTrade) {
 				//Automatically set 10% interest to paying
 				this.titleDeedCard.getOwner().reduceMoney((int) (0.1 * this.titleDeedCard.getMortgage()), null);
-				//If they don't have enough money to pay off mortgage
-				if (this.titleDeedCard.getMortgage() > this.titleDeedCard.getOwner().getMoney()) {
-					System.err.println("You don't have enough money to demortgage this property now!");
-				} 
-				else {
-					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null);
-					this.titleDeedCard.setMortgageStatus(false);
-					System.out.println(this.titleDeedCard.getCardDesc() + " has been successfully demortgaged.");
-				}
 			}
 			//property has not been sold, just demortgaged
 			else {
 				//check owner has required funds to demortgage
 				if ((this.titleDeedCard.getMortgage() + 0.1 * this.titleDeedCard.getMortgage()) > this.titleDeedCard.getOwner().getMoney()) {
-					System.err.println("You don't have enough money to demortgage this property now!");
+					if(demortgagedTrade){
+						System.err.println("You don't have enough money to demortgage this property now, you must pay 10% interest instead.");
+						this.demortgage(false,true);
+					}
+					else System.err.println("You don't have enough money to demortgage this property now!");
 				}
 				else {
 					this.titleDeedCard.getOwner().reduceMoney(this.titleDeedCard.getMortgage(), null); //Paying price of mortgage

@@ -1,4 +1,5 @@
 package game;
+import java.io.BufferedReader;
 import java.util.*;
 
 import cards.Card;
@@ -205,7 +206,7 @@ public class Player {
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
-			this.addMoney(200); //Add £200 to the player's money because they have passed it
+			this.addMoney(200); //Add ï¿½200 to the player's money because they have passed it
 			System.out.println("You have passed go, you collect Â£200\n\nYour funds: "+this.getMoney());
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
@@ -490,9 +491,13 @@ public class Player {
 	public void completeBankruptcyTrade(){
 		for(TitleDeed currentTitleDeed: titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
-				this.reduceMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0],null);
-				currentTitleDeed.setOwner(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]));
-				System.out.println(currentTitleDeed.getOwner().getName());
+				currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]).reduceMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0],null);
+				this.addMoney((int)currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]);
+				currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]).addPurchasedTitleDeed(currentTitleDeed);
+
+				if(currentTitleDeed.getMortgageStatus()){
+					Transactions.handleMortgagedTitledeed(currentTitleDeed.getBankruptcyTradeStatus().get(currentTitleDeed.getBankruptcyTradeStatus().keySet().toArray()[0]),currentTitleDeed,null);
+				}
 				currentTitleDeed.getBankruptcyTradeStatus().clear();
 			}
 		}
