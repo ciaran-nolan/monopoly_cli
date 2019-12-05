@@ -1,4 +1,6 @@
 package ie.ucd.cards;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import ie.ucd.game.Jail;
@@ -16,7 +18,7 @@ import ie.ucd.squares.Property;
 
 public class Chance extends Card {
 	
-	/** 
+	/**
 	 * This is the Constructor which has the same arguments of its parent class of type, description and value
 	 * @param cardType The type of card such as MOVE, PAY, INCOME
 	 * @param cardDesc The actual text on the card
@@ -26,14 +28,17 @@ public class Chance extends Card {
 		super(cardType, cardDesc, cardValue);
 	}
 
-	/** 
-	 * Deal with card function which takes an input of player object and either reduces the money of player (PAY), gives money 
+	/**
+	 * Deal with card function which takes an input of player object and either reduces the money of player (PAY), gives money
 	 * to player (INCOME), sends them to Jail (JAIL) or gives them a Get out of Jail card (GET_OUT_OF_JAIL) depending on a switch statement
 	 * determined by the card's type
-	 * 
+	 *
 	 * @param player A player object which these actions can be applied to
 	 */
-	public void dealWithCard(Player player) {
+
+	//method to deal with a card from one of the game's decks
+	public void dealWithCard(Player player, BufferedReader userInput) {
+		if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
 		ArrayList<TitleDeed> titleDeedList = player.getTitleDeedList();
 
 		//print card details for the user
@@ -44,12 +49,12 @@ public class Chance extends Card {
 				//cover case where players move backwards
 				if(this.getCardValue()<0){
 					player.moveToSquare(player.getLocation()+this.getCardValue());
-					Checks.checkSquare(player.getLocation(), player);
+					Checks.checkSquare(player.getLocation(), player, userInput);
 				}
 				//move player forwards
 				else {
 					player.moveToSquare(this.getCardValue());
-					Checks.checkSquare(player.getLocation(), player);
+					Checks.checkSquare(player.getLocation(), player, userInput);
 				}
 				break;
 			case "JAIL":

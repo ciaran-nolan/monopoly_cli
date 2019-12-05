@@ -2,6 +2,8 @@ package ie.ucd.operations;
 
 //import java.util.ArrayList;
 //import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import ie.ucd.cards.TitleDeed;
@@ -24,7 +26,10 @@ public class Checks {
 	}
 
 	//check the square the player has landed on
-	public static void checkSquare(int index, Player player) {
+	public static void checkSquare(int index, Player player, BufferedReader userInput) {
+		if(userInput==null){
+			userInput = new BufferedReader(new InputStreamReader(System.in));
+		}
 		//get the current square
 		Square currentSquare = Board.board.get(index);
 		//check the square type
@@ -32,7 +37,7 @@ public class Checks {
 		case PROPERTY:
 			//property has no owner, offer to buy
 			if(canBuy(((Property)currentSquare).getTitleDeedCard())){
-				((Property)currentSquare).buy(player);
+				((Property)currentSquare).buy(player, userInput);
 			}
 			//player already owns the property
 			else if(isPlayerOwner(((Property) currentSquare).getTitleDeedCard(),player)) {
@@ -48,7 +53,7 @@ public class Checks {
 		case TRAIN:
 			//no owner, offer to buy
 			if(canBuy(((Train)currentSquare).getTitleDeedCard())){
-				((Train)currentSquare).buy(player);
+				((Train)currentSquare).buy(player, userInput);
 			}
 			//player is owner, no action required
 			else if(isPlayerOwner(((Train) currentSquare).getTitleDeedCard(),player)) {
@@ -60,7 +65,7 @@ public class Checks {
 		case UTILITY:
 			//no owner, offer to buy
 			if(canBuy(((Utility)currentSquare).getTitleDeedCard())){
-				((Utility)currentSquare).buy(player);
+				((Utility)currentSquare).buy(player, userInput);
 			}
 			//current player is owner, no action is required
 			else if(isPlayerOwner(((Utility) currentSquare).getTitleDeedCard(),player)) {
@@ -179,13 +184,13 @@ public class Checks {
 		// - 2 - exit without building
 		// return 0 - valid
 		if(null==propToBuild) {
-			if (InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("The property you have entered is invalid, would you like to try again? (y/n)", player, null)) {
 				return -1;
 			}
 			else return -2;
 		}
 		else if(!(Checks.isPlayerOwner(propToBuild.getTitleDeedCard(), player))){
-			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("You do not own the property you have entered, would you like to try again? (y/n)", player, null)) {
 				//restart pre-dice roll options
 				return -1;
 			} else return -2;
@@ -197,7 +202,7 @@ public class Checks {
 		}
 
 		else if(null == Checks.ownAllColour(player,propToBuild)) {
-			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player)) {
+			if (InputOutput.yesNoInput("You do not own all properties in this colour group, would you like to try again? (y/n)", player, null)) {
 				//restart pre-dice roll options
 				return -1;
 			} else return -2;

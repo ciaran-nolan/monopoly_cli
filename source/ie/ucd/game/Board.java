@@ -230,4 +230,12 @@ public class Board {
 			System.out.println("Exception: " + e);
 		}
 	}
+	public static void clearBoard(){
+		properties.clear();
+		specialSquares.clear();
+		utilities.clear();
+		communityChests.clear();
+		chances.clear();
+		trains.clear();
+	}
 }

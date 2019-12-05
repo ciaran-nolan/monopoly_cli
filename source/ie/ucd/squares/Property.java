@@ -1,5 +1,7 @@
 package ie.ucd.squares;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import ie.ucd.cards.TitleDeed;
@@ -9,9 +11,9 @@ import ie.ucd.operations.Checks;
 import ie.ucd.operations.InputOutput;
 /**
  * The Property class is used to implement a Property Square Object. It extends its parent class of CanOwn which means it can be owned by a Player object.
- * Each Property object has its own associated Title Deed Card which is assigned inside the Title Deed constructor and the class variables are 
- * the colour of the square and the number of houses and hotels on the site. 
- * The methods are getters and setters, buying a Property, building Houses or Hotels, selling houses and selling hotels. 
+ * Each Property object has its own associated Title Deed Card which is assigned inside the Title Deed constructor and the class variables are
+ * the colour of the square and the number of houses and hotels on the site.
+ * The methods are getters and setters, buying a Property, building Houses or Hotels, selling houses and selling hotels.
  * @author Robert Keenan & Ciaran Nolan
  *
  */
@@ -22,9 +24,9 @@ public class Property extends CanOwn {
 	private int numHotels;			//The number of hotels currently on the site
 	
 	/**
-	 * The Property object constructor takes 3 variables as input. These are then pushed up to the Super class of CanOwn and when an initial Property object 
-	 * is created, the variables of numHotels and numHouses are both set to zero. 
-	 * 
+	 * The Property object constructor takes 3 variables as input. These are then pushed up to the Super class of CanOwn and when an initial Property object
+	 * is created, the variables of numHotels and numHouses are both set to zero.
+	 *
 	 * @param squareNum The index location of the property on the board
 	 * @param squareColour The colour of the square which denotes the property group it is in
 	 * @param title The name of the Property object such as "Park Lane" provided as a string
@@ -60,21 +62,23 @@ public class Property extends CanOwn {
 
 	/**
 	 * This is the buy method for buying a Property object. It checks if the argument of a player object has enough money to buy a property
-	 * and if not, the property goes to auction. If the property is already owned, it prints to the screen. 
-	 * It will then ask if the player wants to buy the property if the above conditions are not satisfied, it will deduct the money from he player and 
+	 * and if not, the property goes to auction. If the property is already owned, it prints to the screen.
+	 * It will then ask if the player wants to buy the property if the above conditions are not satisfied, it will deduct the money from he player and
 	 * add the title deed card of the property to the list of their title deed cards. The owner inside the Title Deed object will now change to the player.
-	 * 
+	 *
 	 * If none of these cases are satisfied, the property goes to auction.
 	 * @param player A player object who wants to buy the Property object
 	 */
-	public void buy(Player player) {
+
+	public void buy(Player player, BufferedReader userInput) {
+		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 			//check user has enough funds to purchase
 			TitleDeed titleDeedCard = this.getTitleDeedCard();
 			if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
 				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
                         +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
-				titleDeedCard.playerAuction( null);
+				titleDeedCard.playerAuction(null, userInput);
 
 			}
 			//the case of the owner should be handled in check square
@@ -82,7 +86,7 @@ public class Property extends CanOwn {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player)) {
+                    +this.getName()+" for €"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
 				System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
 
@@ -90,7 +94,7 @@ public class Property extends CanOwn {
 				//add property to users property list
 				player.addPurchasedTitleDeed(titleDeedCard);
 			}
-			else titleDeedCard.playerAuction(null);
+			else titleDeedCard.playerAuction(null, userInput);
 			}
 
 	/**
@@ -101,6 +105,7 @@ public class Property extends CanOwn {
 	 * @param player A player who wants to build a house or hotel on the site
 	 */
 	public static void buildHousesHotels(Player player) {
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		boolean isHotel = false;
 
 		//System.out.println("Please enter the name of the property you wish to purchase houses/hotels for");
@@ -108,7 +113,7 @@ public class Property extends CanOwn {
 
 
 		//Property propToBuild = Checks.isValidProp(propName, player);
-		TitleDeed titleDeedToBuild = InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true);
+		TitleDeed titleDeedToBuild = InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true, userInput);
 		if(null == titleDeedToBuild){
 			System.out.println("Cancelling operation.");
 		}
@@ -130,7 +135,7 @@ public class Property extends CanOwn {
 			}
 
 			System.out.println("Would you like to build houses or a hotel?\n0 for houses\n1 for hotel");
-			int choiceInput = InputOutput.integerMenu(0, 1);
+			int choiceInput = InputOutput.integerMenu(0, 1, userInput);
 			if (choiceInput == 1) {
 				isHotel = true;
 			}
@@ -162,7 +167,7 @@ public class Property extends CanOwn {
 					System.out.println("Successfully purchased hotel for " + propToBuild.getName());
 				} else
 					System.out.println("Building a hotel on " + propToBuild.getName() + " will result in an uneven distribution in this colour group");
-			} 
+			}
 			else {
 				if (Game.getRemainingHouses() == 0) {
 					System.out.println("The maximum number of houses on the board has been reached, a house cannot currently be purchased for " + propToBuild.getName());
@@ -170,14 +175,14 @@ public class Property extends CanOwn {
 
 				//If there are four houses, they have reached the max number. Offer to purchase a hotel
 				else if (propToBuild.numHouses == 4) {
-					if (InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player)) {
+					if (InputOutput.yesNoInput("You have built the maximum number of houses, would you like to build a hotel? (y/n)", player, userInput)) {
 						buildHousesHotels(player);
 					}
 				}
 				//use the house distribution method to check that building a house on the specified property will keep the colour group evenly distributed with houses
 				else if (Checks.evenHouseDistribution(colourGroup, propToBuild, true)) {
 					// y/n input to confirm intention to build house
-					if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player)) {
+					if (InputOutput.yesNoInput("Please confirm you wish to purchase a house for " + propToBuild.getName() + " (y/n)", player, userInput)) {
 						if (propToBuild.getTitleDeedCard().getHousePrice() > player.getMoney()) {
 							System.err.println("You cannot afford to purchase a house");
 						} else {
@@ -196,11 +201,11 @@ public class Property extends CanOwn {
 		
 	
 	/**
-	 * This is the method for selling houses which takes the arguments shown and returns the value of the houses sold if they are sold 
+	 * This is the method for selling houses which takes the arguments shown and returns the value of the houses sold if they are sold
 	 * or returns 0/half the house price.
-	 * It first of all checks if the property is mortgaged or bankrupt and as a result, it sells off all of the houses in one go at half their 
+	 * It first of all checks if the property is mortgaged or bankrupt and as a result, it sells off all of the houses in one go at half their
 	 * buy price and returns this value.
-	 * If not, it checks if there are houses on a property while continually checking the house distribution in a colour group to make sure 
+	 * If not, it checks if there are houses on a property while continually checking the house distribution in a colour group to make sure
 	 * there is no bigger difference than 1 between all of them.
 	 * @param player The player object wishing to sell houses on a property
 	 * @param isMortgage Whether the property is mortgaged or not
@@ -246,7 +251,7 @@ public class Property extends CanOwn {
 				System.out.println(property.getName() + ": " + property.numHouses + "\n");
 			}
 			//check if they would like to sell another house
-			if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player))	{
+			if(InputOutput.yesNoInput("Would you like to sell another house? (y/n)", player, null))	{
 				sellHouses(player, false, false);
 			}
 			return this.getTitleDeedCard().getHousePrice()/2;
@@ -260,11 +265,11 @@ public class Property extends CanOwn {
 		}
 	}
 	/**
-	 * This is the method for selling houses which takes the arguments shown and returns the value of the houses sold if they are sold 
+	 * This is the method for selling houses which takes the arguments shown and returns the value of the houses sold if they are sold
 	 * or returns 0/half the house price.
-	 * It first of all checks if the property is mortgaged or bankrupt and as a result, it sells off all of the houses in one go at half their 
+	 * It first of all checks if the property is mortgaged or bankrupt and as a result, it sells off all of the houses in one go at half their
 	 * buy price and returns this value.
-	 * If not, it checks if there are houses on a property while continually checking the house distribution in a colour group to make sure 
+	 * If not, it checks if there are houses on a property while continually checking the house distribution in a colour group to make sure
 	 * there is no bigger difference than 1 between all of them.
 	 * @param player The player object wishing to sell houses on a property
 	 * @param isMortgage Whether the property is mortgaged or not
@@ -291,7 +296,7 @@ public class Property extends CanOwn {
 		//first check if there is enough houses to break the hotel down into houses
 		else if(Game.getRemainingHouses()<4) {
 			System.out.println("There are insufficeint houses "+Game.getRemainingHouses()+" to exchange your hotel. In order to sell this hotel directly, all housese/hotels in this colour group will be sold.");
-			if(InputOutput.yesNoInput("Would you like to proceed (y/n)", player)) {
+			if(InputOutput.yesNoInput("Would you like to proceed (y/n)", player, null)) {
 				//sell all hotels directly 
 				return (sellHotels(player, true, false)+this.sellHouses(player, true,false));
 			}

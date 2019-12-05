@@ -3,19 +3,19 @@ package ie.ucd.cards;
 //Thus, mortgage and priceBuy will now be moved from CanOwn to their title deed card
 //The title deed card will be associated with the Square of the Property or Utility
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import ie.ucd.game.Game;
 import ie.ucd.game.Player;
 import ie.ucd.operations.InputOutput;
 import ie.ucd.squares.CanOwn;
 /**
- * The Title Deed class descirbes the title deed card of a property, train station or utility site such as a Water Works. 
- * This title deed card is exactly the same as you would have in a real game of Monopoly if you owned one of these sites. 
+ * The Title Deed class descirbes the title deed card of a property, train station or utility site such as a Water Works.
+ * This title deed card is exactly the same as you would have in a real game of Monopoly if you owned one of these sites.
  * It includes details such as the square's colour, the price of buying the site and what site it is linked to on the board
  * @author Robert Keenan & Ciaran Nolan
  *
@@ -31,14 +31,14 @@ public class TitleDeed extends Card {
     private CanOwn ownableSite;			//The site its linked to
     private HashMap<Integer, Player> bankruptcyTradeStatus = new HashMap<>();
     private int mortgage;				//Value of mortgage
-    
-    /** 
-     * The class constructor is what we use to create the title deed card and it takes a lot of arguments to the higher parent 
+
+    /**
+     * The class constructor is what we use to create the title deed card and it takes a lot of arguments to the higher parent
      * class of Card but also edits the class variables unique to the Title Deed card
-     * 
+     *
      * @param cardType This is given as a string "Title Deed"
      * @param cardTitle This is given as the name of the Property, Train Station or Water Works which it belongs to
-     * @param cardValue This is set to zero as it has no value 
+     * @param cardValue This is set to zero as it has no value
      * @param squareColour This is the colour of the square. Valid for properties only
      * @param priceBuy The price to buy this Title Deed card's site
      * @param rents An array of rents depending on how many houses/hotels you have on a site or how many sites of a certain colour you own
@@ -60,21 +60,21 @@ public class TitleDeed extends Card {
     }
     //Can ignore as I needed to override it to implement it
     @Override
-    public void dealWithCard(Player player1) {
+    public void dealWithCard(Player player1, BufferedReader userInput) {
 
     }
-    
+
     //Setters and Getters for all of the variables
     public CanOwn getOwnableSite(){
         return this.ownableSite;
     }
-    
+
     public int getHousePrice(){
         return this.housePrice;
     }
 
-    public void setHousePrice(int price){ 
-    	this.housePrice = price; 
+    public void setHousePrice(int price){
+    	this.housePrice = price;
     }
 
     public int getPriceBuy(){
@@ -84,7 +84,7 @@ public class TitleDeed extends Card {
     public void setpriceBuy(int price){
         this.priceBuy = price;
     }
-    
+
     public int[] getRents(){
         return this.rents;
     }
@@ -92,7 +92,7 @@ public class TitleDeed extends Card {
     public void setRents(int[] rents){
         this.rents = rents;
     }
-    
+
     public String getSquareColour(){
         return this.squareColour;
     }
@@ -100,7 +100,7 @@ public class TitleDeed extends Card {
     public void setSquareColour(String squareColour){
         this.squareColour = squareColour;
     }
-    
+
     public Player getOwner(){
         return this.owner;
     }
@@ -108,7 +108,7 @@ public class TitleDeed extends Card {
     public void setOwner(Player newOwner){
         this.owner = newOwner;
     }
-    
+
     public boolean getMortgageStatus(){
         //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
@@ -126,7 +126,7 @@ public class TitleDeed extends Card {
         this.mortgage = mortgage;
     }
 
-    /** 
+    /**
      * This is used to determine the trade status of the site associated with this title deed card and whether it will be enough to make the player not bankrupt
      * A player is agreed with to provisionally receive the property
      * @param agreedPrice The agreed price to pay for the property by the recipient
@@ -140,16 +140,19 @@ public class TitleDeed extends Card {
         return this.bankruptcyTradeStatus;
     }
 
-    /** 
+    /**
      * This is the player auction method which initiates an auction between a number of players and the owner of the property.
      * It increases the bidding pool size and then a number of Player objects can go into a bidding war with each other.
-     * The auction ends when somebody enters a value to pay which all of the remaining players in the bidding war don't want to bid against by 
+     * The auction ends when somebody enters a value to pay which all of the remaining players in the bidding war don't want to bid against by
      * entering "n" instead of "y"
      * If you enter a lower bid than the current highest bit, it will prompt you to enter a new bid as yours is lower than the current highest
-     * 
+     *
      * @param bankruptPlayer The bankrupt player object who owns the property which is being auctioned off
      */
-    public void playerAuction(Player bankruptPlayer) {
+
+
+    public void playerAuction(Player bankruptPlayer, BufferedReader userInput) {
+        if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
         int[] currentAuctionDetails = new int[] {0,0};
         //Adds bidding players
         ArrayList<Player> biddingPlayers = new ArrayList<>(Game.playerList);
@@ -179,7 +182,7 @@ public class TitleDeed extends Card {
                             +"\nCurrent bid: "+currentAuctionDetails[0]+"\nYour Funds: "+biddingPlayers.get(i).getMoney());
                     biddingPlayers.remove(i);
                     i --;	//reduce index as pool size has decreased
-                    
+
                     biddingPoolSize = biddingPlayers.size(); //update building pool size for while loop
                     currentAuctionDetails[1]--;			 //index of user with winning needs to be reduced by one
 
@@ -199,12 +202,12 @@ public class TitleDeed extends Card {
                 }
 
                 //user has indicated intention to bid
-                if(InputOutput.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getCardDesc()+"? (y/n)"), biddingPlayers.get(i))) {
+                if(InputOutput.yesNoInput((biddingPlayers.get(i).getName()+" would you like to place a bid on "+this.getCardDesc()+"? (y/n)"), biddingPlayers.get(i), userInput)) {
                     //prompt user to enter a bid
                     System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
 
                     //read in user bid
-                    int temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
+                    int temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney(), userInput);
 
                     //check the user's bid is greater than current highest bid or that they do not have enough money to make the specified bid
                     while(temporaryBid <= currentAuctionDetails[0]) {
@@ -214,10 +217,10 @@ public class TitleDeed extends Card {
                                     " your bid must be greater than the current bid of: "+currentAuctionDetails[0]);
                         }
                         //check if user has confirmed intention to bid again
-                        if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i))) {
+                        if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i), userInput)) {
                             System.out.println(biddingPlayers.get(i).getName() + " please enter your bid:");
                             //read in new bid
-                            temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney());
+                            temporaryBid = InputOutput.integerMenu(0,biddingPlayers.get(0).getMoney(), userInput);
                         }
                         //user has declared intention to NOT bid again, remove from list of current users in auction
                         else {

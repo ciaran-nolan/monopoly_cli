@@ -4,11 +4,13 @@ package ie.ucd.game;
 import ie.ucd.cards.Card;
 import ie.ucd.cards.Chance;
 import ie.ucd.cards.TitleDeed;
+import ie.ucd.operations.InputOutput;
 import ie.ucd.squares.Property;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ class PlayerTest {
     private Player playerOwed;
     private Property prop1;
     private TitleDeed t1;
-    //InputStream in_reset = System.in;
+    private InputStream instructionInputStream;
     
     @BeforeEach
     void setUp() throws Exception {
@@ -29,17 +31,15 @@ class PlayerTest {
     	playerOwed = new Player("P2","blue");
     	prop1 = new Property(10,"orange", "Test");
     	t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4,5,6}, 10,50,player,prop1);
-//    	ByteArrayInputStream in = new ByteArrayInputStream(("y"+System.lineSeparator()+"y"+System.lineSeparator()+"y"+System.lineSeparator()).getBytes());
-//    	System.setIn(in);
     }
     
     @AfterEach
     void tearDown() throws Exception {
+        Board.clearBoard();
     	player = null;
     	playerOwed = null;
     	prop1 = null;
     	t1 = null;
-//    	System.setIn(in_reset);
     }
     
     @Test
@@ -170,7 +170,10 @@ class PlayerTest {
     @Test
     void testPickChanceCard() {
 //    	Board.initialiseBoard();
-//    	//First card is random each time 
+//    	//First card is random each time
+        String instruction = "y\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	player.pickChanceCard();
     }
 
@@ -190,9 +193,12 @@ class PlayerTest {
 
     @Test
     void testCreateListPlayers() {
+        String instruction = "2\r\nRob,red\r\nBob,blue";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	System.out.println("\n-----------------\nTEST: CREATE LIST OF PLAYERS\nPlease enter the following:");
     	System.out.println("2 (PRESS ENTER) Rob,red (PRESS ENTER) Bob,blue (PRESS ENTER)\n-----------------");
-        ArrayList<Player> playerList = Player.createListPlayers();
+        ArrayList<Player> playerList = InputOutput.createListPlayers(null);
         assertEquals("Rob", playerList.get(0).getName(),"Checking Name entered");
         assertEquals("red", playerList.get(0).getToken(),"Checking Token");
         assertEquals("Bob", playerList.get(1).getName(), "Checking Name is Ciaran");
@@ -221,6 +227,9 @@ class PlayerTest {
 
     @Test
     void testPayRentPROPERTY() {
+        String instruction = "y\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	//T1 is now in hand of playerOwed
     	//Player owed has the title deed card in their list
     	int initialMoney = player.getMoney();
@@ -239,6 +248,9 @@ class PlayerTest {
     
     @Test
     void testPayRentTRAIN() {
+        String instruction = "y\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	int initialMoney = player.getMoney();
     	int initialMoneyOwed = playerOwed.getMoney();
     	Board.trains.get(0).getTitleDeedCard().setOwner(playerOwed);
@@ -253,6 +265,9 @@ class PlayerTest {
     
     @Test
     void testPayRentUTILITY() {
+        String instruction = "y\r\n";
+        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        System.setIn(instructionInputStream);
     	int initialMoney = player.getMoney();
     	int initialMoneyOwed = playerOwed.getMoney();
     	Board.utilities.get(0).getTitleDeedCard().setOwner(playerOwed);

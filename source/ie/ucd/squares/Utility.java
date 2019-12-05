@@ -2,8 +2,12 @@ package ie.ucd.squares;
 
 import ie.ucd.game.Player;
 import ie.ucd.operations.InputOutput;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 /**
- * The class that describes a Utility object object such as Water Works. 
+ * The class that describes a Utility object object such as Water Works.
  * This class file contains the method buy() which implements the abstract method from CanOwn class
  * @author Robert Keenan & Ciaran Nolan
  *
@@ -17,6 +21,11 @@ public class Utility extends PublicSquare {
 	public Utility(String name, int indexLocation) {
 		super(name, indexLocation, Square.SquareType.UTILITY);
 	}
+
+	public void buy(Player player, BufferedReader userInput) {
+		if(userInput==null){
+			userInput = new BufferedReader(new InputStreamReader(System.in));
+		}
 	/**
 	 * This is the buy method for a utility which takes the argument of a player to buy the utility.
 	 * It checks whether you have funds to purchase it, if you don't it goes to auction.
@@ -25,16 +34,15 @@ public class Utility extends PublicSquare {
 	 * If none of these cases are satisfied, it goes to auction.
 	 * @param player The player object that wants to buy the utility
 	 */
-	public void buy(Player player) {
-		//check user has enough funds to purchase 
+		//check user has enough funds to purchase
 		if(player.getMoney() < this.getTitleDeedCard().getPriceBuy()) {
 			System.err.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
 					+player.getMoney()+"\nProperty Price: "+this.getTitleDeedCard().getPriceBuy());
 			//player does not have enough funds to buy property, automatically enter auction
-			this.getTitleDeedCard().playerAuction(null);
+			this.getTitleDeedCard().playerAuction(null, userInput);
 		}
 		else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "+this.getName()
-				+" for £"+this.getTitleDeedCard().getPriceBuy()+"?", player)) {
+				+" for €"+this.getTitleDeedCard().getPriceBuy()+"?", player, userInput)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
 				player.reduceMoney(this.getTitleDeedCard().getPriceBuy(), null);
 				//add property to users property list
@@ -42,7 +50,7 @@ public class Utility extends PublicSquare {
 				System.out.println("You have purchased "+this.getName()+" for "+this.getTitleDeedCard().getPriceBuy());
 		}
 		else{
-			this.getTitleDeedCard().playerAuction(null);
+			this.getTitleDeedCard().playerAuction(null, userInput);
 		}
 	}
 }

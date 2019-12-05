@@ -1,6 +1,6 @@
 package ie.ucd.cards;
-import ie.ucd.cards.TitleDeed;
 import ie.ucd.game.*;
+import ie.ucd.operations.InputOutput;
 import ie.ucd.squares.Property;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,13 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 class TitleDeedTest {
 	private  Player p1 = new Player("P1","red");
 	private  Player p2 = new Player("P2","blue");
 	private Property prop1 = new Property(10,"orange", "Test");
+	private InputStream instructionInputStream;
+
 	@BeforeEach
 	void setUp() throws Exception {
 		Board.initialiseBoard();
@@ -22,7 +27,8 @@ class TitleDeedTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		 Game.playerList = null;
+		Board.clearBoard();
+		Game.playerList.clear();
 	}
 
 	@Test
@@ -158,29 +164,52 @@ class TitleDeedTest {
 	}
 	//FIXME think about us testing this @@ciarannolan??
 	@Test
-	void testPlayerAuction() {
+	void testPlayerAuction()  throws IOException{
+		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		String Instruction2 = "y\r\n30\r\ny\r\n50\r\ny\r\n6\r\ny\r\n60\r\nn\r\n";
+		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+
+
 		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
-		Game.playerList = Player.createListPlayers();
+
+
+		System.setIn(instructionInputStream);
+		Game.playerList = InputOutput.createListPlayers(null);
+
 		System.out.println("Please follow these instructions:");
 		System.out.println("Rob Enter bid of 30, Ciaran then bid of 50, Rob then bid again at 6, Rob then bid again at 60, Ciaran then leave bidding");
-		t1.playerAuction(null);
+
+		instructionInputStream =  new ByteArrayInputStream(Instruction2.getBytes());
+		System.setIn(instructionInputStream);
+		t1.playerAuction(null, null);
 		assertTrue(Game.playerList.get(0).getTitleDeedList().contains(t1));
-		
+
 	}
 	
 	@Test
-	void testPlayerAuctionNO_BIDS_OR_OWNER() {
+	void testPlayerAuctionNO_BIDS_OR_OWNER() throws IOException {
+
+		String Instruction = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		String Instruction2 = "n\r\nn\r\n";
+		InputStream instructionInputStream1 = new ByteArrayInputStream(Instruction.getBytes());
+
 		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,null,prop1);
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");
-		Game.playerList = Player.createListPlayers();
+		System.setIn(instructionInputStream1);
+		Game.playerList = InputOutput.createListPlayers(null);
+		InputStream instructionInputStream2= new ByteArrayInputStream(Instruction2.getBytes());
+		System.setIn(instructionInputStream2);
 		System.out.println("Please follow these instructions:");
 		System.out.println("Nobody bids. Both press n");
-		t1.playerAuction(null);
+		t1.playerAuction(null, null);
+
 		assertTrue(t1.getOwner()==null);
+
 		//assertTrue(Game.playerList.get(1).getTitleDeedList().isEmpty());
+
 	}
 
 }

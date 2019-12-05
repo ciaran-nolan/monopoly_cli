@@ -44,7 +44,7 @@ public class Player {
 		this.indexLocation = 0;
 	}
 	
-	/** 
+	/**
 	 * Gets the name of Player object
 	 * @return this.name
 	 */
@@ -111,14 +111,14 @@ public class Player {
 	 * Returns the number of moves they have been in jail for
 	 * @return this.jailMoves
 	 */
-	public int getJailMoves(){ 
+	public int getJailMoves(){
 		return this.jailMoves;
 	}
 	/**
 	 * Sets the amout of moves they have been in jail for
 	 * @param numJailMoves The number of moves they have been in jail for
 	 */
-	public void setJailMoves(int numJailMoves){ 
+	public void setJailMoves(int numJailMoves){
 		this.jailMoves=numJailMoves;
 	}
 	/**
@@ -149,10 +149,10 @@ public class Player {
 	 * This the method which reduces the amount of money they owe somebody or the Bank. The playerOwed is used to determine if the debt is due to another
 	 * player such as rent and is set to null if the player owes the bank in terms of taxes etc.
 	 * If the player cannot pay another player, then they are automatically bankrupt and this calls the bankrupt() method from this class which sells off the current
-	 * player's assets. 
+	 * player's assets.
 	 * If the player cannot pay the bank, then this function calls saveFromBankruptcy() where we attempt to sell assets to obtain money to pay the debt
 	 * If the player has enough money, then it reduces their balance
-	 * 
+	 *
 	 * @param money The money to reduce your balance by
 	 * @param playerOwed The player object owed, null if owed to the bank
 	 */
@@ -212,7 +212,7 @@ public class Player {
 	}
 	/**
 	 * Moving to a particular square. Handles payment at Go also
-	 * 
+	 *
 	 * @param squareNum The square number on the board to move to
 	 */
 	public void moveToSquare(int squareNum) {
@@ -241,7 +241,7 @@ public class Player {
 			Board.communityChests.remove(0);
 		}
 		//This will implement the card
-		pickedCard.dealWithCard(this);
+		pickedCard.dealWithCard(this, null);
 	}
 	/**
 	 * Picking a Chance card from the top of the deck or the start of the chances ArrayList
@@ -261,7 +261,7 @@ public class Player {
 			Board.chances.remove(0);
 		}
 		//This will implement the card
-		pickedCard.dealWithCard(this);
+		pickedCard.dealWithCard(this, null);
 	}
 	/**
 	 * Used to see if the player is in jail
@@ -277,71 +277,7 @@ public class Player {
 	public void setInJail(boolean jailStatus){
 	    this.inJail = jailStatus;
     }
-	/**
-	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with
-	 * Name,token. The token has to be a colour which are printed on the screen. It then creates Player objects for each of the players entered with 
-	 * minimum 2 players to maximum 6. 
-	 * @return listPlayers, an ArrayList of type Player with the Players for the game
-	 */
-	public static ArrayList<Player> createListPlayers(){
-		ArrayList<Player> listPlayers = new ArrayList<Player>();
-		ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green" , "black", "orange", "yellow"));
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-			System.out.println("How many players will be playing the game(In range 2-6)?");
-			int numPlayers = InputOutput.integerMenu(2, 6);
-			System.out.println("You have specified "+numPlayers+" players to play the game");
-			//Get the players to be entered by the user -> Have a loop that asks for that number of players.
-			if(numPlayers >= 2 && numPlayers <= 6) {
-				for(int i=0; i < numPlayers; i++) {
-					String line;
-					String[] lineVector = new String[2];
-					String name, token;
-					while(true) {
-						System.out.println("Please enter the relevant details for each player in the format below:");
-						System.out.println("\t\t\tName, Token");
-						System.out.println("Token picked must be one of the following: "+tokenList+
-								"\n----------------------------------------------------------------");
-						line = scanner.nextLine();
-						//Trim the whitespace first before splitting
-						if(!line.contains(","))	System.err.println("Please use a comma (,) to separate input");
-						else{
-							lineVector = line.split(",");
-							name = lineVector[0].trim();
-							token = lineVector[1].trim();
-							if (!tokenList.contains(token)) {
-								System.err.println("Token not part of list. Enter details of Player again!");
-								continue;
-							}
-							else if (name.length() == 0) {
-								System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
-								continue;
-							}
-							else {
-								//Remove token from the array
-								tokenList.remove(token);
-								//Do I need to access them using the index though. I suppose I will go through them in
-								listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
-								//I have added each player in the range of numPlayers to be in the listPlayers array.
-								//Running this will return the list of players which I can set in main
-								break;
-							}
-						}
-					}
-				}
-			}
-		//Inside of the main, we will return this list of players
-		return listPlayers;
-	}
-	
-	/**
-	 * This is the bankrupt function which takes an argument of a playerOwed which can either be a Player object or Null. If it a player, then 
-	 * this function turns over all of the bankrupt player's assets to the player object owed (playerOwed). This then iterates the numPlayersBankrupt counter 
-	 * which can only be 2 before the game ends
-	 * If the argument is null, the player is already bankrupt as saveFromBankruptcy did not achieve enough money and thus, all properties for example are auctioned
-	 * by the bank
-	 * @param playerOwed A player object defining the player who is owed money, null if the bank is owed
-	 */
+
 	public void bankrupt(Player playerOwed) {
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
@@ -386,7 +322,7 @@ public class Player {
 					this.titleDeedCardList.remove(i);
 					i--;
 					System.out.println("Property will now be auctioned");
-					property.getTitleDeedCard().playerAuction(null);
+					property.getTitleDeedCard().playerAuction(null, null);
 				}
 
 				System.out.println("Bankrupt player, " + this.getName() + ", has retired from the game!");
@@ -414,7 +350,7 @@ public class Player {
 	}
 		
 	/**
-	 * Adding a purchased title deed card to the title deed card list of the Player objet and setting the owner of the Title Deed 
+	 * Adding a purchased title deed card to the title deed card list of the Player objet and setting the owner of the Title Deed
 	 * card to be the player object
 	 * @param purchasedProperty The TitleDeed card object of the purchased property
 	 */
@@ -438,8 +374,8 @@ public class Player {
 		}
 	}
 	/**
-	 * This is the payRent function which prompts the owner of the CanOwn object to ask the current player on the square to pay rent. 
-	 * They can either ask for rent or not. The player on the square must then act accordingly . 
+	 * This is the payRent function which prompts the owner of the CanOwn object to ask the current player on the square to pay rent.
+	 * They can either ask for rent or not. The player on the square must then act accordingly .
 	 * This method calculates how much rent a player will pay depending on how many houses or hotels or properties of the same colour are owned
 	 * If the current player cannot pay, then they go bankrupt
 	 * @param ownableSquare The CanOwn object to pay rent on
@@ -454,7 +390,7 @@ public class Player {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
 		}
 		else {
-			if(InputOutput.yesNoInput("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?", owner)) {
+			if(InputOutput.yesNoInput("Player, "+owner.getName()+", would you like the current player, "+this.name+", to pay rent?", owner,null)) {
 				//This means i need to claim rent from the user
 				//Need to check what type of property it is followed by how much rent they will need to pay
 				if(ownableSquare instanceof Property) {
@@ -566,9 +502,9 @@ public class Player {
 	 * This method tries to save a player from bankruptcy when they cannot pay a debt to the bank.
 	 * It values the houses and hotels on the CanOwn objects and tells you the value they have.
 	 * It will then make preliminary trades with other Players in the player list. It will enter into a player to player trade.
-	 * The other player will bid a price and then that value will be stored temporarily but the CanOwn object's TitleDeed card will not change ownership until it is 
+	 * The other player will bid a price and then that value will be stored temporarily but the CanOwn object's TitleDeed card will not change ownership until it is
 	 * confirmed that the bankrupt player can be saved from bankruptcy. It will continue to ask you to make more trades if you need to make up more money.
-	 * 
+	 *
 	 * If you were saved from bankruptcy, then it completes the trades, completes the mortgaging of CanOwn objects and selling of houses and hotels.
 	 * If not, it clears the bankruptcy status and everything is handled by the bank in terms of selling houses/hotels and then auctioning of CanOwn TitleDeed cards
 	 * @return true if saved, false if not
@@ -598,7 +534,7 @@ public class Player {
 		else {
 			if(InputOutput.yesNoInput("The combined value of mortgaging all properties ("+valOfMortgage
 					+") and selling all houses ("+valOfHouseHotels+") is insufficient to cover your debt ("+moneyNeedToRaise+")"+
-                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this)){
+                    "\nWould you like to attempt to trade items with other players in order to raise additional funds? (y/n)", this, null)){
 			    boolean continueTrade = true;
 			    while(continueTrade) {
 
@@ -614,7 +550,7 @@ public class Player {
 					}
                     else if (!InputOutput.yesNoInput("You still do not have enough funds to prevent bankruptcy."+
 							"\nOutstanding Balance: "+(moneyNeedToRaise-(valOfBankruptcyTrade+valOfHouseHotels+valOfMortgage))+
-							"\nWould you like to make another trade? (y/n)", this)) {
+							"\nWould you like to make another trade? (y/n)", this, null)) {
 
                     	continueTrade=false;
                     }
