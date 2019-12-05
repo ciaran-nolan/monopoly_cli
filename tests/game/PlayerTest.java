@@ -157,7 +157,7 @@ class PlayerTest {
         assertEquals(25,player.getLocation());
     }
 
-    @Test
+/*    @Test
     void testPickCommChestCard() {
 //    	Board.initialiseBoard();
 //    	//First card in deck is random each time
@@ -172,7 +172,7 @@ class PlayerTest {
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
     	player.pickChanceCard();
-    }
+    }*/
 
     @Test
     void testIsInJail() {
