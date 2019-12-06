@@ -9,7 +9,7 @@ import operations.InputOutput;
 
 /**
  * This Class describes the interaction of a Community Chest card which is very similar to the Chance Card functionality
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 //This is how to sort out the handling of a community chest card that is picked from a deck

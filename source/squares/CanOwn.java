@@ -10,7 +10,7 @@ import operations.InputOutput;
  * This is the CanOwn class. This is to do with Squares that can be owned by a player such as Properties, Train Stations and Utilities.
  * They have an associated Title Deed card and you can see that functionality in TitleDeed.java.
  * The method in this class are mortgage(),demortgage() and buy() as well as setters and getters for the Title Deed card of a CanOwn object
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  */
 public abstract class CanOwn extends Square {
 	//Class variable of a title deed card
@@ -46,6 +46,7 @@ public abstract class CanOwn extends Square {
 	/**
 	 * Abstract method for buying a CanOwn property and this is implemented in the child classes
 	 * @param player The player who wishes to buy a CanOwn object
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 	public abstract void buy(Player player, BufferedReader userInput);
 
@@ -137,6 +138,7 @@ public abstract class CanOwn extends Square {
 	 * It then sets the mortgage status to false and prints to the screen
 	 * It follows the same type of pattern for the property if it has not been sold and is being un-mortgaged after a number of rounds
 	 * @param InstantDemortgageOnSale This is to check if the property is being de-mortgaged immediately or not which determines the charge
+	 * @param demortgagedTrade Notify that the mortgaged property has been traded to another player
 	 */
 	public void demortgage(boolean InstantDemortgageOnSale, boolean demortgagedTrade) {
 		//Check property is mortgaged

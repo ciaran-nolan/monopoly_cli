@@ -1,4 +1,9 @@
 package squares;
+/**
+ * Interface called Printable which shows the data of an instance
+ * @author Robert Keenan and Ciaran Nolan
+ *
+ */
 
 public interface Printable {
     /**

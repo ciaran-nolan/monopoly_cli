@@ -18,7 +18,7 @@ import squares.Utility;
 /**
  * This is the Checks class. We built this class as we had a lot of checking being made on inputs and different conditions inside methods of core classes.
  * We found that it would be better to locate them here instead. 
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Checks {
@@ -26,7 +26,7 @@ public class Checks {
 	//check if the game can still continue
 	/**
 	 * Method to check if a game can still continue
-	 * @return 1 if playerList.size()>1 and numPlayersBankrupt < 2, 0 otherwise
+	 * @return 1 if playerList.size() greater than 1 and numPlayersBankrupt less than 2, 0 otherwise
 	 */
 	public static boolean checkIfValidGame(){
 		return Game.playerList.size() != 1 && Game.numPlayersBankrupt < 2;

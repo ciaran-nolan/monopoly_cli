@@ -12,7 +12,7 @@ import game.Player;
 /**
  * This is the Special Square class. A special square class defines the squares of the board 
  * that are not Properties, Train Stations or Utilities but rather have types such as TAX, INCOME, JAIL, CHANCE, COMMUNITY CHEST
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Special extends Square implements Printable {

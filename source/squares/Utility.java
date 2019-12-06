@@ -11,7 +11,7 @@ import operations.InputOutput;
 /**
  * The class that describes a Utility object object such as Water Works.
  * This class file contains the method buy() which implements the abstract method from CanOwn class
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Utility extends CanOwn implements Printable {

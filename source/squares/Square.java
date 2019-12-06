@@ -8,7 +8,7 @@ package squares;
 /**
  * This is the Square class. It defines the structure and basic setter and getter methods for a general square type. It is abstract and contains
  * an enum called SquareType which is either PROPERTY, UTILITY, TRAIN, SPECIAL, PUBLIC.
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public abstract class Square  {

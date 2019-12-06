@@ -19,7 +19,7 @@ import squares.*;
  * This class describes a player object which are essential to the correct implementation of the game of Monopoly.
  * It handles all of the interaction with player movement, going to and leaving jail, purchasing of Properties and other squares and most importantly,
  * bankruptcy and how to save the player object from bankruptcy depending on a number of conditions
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Player {
