@@ -20,7 +20,7 @@ import squares.Utility;
  * It then creates the Board structure using these ArrayLists so that when a player moves, they are on the correct square. 
  * 
  * We used the BoardReader example from CSMoodle as inspiration for this class and its implementation.
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Board {

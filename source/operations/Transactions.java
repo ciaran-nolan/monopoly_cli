@@ -12,7 +12,7 @@ import game.Player;
 /**
  * The Transactions class handles all of the transactions between Player objects when they want to trade and during bankruptcy (and saving from
  * bankruptcy)
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Transactions {

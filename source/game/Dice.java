@@ -7,7 +7,7 @@ import java.util.Random;
  * We have set it to be a class of type "public final" as we don't want anything to extend it or override it as a class.
  * It contains 3 static integers as class variables which are the roll of dice 1 and dice 2 and also a counter
  * to see how many doubles have been rolled
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public final class Dice {
@@ -22,7 +22,8 @@ public final class Dice {
 	 */
 	private Dice(){ }
 	/**
-	 * Return the instance
+	 * Return the instance of the Dice using the Singleton Design Pattern
+	 * @return dice Return static object
 	 */
 	public static Dice getInstance(){
 		return dice;

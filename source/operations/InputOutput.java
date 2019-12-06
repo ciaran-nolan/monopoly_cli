@@ -17,7 +17,7 @@ import squares.*;
  * The Input/Output class handles all of the inputs from the user that are used continuously. 
  * These include Yes/no inputs, a title deed operation menu , information about the square a player object is on, an integer menu to make 
  * choices numerically, handling user options when they land on a square and a menu for a player to select another player to interact with.
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class InputOutput {

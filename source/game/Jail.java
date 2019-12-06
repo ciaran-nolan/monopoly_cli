@@ -12,7 +12,7 @@ import operations.InputOutput;
  * This is the Jail class and handles all of the interactions of a player with the jail square such as sending to Jail, removing from jail,
  * using a get out of jail free card, handling a jail move such as when you are leaving
  * It has no class variables and is purely an implementation class of methods
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Jail {

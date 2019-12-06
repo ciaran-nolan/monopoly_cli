@@ -12,7 +12,7 @@ import squares.Property;
 /**
  * The Chance class extends the Card class as its parent. This Class implements the abstract method dealWithCard for Chance cards
  * of different types
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 

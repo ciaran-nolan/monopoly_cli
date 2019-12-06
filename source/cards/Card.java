@@ -8,7 +8,7 @@ import game.Player;
  * The Card class defines the structure of all Card types of which there are a number extended from this abstract class.
  * This class is for any classes that are physical cards in the game of Monopoly. These include Community Chest, Chance and Title Deed Cards.
  *
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 

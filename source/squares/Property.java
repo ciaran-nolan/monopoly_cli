@@ -14,7 +14,7 @@ import operations.InputOutput;
  * Each Property object has its own associated Title Deed Card which is assigned inside the Title Deed constructor and the class variables are
  * the colour of the square and the number of houses and hotels on the site.
  * The methods are getters and setters, buying a Property, building Houses or Hotels, selling houses and selling hotels.
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class Property extends CanOwn implements Printable {

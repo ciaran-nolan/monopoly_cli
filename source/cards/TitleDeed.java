@@ -22,7 +22,7 @@ import squares.Printable;
  * We decided this was a better way of presenting the CanOwn object rather than the Square itself. In terms of buying and selling,  the players
  * buy and sell these cards rather than the physical square. This is to reflect as close as possible to the real game of Monopoly where an owner holds the title
  * deed card on their side in a game.
- * @author Robert Keenan & Ciaran Nolan
+ * @author Robert Keenan and Ciaran Nolan
  *
  */
 public class TitleDeed extends Card implements Printable {
