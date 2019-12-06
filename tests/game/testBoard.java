@@ -3,8 +3,6 @@ package game;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import game.Board;
-
 class testBoard {
 	//This is testing all of the other methods in the class as Board.initiliaseBoard calls all of them
 	@Test

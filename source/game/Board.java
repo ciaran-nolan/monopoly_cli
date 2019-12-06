@@ -1,9 +1,3 @@
-/**
- * Class to read from properties file 
- * References: BoardReader example, cs moodle 
- * 
- */
-
 package game;
 import java.io.*;
 import java.util.*;
@@ -44,21 +38,18 @@ public class Board {
 	/**
 	 * The input stream is setup for a reading in particular configuration file
 	 * @param propFileName The Relative path to the configuration file from this Board.java file
-	 * @return inputStream
 	 */
 
 	//set up input stream for each property file
-	private static InputStream setupInputStream(String propFileName) {
+	private static void setupInputStream(String propFileName) {
 		try {
 			//define the input stream for the prop file
 			InputStream inputStream = Board.class.getClassLoader().getResourceAsStream(propFileName);
 			//check that the prop file location is valid
 			prop.load(inputStream);
-			return inputStream;
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		}
-		return null;
 	}
 
 	//Methods read in each square type on the monopoly board into their respective Arraylists
@@ -68,7 +59,7 @@ public class Board {
 	 * It then creates a new Property instance for each of these and their corresponding Title Deed card.
 	 * It then puts the respective property into the static properties Array list which is used to populate the board. 
 	 */
-    public static void readProperties(){
+    private static void readProperties(){
     	try {
     		//define the location of the prop file
     		String propFileName = "gameConfigurations/property.properties";
@@ -94,7 +85,7 @@ public class Board {
 	 * It then creates a new Utility instance for each of these and their corresponding Title Deed card.
 	 * It then puts the respective utility into the static utilities Array list which is used to populate the board. 
 	 */
-    public static void readUtilities() {
+    private static void readUtilities() {
     	try {
     		String propFileName = "gameConfigurations/utilities.properties";
     		setupInputStream(propFileName);
@@ -124,7 +115,7 @@ public class Board {
 	 * It then creates a new special square instance for each of these.
 	 * It then puts the respective special square into the static specialSquares Array list which is used to populate the board. 
 	 */
-    public static void readSpecialSquares() {
+    private static void readSpecialSquares() {
     	try {
     		//location of prop file
     		String propFileName = "gameConfigurations/specialSquares.properties";
@@ -146,7 +137,7 @@ public class Board {
 	 * It then creates a new community chest card instance for each of these.
 	 * It then puts the respective community chest card into the static communityChests Array list which is shuffled when it is populated
 	 */
-    public static void readCommunityChests(){
+    private static void readCommunityChests(){
     	try {
     		//location of prop file
     		String propFileName = "gameConfigurations/communityChest.properties";
@@ -170,7 +161,7 @@ public class Board {
 	 * It then puts the respective chance card into the static chances Array list which is shuffled when it is populated
 	 */
     
-    public static void readChances() {
+    private static void readChances() {
     	try {
     		//location of prop file
     		String chanceFileName = "gameConfigurations/chance.properties";
@@ -194,7 +185,7 @@ public class Board {
 	 * It then puts the respective utility into the static trains Array list which is used to populate the board. 
 	 */
    
-    public static void readTrains(){
+    private static void readTrains(){
     	try {
     		String trainFileName = "gameConfigurations/train.properties";
     		setupInputStream(trainFileName);

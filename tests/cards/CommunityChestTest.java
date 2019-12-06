@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommunityChestTest {
     private CommunityChest commChestTest;
     private Player playerTest = new Player("John", "blue");
-    private InputStream instructionInputStream;
+
     @BeforeEach
     void setUp() {
         commChestTest = new CommunityChest("PAY","Pay doctor's fees of £20", 20);
@@ -29,7 +29,7 @@ class CommunityChestTest {
         assertEquals(initialMoney-commChestTest.getCardValue(), playerTest.getMoney(),"Check money is reduced from Player");
     }  
     @Test
-    public void testDealWithCardINCOME() {
+    void testDealWithCardINCOME() {
         //INCOME
     	int initialMoney = playerTest.getMoney();
         commChestTest.setCardType("INCOME");
@@ -37,7 +37,7 @@ class CommunityChestTest {
         assertEquals(initialMoney+commChestTest.getCardValue(),playerTest.getMoney(),"Checking income works");
     }  
     @Test
-    public void testDealWithCardMOVE() {
+    void testDealWithCardMOVE() {
        //MOVE
     	int currLocation = playerTest.getLocation();
         commChestTest.setCardType("MOVE");
@@ -46,19 +46,19 @@ class CommunityChestTest {
         assertEquals(currLocation+5,playerTest.getLocation(),"Checking a player can move squares");
     }
     @Test
-    public void testDealWithCardGETOUTOFJAIL() {
+    void testDealWithCardGETOUTOFJAIL() {
         //GET OUT OF JAIL FREE
         commChestTest.setCardType("GET_OUT_OF_JAIL");
         commChestTest.dealWithCard(playerTest, null);
         assertNotEquals(0, playerTest.getJailCard().size(), "Checking the jail card was added to their jail card array list");
     }
     @Test
-    public void testDealWithCardCHOICE() {
+    void testDealWithCardCHOICE() {
         //CHOICE CARD
         //Fine is input of 0 and Chance is input of 1
         //FIXME @@ciarannolan....unsure about how to process the choice on this
         String instruction = "0\r\n";
-        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        InputStream instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
     	int initialMoney = playerTest.getMoney();
     	commChestTest.setCardDesc("Pay fine of £25 or pick Chance card");
@@ -73,7 +73,7 @@ class CommunityChestTest {
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
     }
     @Test
-    public void testDealWithCardJAIL() {
+    void testDealWithCardJAIL() {
         //JAIL
         commChestTest.setCardType("JAIL");
         commChestTest.dealWithCard(playerTest, null);

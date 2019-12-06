@@ -115,13 +115,12 @@ public class Checks {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
 				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
 	}
-	//reveal the status of a players CanOwn list
-	//FIXME
+
     /**
      * Prints out the status of a Player object's CanOwn list or Title Deed list. These are the CanOwn object's that the Player owns due to them holding
      * the TitleDeed card.
      * If a property is in their list of TitleDeed cards, it also presents how many houses and hotels are on the Properties.
-     * @param player
+     * @param player The player who wishes to display the information about the ownable sites in their possession
      */
 	public static void checkPlayerCanOwnStatus(Player player){
 	    System.out.println(player.getName() + " - Title deed Status: \n");
@@ -150,7 +149,7 @@ public class Checks {
 	 * @param player The Player object being checked 
 	 * @return true if player is owner, false if ownableCard has no owner or player is not owner
 	 */
-	public static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
+	static boolean isPlayerOwner(TitleDeed ownableCard, Player player){
 		if(null == ownableCard.getOwner()){
 			return false;
 		}

@@ -1,18 +1,12 @@
 package game;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cards.CommunityChest;
-import game.Board;
-import game.Jail;
-import game.Player;
-
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 
@@ -25,7 +19,7 @@ class JailTest {
 		Board.initialiseBoard();
 	}
 	@AfterEach
-    void tearDown() throws Exception {
+    void tearDown() {
 		Board.clearBoard();
 		p1.getJailCard().clear();
 	}
@@ -48,7 +42,7 @@ class JailTest {
 	}
 
 	@Test
-	void testHandleJailMove() throws IOException {
+	void testHandleJailMove() {
 		System.out.println("Exit Jail by paying Fine");
 		System.out.println("*********\n"+
 				"Player 1 Press:\n"

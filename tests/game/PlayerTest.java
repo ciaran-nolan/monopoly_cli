@@ -19,16 +19,17 @@ class PlayerTest {
     private Player player;
     private Player playerOwed;
     private InputStream instructionInputStream;
+    private static Dice dice = Dice.getInstance();
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
     	Board.initialiseBoard();
     	player = new Player("P1","red");
     	playerOwed = new Player("P2","blue");
     }
 
     @AfterEach
-    void tearDown() throws Exception {
+    void tearDown() {
         Board.clearBoard();
         Game.playerList.clear();
     	player = null;
@@ -37,12 +38,12 @@ class PlayerTest {
 
     @Test
     void testGetName() {
-        assertTrue(player.getName().equals("P1"));
+        assertEquals("P1", player.getName());
     }
 
     @Test
     void testGetToken() {
-        assertTrue(player.getToken().equals("red"));
+        assertEquals("red", player.getToken());
     }
 
     @Test
@@ -62,7 +63,7 @@ class PlayerTest {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         assertEquals(1,player.getTitleDeedList().size());
         System.out.println(player.getTitleDeedList().get(0).getCardDesc());
-        assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals("Old Kent Road"));
+        assertEquals("Old Kent Road", player.getTitleDeedList().get(0).getCardDesc());
     }
 
     @Test
@@ -342,7 +343,7 @@ class PlayerTest {
     	Board.utilities.get(0).getTitleDeedCard().setOwner(playerOwed);
     	playerOwed.addPurchasedTitleDeed(Board.utilities.get(0).getTitleDeedCard());
     	//Setting Dievals to 2 and 3 = 5 (rent will be 20)
-    	Dice.setDieVals(2,3);
+    	dice.setDieVals(2,3);
     	//Paying rent on the ownable site
     	System.out.println("\n-----------------\nTEST: PAY RENT UTILITY\n Press y then ENTER\n-----------------");
     	player.payRent(Board.utilities.get(0));
@@ -374,6 +375,7 @@ class PlayerTest {
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+
         Board.properties.get(0).setNumHouses(1);
         Board.properties.get(2).getTitleDeedCard().setMortgageStatus(true);
         Game.playerList.get(0).reduceMoney(2500,null);
@@ -387,11 +389,10 @@ class PlayerTest {
         Game.playerList.add(player);
         Game.playerList.add(playerOwed);
 
-
-
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
+
         Board.properties.get(0).setNumHouses(1);
         Board.properties.get(2).getTitleDeedCard().setMortgageStatus(true);
         Board.properties.get(1).getTitleDeedCard().setBankruptcyTradeStatus(1000,playerOwed);

@@ -1,14 +1,11 @@
 package squares;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import game.*;
-import squares.Train;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -18,13 +15,13 @@ class TrainTest {
 	
 	private Player p2;
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		p2 = new Player("P2","blue");
 		Board.initialiseBoard();
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		train1 = null;
 		p2=null;
 	}

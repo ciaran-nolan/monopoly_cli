@@ -1,27 +1,31 @@
-/**
- * Class to implement to simulation of a dice throw for two die, and to implement the required monopoly rules around multiple duplicate throws
- * i.e. 3 Duplicate rolls results in the player being sent directly to jail
-*/
 package game;
 import java.util.Random;
 
 /**
- * This class is for the Dice. Only one instance is created and that is in the Game class. We have set it to be a class of type "public final" as we don't want 
- * anything to extend it or override it as a class. It contains 3 static integers as class variables which are the roll of dice 1 and dice 2 and also a counter 
+ * This class is for the Dice. Only one instance is created, adhering to the Singleton design method.
+ * The instance of the dice is used in multiple classes and tests.
+ * We have set it to be a class of type "public final" as we don't want anything to extend it or override it as a class.
+ * It contains 3 static integers as class variables which are the roll of dice 1 and dice 2 and also a counter
  * to see how many doubles have been rolled
  * @author Robert Keenan & Ciaran Nolan
  *
  */
 public final class Dice {
 
+	public static final Dice dice= new Dice( );
 	private static int dice1; 		//The roll of Dice 1
 	private static int dice2;		//The roll of Dice 2
 	private static int duplicateRollCounter=0;		//A counter to track the number of doubles rolled in a game
 
+	private Dice(){ }
+	public static Dice getInstance(){
+		return dice;
+	}
+
 	/**
 	 * Rolling a dice. It uses the Random() function which rolls 2 random values and assigns them to dice1 and dice2 and then prints the output
 	 */
-	public static void rollDice(){
+	void rollDice(){
 		Random rollGenerator = new Random();
 		// .nextInt generates between 0 and specified range (exclusively), so its necessary to add 1 to ensure the dice cannot return 0
 		dice1 = rollGenerator.nextInt(6)+1; 
@@ -34,7 +38,7 @@ public final class Dice {
 	 * This checks whether a double has been rolled
 	 * @return true if dice1==dice2, false if not
 	 */
-	public static boolean isDoubleRoll(){
+	boolean isDoubleRoll(){
 		return dice1 == dice2;
 	}
 
@@ -42,12 +46,17 @@ public final class Dice {
 	 * Gets the current values of the dice after a roll
 	 * @return dice1+dice2
 	 */
-	public static int getDieVals() {
+	int getDieVals() {
 		//return int containing both die values
 		return (dice1 + dice2);
 	}
 	//Used to set the dice values in testing
-	public static void setDieVals(int dice1Val, int dice2Val) {
+	/**
+	 * Sets the dice values for testing purposes
+	 * @param dice1Val value of first die
+	 * @param dice2Val value of second die
+	 */
+	public void setDieVals(int dice1Val, int dice2Val) {
 		//Used in testing
 		dice1 = dice1Val;
 		dice2 = dice2Val;
@@ -57,7 +66,7 @@ public final class Dice {
 	 * Sets the duplicate Roll counter
 	 * @param rollCount Just a number of doubles rolled
 	 */
-	public static void setDuplicateRollCounter(int rollCount) {
+	void setDuplicateRollCounter(int rollCount) {
 		 duplicateRollCounter=rollCount;
 	}
 	
@@ -65,7 +74,7 @@ public final class Dice {
 	 * Returns the counter of doubles rolled
 	 * @return duplicateRollCounter
 	 */
-	public static int getDuplicateRollCounter() {
+	int getDuplicateRollCounter() {
 		 return duplicateRollCounter;
 	}
 	/**
@@ -73,7 +82,7 @@ public final class Dice {
 	 * @param player The player who has rolled a double 3 times and will be sent to jail
 	 * @return true if duplicateRollCounter==3, false if not
 	 */
-	public static boolean isThirdDouble(Player player){
+	boolean isThirdDouble(Player player){
 		if (duplicateRollCounter == 3) {
 			//put player to jail on roll of the third double
 			System.out.println("You have rolled doubles for the third time.");
@@ -91,7 +100,7 @@ public final class Dice {
 	 * @param player The player who has rolled
 	 * @return !isThirdDouble(player) if it is a double roll, false if not
 	 */
-	public static boolean handlePlayerRoll(Player player){
+	boolean handlePlayerRoll(Player player){
 		rollDice();			//Rolls dice
 		//Checks if it is a double roll
 		if (isDoubleRoll()) {

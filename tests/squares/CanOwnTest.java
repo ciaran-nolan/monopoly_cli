@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import cards.Card;
-import cards.TitleDeed;
 import game.*;
 
 import java.io.ByteArrayInputStream;
@@ -16,27 +15,27 @@ class CanOwnTest {
     private  Player p1 = new Player("P1","Red");
     private InputStream instructionInputStream;
     @BeforeEach
-    public void setup(){
+    void setup(){
         Board.initialiseBoard();
     }
 
     @AfterEach
-    public void tearDown(){
+    void tearDown(){
         Board.clearBoard();
     }
 
     @Test
-    public void testGetTitleDeedCard() {
+    void testGetTitleDeedCard() {
     	Card card = Board.properties.get(3).getTitleDeedCard();
-    	assertTrue(card instanceof TitleDeed,"Card obtained is a Title Deed Card");
+        assertNotNull(card, "Card obtained is a Title Deed Card");
     }
 
     @Test
-    public void testSetTitleDeedCard() {
+    void testSetTitleDeedCard() {
     }
 
     @Test
-    public void testMortgage() {
+    void testMortgage() {
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
@@ -46,7 +45,7 @@ class CanOwnTest {
     }
 
     @Test
-    public void testDemortgage() {
+    void testDemortgage() {
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);

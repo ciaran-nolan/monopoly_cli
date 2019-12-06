@@ -75,7 +75,7 @@ public class TitleDeed extends Card implements Printable {
         return this.housePrice;
     }
 
-    public void setHousePrice(int price){
+    void setHousePrice(int price){
     	this.housePrice = price;
     }
 
@@ -83,7 +83,7 @@ public class TitleDeed extends Card implements Printable {
         return this.priceBuy;
     }
 
-    public void setpriceBuy(int price){
+    void setpriceBuy(int price){
         this.priceBuy = price;
     }
 
@@ -95,11 +95,11 @@ public class TitleDeed extends Card implements Printable {
         this.rents = rents;
     }
 
-    public String getSquareColour(){
+    String getSquareColour(){
         return this.squareColour;
     }
 
-    public void setSquareColour(String squareColour){
+    void setSquareColour(String squareColour){
         this.squareColour = squareColour;
     }
 
@@ -150,6 +150,7 @@ public class TitleDeed extends Card implements Printable {
      * If you enter a lower bid than the current highest bit, it will prompt you to enter a new bid as yours is lower than the current highest
      *
      * @param bankruptPlayer The bankrupt player object who owns the property which is being auctioned off
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 
 

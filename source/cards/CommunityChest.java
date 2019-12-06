@@ -1,16 +1,15 @@
 package cards;
 
+import java.io.BufferedReader;
+import game.Jail;
+import game.Player;
+import operations.InputOutput;
+
 /**
  * This Class describes the interaction of a Community Chest card which is very similar to the Chance Card functionality
  * @author Robert Keenan & Ciaran Nolan
  *
  */
-import java.io.BufferedReader;
-
-import game.Jail;
-import game.Player;
-import operations.InputOutput;
-
 //This is how to sort out the handling of a community chest card that is picked from a deck
 //It is not to denote a communitychest square. That is handled by the Special.java file
 public class CommunityChest extends Card {
@@ -31,6 +30,7 @@ public class CommunityChest extends Card {
      * CHOICE is the difference between Chance and this. CHOICE card gives you the option of a fine or to pick a Chance card
      *
      * @param player1 A player object which these actions can be applied to
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 	public void dealWithCard(Player player1, BufferedReader userInput) {
 

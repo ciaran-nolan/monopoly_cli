@@ -27,11 +27,11 @@ public class Player {
 	private String token; 	//Token that represents the player
 	private int money; 		// The amount of money that the Player will have
 	private int indexLocation; //The index of the square at which the player is on the board
-	private ArrayList<TitleDeed> titleDeedCardList = new ArrayList<TitleDeed>(); //A list of the Title Deed cards being owned by the player
+	private ArrayList<TitleDeed> titleDeedCardList = new ArrayList<>(); //A list of the Title Deed cards being owned by the player
 	private boolean inJail = false; //If they are in jail or not
-	private ArrayList<Card> jailCards = new ArrayList<Card>(); //The array list which stores their title deed cards
+	private ArrayList<Card> jailCards = new ArrayList<>(); //The array list which stores their title deed cards
 	private int jailMoves = 0;				//How many moves they have been in jail for
-
+    private static Dice dice = Dice.getInstance();
 	/**
 	 * Class constructor. Initially the player receives £1500 as their money, they are set at location 0 or Go on the square
 	 * @param name The name of the player
@@ -55,7 +55,7 @@ public class Player {
 	 * Gets token of player object
 	 * @return this.token
 	 */
-	public String getToken() {
+	String getToken() {
 		return this.token;
 	}
 	/**
@@ -111,21 +111,21 @@ public class Player {
 	 * Returns the number of moves they have been in jail for
 	 * @return this.jailMoves
 	 */
-	public int getJailMoves(){
+	int getJailMoves(){
 		return this.jailMoves;
 	}
 	/**
 	 * Sets the amout of moves they have been in jail for
 	 * @param numJailMoves The number of moves they have been in jail for
 	 */
-	public void setJailMoves(int numJailMoves){
+	void setJailMoves(int numJailMoves){
 		this.jailMoves=numJailMoves;
 	}
 	/**
 	 * Setting the token of the player
 	 * @param token Must be a colour in a specific array provided in String form
 	 */
-	public void setToken(String token) {
+	void setToken(String token) {
 		this.token = token;
 	}
 	/**
@@ -166,7 +166,7 @@ public class Player {
 				//can the player afford to pay the bank
 				if (money > this.money) {
 					//save from bankruptcy handles the reduction of money
-					if (saveFromBankruptcy(money - this.money, null)) {
+					if (saveFromBankruptcy(money - this.money)) {
 						System.out.println(this.name + ", remaining Funds: £" + this.money);
 					}
 					//cant afford, player is bankrupt
@@ -200,7 +200,7 @@ public class Player {
 	 * It handles the payment of £200 if the player passes or lands on Go
 	 * @param moves The amount of squares to move forward
 	 */
-	public void movePlayer(int moves) {
+	void movePlayer(int moves) {
 		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
@@ -268,9 +268,6 @@ public class Player {
 	 * @return inJail, jail status
 	 */
 
-
-
-
 	public boolean isInJail() {
 		return inJail; //Return inJail status
 	}
@@ -278,13 +275,15 @@ public class Player {
 	 * Set the player in jail
 	 * @param jailStatus Boolean to determine if they should be put in jail
 	 */
-	public void setInJail(boolean jailStatus){
+	void setInJail(boolean jailStatus){
 	    this.inJail = jailStatus;
     }
 
-
-
-	public void bankrupt(Player playerOwed) {
+	/**
+	 * Method to handle when a player is completely
+	 * @param playerOwed contains a player object, if the bankrupt player is bankrupt to another
+	 */
+	void bankrupt(Player playerOwed) {
 		BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
@@ -424,9 +423,6 @@ public class Player {
 						if(ownedSquare instanceof Train) {
 							numTrains++;
 						}
-						else {
-							continue;
-						}
 					}
 					this.reduceMoney(titleDeedCard.getRents()[numTrains-1], titleDeedCard.getOwner());
 				}
@@ -441,11 +437,8 @@ public class Player {
 						if(ownedSquare instanceof Utility) {
 							numUtilities++;
 						}
-						else {
-							continue;
-						}
 					}
-					this.reduceMoney((titleDeedCard.getRents()[numUtilities-1])*Dice.getDieVals(), titleDeedCard.getOwner());
+					this.reduceMoney((titleDeedCard.getRents()[numUtilities-1])*dice.getDieVals(), titleDeedCard.getOwner());
 				}
 			}
 			else {
@@ -459,7 +452,7 @@ public class Player {
 	 * Used to mortgage a CanOwn object when the player goes bankrupt to the bank
 	 * @param moneyNeedToRaise The amount of money needed to raise to pay the debt
 	 */
-	public void bankruptcyMortgage(int moneyNeedToRaise) {
+	void bankruptcyMortgage(int moneyNeedToRaise) {
 		for(TitleDeed toMortgage:this.titleDeedCardList) {
 			if(toMortgage.getBankruptcyTradeStatus().isEmpty() && !toMortgage.getMortgageStatus()) {
 				CanOwn ownable = toMortgage.getOwnableSite();
@@ -475,7 +468,7 @@ public class Player {
 	 * Selling houses and hotels when bankrupt to bank
 	 * @param moneyNeedToRaise The amount of money needed to raise to pay the debt
 	 */
-	public void bankruptcySellHousesHotels(int moneyNeedToRaise) {
+	private void bankruptcySellHousesHotels(int moneyNeedToRaise) {
 		for(TitleDeed titleDeed:this.titleDeedCardList) {
 			CanOwn ownable = titleDeed.getOwnableSite();
 			if(ownable instanceof Property) {
@@ -491,9 +484,9 @@ public class Player {
 
 	/**
 	 * Complete the trade of a CanOwn object's TitleDeed card when in bankruptcy in order to raise money
-	 * @param userInput
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
-	public void completeBankruptcyTrade(BufferedReader userInput){
+	private void completeBankruptcyTrade(BufferedReader userInput){
 		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
 		for(TitleDeed currentTitleDeed: titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
@@ -517,10 +510,11 @@ public class Player {
 	 *
 	 * If you were saved from bankruptcy, then it completes the trades, completes the mortgaging of CanOwn objects and selling of houses and hotels.
 	 * If not, it clears the bankruptcy status and everything is handled by the bank in terms of selling houses/hotels and then auctioning of CanOwn TitleDeed cards
+	 * @param moneyNeedToRaise the debt a player currently has
 	 * @return true if saved, false if not
 	 */
-	public boolean saveFromBankruptcy(int moneyNeedToRaise, BufferedReader userInput) {
-		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
+	private boolean saveFromBankruptcy(int moneyNeedToRaise) {
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		boolean savedFromBankruptcy = false;
 		boolean mustSellHouseHotels=false;
 		boolean mustMortgage=false;
@@ -565,7 +559,6 @@ public class Player {
 
                     	continueTrade=false;
                     }
-                    else continue;
                 }
             }
 			if(savedFromBankruptcy){

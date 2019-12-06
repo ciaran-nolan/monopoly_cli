@@ -6,18 +6,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import game.*;
-import squares.Special;
 import squares.Square.SquareType;
 
 class SpecialTest {
 	private Special squareNew;
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		squareNew = new Special("Test", 10,false, "TAX", 100, SquareType.SPECIAL);
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		squareNew = null;
 	}
 

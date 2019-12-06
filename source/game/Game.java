@@ -11,7 +11,7 @@ import operations.InputOutput;
 public class Game {
 	private static int remainingHouses=32;
 	private static int remainingHotels=12;
-    public static ArrayList<Player> playerList = new ArrayList<Player>();
+    public static ArrayList<Player> playerList = new ArrayList<>();
 	public static int numPlayersBankrupt=0;
 	public static int getRemainingHouses() {
 		return remainingHouses;
@@ -25,7 +25,6 @@ public class Game {
 	public static void setRemainingHotels(int newHotelCount) {
 		remainingHotels = newHotelCount;
 	}
-	
 
 	public static void main(String[] args){
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
@@ -33,6 +32,7 @@ public class Game {
 		playerList = InputOutput.createListPlayers(userInput);
 		//initialise board
 		Board.initialiseBoard();
+		Dice dice = Dice.getInstance();
 
 		//end game when 2 players have become bankrupt
 		while(Checks.checkIfValidGame()) {
@@ -55,9 +55,9 @@ public class Game {
 
                         //roll the dice once they have finished their operations
                         //check if a double has been rolled
-                        doubleRoll=Dice.handlePlayerRoll(currentPlayer);
+                        doubleRoll=dice.handlePlayerRoll(currentPlayer);
                         //move player
-						currentPlayer.movePlayer(Dice.getDieVals());
+						currentPlayer.movePlayer(dice.getDieVals());
 						//Display information about the square
 						InputOutput.squareInformation(currentPlayer.getLocation());
 						//handle the required action on the square

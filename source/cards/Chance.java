@@ -34,6 +34,7 @@ public class Chance extends Card {
 	 * determined by the card's type
 	 *
 	 * @param player A player object which these actions can be applied to
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 
 	//method to deal with a card from one of the game's decks

@@ -1,18 +1,14 @@
 package cards;
-import squares.Property;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cards.TitleDeed;
 import game.*;
+import squares.Property;
 import operations.InputOutput;
-
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -20,15 +16,14 @@ class TitleDeedTest {
 	private  Player p1 = new Player("P1","red");
 	private  Player p2 = new Player("P2","blue");
 	private Property prop1 = new Property(10,"orange", "Test");
-	private InputStream instructionInputStream;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		Board.initialiseBoard();
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		Board.clearBoard();
 		Game.playerList.clear();
 	}
@@ -166,10 +161,10 @@ class TitleDeedTest {
 	}
 	//FIXME think about us testing this @@ciarannolan??
 	@Test
-	void testPlayerAuction()  throws IOException{
+	void testPlayerAuction() {
 		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
 		String Instruction2 = "y\r\n30\r\ny\r\n50\r\ny\r\n6\r\ny\r\n60\r\nn\r\n";
-		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		InputStream instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
 
 
 		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
@@ -191,7 +186,7 @@ class TitleDeedTest {
 	}
 	
 	@Test
-	void testPlayerAuctionNO_BIDS_OR_OWNER() throws IOException {
+	void testPlayerAuctionNO_BIDS_OR_OWNER()  {
 
 		String Instruction = "2\r\nRob,red\r\nCiaran,blue\r\n";
 		String Instruction2 = "n\r\nn\r\n";
@@ -208,7 +203,7 @@ class TitleDeedTest {
 		System.out.println("Nobody bids. Both press n");
 		t1.playerAuction(null, null);
 
-		assertEquals(null, t1.getOwner(), "Checking owner is Null");
+		assertNull(t1.getOwner(), "Checking owner is Null");
 	}
 
 }

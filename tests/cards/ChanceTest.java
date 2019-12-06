@@ -1,25 +1,29 @@
 package cards;
 
 import org.junit.jupiter.api.AfterEach;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import cards.Chance;
 import game.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class ChanceTest {
     private Chance chanceTest;
     private Player playerTest;
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() {
         chanceTest = new Chance("PAY","Pay £100 in taxes",100);
         playerTest = new Player("John", "blue");
+    }
+
+    @AfterEach
+    void tearDown()  {
+        chanceTest = null;
+        playerTest = null;
     }
 
     @Test
@@ -37,7 +41,7 @@ class ChanceTest {
     void testDealWithCardINCOME() {
         //INCOME
     	int initialMoney = playerTest.getMoney();
-        int expectedValueIncome = initialMoney + chanceTest.getCardValue();;
+        int expectedValueIncome = initialMoney + chanceTest.getCardValue();
         chanceTest.setCardType("INCOME");
         chanceTest.dealWithCard(playerTest, null);
         assertEquals(expectedValueIncome,playerTest.getMoney(),"Checking income works");
@@ -68,11 +72,5 @@ class ChanceTest {
         chanceTest.setCardType("JAIL");
         chanceTest.dealWithCard(playerTest, null);
         assertTrue(playerTest.isInJail());
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        chanceTest = null;
-        playerTest = null;
     }
 }

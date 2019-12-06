@@ -1,14 +1,8 @@
 package squares;
 
-
-//import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import squares.Property;
-import squares.Square;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class SquareTest {
@@ -58,7 +52,7 @@ class SquareTest {
     @Test
     void testSetBuyStatus() {
         squareNew.setBuyStatus(false);
-        assertEquals(false, squareNew.getBuyStatus(), "Checking buy status can be set to false");
+        assertFalse(squareNew.getBuyStatus(), "Checking buy status can be set to false");
     }
 
     @Test

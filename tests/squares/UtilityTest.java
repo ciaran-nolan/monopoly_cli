@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UtilityTest {
     private Utility utilityNew;
-    private InputStream instructionInputStream;
+
     @BeforeEach
     void setUp() {
         Board.initialiseBoard();
@@ -43,24 +43,24 @@ class UtilityTest {
         //This should fail as i cant overfill the array
         utilityNew.getTitleDeedCard().setRents(overfillRent);
         //Shouldn't be able to overfill re(expectedRent, not(equalTo()));
-        assertFalse(expectedRent.equals(utilityNew.getTitleDeedCard().getRents()));
+        assertNotEquals(expectedRent, utilityNew.getTitleDeedCard().getRents());
     }
 
     @Test
     void testBuy(){
         String instruction = "y\r\n";
-        instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
+        InputStream instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         Player player1 = new Player("John", "blue");
         utilityNew.buy(player1, null);
-        assertTrue(player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()) == true);
+        assertEquals(true, player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()));
         player1.removeOwnedTitleDeed(utilityNew.getTitleDeedCard());
         player1.setMoney(150);
         instruction = "n\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         utilityNew.buy(player1, null);
-        assertFalse(player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()) == true);
+        assertNotEquals(true, player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()));
     }
 
     @AfterEach

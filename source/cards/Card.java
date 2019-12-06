@@ -35,12 +35,10 @@ public abstract class Card {
 	public String getCardType() {
 		return this.cardType;
 	}
-	
 	public String getCardDesc() {
 		return this.cardDesc;
 	}
-	
-	public int getCardValue() {
+	int getCardValue() {
 		return this.cardValue;
 	}
 	
@@ -48,11 +46,9 @@ public abstract class Card {
 	public void setCardType(String cardType) {
 		this.cardType = cardType;
 	}
-	
 	public void setCardDesc(String cardDesc) {
 		this.cardDesc = cardDesc;
 	}
-	
 	public void setCardValue(int cardValue) {
 		this.cardValue = cardValue;
 	}
@@ -60,12 +56,10 @@ public abstract class Card {
     /**
      * Abstract method which is implemented in either Community Chest or Chance which is handles the type of card and its cardType as specified above
      * @param player1 Takes a Player object as input
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 	public abstract void dealWithCard(Player player1, BufferedReader userInput);
 
-
-
-	
 	//Print the details of the card
 	public String toString() {
 		return "Card Type: "+this.cardType+", Card Description: "+this.cardDesc+", Card Value: "

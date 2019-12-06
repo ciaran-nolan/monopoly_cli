@@ -17,12 +17,12 @@ class PropertyTest {
     private InputStream instructionInputStream;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         Board.initialiseBoard();
     }
 
     @AfterEach
-    public void tearDown(){
+    void tearDown(){
         Board.clearBoard();
     }
 
@@ -58,12 +58,11 @@ class PropertyTest {
     @Test
     void testGetSquareColour() {
         Property testprop = Board.properties.get(0);
-        assertTrue(testprop.getSquareColour().equals("Purple"));
+        assertEquals("Purple", testprop.getSquareColour());
     }
 
     @Test
     void testBuy() {
-        //player.addPurchasedTitleDeed(BoardReader.properties.get(0).getTitleDeedCard());
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
@@ -72,7 +71,6 @@ class PropertyTest {
         System.out.println("-------------------------------");
         Board.properties.get(0).getTitleDeedCard().setOwner(null);
         Board.properties.get(0).buy(player, null);
-        //BoardReader.properties.get(1).buy(player);
         assertTrue(player.getTitleDeedList().contains(Board.properties.get(0).getTitleDeedCard()));
     }
 

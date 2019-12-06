@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import cards.TitleDeed;
 import game.*;
-import operations.Checks;
 import squares.Property;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ChecksTest {
     private Player player = new Player("Player", "Red");
     private InputStream instructionInputStream;
+    private static Dice dice = Dice.getInstance();
 
     @BeforeEach
     void setUp() {
@@ -46,7 +46,7 @@ class ChecksTest {
 				);
     	Board.properties.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(1, player, null);
-    	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.properties.get(0).getTitleDeedCard().getCardDesc()));
+        assertEquals(player.getTitleDeedList().get(0).getCardDesc(), Board.properties.get(0).getTitleDeedCard().getCardDesc());
     	player.setMoney(1500);
     	
     	//owned by player
@@ -82,7 +82,7 @@ class ChecksTest {
 				);
     	Board.utilities.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(12, player, null);
-    	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.utilities.get(0).getTitleDeedCard().getCardDesc()));
+        assertEquals(player.getTitleDeedList().get(0).getCardDesc(), Board.utilities.get(0).getTitleDeedCard().getCardDesc());
     	player.setMoney(1500);
     	
     	//owned by player
@@ -98,8 +98,8 @@ class ChecksTest {
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
-    	Dice.setDieVals(2,3);
-    	
+    	dice.setDieVals(2,3);
+
     	Checks.checkSquare(12,player, null);
     	assertEquals(1480,player.getMoney());
     	player.setMoney(1500);
@@ -118,7 +118,7 @@ class ChecksTest {
 				);
     	Board.trains.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(5, player, null);
-    	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.trains.get(0).getTitleDeedCard().getCardDesc()));
+        assertEquals(player.getTitleDeedList().get(0).getCardDesc(), Board.trains.get(0).getTitleDeedCard().getCardDesc());
     	player.setMoney(1500);
     	
     	//owned by player
@@ -134,7 +134,7 @@ class ChecksTest {
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
     	player.getTitleDeedList().clear();
-    	Dice.setDieVals(2,3);
+    	dice.setDieVals(2,3);
     	
     	Checks.checkSquare(5,player, null);
     	assertEquals(1475,player.getMoney());

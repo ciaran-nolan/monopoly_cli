@@ -4,11 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cards.Card;
-import cards.Chance;
-import cards.CommunityChest;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {

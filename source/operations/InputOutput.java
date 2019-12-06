@@ -30,7 +30,8 @@ public class InputOutput {
 	 * @param message The message which is to be presented to the user
 	 * @param player The Player object which is making the input
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
-	 * @return
+	 * @return true if "y"
+	 * @return false if "n"
 	 */
 	public static boolean yesNoInput(String message, Player player, BufferedReader userInput) {
 		//If no buffered reader given, then we can create one

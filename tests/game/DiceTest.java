@@ -1,78 +1,74 @@
 package game;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import game.Board;
-import game.Dice;
-import game.Player;
-
 class DiceTest {
 
 	private Player player = new Player("P1","Red");
+	private static Dice dice = Dice.getInstance();
+
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		Board.initialiseBoard();
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		Board.clearBoard();
 	}
 
 	@Test
 	void testRollDice() {
 		Dice.rollDice();
-		assertNotEquals(0, Dice.getDieVals());
+		assertNotEquals(0, dice.getDieVals());
 	}
 
 	@Test
 	void testIsDoubleRoll() {
-		Dice.setDieVals(1, 2);
-		assertFalse(Dice.isDoubleRoll());
-		Dice.setDieVals(2, 2);
-		assertTrue(Dice.isDoubleRoll());
+		dice.setDieVals(1, 2);
+		assertFalse(dice.isDoubleRoll());
+		dice.setDieVals(2, 2);
+		assertTrue(dice.isDoubleRoll());
 	
 	}
 
 	@Test
 	void testGetDieVals() {
-		Dice.setDieVals(1, 1);
-		assertEquals(2,Dice.getDieVals());
+		dice.setDieVals(1, 1);
+		assertEquals(2,dice.getDieVals());
 	}
 
 	@Test
 	void testSetDieVals() {
-		Dice.setDieVals(1, 1);
-		assertEquals(2,Dice.getDieVals());
+		dice.setDieVals(1, 1);
+		assertEquals(2,dice.getDieVals());
 	}
 
 
 	@Test
 	void testSetDuplicateRollCounter() {
-		Dice.setDuplicateRollCounter(2);
-		assertEquals(2,Dice.getDuplicateRollCounter());
+		dice.setDuplicateRollCounter(2);
+		assertEquals(2,dice.getDuplicateRollCounter());
 	}
 	@Test
 	void testGetDuplicateRollCounter() {
-		Dice.setDuplicateRollCounter(2);
-		assertEquals(2,Dice.getDuplicateRollCounter());
+		dice.setDuplicateRollCounter(2);
+		assertEquals(2,dice.getDuplicateRollCounter());
 	}
 	
 	@Test
 	void testIsThrirdDouble() {
-		Dice.setDuplicateRollCounter(3);
-		assertTrue(Dice.isThirdDouble(player));
-		Dice.setDuplicateRollCounter(2);
-		assertFalse(Dice.isThirdDouble(player));
+		dice.setDuplicateRollCounter(3);
+		assertTrue(dice.isThirdDouble(player));
+		dice.setDuplicateRollCounter(2);
+		assertFalse(dice.isThirdDouble(player));
 	}
 	@Test
 	void testHandlePlayerRoll() {
-		Dice.handlePlayerRoll(player);
+		dice.handlePlayerRoll(player);
 	}
 
 }

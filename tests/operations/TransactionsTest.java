@@ -19,7 +19,7 @@ class TransactionsTest {
 	private InputStream instructionInputStream;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		Board.initialiseBoard();
 		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
 		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
@@ -31,7 +31,7 @@ class TransactionsTest {
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		Board.clearBoard();
 		Game.playerList.clear();
 	}

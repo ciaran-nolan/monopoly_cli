@@ -14,16 +14,15 @@ import game.Player;
 
 
 class InputOutputTest {
-	private InputStream answerInputStream;
 	private Player player;
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 		Board.initialiseBoard();
 		player = new Player("P1","red");
 	}
 
 	@AfterEach
-	void tearDown() throws Exception {
+	void tearDown() {
 		Board.clearBoard();
 		player = null;
 	}
@@ -32,7 +31,7 @@ class InputOutputTest {
 	void testYesNoInput() {
 		//Trying incorrect answer first
 	    String answer = "a\r\ny\r\n";
-	    answerInputStream = new ByteArrayInputStream(answer.getBytes());
+		InputStream answerInputStream = new ByteArrayInputStream(answer.getBytes());
 	    System.setIn(answerInputStream);
 		boolean answerYesNo = InputOutput.yesNoInput("Please press y for Yes", player, null);
 		assertTrue(answerYesNo);
