@@ -6,10 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-
 class JailTest {
 	private Player p1 = new Player("P1", "Red");
 
