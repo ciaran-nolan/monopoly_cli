@@ -33,7 +33,7 @@ public class Player {
 	private int jailMoves = 0;				//How many moves they have been in jail for
 
 	/**
-	 * Class constructor. Initially the player receives £1500 as their money, they are set at location 0 or Go on the square
+	 * Class constructor. Initially the player receives �£1500 as their money, they are set at location 0 or Go on the square
 	 * @param name The name of the player
 	 * @param token The token they will be represented on the board with. This is from an array of colours
 	 */
@@ -134,7 +134,7 @@ public class Player {
 	 */
 	public void addMoney(int money) {
 		this.money+= money;
-		if(money>0) System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
+		if(money>0) System.out.println(this.getName()+ ", remaining Funds : �£"+this.money);
 	}
 	/**
 	 * Setting the player's location on the board
@@ -167,14 +167,14 @@ public class Player {
 				if (money > this.money) {
 					//save from bankruptcy handles the reduction of money
 					if (saveFromBankruptcy(money - this.money, null)) {
-						System.out.println(this.name + ", remaining Funds: �" + this.money);
+						System.out.println(this.name + ", remaining Funds: £" + this.money);
 					}
 					//cant afford, player is bankrupt
 					else this.bankrupt(null);
 				} else {
 					//can afford, pay the amount
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: �" + this.money);
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
 				}
 			}
 			//a player is owed
@@ -186,7 +186,7 @@ public class Player {
 				} else {
 					//can afford to pay, reduce payer's money
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: �" + this.money);
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
 					//increment payees money
 					playerOwed.addMoney(money);
 				}
@@ -197,16 +197,15 @@ public class Player {
 	//This function will increment the location of the player
 	/**
 	 * This handles the movement of a player when they roll a dice or are told to move forward a certain amount of places.
-	 * It handles the payment of £200 if the player passes or lands on Go
+	 * It handles the payment of �£200 if the player passes or lands on Go
 	 * @param moves The amount of squares to move forward
 	 */
 	public void movePlayer(int moves) {
-		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
 			this.addMoney(200); //Add �200 to the player's money because they have passed it
-			System.out.println("You have passed go, you collect �200\n\nYour funds: "+this.getMoney());
+			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
@@ -217,7 +216,7 @@ public class Player {
 	 */
 	public void moveToSquare(int squareNum) {
 		if(this.getLocation() > squareNum || this.indexLocation == 0) {
-		    System.out.println("You have passed go, collect �200.");
+		    System.out.println("You have passed go, collect £200.");
 			this.addMoney(200); //This implies that they have passed GO
 		}
 		this.indexLocation = squareNum;

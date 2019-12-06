@@ -37,14 +37,14 @@ public class Transactions {
 		for(String key: traderOnePropsToTrade.keySet()) {
 			System.out.println(key);
 		}
-		System.out.println("Cash: £"+traderOneCash);
+		System.out.println("Cash: Â£"+traderOneCash);
 
 		//PLayer Two
 		System.out.println("\n"+tradeList.get(1).getName()+":\nJail free Cards: "+traderTwoJailFree+"\nProperties:");
 		for(String key: traderTwoPropsToTrade.keySet()) {
 			System.out.println(key);
 		}
-		System.out.println("Cash: £"+traderTwoCash);
+		System.out.println("Cash: Â£"+traderTwoCash);
 	}
 	
 	/**

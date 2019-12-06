@@ -233,7 +233,7 @@ public class TitleDeed extends Card implements Printable {
                 if(biddingPlayers.get(i).getMoney()<= currentAuctionDetails[0]) {
                     //user does not have enough funds to make a winning bid, remove them from the auction pool
                     System.out.println(biddingPlayers.get(i).getName()+" does not have enough funds to make a winning bid on "+this.getCardDesc()
-                            +"\nCurrent bid: £"+currentAuctionDetails[0]+"\nYour Funds: £"+biddingPlayers.get(i).getMoney());
+                            +"\nCurrent bid: Â£"+currentAuctionDetails[0]+"\nYour Funds: Â£"+biddingPlayers.get(i).getMoney());
                     biddingPlayers.remove(i);
                     i --;	//reduce index as pool size has decreased
 
@@ -252,7 +252,7 @@ public class TitleDeed extends Card implements Printable {
 
                 //if a previous bid has already been made, display to user
                 if(currentAuctionDetails[0] > 0) {
-                    System.out.println("Current bid: £"+currentAuctionDetails[0]+" by "+biddingPlayers.get(currentAuctionDetails[1]).getName());
+                    System.out.println("Current bid: Â£"+currentAuctionDetails[0]+" by "+biddingPlayers.get(currentAuctionDetails[1]).getName());
                 }
 
                 //user has indicated intention to bid
@@ -268,7 +268,7 @@ public class TitleDeed extends Card implements Printable {
                         //bid is less than current highest bid, prompt for intention to re input bid
                         if(temporaryBid <= currentAuctionDetails[0]) {
                             System.out.println(biddingPlayers.get(i).getName() +
-                                    " your bid must be greater than the current bid of: £"+currentAuctionDetails[0]);
+                                    " your bid must be greater than the current bid of: Â£"+currentAuctionDetails[0]);
                         }
                         //check if user has confirmed intention to bid again
                         if(InputOutput.yesNoInput("\nWould you like to make another bid? (y/n)", biddingPlayers.get(i), userInput)) {
@@ -333,7 +333,7 @@ public class TitleDeed extends Card implements Printable {
      */
     @Override
     public void printInstanceData() {
-        System.out.println("Mortgage Status: "+this.getMortgageStatus()+"\nBase Value: £"+this.getPriceBuy());
+        System.out.println("Mortgage Status: "+this.getMortgageStatus()+"\nBase Value: Â£"+this.getPriceBuy());
     }
     /**
      * Checking whether it can be bought

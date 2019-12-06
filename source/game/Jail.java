@@ -81,7 +81,7 @@ public class Jail {
         //If they don't have get out of jail free card
         //Check if they can afford the fine and if not, deem them bankrupt and try raise money as they owe the bank
         if(jailedPlayer.getJailCard().size()==0){
-            System.out.println("You have rolled for the third time without getting doubles, you must pay the £50 fine");
+            System.out.println("You have rolled for the third time without getting doubles, you must pay the Â£50 fine");
             if(!Checks.enoughFunds(jailedPlayer, 50)){
                 System.out.println("You do not have enough funds to pay the jail fee");
                 jailedPlayer.bankrupt(null);
@@ -98,7 +98,7 @@ public class Jail {
                 System.out.println("You do not have enough funds to pay the fine, so you must use a get out of jail free card");
             }
             else{
-                System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay £50 fine");
+                System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay Â£50 fine");
                 jailExitChoice = InputOutput.integerMenu(0,1, userInput);
             }
             if(jailExitChoice==0){

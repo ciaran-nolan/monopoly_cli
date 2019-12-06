@@ -96,8 +96,8 @@ public class Property extends CanOwn implements Printable {
 			//check user has enough funds to purchase
 			TitleDeed titleDeedCard = this.getTitleDeedCard();
 			if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
-				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: £"
-                        +player.getMoney()+"\nProperty Price: £"+titleDeedCard.getPriceBuy());
+				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: Â£"
+                        +player.getMoney()+"\nProperty Price: Â£"+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
 				titleDeedCard.playerAuction(null, userInput);
 
@@ -107,9 +107,9 @@ public class Property extends CanOwn implements Printable {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
+                    +this.getName()+" for Â£"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
-				System.out.println("You have purchased "+this.getName()+" for £"+titleDeedCard.getPriceBuy());
+				System.out.println("You have purchased "+this.getName()+" for Â£"+titleDeedCard.getPriceBuy());
 
 				player.reduceMoney(titleDeedCard.getPriceBuy(), null);
 				//add property to users property list

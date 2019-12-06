@@ -35,11 +35,11 @@ class TitleDeedTest {
 	//Testing the constructor of the title deed
 	@Test
 	void testTitleDeed() {
-		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "Orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
 		assertEquals("Title Deed", t1.getCardType(),"Checking card Type");
 		assertEquals("Test", t1.getCardDesc(),"Checking Card Desc");
 		assertEquals(0,t1.getCardValue(),"Checking card value");
-		assertEquals("orange", t1.getSquareColour(),"Checking Square Colour");
+		assertEquals("Orange", t1.getSquareColour(),"Checking Square Colour");
 		assertEquals(100,t1.getPriceBuy(),"Checking Buy Price");
 		assertEquals(10,t1.getHousePrice(),"Checking House Price");
 		assertEquals(50,t1.getMortgage(),"Checking mortgage value");
@@ -173,7 +173,7 @@ class TitleDeedTest {
 		String Instruction2 = "y\r\n30\r\ny\r\n50\r\ny\r\n6\r\ny\r\n60\r\nn\r\n";
 		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
 
-		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "Orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
 		System.setIn(instructionInputStream);
 		Game.playerList = InputOutput.createListPlayers(null);
 
@@ -191,7 +191,7 @@ class TitleDeedTest {
 		String Instruction2 = "n\r\nn\r\n";
 		InputStream instructionInputStream1 = new ByteArrayInputStream(Instruction.getBytes());
 
-		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "orange", 100, new int[]{1,2,3,4}, 10,50,null,prop1);
+		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "Orange", 100, new int[]{1,2,3,4}, 10,50,null,prop1);
 		System.setIn(instructionInputStream1);
 		Game.playerList = InputOutput.createListPlayers(null);
 		InputStream instructionInputStream2= new ByteArrayInputStream(Instruction2.getBytes());
