@@ -348,6 +348,7 @@ public class Checks {
 	public static void checkWinner() {
 		if(Game.playerList.size()==1){
 			System.out.println(Game.playerList.get(0).getName()+" has won the game!");
+			System.exit(1);
 		}
 		//More than one player left
 		else {
@@ -376,8 +377,10 @@ public class Checks {
 			maxValue = Collections.max(valueArray);
 			maxIndex = valueArray.indexOf(maxValue);
 			//Winner determined
+			InputOutput.printSeparator();
 			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of £" + maxValue));
 			System.out.println("The Game has been won! It is now over!");
+			InputOutput.printSeparator();
 			System.exit(1);
 		}
 	}

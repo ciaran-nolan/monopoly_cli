@@ -47,20 +47,19 @@ public class Chance extends Card {
 		//implement the card
 		switch(this.getCardType()) {
 			case "MOVE":
-				//cover case where players move backwards
-				if(this.getCardValue()<0){
-					player.moveToSquare(player.getLocation()+this.getCardValue());
-					Checks.checkSquare(player.getLocation(), player, userInput);
-				}
 				//move player forwards
-				else {
-					player.moveToSquare(this.getCardValue());
-					if(player.getLocation()==0){
-						break;
-					}
-					else Checks.checkSquare(player.getLocation(), player, userInput);
+				if(this.getCardValue()==3){
+					player.moveToSquare(this.getCardValue()+player.getLocation());
 				}
-				break;
+				else player.moveToSquare(this.getCardValue());
+
+				if(player.getLocation()==0){
+					break;
+				}
+				else {
+					Checks.checkSquare(player.getLocation(), player, userInput);
+					break;
+				}
 			case "JAIL":
 				//send player to jail
 				Jail.sendToJail(player);

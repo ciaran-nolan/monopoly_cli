@@ -1,6 +1,8 @@
 package cards;
 
 import java.io.BufferedReader;
+
+import game.Game;
 import game.Jail;
 import game.Player;
 import operations.InputOutput;
@@ -48,7 +50,10 @@ public class CommunityChest extends Card {
 			player1.reduceMoney(this.getCardValue(), null);
 			break;
 		case "INCOME":
-			player1.addMoney(this.getCardValue());
+			if(this.getCardDesc().contains("birthday")) {
+				player1.addMoney(this.getCardValue()* Game.playerList.size());
+			}
+			else player1.addMoney(this.getCardValue());
 			break;
 		case "GET_OUT_OF_JAIL":
 			player1.addJailCard(this); // Increments the amount of jail free cards by 1

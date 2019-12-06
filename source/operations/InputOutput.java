@@ -90,7 +90,11 @@ public class InputOutput {
 				}
 				//not a house or hotel operation so print any titledeed
 				else if (!housesHotels) {
-					System.out.println("[" + i + "] " + player.getTitleDeedList().get(i).getCardDesc());
+					if(player.getTitleDeedList().get(i).getOwnableSite() instanceof Property){
+						System.out.println("[" + i + "] " + player.getTitleDeedList().get(i).getCardDesc()+" ("
+								+((Property)player.getTitleDeedList().get(i).getOwnableSite()).getSquareColour()+")");
+					}
+					else System.out.println("[" + i + "] " + player.getTitleDeedList().get(i).getCardDesc());
 				}
 			}
 			//print house hotel list

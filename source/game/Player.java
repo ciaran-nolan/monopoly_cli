@@ -204,8 +204,11 @@ public class Player {
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
-			System.out.println("You have passed go, you collect £200\n");
-			if(this.indexLocation!=0) this.addMoney(200); //Add £200 to the player's money because they have passed it
+
+			if(this.indexLocation!=0){
+				System.out.println("You have passed go, you collect £200\n");
+				this.addMoney(200); //Add £200 to the player's money because they have passed it
+			}
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
@@ -289,6 +292,7 @@ public class Player {
 		BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
 		//Need to check if it is a player that you owe money to. 
 		//If it is a player, turn over all of value to that player
+		System.out.println(this.getName()+" is bankrupt, and is removed from the game");
 		Game.playerList.remove(this);
 		if(!Checks.checkIfValidGame()){
 			Checks.checkWinner();
@@ -335,20 +339,22 @@ public class Player {
 				Game.numPlayersBankrupt++; //Increase the number of players bankrupt
 
 			} else {
-				System.out.println("You are bankrupt to " + playerOwed.getName());
+				System.out.println("You are bankrupt to " + playerOwed.getName()+".\n"+playerOwed.getName()+" will receive all of "+this.getName()+"'s assets");
 				if (this.money > 0) {
 					playerOwed.addMoney(this.money);
 				}
 				if (this.titleDeedCardList.size() > 0) {
-					for (TitleDeed currentTitleDeed : this.titleDeedCardList) {
+					for(int i = 0; i < titleDeedCardList.size(); i++) {
+						TitleDeed currentTitleDeed = titleDeedCardList.get(i);
 						this.titleDeedCardList.remove(currentTitleDeed);
 						playerOwed.addPurchasedTitleDeed(currentTitleDeed);
+						i--;
 					}
 				}
-				if (this.jailCards.size() > 0) {
-					for (Card jailCard : this.jailCards) {
-						playerOwed.addJailCard(jailCard);
-					}
+				while (this.jailCards.size() > 0) {
+					Card tempJail = this.jailCards.get(0);
+					this.jailCards.remove(0);
+					playerOwed.addJailCard(tempJail);
 				}
 				Checks.checkPlayerStatus(playerOwed);
 			}
@@ -528,20 +534,20 @@ public class Player {
 		boolean mustMortgage=false;
 
 		int valOfHouseHotels = Checks.checkHouseHotelValue(this);
-		System.out.println(valOfHouseHotels +" "+ moneyNeedToRaise);
 		if(valOfHouseHotels > moneyNeedToRaise) mustSellHouseHotels = true;
 
 		int valOfMortgage = Checks.checkMortgagingValue(this);
-		System.out.println(valOfMortgage);
 		if (valOfHouseHotels + valOfMortgage > moneyNeedToRaise) mustMortgage = true;
 
 		if(mustSellHouseHotels) {
-			bankruptcySellHousesHotels(moneyNeedToRaise);
+			System.out.println("You have the required funds to save yourself from bankruptcy by selling houses and hotels");
+			if (Checks.checkHouseHotelValue(this)>0) bankruptcySellHousesHotels(moneyNeedToRaise);
 			return true;
 		}
 		else if(mustMortgage) {
-			bankruptcySellHousesHotels(moneyNeedToRaise);
-			bankruptcyMortgage(moneyNeedToRaise);
+			System.out.println("You have the required funds to save yourself from bankruptcy by selling houses and hotels and mortgaging properties");
+			if (Checks.checkHouseHotelValue(this)>0) bankruptcySellHousesHotels(moneyNeedToRaise);
+			if (Checks.checkMortgagingValue(this)>0) bankruptcyMortgage(moneyNeedToRaise);
 			return true;
 		}
 		else {
@@ -570,9 +576,10 @@ public class Player {
                 }
             }
 			if(savedFromBankruptcy){
-				bankruptcySellHousesHotels(moneyNeedToRaise);
-				bankruptcyMortgage(moneyNeedToRaise);
-				completeBankruptcyTrade(userInput);
+
+				if(Checks.checkHouseHotelValue(this)>0) bankruptcySellHousesHotels(moneyNeedToRaise);
+				if(Checks.checkMortgagingValue(this)>0) bankruptcyMortgage(moneyNeedToRaise);
+				if(Checks.checkBankruptcyTradeValue(this)>0) completeBankruptcyTrade(userInput);
 				return true;
 			}
 			else {

@@ -28,15 +28,4 @@ class JailTest {
 		Jail.sendToJail(p1);
 		assertTrue(p1.isInJail());
 	}
-	//Removing from jail
-	@Test
-	void testRemoveFromJail() {
-		String instruction1 = "y\r\n";
-		InputStream instructionInputStream = new ByteArrayInputStream(instruction1.getBytes());
-		System.setIn(instructionInputStream);
-		Jail.sendToJail(p1);
-		assertTrue(p1.isInJail());
-		Jail.removeFromJail(p1,false,null);
-		assertFalse(p1.isInJail());
-	}
 }

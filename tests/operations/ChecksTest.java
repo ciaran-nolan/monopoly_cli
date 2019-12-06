@@ -124,9 +124,6 @@ class ChecksTest {
     	//GO
     	Checks.checkSquare(0,player, null);
     	assertEquals(1700,player.getMoney());
-    	
-    	//Chance
-    	Checks.checkSquare(2,player, null);
     }
     //Checking funds
     @Test

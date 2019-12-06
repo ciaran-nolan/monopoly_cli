@@ -33,12 +33,16 @@ public class Game {
 		//initialise board
 		Board.initialiseBoard();
 		Dice dice = Dice.getInstance();
-
+		//to hold a dynamic playerList size
+		int playerListSize = Game.playerList.size();
+		//integer comparer
+		int playerListComparer;
 		//end game when 2 players have become bankrupt
 		while(Checks.checkIfValidGame()) {
 			//Loop through the players of the game to handle their turn
-			for(Player currentPlayer:playerList) {
-
+			for(int i = 0; i<playerListSize; i++){
+			//for(Player currentPlayer:playerList) {
+				Player currentPlayer = Game.playerList.get(i);
                 //even if doubles are rolled to get out of jail, the player does not make another turn,
                 if (currentPlayer.isInJail()) {
                     Jail.handleJailMove(currentPlayer);
@@ -63,11 +67,19 @@ public class Game {
 						//handle the required action on the square
 						Checks.checkSquare(currentPlayer.getLocation(), currentPlayer, userInput);
                         //Check if further operations after dice roll are required
+
+						playerListComparer = Game.playerList.size();
+						//check if a player has been removed through bankruptcy
+						if(playerListComparer!=playerListSize){
+							playerListSize--;
+							i--;
+							break;
+						}
                         while (!InputOutput.yesNoInput(currentPlayer.getName()+", are you done with your turn? (y/n)", currentPlayer,userInput)) {
                             InputOutput.handleUserOption(currentPlayer, false, userInput);
                         }
                         //end turn if doubles not rolled, repeat if doubles rolled
-                        if (!doubleRoll) {
+                        if (!doubleRoll || currentPlayer.isInJail()) {
                             break;
                         } else {
                             System.out.println("\n"+currentPlayer.getName() + ", you have rolled doubles, you will roll again");
