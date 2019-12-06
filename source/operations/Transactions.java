@@ -37,14 +37,14 @@ public class Transactions {
 		for(String key: traderOnePropsToTrade.keySet()) {
 			System.out.println(key);
 		}
-		System.out.println("Cash: "+traderOneCash);
+		System.out.println("Cash: £"+traderOneCash);
 
 		//PLayer Two
 		System.out.println("\n"+tradeList.get(1).getName()+":\nJail free Cards: "+traderTwoJailFree+"\nProperties:");
 		for(String key: traderTwoPropsToTrade.keySet()) {
 			System.out.println(key);
 		}
-		System.out.println("Cash: "+traderTwoCash);
+		System.out.println("Cash: £"+traderTwoCash);
 	}
 	
 	/**
@@ -59,11 +59,14 @@ public class Transactions {
 		traderTwoPropsToTrade.clear();
 		tradeList.clear();
 	}
-	/**
-	 * Initiates a trade between 2 people, initiates their title deed card lists and trades it over to the other player.
-	 * It does this for jail free cards and cash too and these are all updated using the static class variables
-	 */
 
+	/**
+	 * It is checking the mortgage status of a title deed card when it is sold and when it is not sold. It checks whether the property has just been sold and thus, 
+	 * they need to pay the 10% interest instantly. 
+	 * @param player The Player object who has just purchased site
+	 * @param mortgagedTitledeed The TitleDeed card object of the purchased site 
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	public static void handleMortgagedTitledeed(Player player, TitleDeed mortgagedTitledeed, BufferedReader userInput){
 		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println(mortgagedTitledeed.getCardDesc()+" which "+player.getName()+" has received in trade or auction is mortgaged\n"

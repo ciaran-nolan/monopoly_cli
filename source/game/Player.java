@@ -167,14 +167,14 @@ public class Player {
 				if (money > this.money) {
 					//save from bankruptcy handles the reduction of money
 					if (saveFromBankruptcy(money - this.money, null)) {
-						System.out.println(this.name + ", remaining Funds: Â£" + this.money);
+						System.out.println(this.name + ", remaining Funds: £" + this.money);
 					}
 					//cant afford, player is bankrupt
 					else this.bankrupt(null);
 				} else {
 					//can afford, pay the amount
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: Â£" + this.money);
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
 				}
 			}
 			//a player is owed
@@ -186,7 +186,7 @@ public class Player {
 				} else {
 					//can afford to pay, reduce payer's money
 					this.money -= money;
-					System.out.println(this.name + ", remaining Funds: Â£" + this.money);
+					System.out.println(this.name + ", remaining Funds: £" + this.money);
 					//increment payees money
 					playerOwed.addMoney(money);
 				}
@@ -206,7 +206,7 @@ public class Player {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
 			this.addMoney(200); //Add ï¿½200 to the player's money because they have passed it
-			System.out.println("You have passed go, you collect Â£200\n\nYour funds: "+this.getMoney());
+			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
@@ -217,7 +217,7 @@ public class Player {
 	 */
 	public void moveToSquare(int squareNum) {
 		if(this.getLocation() > squareNum || this.indexLocation == 0) {
-		    System.out.println("You have passed go, collect Â£200.");
+		    System.out.println("You have passed go, collect £200.");
 			this.addMoney(200); //This implies that they have passed GO
 		}
 		this.indexLocation = squareNum;
@@ -263,14 +263,11 @@ public class Player {
 		//This will implement the card
 		pickedCard.dealWithCard(this, null);
 	}
+	
 	/**
 	 * Used to see if the player is in jail
 	 * @return inJail, jail status
 	 */
-
-
-
-
 	public boolean isInJail() {
 		return inJail; //Return inJail status
 	}
@@ -281,7 +278,6 @@ public class Player {
 	public void setInJail(boolean jailStatus){
 	    this.inJail = jailStatus;
     }
-
 
 	/**
 	 * This is for when a player is declared bankrupt. If it is the 2nd player of the game to go bankrupt, then the game is over and the winner of the game is calculated.
@@ -360,7 +356,7 @@ public class Player {
 	}
 
 	/**
-	 * Adding a purchased title deed card to the title deed card list of the Player objet and setting the owner of the Title Deed
+	 * Adding a purchased title deed card to the title deed card list of the Player object and setting the owner of the Title Deed
 	 * card to be the player object
 	 * @param purchasedProperty The TitleDeed card object of the purchased property
 	 */

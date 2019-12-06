@@ -64,6 +64,7 @@ public abstract class CanOwn extends Square {
 	 * @param player The player who is wishing to mortgage a CanOwn object
 	 * @param bankruptcy A boolean to see if the property is being mortgaged because of the Player's bankruptcy
 	 */
+	
 	public void mortgage(Player player, boolean bankruptcy) {
 		//check that the player owns the property
 		if (this.titleDeedCard.getOwner() == player) {

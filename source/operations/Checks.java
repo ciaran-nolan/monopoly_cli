@@ -113,7 +113,7 @@ public class Checks {
 	 */
     public static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
-				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
+				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n£"+player.getMoney()+" in cash \n\n");
 	}
 	//reveal the status of a players CanOwn list
 	//FIXME
@@ -366,7 +366,7 @@ public class Checks {
 					//Value of CanOwn objects
 					totalValue += titleDeed.getPriceBuy();
 					valueArray.add(totalValue);
-					System.out.println("Player: " + player.getName() + " has Total Asset value of Â£" + totalValue);
+					System.out.println("Player: " + player.getName() + " has Total Asset value of £" + totalValue);
 				}
 				//Zero the local variable for use with next player
 				totalValue = 0;
@@ -375,7 +375,7 @@ public class Checks {
 			maxValue = Collections.max(valueArray);
 			maxIndex = valueArray.indexOf(maxValue);
 			//Winner determined
-			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of Â£" + maxValue));
+			System.out.println("The richest player and winner of the game is: " + (Game.playerList.get(maxIndex).getName() + " with a Total Asset Value of £" + maxValue));
 			System.out.println("The Game has been won! It is now over!");
 			System.exit(1);
 		}
