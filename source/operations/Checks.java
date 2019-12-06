@@ -122,7 +122,7 @@ public class Checks {
      * If a property is in their list of TitleDeed cards, it also presents how many houses and hotels are on the Properties.
      * @param player The player who wishes to display the information about the ownable sites in their possession
      */
-	public static void checkPlayerCanOwnStatus(Player player){
+	static void checkPlayerCanOwnStatus(Player player){
 	    System.out.println(player.getName() + " - Title deed Status: \n");
 	    for(TitleDeed currentTitleDeed: player.getTitleDeedList()){
 	    	switch(currentTitleDeed.getOwnableSite().getClass().getSimpleName()){
@@ -213,14 +213,13 @@ public class Checks {
 	 */
 	public static boolean evenHouseDistribution(ArrayList<Property> colourGroup, Property propertyToAlterHouses, boolean buyOrSell) {
 		int[] houseDifferentialBounds = new int[2];
+		//Since the arrays are initialized to 0, only bounds which are non zero must be altered
 		if(buyOrSell) {
 			//when buying a house the must only be a difference of 0 or -1 between the chosen property and all other property's house numbers
-			houseDifferentialBounds[0]=-1;
-			houseDifferentialBounds[1]=0;
+			houseDifferentialBounds[0]= -1;
 		}
 		else {
 			//when selling it can be 1 or 0
-			houseDifferentialBounds[0] = 0;
 			houseDifferentialBounds[1] = 1;
 		}
 		//loop through the colour group in question

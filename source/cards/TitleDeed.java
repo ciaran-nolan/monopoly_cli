@@ -88,7 +88,7 @@ public class TitleDeed extends Card implements Printable {
      * Setting house price
      * @param price Integer price
      */
-    public void setHousePrice(int price){
+    void setHousePrice(int price){
     	this.housePrice = price;
     }
     /**
@@ -284,7 +284,6 @@ public class TitleDeed extends Card implements Printable {
                             }
                             biddingPlayers.remove(i);
                             i--;
-                            biddingPoolSize=biddingPlayers.size();
                             //reset temporary bid back to highest bid so it is not overwritten
                             temporaryBid = currentAuctionDetails[0];
                             break;
@@ -303,7 +302,7 @@ public class TitleDeed extends Card implements Printable {
                     }
                     biddingPlayers.remove(i);
                     i--;
-                    biddingPoolSize=biddingPlayers.size();
+                   
                 }
                 //updating bidding pool size
                 biddingPoolSize = biddingPlayers.size();

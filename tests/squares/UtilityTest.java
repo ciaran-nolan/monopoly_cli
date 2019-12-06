@@ -1,16 +1,10 @@
-
 package squares;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
 import cards.TitleDeed;
 import game.*;
-import squares.Utility;
-
 import org.junit.jupiter.api.*;
-//import java.util.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -53,7 +47,7 @@ class UtilityTest {
         System.setIn(instructionInputStream);
         Player player1 = new Player("John", "blue");
         utilityNew.buy(player1, null);
-        assertEquals(true, player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()));
+        assertTrue(player1.getTitleDeedList().contains(utilityNew.getTitleDeedCard()));
         player1.removeOwnedTitleDeed(utilityNew.getTitleDeedCard());
         player1.setMoney(150);
         instruction = "n\r\n";

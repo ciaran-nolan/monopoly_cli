@@ -5,15 +5,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cards.CommunityChest;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 
 class JailTest {
 	private Player p1 = new Player("P1", "Red");
-	private InputStream instructionInputStream;
-	
+
 	@BeforeEach
 	void setup(){
 		Board.initialiseBoard();
@@ -33,7 +32,7 @@ class JailTest {
 	@Test
 	void testRemoveFromJail() {
 		String Instruction1 = "y\r\n";
-		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		InputStream instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
 		System.setIn(instructionInputStream);
 		Jail.sendToJail(p1);
 		assertTrue(p1.isInJail());

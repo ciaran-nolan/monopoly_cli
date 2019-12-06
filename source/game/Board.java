@@ -28,9 +28,9 @@ public class Board {
 	public static ArrayList<Property> properties = new ArrayList<>(22); 	//Properties list
 	public static ArrayList<Train> trains = new ArrayList<>(4);				//Trains list
 	public static ArrayList<Utility> utilities = new ArrayList<>(2);		//Utilities list
-	public static ArrayList<Special> specialSquares = new ArrayList<>(12);	//Special Squares list
+	static ArrayList<Special> specialSquares = new ArrayList<>(12);	//Special Squares list
 	public static ArrayList<CommunityChest> communityChests = new ArrayList<>(16);		//Community Chest list
-	public static ArrayList<Chance> chances = new ArrayList<>(16);						//Chances list
+	static ArrayList<Chance> chances = new ArrayList<>(16);						//Chances list
 	public static ArrayList<Square> board = new ArrayList<>(Collections.nCopies(40, null)); //The board itself
 	
 	private static Properties prop = new Properties();

@@ -118,11 +118,11 @@ public class Jail {
      * ,paying their fine or using a get out of jail free card
      * @param jailedPlayer The player who is currently in jail who is asked to either roll a dice, pay a fine or use a get out of jail free card if they have one
      */
-    public static void handleJailMove(Player jailedPlayer){
+    static void handleJailMove(Player jailedPlayer){
         BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
         //print jail status
         boolean doubleRoll;
-        int jailExitChoice = 0;
+        int jailExitChoice;
         System.out.println("You are in jail.\nYou have "+jailedPlayer.getJailCard().size()+" get out of jail free cards"
         +"\nYou have rolled "+jailedPlayer.getJailMoves()+" times, without rolling a double.");
 

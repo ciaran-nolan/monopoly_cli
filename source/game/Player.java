@@ -130,7 +130,7 @@ public class Player {
 	}
 	/**
 	 * Add money to the player. Used as an income function
-	 * @param money The amount of money to add to their accoutn
+	 * @param money The amount of money to add to their account
 	 */
 	public void addMoney(int money) {
 		this.money+= money;
@@ -579,7 +579,7 @@ public class Player {
 	/**
 	 * Clears all of the preliminary trades made for the bankruptcy trades
 	 */
-	public void clearBankruptcyTradeStatus(){
+	void clearBankruptcyTradeStatus(){
 		for(TitleDeed currentTitleDeed: this.titleDeedCardList){
 			if(!currentTitleDeed.getBankruptcyTradeStatus().isEmpty()){
 				//give money back

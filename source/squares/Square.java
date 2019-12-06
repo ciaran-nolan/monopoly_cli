@@ -17,7 +17,7 @@ public abstract class Square  {
 	private String name; 	    //The description of the square
 	
 	public enum SquareType {
-		PROPERTY, UTILITY, TRAIN, SPECIAL, PUBLIC
+		PROPERTY, UTILITY, TRAIN, SPECIAL
 	}
 	
 	private SquareType squareType;
@@ -45,7 +45,7 @@ public abstract class Square  {
 	 * Returns the buy status and whether the square can be bought
 	 * @return this.canBuy
 	 */
-	public boolean getBuyStatus() {
+	boolean getBuyStatus() {
 		return this.canBuy;
 	}
 	/**
@@ -66,7 +66,7 @@ public abstract class Square  {
 	 * Setting the square type
 	 * @param squareType Of type squareType enum
 	 */
-	public void setSquareType(SquareType squareType) {
+	void setSquareType(SquareType squareType) {
 		this.squareType = squareType;
 	}
 	/**
@@ -80,7 +80,7 @@ public abstract class Square  {
 	 * Setting the buy status of the square
 	 * @param canBuy Boolean to determine if the square can be bought or not
 	 */
-	public void setBuyStatus(boolean canBuy) {
+	void setBuyStatus(boolean canBuy) {
 		this.canBuy = canBuy;
 	}
 	/**

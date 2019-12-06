@@ -144,7 +144,7 @@ public class Transactions {
 	 * it will complete the relevant trades of assets.
 	 * @param initiatingPlayer The Player Object wishing to initiate a trade
 	 */
-	public static void playerToPlayerTrade(Player initiatingPlayer) {
+	static void playerToPlayerTrade(Player initiatingPlayer) {
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		initiateTrade(initiatingPlayer, userInput);
 		int transactionChoice;
@@ -288,7 +288,7 @@ public class Transactions {
 				if(tradeItem == null){
 					System.out.println("Trade has been cancelled.");
 				}
-				tradeItem.playerAuction(bankruptPlayer, userInput);
+				else tradeItem.playerAuction(bankruptPlayer, userInput);
 			}
 		}
 		else{

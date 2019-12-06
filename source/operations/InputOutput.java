@@ -150,8 +150,8 @@ public class InputOutput {
 	public static ArrayList<Player> createListPlayers(BufferedReader userInput) {
 		try {
 			if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
-			ArrayList<Player> listPlayers = new ArrayList<Player>();
-			ArrayList<String> tokenList = new ArrayList<String>(Arrays.asList("blue", "red", "green", "black", "orange", "yellow"));
+			ArrayList<Player> listPlayers = new ArrayList<>();
+			ArrayList<String> tokenList = new ArrayList<>(Arrays.asList("blue", "red", "green", "black", "orange", "yellow"));
 
 
 			System.out.println("How many players will be playing the game(In range 2-6)?");
@@ -161,7 +161,7 @@ public class InputOutput {
 			if (numPlayers >= 2 && numPlayers <= 6) {
 				for (int i = 0; i < numPlayers; i++) {
 					String line;
-					String[] lineVector = new String[2];
+					String[] lineVector;
 					String name, token;
 					while (true) {
 						System.out.println("Please enter the relevant details for each player in the format below:");
@@ -177,10 +177,8 @@ public class InputOutput {
 							token = lineVector[1].trim();
 							if (!tokenList.contains(token)) {
 								System.err.println("Token not part of list. Enter details of Player again!");
-								continue;
 							} else if (name.length() == 0) {
 								System.err.println("Name of Player has not been entered or is not valid. Enter details of Player again!\n");
-								continue;
 							} else {
 								//Remove token from the array
 								tokenList.remove(token);
@@ -224,8 +222,7 @@ public class InputOutput {
 		}
 		catch(NumberFormatException ex){
 			System.err.println("Could not convert input string: "+ex.getMessage());
-			int choiceInput = integerMenu(lowerBound,upperBound, userInput);
-			return choiceInput;
+			return integerMenu(lowerBound,upperBound, userInput);
 		}
 		catch(IOException e){
 			System.out.println("Exception: "+e);
@@ -310,7 +307,7 @@ public class InputOutput {
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 * @return playerMenu.get(choiceInput), The player object you wish to interact with
 	 */
-    public static Player selectPlayerMenu(Player selectingPlayer, BufferedReader userInput){
+    static Player selectPlayerMenu(Player selectingPlayer, BufferedReader userInput){
 		if(userInput==null){
 			userInput = new BufferedReader(new InputStreamReader(System.in));
 		}
