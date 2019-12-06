@@ -33,7 +33,7 @@ public class Player {
 	private int jailMoves = 0;				//How many moves they have been in jail for
     private static Dice dice = Dice.getInstance();
 	/**
-	 * Class constructor. Initially the player receives £1500 as their money, they are set at location 0 or Go on the square
+	 * Class constructor. Initially the player receives �£1500 as their money, they are set at location 0 or Go on the square
 	 * @param name The name of the player
 	 * @param token The token they will be represented on the board with. This is from an array of colours
 	 */
@@ -134,7 +134,7 @@ public class Player {
 	 */
 	public void addMoney(int money) {
 		this.money+= money;
-		if(money>0) System.out.println(this.getName()+ ", remaining Funds : £"+this.money);
+		if(money>0) System.out.println(this.getName()+ ", remaining Funds : �£"+this.money);
 	}
 	/**
 	 * Setting the player's location on the board
@@ -197,11 +197,10 @@ public class Player {
 	//This function will increment the location of the player
 	/**
 	 * This handles the movement of a player when they roll a dice or are told to move forward a certain amount of places.
-	 * It handles the payment of £200 if the player passes or lands on Go
+	 * It handles the payment of �£200 if the player passes or lands on Go
 	 * @param moves The amount of squares to move forward
 	 */
 	void movePlayer(int moves) {
-		//FIXME change this 39 to be the GO SQUARE configuration
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
@@ -263,6 +262,7 @@ public class Player {
 		//This will implement the card
 		pickedCard.dealWithCard(this, null);
 	}
+
 	/**
 	 * Used to see if the player is in jail
 	 * @return inJail, jail status
@@ -280,8 +280,10 @@ public class Player {
     }
 
 	/**
-	 * Method to handle when a player is completely
-	 * @param playerOwed contains a player object, if the bankrupt player is bankrupt to another
+	 * This is for when a player is declared bankrupt. If it is the 2nd player of the game to go bankrupt, then the game is over and the winner of the game is calculated.
+	 * If the bank is owed by playerOwed == null, then saveFromBankruptcy can be run to see can the player avoid a bankruptcy situation.
+	 * If the current player goes bankrupt to another player, (playerOwed!=null), then everything of the current player's value is given to playerOwed
+	 * @param playerOwed The Player object who is owed money
 	 */
 	void bankrupt(Player playerOwed) {
 		BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
@@ -354,7 +356,7 @@ public class Player {
 	}
 
 	/**
-	 * Adding a purchased title deed card to the title deed card list of the Player objet and setting the owner of the Title Deed
+	 * Adding a purchased title deed card to the title deed card list of the Player object and setting the owner of the Title Deed
 	 * card to be the player object
 	 * @param purchasedProperty The TitleDeed card object of the purchased property
 	 */
@@ -510,7 +512,7 @@ public class Player {
 	 *
 	 * If you were saved from bankruptcy, then it completes the trades, completes the mortgaging of CanOwn objects and selling of houses and hotels.
 	 * If not, it clears the bankruptcy status and everything is handled by the bank in terms of selling houses/hotels and then auctioning of CanOwn TitleDeed cards
-	 * @param moneyNeedToRaise the debt a player currently has
+	 * @param moneyNeedToRaise Integer value of money needed to raise to save player from bankruptcy
 	 * @return true if saved, false if not
 	 */
 	private boolean saveFromBankruptcy(int moneyNeedToRaise) {

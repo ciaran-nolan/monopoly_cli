@@ -113,7 +113,7 @@ public class Checks {
 	 */
     public static void checkPlayerStatus(Player player) {
 		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
-				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n"+player.getMoney()+" in cash \n\n");
+				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n£"+player.getMoney()+" in cash \n\n");
 	}
 
     /**

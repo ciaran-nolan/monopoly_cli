@@ -56,16 +56,10 @@ class TransactionsTest {
 		p2.addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
 		p2.pickCommChestCard();
 		
-		
+		//Info about the test
 		System.out.println("Player 1: Add a property, attempt to add the same property. Attempt to add another property, but cancel before. "+
 		"Add a jail free card, attempt to add another jail free card you dont have. Add some cash");
 		System.out.println("Player 2: Add a property,. Add a jail free card. Add some cash. Complete trade\n");
-		
-		System.out.println("*********\n"+
-		"Player 1 Press:\n"
-		+ "0 ENTER 2 ENTER 0 ENTER n ENTER 2 ENTER 0 ENTER y ENTER 2 ENTER 2 ENTER y ENTER 1 ENTER n ENTER 1 ENTER y ENTER 3 ENTER 10 ENTER y ENTER"
-		+ "\nPlayer 2 Press:\n"
-		+ "2 ENTER 0 ENTER n ENTER 1 ENTER n ENTER 3 ENTER 10 ENTER y ENTER y ENTER y ENTER");
 
 		Transactions.playerToPlayerTrade(p1);
 		assertTrue(p1.getTitleDeedList().contains(Board.properties.get(2).getTitleDeedCard()));
@@ -93,14 +87,8 @@ class TransactionsTest {
 		
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
-		
+		//Info about the test
 		System.out.println("both players trade. PLayer two attempt to add jail free card that you do not have, player 2 DONT ACCEPT trade terms");
-		
-		System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "0 ENTER 2 ENTER 0 ENTER n ENTER 3 ENTER 10 ENTER y ENTER"
-				+ "\nPlayer 2 Press:\n"
-				+ "1 ENTER y ENTER 2 ENTER 0 ENTER y ENTER");
 		
 		Transactions.playerToPlayerTrade(Game.playerList.get(0));
 		
@@ -111,6 +99,7 @@ class TransactionsTest {
 		Game.playerList.get(0).getJailCard().clear();
 		
 	}
+	//Cancelling the trade
 	@Test
 	void testPlayerToPlayerTrade3() {
 		System.out.println("Player 1 immediately cancel trade");
@@ -124,8 +113,7 @@ class TransactionsTest {
 			"Player 1 Press:\n"
 			+ "0 ENTER 0 ENTER");
 	}
-	
-	
+	//A trade which saves you from bankruptcy
 	@Test
 	void testSaveFromBankruptcyTrade1() {
 		String instruction = "y\r\n0\r\n0\r\n500\r\ny\r\n";
@@ -133,13 +121,6 @@ class TransactionsTest {
 		System.setIn(instructionInputStream);
 
 		System.out.println("Make a normal Trade");
-		System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER 0 ENTER 0 ENTER"
-				+ "\nPlayer 2 Press:\n"
-				+ "500 ENTER"
-				+"Player 1 Press:\n"
-				+ "y ENTER");
 		Player p1 = Game.playerList.get(0);
 		Player p2 = Game.playerList.get(1);
 		
@@ -149,8 +130,7 @@ class TransactionsTest {
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(2).getTitleDeedCard());
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
 		Transactions.saveFromBankruptcyTrade(p1, null);
-		assertEquals(1000, p2.getMoney());
-		
+		assertEquals(1000, p2.getMoney());	
 	}
 	@Test
 	void testSaveFromBankruptcyTrade2() {
@@ -158,18 +138,6 @@ class TransactionsTest {
 		instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
 		System.setIn(instructionInputStream);
 		System.out.println("Players two and three bid for chosen property, until one player decides to no longer bid");
-		
-		System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER 1 ENTER"
-				+ "\nPlayer 2 Press:\n"
-				+ "y ENTER 200 ENTER"
-				+"Player 3 Press:\n"
-				+ "y ENTER 250 ENTER"
-				+ "\nPlayer 2 Press:\n"
-				+ "y ENTER 300 ENTER"
-				+"Player 3 Press:\n"
-				+ "n ENTER");
 		
 		Player p1 = Game.playerList.get(0);
 		Player p3 = new Player("p3","Green");
@@ -182,5 +150,4 @@ class TransactionsTest {
 		Game.playerList.get(1).addPurchasedTitleDeed(Board.properties.get(3).getTitleDeedCard());
 		Transactions.saveFromBankruptcyTrade(p1, null);
 	}
-
 }

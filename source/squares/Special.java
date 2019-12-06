@@ -99,12 +99,16 @@ public class Special extends Square implements Printable {
 				}
 		}
 	}
-
+	/**
+	 * Print the instance data using the Interface Printable
+	 */
 	@Override
 	public void printInstanceData() {
 		System.out.println("Special, "+this.getName());
 	}
-
+	/**
+	 * Whether you can buy this Square
+	 */
 	@Override
 	public boolean canBuy() {
 		return false;

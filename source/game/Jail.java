@@ -30,13 +30,12 @@ public class Jail {
     }
 
     /**
-     * Removing a player from jail.If they didn't roll a double, they can roll the dice and move to that square. Then we perform CheckSquare
+     * Removing a player from jail. If they didn't roll a double, they can roll the dice and move to that square. Then we perform CheckSquare
      * @param jailedPlayer The player that is jailed and will now be freed from jail
      * @param rolledDouble Whether or not the player has rolled a double to free them from jail
      * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
     static void removeFromJail(Player jailedPlayer, boolean rolledDouble, BufferedReader userInput){
-        System.out.println("Test");
         if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
         jailedPlayer.setInJail(false);
         jailedPlayer.setJailMoves(0);
@@ -50,7 +49,7 @@ public class Jail {
 
     /**
      * This handles using a get out of jail free card to leave jail. It will check what pile of cards it came from, either community chest or chance, add it back to
-     * those piles of cards and then remove it from the Arraylist of jail free cards that the jailedPlayer object possesses.
+     * back to the bottom of the pile of cards and then remove it from the Arraylist of jail free cards that the jailedPlayer object possesses.
      * It then calls removeFromJail() to remove them from jail
      * @param jailedPlayer The player who is jailed who is using the get out of jail free card
      * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
@@ -72,7 +71,7 @@ public class Jail {
     /**
      * This handles the rolls a player makes when in jail. They can either pay the fine (if they have enough money), use a get out of jail free
      * card if they have one or if they do not have enough for a fine, they will go bankrupt
-     * @param jailedPlayer The player who is jailed who is on their final attempt at rolling to get out of jail
+     * @param jailedPlayer The Player object who is jailed
      * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 
@@ -99,7 +98,7 @@ public class Jail {
                 System.out.println("You do not have enough funds to pay the fine, so you must use a get out of jail free card");
             }
             else{
-                System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay €50 fine");
+                System.out.println("Please Select an option:\n[0]Use get out of jail free card\n[1]Pay £50 fine");
                 jailExitChoice = InputOutput.integerMenu(0,1, userInput);
             }
             if(jailExitChoice==0){

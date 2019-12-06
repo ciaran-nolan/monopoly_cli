@@ -5,15 +5,15 @@ import java.io.BufferedReader;
 import game.Player;
 
 /**
- * The Card class defines structure of all Card types of which there are a number extended from this abstract class.
- * This class is for any classes that are physical cards in the game of Monopoly. These include Community Chest, Chance and Title Deed Cards
+ * The Card class defines the structure of all Card types of which there are a number extended from this abstract class.
+ * This class is for any classes that are physical cards in the game of Monopoly. These include Community Chest, Chance and Title Deed Cards.
  *
  * @author Robert Keenan & Ciaran Nolan
  *
  */
 
-
 public abstract class Card {
+	//Class variables
 	private String cardType;
 	private String cardDesc;
 	private int cardValue;
@@ -32,23 +32,47 @@ public abstract class Card {
 	}
 	
 	//Getters for each class variable
+	/**
+	 * Get the type of the card
+	 * @return this.cardType
+	 */
 	public String getCardType() {
 		return this.cardType;
 	}
+	/**
+	 * Get the description of the card
+	 * @return this.cardDesc
+	 */
 	public String getCardDesc() {
 		return this.cardDesc;
 	}
+	/**
+	 * Get card value
+	 * @return this.cardValue
+	 */
 	int getCardValue() {
 		return this.cardValue;
 	}
 	
 	//Setters for each class variable
+	/**
+	 * Setting the card type
+	 * @param cardType A string of the card type such as Title Deed, MOVE, JAIL, PAY, etc.
+	 */
 	public void setCardType(String cardType) {
 		this.cardType = cardType;
 	}
+	/**
+	 * Setting the card description
+	 * @param cardDesc A string of the card description
+	 */
 	public void setCardDesc(String cardDesc) {
 		this.cardDesc = cardDesc;
 	}
+	/**
+	 * Setting the value of the card
+	 * @param cardValue The value of the card
+	 */
 	public void setCardValue(int cardValue) {
 		this.cardValue = cardValue;
 	}
@@ -61,6 +85,9 @@ public abstract class Card {
 	public abstract void dealWithCard(Player player1, BufferedReader userInput);
 
 	//Print the details of the card
+	/**
+	 * Prints the details of a card
+	 */
 	public String toString() {
 		return "Card Type: "+this.cardType+", Card Description: "+this.cardDesc+", Card Value: "
 				+this.cardValue;

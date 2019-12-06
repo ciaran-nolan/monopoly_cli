@@ -19,7 +19,7 @@ class SpecialTest {
 	void tearDown() {
 		squareNew = null;
 	}
-
+	//Testing constructor
 	@Test
 	void testSpecial() {
 		assertEquals("Test", squareNew.getName(),"Checking name is correct");
@@ -41,7 +41,7 @@ class SpecialTest {
 		squareNew.setValue(50);
 		assertEquals(50,squareNew.getValue(),"Checking value can be changed");
 	}
-
+	//All cases of special square
 	@Test
 	void testImplementSpecialSquare() {
 		Player p1 = new Player("P1", "red");

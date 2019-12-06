@@ -25,7 +25,7 @@ class TrainTest {
 		train1 = null;
 		p2=null;
 	}
-
+	//Buying with no owner
 	@Test
 	void testBuyPlayerNO_OWNER() {
 		String instruction = "y\r\n";
@@ -35,7 +35,7 @@ class TrainTest {
 		Board.trains.get(0).buy(p2, null);
 		assertTrue(p2.getTitleDeedList().contains(Board.trains.get(0).getTitleDeedCard()));
 	}
-	
+	//Buying with owner
 	@Test
 	void testBuyPlayerOWNER() {
 		String instruction = "y\r\n";
@@ -45,7 +45,7 @@ class TrainTest {
 		Board.trains.get(1).buy(p2, null);
 		assertTrue(p2.getTitleDeedList().contains(Board.trains.get(1).getTitleDeedCard()));
 	}
-
+	//Test the constructor
 	@Test
 	void testTrain() {
 		train1 = new Train("testConstruct",10);

@@ -40,22 +40,42 @@ public class Property extends CanOwn implements Printable {
 	}
 	
 	//Getters and setters
+	/**
+	 * Get the number of hotels on a Property square
+	 * @return this.numHotels
+	 */
 	public int getNumHotels() {
 		return this.numHotels;
 	}
 	//Get number of houses
+	/**
+	 * Get the number of houses on a Square
+	 * @return this.numHouses
+	 */
 	public int getNumHouses() {
 		return this.numHouses;
 	}
 	//set the num of houses
+	/**
+	 * Set the number of houses on a Square 
+	 * @param numHouses Integer number of houses
+	 */
 	public void setNumHouses(int numHouses) {
 		this.numHouses = numHouses;
 	}
 	//set the num of hotels
+	/**
+	 * Set the number of Hotels
+	 * @param numHotels Integer number of hotels
+	 */
 	public void setNumHotels(int numHotels) {
 		this.numHotels = numHotels;
 	}
 	//get the square colour
+	/**
+	 * Get the colour of the square
+	 * @return this.squareColour
+	 */
 	public String getSquareColour() {
 		return this.squareColour;
 	}
@@ -68,6 +88,7 @@ public class Property extends CanOwn implements Printable {
 	 *
 	 * If none of these cases are satisfied, the property goes to auction.
 	 * @param player A player object who wants to buy the Property object
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 
 	public void buy(Player player, BufferedReader userInput) {
@@ -75,8 +96,8 @@ public class Property extends CanOwn implements Printable {
 			//check user has enough funds to purchase
 			TitleDeed titleDeedCard = this.getTitleDeedCard();
 			if(!Checks.enoughFunds(player, titleDeedCard.getPriceBuy())) {
-				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: "
-                        +player.getMoney()+"\nProperty Price: "+titleDeedCard.getPriceBuy());
+				System.out.println("You do not have the necessary funds to purchase this property.\nYour Funds: £"
+                        +player.getMoney()+"\nProperty Price: £"+titleDeedCard.getPriceBuy());
 				//player does not have enough funds to buy property, automatically enter auction
 				titleDeedCard.playerAuction(null, userInput);
 
@@ -86,9 +107,9 @@ public class Property extends CanOwn implements Printable {
 				System.out.println("This property is already owned!");
 			}
 			else if(InputOutput.yesNoInput(player.getName()+", would you like to purchase "
-                    +this.getName()+" for €"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
+                    +this.getName()+" for £"+titleDeedCard.getPriceBuy()+"?", player, userInput)) {
 				//user has passed all necessary checks to purchase a property, reduce the price from users funds
-				System.out.println("You have purchased "+this.getName()+" for "+titleDeedCard.getPriceBuy());
+				System.out.println("You have purchased "+this.getName()+" for £"+titleDeedCard.getPriceBuy());
 
 				player.reduceMoney(titleDeedCard.getPriceBuy(), null);
 				//add property to users property list
@@ -115,7 +136,6 @@ public class Property extends CanOwn implements Printable {
 		else {
 			Property propToBuild = ((Property)titleDeedToBuild.getOwnableSite());
 			ArrayList<Property> colourGroup = Checks.ownAllColour(player, propToBuild);
-			//InputOutput.titleDeedOperationMenu(player, "purchase houses/hotels for", true);
 
 			int canBuildStatus = Checks.canBuildHousesHotels(propToBuild, player);
 
@@ -309,14 +329,18 @@ public class Property extends CanOwn implements Printable {
 			return this.getTitleDeedCard().getHousePrice()/2;
 		}
 	}
-
+	/**
+	 * Print the instance data. This comes from the Interface Printable
+	 */
 	@Override
 	public void printInstanceData() {
 		System.out.println("Property, "+this.getName()+"("+this.getSquareColour()+"): \nLocation: Square "+this.getLocation());
 		this.getTitleDeedCard().printInstanceData();
 		System.out.println("Number of houses: "+this.getNumHouses()+ "\nNumber of Hotels: "+this.getNumHotels());
 	}
-
+	/**
+	 * Returning if you can buy a site
+	 */
 	@Override
 	public boolean canBuy() {
 		return this.getTitleDeedCard().canBuy();

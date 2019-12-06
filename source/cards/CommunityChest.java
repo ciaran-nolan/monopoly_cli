@@ -35,7 +35,7 @@ public class CommunityChest extends Card {
 	public void dealWithCard(Player player1, BufferedReader userInput) {
 
 		// deal with a community chest card
-		// rit details of card to player
+		// print details of card to player
 		System.out.println("The community chest card reads: " + this.getCardDesc());
 		switch (this.getCardType()) {
 		case "MOVE":

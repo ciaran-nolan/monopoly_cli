@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import cards.Card;
+import cards.TitleDeed;
 import game.*;
 
 import java.io.ByteArrayInputStream;
@@ -34,6 +35,7 @@ class CanOwnTest {
     void testSetTitleDeedCard() {
     }
 
+    //Test mortgaging
     @Test
     void testMortgage() {
         String instruction = "y\r\n";
@@ -44,6 +46,7 @@ class CanOwnTest {
         assertTrue(Board.properties.get(3).getTitleDeedCard().getMortgageStatus());
     }
 
+    //Test removing the mortgage
     @Test
     void testDemortgage() {
         String instruction = "y\r\n";
