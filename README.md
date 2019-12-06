@@ -13,10 +13,11 @@
 	* source: Contains all of the source code in a number of packages.
 	* tests: Contains all of our unit tests for each one of our source code classes in the source/ folder.
 * There are a number of other folders such as _UML Diagrams/_ (for UML Class, Use Case and Sequence Diagrams), _Images/_ (Of Test results and general workflow) and _doc/_ (which contains all of the Javadoc. It is split into source (Javadoc for source code) and tests for test code)
+
 #### Source Code 
 * Each one of these 2 main folders is split into a number of packages which are described below in terms of why we structured them that way:
 	* **cards: The *cards* package contains all of the relevant cards to play the game. These are the cards that will be physically used in the game and the Card parent class**
-		* **Card.java**: Card abstract class (parent class).
+	* **Card.java**: Card abstract class (parent class).
 		* **Chance.java**: The implementation of Chance cards.
 		* **CommunityChest.java**: The implementation of Community Chest cards.
 		* **TitleDeed.java**: The Title Deed cards that are associated with a site or square on the board that can be bought by a player. Players trade and buy/sell Title Deed cards rather than the Square on the board itself. This means that we have implemented a method similar to how Monopoly is played in reality.
@@ -27,14 +28,14 @@
 		* **Jail.java**: Handles all of a player's interactions with jail
 		* **Player.java**: A large class which handles all of a player's interactions with the game such as paying rent, reducing/adding money to their account, moving around the board and all of the operations involved in bankruptcy
 	* **gameConfigurations**: This file is unique as we import all of the data for properties, train stations, utilities, chance cards, community chest cards and special squares. They are all in a set structure so somebody could use the American version of Monopoly's properties with our code and it would work provided the structure of the configuration files was the same. We did this to improve the extensibility of our design.
-	* **operations: This package contains a number of operations files which we thought would be best kept seperate. These include methods that are checking various outputs and class variables, Input/Output functionality and a class for transactions between players**
+	* **operations: This package contains a number of operations files which we thought would be best kept separate. These include methods that are checking various outputs and class variables, Input/Output functionality and a class for transactions between players**
 		* **Checks.java**: A number of methods that are used to check various aspects of the game such as players, distribution of houses and whether you own all properties of a certain colour for example.
 		* **InputOutput.java**: We found we were repeating a lot of the same input and output functionality so we made a class out of a number of methods such as yes no inputs and integer menus
 		* **Transactions.java**: Covers a wide array of Transactions between players
 	* **squares: This covers all of the squares that will be on the board and their attributes on the board such as their location or name/description**
 		* **CanOwn.java**: A CanOwn object is a Square on the board that can be owned such as a Property, Train station or Utility
 		* **Property.java**: A square which can have houses and hotels built on it
-		* **Special.java**: A special square is one such as Free Parking, Tax, Income, Chance or Commnunity Chest card square, Jail or Go
+		* **Special.java**: A special square is one such as Free Parking, Tax, Income, Chance or Community Chest card square, Jail or Go
 		* **Square.java**: The overall parent class to all squares
 		* **Train.java**: Train station class
 		* **Utility.java**: Utility class
@@ -48,7 +49,7 @@
 * We take no user input in our unit tests. With purely non-user interacting functions, we would have never have been able to achieve sufficient coverage of the code base and determine that each method was working correctly together. 
 	* To do this, we added a `BufferedReader` to the arguments of any methods that needed user input. As a result, we could set a String into the input buffer so that our tests all run automatically without user input which is desirable.
 	* Without this feature, some of our tests such as playerAuction would take nearly 5mins to type in all the relevant details to cover all of the relevant test cases
-	* We decided this was a better structure to have in such a user centric project/game such as Monopoly where user input is required all of the time.
+	* We decided this was a better structure to have in such a user-centric project/game such as Monopoly where user input is required all of the time.
 * `BufferedReader` example in a test for creating a player list:
 ```java
 String instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
@@ -70,8 +71,8 @@ Game.playerList = InputOutput.createListPlayers(null);
 	* **Use Case Diagram** (Use_Case.jpg, Use_Case.xml):
 		* The Use case diagram we have done is very simple, we have not covered all of the aspects of the code understandably and have more so covered the initial set-up of a game and then the Player to Player trading. 
 		* 4 Objects are defined (Player 1, Player 2, Input/Output System, Transactions System)
-		* <<include>> shows shared functionality between the use cases and any solid lines describe an interaction or connectio to the use case or system in place
-		* For example, for the player to player trade use case 2 players take part in the trade so their green lines point to the trade use case bubble. The transactions system and input/output system are also involved in this use case represented by blue and brown lines repsectively and as a result, they contribute to the use case also
+		* <<include>> shows shared functionality between the use cases and any solid lines describe an interaction or connection to the use case or system in place
+		* For example, for the player to player trade use case 2 players take part in the trade so their green lines point to the trade use case bubble. The transactions system and input/output system are also involved in this use case represented by blue and brown lines respectively and as a result, they contribute to the use case also
 		* To reiterate, **Green** lines represent player interaction with use case, **brown** lines are transaction system interactions and **blue** lines are Input/Output system interactions with Use cases
 		
 #### Images
@@ -82,6 +83,37 @@ Game.playerList = InputOutput.createListPlayers(null);
 * We implemented configuration files in a set format or structure as we wanted our code and project to be as transferable as possible so that a user could perhaps use their own configuration files for their own custom version of Monopoly. This could include our code being used for the Irish, UK and US versions of Monopoly with only a few simple changes needed. We used this as a motivation to demonstrate the extensibility and user-friendliness of our code base. 
 
 ## How to run the project successfully
+* We will present in this section a very simple flow to using the project
+
+### Initial Setup of Game and Players
+* Enter the number of players and their Names and Tokens (colours) in the format of `Name,token`
+![](Images/PlayerEntry.png)
+
+### Initial Choice for the Player
+* A player is then presented with the following choice to make and they enter an integer choice
+![](Images/InitialChoice.png)
+
+### Rolling a Dice
+* Choosing Integer choice 5, you roll the dice and presented with the following for example
+![](Images/DiceRollPurchase.png)
+
+* Rolling a double presents you with the following
+![](Images/RolledDouble.png)
+
+### Buying a Property and Title Deed Status
+* If you purchase a property, your Title Deed list will be updated as shown for the player Ciaran
+![](Images/TitleDeedStatus.png)
+
+### Mortgaging a Property you own
+* In the case of the player Ciaran who owns Whitehall, they can mortgage it as shown
+![](Images/Mortgaged2.png)
+
+### Trading with other Players
+* You can trade with other players at any time so long as it is your turn. You can trade money, Properties/Train Stations/Utilities or a Get out of Jail free card.
+* Both players are prompted for terms of the deal and then they must both agree to accept the trade as shown below in the images
+![](Images/TradeRob.png)
+![](Images/FinaliseTrade1.png)
+![](Images/FinaliseTrade2.png)
 		
 ## Teamwork
 * We initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code.
