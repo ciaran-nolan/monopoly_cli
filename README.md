@@ -71,7 +71,7 @@ Game.playerList = InputOutput.createListPlayers(null);
 	* **Use Case Diagram** (Use_Case.jpg, Use_Case.xml):
 		* The Use case diagram we have done is very simple, we have not covered all of the aspects of the code understandably and have more so covered the initial set-up of a game and then the Player to Player trading. 
 		* 4 Objects are defined (Player 1, Player 2, Input/Output System, Transactions System)
-		* <<include>> shows shared functionality between the use cases and any solid lines describe an interaction or connection to the use case or system in place
+		* `<<include>>` shows shared functionality between the use cases and any solid lines describe an interaction or connection to the use case or system in place
 		* For example, for the player to player trade use case 2 players take part in the trade so their green lines point to the trade use case bubble. The transactions system and input/output system are also involved in this use case represented by blue and brown lines respectively and as a result, they contribute to the use case also
 		* To reiterate, **Green** lines represent player interaction with use case, **brown** lines are transaction system interactions and **blue** lines are Input/Output system interactions with Use cases
 		
