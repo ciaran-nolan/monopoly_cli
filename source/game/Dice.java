@@ -17,7 +17,13 @@ public final class Dice {
 	private static int dice2;		//The roll of Dice 2
 	private static int duplicateRollCounter=0;		//A counter to track the number of doubles rolled in a game
 
+	/**
+	 * Single dice constructor
+	 */
 	private Dice(){ }
+	/**
+	 * Return the instance
+	 */
 	public static Dice getInstance(){
 		return dice;
 	}

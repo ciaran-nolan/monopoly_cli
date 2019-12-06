@@ -43,6 +43,7 @@ public class Jail {
         	dice.rollDice();
         }
         jailedPlayer.movePlayer(dice.getDieVals());
+        InputOutput.squareInformation(jailedPlayer.getLocation());
         Checks.checkSquare(jailedPlayer.getLocation(),jailedPlayer, userInput);
     }
 
@@ -123,6 +124,7 @@ public class Jail {
         //print jail status
         boolean doubleRoll;
         int jailExitChoice;
+        InputOutput.printSeparator();
         System.out.println("You are in jail.\nYou have "+jailedPlayer.getJailCard().size()+" get out of jail free cards"
         +"\nYou have rolled "+jailedPlayer.getJailMoves()+" times, without rolling a double.");
 
@@ -155,6 +157,7 @@ public class Jail {
                 if(jailedPlayer.getJailMoves()==3){
                     handleFinalRollAttempt(jailedPlayer,userInput);
                 }
+                else System.out.println("You have not rolled doubles, you will remain in jail, your turn is finished.");
             }
         }
         //Pay the fine if they can

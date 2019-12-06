@@ -21,8 +21,8 @@ class TransactionsTest {
 	@BeforeEach
 	void setUp() {
 		Board.initialiseBoard();
-		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
-		instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		String instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		instructionInputStream = new ByteArrayInputStream(instruction1.getBytes());
 		System.setIn(instructionInputStream);
 		System.out.println("\n----------\nTEST PLEASE ENTER THE FOLLOWING:");
 		System.out.println("2 ENTER Rob,red ENTER Ciaran,blue ENTER\n----------\n");

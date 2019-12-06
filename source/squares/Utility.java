@@ -71,6 +71,7 @@ public class Utility extends CanOwn implements Printable {
 	public void printInstanceData() {
 		System.out.println("Utility, "+this.getName()+": \nLocation: Square "+this.getLocation()+"\nMortgage Status: ");
 		this.getTitleDeedCard().printInstanceData();
+		System.out.print("\n");
 	}
 	/**
 	 * Checking whether you can buy the Square

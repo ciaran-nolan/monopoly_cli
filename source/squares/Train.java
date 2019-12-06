@@ -68,6 +68,7 @@ public class Train extends CanOwn implements Printable {
 	public void printInstanceData() {
 		System.out.println("Train, "+this.getName()+": \nLocation: Square "+this.getLocation()+"\nMortgage Status: ");
 		this.getTitleDeedCard().printInstanceData();
+		System.out.print("\n");
 	}
 	/**
 	 * Whether you can buy the Square

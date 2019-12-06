@@ -164,15 +164,15 @@ class TitleDeedTest {
 	//Takes 2 players and then negotiates a trade
 	@Test
 	void testPlayerAuction() {
-		String Instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
-		String Instruction2 = "y\r\n30\r\ny\r\n50\r\ny\r\n6\r\ny\r\n60\r\nn\r\n";
-		InputStream instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		String instruction1 = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		String instruction2 = "y\r\n30\r\ny\r\n50\r\ny\r\n6\r\ny\r\n60\r\nn\r\n";
+		InputStream instructionInputStream = new ByteArrayInputStream(instruction1.getBytes());
 
 		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "Orange", 100, new int[]{1,2,3,4}, 10,50,p1,prop1);
 		System.setIn(instructionInputStream);
 		Game.playerList = InputOutput.createListPlayers(null);
 
-		instructionInputStream =  new ByteArrayInputStream(Instruction2.getBytes());
+		instructionInputStream =  new ByteArrayInputStream(instruction2.getBytes());
 		System.setIn(instructionInputStream);
 		t1.playerAuction(null, null);
 		assertTrue(Game.playerList.get(0).getTitleDeedList().contains(t1));
@@ -182,14 +182,14 @@ class TitleDeedTest {
 	@Test
 	void testPlayerAuctionNO_BIDS_OR_OWNER()  {
 
-		String Instruction = "2\r\nRob,red\r\nCiaran,blue\r\n";
-		String Instruction2 = "n\r\nn\r\n";
-		InputStream instructionInputStream1 = new ByteArrayInputStream(Instruction.getBytes());
+		String instruction = "2\r\nRob,red\r\nCiaran,blue\r\n";
+		String instruction2 = "n\r\nn\r\n";
+		InputStream instructionInputStream1 = new ByteArrayInputStream(instruction.getBytes());
 
 		TitleDeed t1 = new TitleDeed("Title Deed", "Test", 0, "Orange", 100, new int[]{1,2,3,4}, 10,50,null,prop1);
 		System.setIn(instructionInputStream1);
 		Game.playerList = InputOutput.createListPlayers(null);
-		InputStream instructionInputStream2= new ByteArrayInputStream(Instruction2.getBytes());
+		InputStream instructionInputStream2= new ByteArrayInputStream(instruction2.getBytes());
 		System.setIn(instructionInputStream2);
 		t1.playerAuction(null, null);
 

@@ -22,6 +22,10 @@ import squares.*;
  */
 public class InputOutput {
 
+	public static void printSeparator(){
+		System.out.println("\n********************************************************************************************\n"+
+				"********************************************************************************************\n");
+	}
 
 	//method to handle yes/no inputs
 	/**
@@ -92,7 +96,7 @@ public class InputOutput {
 			//print house hotel list
 			if (housesHotels) {
 				for (int i = 0; i < houseHotelList.size(); i++) {
-					System.out.println("[" + i + "] " + houseHotelList.get(i).getCardDesc());
+					System.out.println("[" + i + "] " + houseHotelList.get(i).getCardDesc()+" ("+((Property)houseHotelList.get(i).getOwnableSite()).getSquareColour()+")");
 				}
 				System.out.println("[" + (houseHotelList.size()) + "] Cancel");
 				choiceInput = integerMenu(0, houseHotelList.size(), userInput);
@@ -126,7 +130,7 @@ public class InputOutput {
 	 */
 	public static void squareInformation(int index){
 		//type canown requires additional information
-		System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")");
+		System.out.println("You have landed on: " + board.get(index).getName()+" (Index: "+index+")\n");
 		switch (board.get(index).getClass().getSimpleName()){
 			case "Property":
 				((Property)board.get(index)).printInstanceData();
@@ -156,7 +160,7 @@ public class InputOutput {
 
 			System.out.println("How many players will be playing the game(In range 2-6)?");
 			int numPlayers = InputOutput.integerMenu(2, 6, userInput);
-			System.out.println("You have specified " + numPlayers + " players to play the game");
+			System.out.println("\nYou have specified " + numPlayers + " players to play the game");
 			//Get the players to be entered by the user -> Have a loop that asks for that number of players.
 			if (numPlayers >= 2 && numPlayers <= 6) {
 				for (int i = 0; i < numPlayers; i++) {
@@ -186,13 +190,13 @@ public class InputOutput {
 								listPlayers.add(new Player(name, token)); //This will add a new player to the list of players
 								//I have added each player in the range of numPlayers to be in the listPlayers array.
 								//Running this will return the list of players which I can set in main
+								System.out.print("\n");
 								break;
 							}
 						}
 					}
 				}
 			}
-
 			//Inside of the main, we will return this list of players
 			return listPlayers;
 		}
@@ -240,7 +244,7 @@ public class InputOutput {
 	 */
 	public static void handleUserOption(Player currentPlayer, boolean doubleRoll, BufferedReader userInput) {
 		if(userInput==null){userInput=new BufferedReader(new InputStreamReader(System.in));}
-		System.out.println("\n"+currentPlayer.getName()+", please enter in Numeric form what you would like to do!");
+		System.out.println("\n"+currentPlayer.getName()+", please enter in numeric form what you would like to do!");
 		System.out.println("----------------------------------------------------------------\n" +
 						"|\t1: Mortgage/Demortgage a property\n" +
 						"|\t2: Build Houses/Hotels on Square\n" +

@@ -31,8 +31,8 @@ class JailTest {
 	//Removing from jail
 	@Test
 	void testRemoveFromJail() {
-		String Instruction1 = "y\r\n";
-		InputStream instructionInputStream = new ByteArrayInputStream(Instruction1.getBytes());
+		String instruction1 = "y\r\n";
+		InputStream instructionInputStream = new ByteArrayInputStream(instruction1.getBytes());
 		System.setIn(instructionInputStream);
 		Jail.sendToJail(p1);
 		assertTrue(p1.isInJail());

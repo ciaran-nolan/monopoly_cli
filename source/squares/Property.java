@@ -334,9 +334,9 @@ public class Property extends CanOwn implements Printable {
 	 */
 	@Override
 	public void printInstanceData() {
-		System.out.println("Property, "+this.getName()+"("+this.getSquareColour()+"): \nLocation: Square "+this.getLocation());
+		System.out.println("Property, "+this.getName()+" ("+this.getSquareColour()+"): \nLocation: Square "+this.getLocation());
 		this.getTitleDeedCard().printInstanceData();
-		System.out.println("Number of houses: "+this.getNumHouses()+ "\nNumber of Hotels: "+this.getNumHotels());
+		System.out.println("Number of houses: "+this.getNumHouses()+ "\nNumber of Hotels: "+this.getNumHotels()+"\n");
 	}
 	/**
 	 * Returning if you can buy a site

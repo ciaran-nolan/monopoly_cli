@@ -63,7 +63,7 @@ public class Game {
 						//handle the required action on the square
 						Checks.checkSquare(currentPlayer.getLocation(), currentPlayer, userInput);
                         //Check if further operations after dice roll are required
-                        while (!InputOutput.yesNoInput("Are you done with your turn?(y/n)", currentPlayer,userInput)) {
+                        while (!InputOutput.yesNoInput(currentPlayer.getName()+", are you done with your turn? (y/n)", currentPlayer,userInput)) {
                             InputOutput.handleUserOption(currentPlayer, false, userInput);
                         }
                         //end turn if doubles not rolled, repeat if doubles rolled

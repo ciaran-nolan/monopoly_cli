@@ -112,8 +112,10 @@ public class Checks {
 	 * @param player The Player object which will have its data printed to the screen
 	 */
     public static void checkPlayerStatus(Player player) {
-		System.out.println(player.getName()+": You are currently at square "+player.getLocation()+", you have:\n\n"+player.getJailCard().size()
-				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" ownable properties\n£"+player.getMoney()+" in cash \n\n");
+    	InputOutput.printSeparator();
+		System.out.println(player.getName()+", You are currently at square "+player.getLocation()+", you have:\n"+player.getJailCard().size()
+				+" Jail Free Cards\n"+player.getTitleDeedList().size()+" Ownable Properties\n£"+player.getMoney()+" in Cash ");
+		InputOutput.printSeparator();
 	}
 
     /**
@@ -139,6 +141,7 @@ public class Checks {
 					break;
 			}
         }
+	    InputOutput.printSeparator();
     }
 
 

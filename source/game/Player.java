@@ -204,8 +204,8 @@ public class Player {
 		if((this.getLocation()+ moves) >= 40) {
 			//In this they are either on the square or they have now passed it
 			this.indexLocation += (moves-40);
-			this.addMoney(200); //Add £200 to the player's money because they have passed it
-			System.out.println("You have passed go, you collect £200\n\nYour funds: "+this.getMoney());
+			System.out.println("You have passed go, you collect £200\n");
+			if(this.indexLocation!=0) this.addMoney(200); //Add £200 to the player's money because they have passed it
 		}
 		else this.indexLocation = this.indexLocation + moves; //This moves the index location by moves
 	}
@@ -390,7 +390,6 @@ public class Player {
 		//Going to take the ownable square and work with it from there
 		//Ask the player who owns it first whether they want to pay rent or not
 		Player owner = ownableSquare.getTitleDeedCard().getOwner();
-		System.out.println(owner.getName());
 		TitleDeed titleDeedCard = ownableSquare.getTitleDeedCard();
 		if(titleDeedCard.getMortgageStatus()) {
 			System.out.println("This square is mortgaged and so no rent can be claimed on it!");
@@ -404,15 +403,22 @@ public class Player {
 					int numHotels = ((Property)ownableSquare).getNumHotels();
 					//Below is for if you own all of the properties but they are not improved,
 					//Charge double rent
+
 					if(Checks.ownAllColour(this, (Property)ownableSquare) != null && numHouses + numHotels == 0) {
+						System.out.println(titleDeedCard.getOwner()+" owns all properties on this colour group ("+((Property) ownableSquare).getSquareColour()+")");
+						System.out.println("Rent totals to: "+(2*(titleDeedCard.getRents()[0])));
 						this.reduceMoney(2*(titleDeedCard.getRents()[0]), titleDeedCard.getOwner());
 					}
 					else if(numHotels == 0) {
-						//This is for if you own all the properties in a colour group but you have houses
+						//No hotels on property, handles both upgraded and non-upgraded properties
+						System.out.println("There is "+((Property)ownableSquare).getNumHouses()+" houses on "+titleDeedCard.getCardDesc());
+						System.out.println("Rent totals to: "+titleDeedCard.getRents()[numHouses]);
 						this.reduceMoney(titleDeedCard.getRents()[numHouses], titleDeedCard.getOwner());
 					}
 					else {
 						//This is for if there is a hotel on the site. Max 1
+						System.out.println("There is a hotel on "+this.getName());
+						System.out.println("Rent totals to: "+titleDeedCard.getRents()[5]);
 						this.reduceMoney(titleDeedCard.getRents()[5], titleDeedCard.getOwner());
 					}	
 				}
@@ -426,20 +432,20 @@ public class Player {
 							numTrains++;
 						}
 					}
+					System.out.println("Rent totals to: "+titleDeedCard.getRents()[numTrains-1]);
 					this.reduceMoney(titleDeedCard.getRents()[numTrains-1], titleDeedCard.getOwner());
 				}
 				else {
 					//Rent payment for a utility
 					//Check the amount of utilities that an owner has
 					int numUtilities=0;
-					System.out.println(owner.getTitleDeedList().size());
 					for(TitleDeed titleDeedUtility:owner.getTitleDeedList()) {
-						
 						CanOwn ownedSquare = titleDeedUtility.getOwnableSite();
 						if(ownedSquare instanceof Utility) {
 							numUtilities++;
 						}
 					}
+					System.out.println("Rent totals to: "+(titleDeedCard.getRents()[numUtilities-1])*dice.getDieVals());
 					this.reduceMoney((titleDeedCard.getRents()[numUtilities-1])*dice.getDieVals(), titleDeedCard.getOwner());
 				}
 			}
