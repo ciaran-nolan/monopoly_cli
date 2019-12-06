@@ -50,7 +50,7 @@ class CommunityChestTest {
         //GET OUT OF JAIL FREE
         commChestTest.setCardType("GET_OUT_OF_JAIL");
         commChestTest.dealWithCard(playerTest, null);
-        assertTrue(playerTest.getJailCard().size()>0);
+        assertNotEquals(0, playerTest.getJailCard().size(), "Checking the jail card was added to their jail card array list");
     }
     @Test
     public void testDealWithCardCHOICE() {

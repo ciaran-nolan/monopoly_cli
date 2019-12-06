@@ -60,7 +60,7 @@ class ChanceTest {
         //GET OUT OF JAIL FREE
         chanceTest.setCardType("GET_OUT_OF_JAIL");
         chanceTest.dealWithCard(playerTest, null);
-        assertTrue(playerTest.getJailCard().size() > 0);
+        assertNotEquals(0, playerTest.getJailCard().size(), "Checking the player has received a Jail card");
     }
     @Test
     void testDealWithCardJAIL() {

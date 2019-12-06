@@ -27,7 +27,7 @@ class DiceTest {
 	@Test
 	void testRollDice() {
 		Dice.rollDice();
-		assertTrue(Dice.getDieVals()>0);
+		assertNotEquals(0, Dice.getDieVals());
 	}
 
 	@Test
