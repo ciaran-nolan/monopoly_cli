@@ -9,11 +9,10 @@
 * Please see our JavaDoc in our repository for more in-depth details into the structure of our project and the implementation for all methods and classes
 * NOTE: We had problems with UTF-8 coding of the £ symbol when printing to the console with different text encoding schemes in Eclipse between computers (macOS vs Windows). **Please ensure your text encoding is UTF-8 in your IDE.**
 ## Structure of the Repository
-
 * The repository is firstly split into 2 main folders of Java code:
 	* source: Contains all of the source code in a number of packages.
 	* tests: Contains all of our unit tests for each one of our source code classes in the source/ folder.
-* There are a number of other folders such as UML Diagrams and Images
+* There are a number of other folders such as _UML Diagrams/_ (for UML Class, Use Case and Sequence Diagrams), _Images/_ (Of Test results and general workflow) and _doc/_ (which contains all of the Javadoc. It is split into source (Javadoc for source code) and tests for test code)
 #### Source Code 
 * Each one of these 2 main folders is split into a number of packages which are described below in terms of why we structured them that way:
 	* **cards: The *cards* package contains all of the relevant cards to play the game. These are the cards that will be physically used in the game and the Card parent class**
@@ -57,10 +56,10 @@ InputStream instructionInputStream = new ByteArrayInputStream(instruction1.getBy
 System.setIn(instructionInputStream);
 Game.playerList = InputOutput.createListPlayers(null);
 ```
-* The final code coverage and performance of our tests are shown below. We have 133 tests in total and there is a test for every class apart from the Game class which is our Main file. Firstly we will show all tests passing and then followed by 71.6% code coverage of the source code.
+* The final code coverage and performance of our tests are shown below. We have 132 tests in total and there is a test for every class apart from the Game class which is our Main file. Firstly we will show all tests passing and then followed by 70.4% code coverage of the source code.
 
 ![](Images/TestPerformance.png)
-![](Images/Code Coverage.png)
+![](Images/Coverage.png)
 
 #### UML Diagrams 
 * UML Diagrams are located in the folder at the top level of the project called "UML Diagrams". Inside of this folder, you can find the following diagrams which are saved as .xml, .jpg image and .ucls which is an ObjectAid Class Diagram.
@@ -94,6 +93,18 @@ Game.playerList = InputOutput.createListPlayers(null);
 * Once we were finished with a class, we would meet up and review the code. From here, we could make judgements on areas where we could improve, optimise the speed of our program or simplify the structure.
 * As you may have noticed from our Gitlab repository, there is a large number of commits. We have obviously seen in this Software Engineering module just how important Agile methodologies are to the efficient performance of a software development team. We emphasised incremental improvements with many commits a day. This meant that there was a minimal amount of times where we had merge conflicts or encountered issues in our workflow and this is definitely something we prioritised throughout the project
 * You may also notice when you look at the contributors for our Gitlab repository in Repository > Contributors that there are 4 separate main contributors. This is due to us both using 2 different computers to push changes to the code base
+
+## Appendix UML Diagrams
+* I will put these UML Diagrams here as an Appendix for reference
+* Class Diagram:
+
+![](UML_Diagrams/Class_Diagram.jpg)
+* Sequence Diagram:
+
+![](UML_Diagrams/Sequence.jpg)
+* Use Case Diagram:
+
+![](UML_Diagrams/Use_Case.jpg)
 
 
 		
