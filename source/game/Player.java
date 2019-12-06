@@ -283,7 +283,12 @@ public class Player {
     }
 
 
-
+	/**
+	 * This is for when a player is declared bankrupt. If it is the 2nd player of the game to go bankrupt, then the game is over and the winner of the game is calculated.
+	 * If the bank is owed by playerOwed == null, then saveFromBankruptcy can be run to see can the player avoid a bankruptcy situation.
+	 * If the current player goes bankrupt to another player, (playerOwed!=null), then everything of the current player's value is given to playerOwed
+	 * @param playerOwed The Player object who is owed money
+	 */
 	public void bankrupt(Player playerOwed) {
 		BufferedReader userInput=new BufferedReader(new InputStreamReader(System.in));
 		//Need to check if it is a player that you owe money to. 
@@ -491,7 +496,7 @@ public class Player {
 
 	/**
 	 * Complete the trade of a CanOwn object's TitleDeed card when in bankruptcy in order to raise money
-	 * @param userInput
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 	public void completeBankruptcyTrade(BufferedReader userInput){
 		if(userInput==null){userInput = new BufferedReader(new InputStreamReader(System.in));}
@@ -517,6 +522,8 @@ public class Player {
 	 *
 	 * If you were saved from bankruptcy, then it completes the trades, completes the mortgaging of CanOwn objects and selling of houses and hotels.
 	 * If not, it clears the bankruptcy status and everything is handled by the bank in terms of selling houses/hotels and then auctioning of CanOwn TitleDeed cards
+	 * @param moneyNeedToRaise Integer value of money needed to raise to save player from bankruptcy
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 * @return true if saved, false if not
 	 */
 	public boolean saveFromBankruptcy(int moneyNeedToRaise, BufferedReader userInput) {

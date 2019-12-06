@@ -16,7 +16,7 @@ import squares.*;
 /**
  * The Input/Output class handles all of the inputs from the user that are used continuously. 
  * These include Yes/no inputs, a title deed operation menu , information about the square a player object is on, an integer menu to make 
- * choices numerically, handling user options when they land on a square and a menu for a player to select another player to interact with
+ * choices numerically, handling user options when they land on a square and a menu for a player to select another player to interact with.
  * @author Robert Keenan & Ciaran Nolan
  *
  */
@@ -30,7 +30,7 @@ public class InputOutput {
 	 * @param message The message which is to be presented to the user
 	 * @param player The Player object which is making the input
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
-	 * @return
+	 * @return y if y entered, n if not
 	 */
 	public static boolean yesNoInput(String message, Player player, BufferedReader userInput) {
 		//If no buffered reader given, then we can create one
@@ -64,7 +64,7 @@ public class InputOutput {
 	 * @param operation The operation the player object wishes to do 
 	 * @param housesHotels Boolean to determine if it is related to houses or hotels
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
-	 * @return
+	 * @return TitleDeed object if title deed selected, house hotel list of a title deed, null otherwise
 	 */
 	public static TitleDeed titleDeedOperationMenu(Player player, String operation, boolean housesHotels, BufferedReader userInput){
 		try {
@@ -141,7 +141,7 @@ public class InputOutput {
 		}
 	}
 	/**
-	 * This creates the list of players which will take part in a game. It prompts the user to input players in a specific form with
+	 * This creates the list of players who will take part in a game. It prompts the users to input players in a specific form with
 	 * Name,token. The token has to be a colour which are printed on the screen. It then creates Player objects for each of the players entered with
 	 * minimum 2 players to maximum 6.
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
@@ -210,7 +210,7 @@ public class InputOutput {
 	 * @param lowerBound The lower bound of the integer menu as an integer
 	 * @param upperBound The lower bound of the integer menu as an integer
 	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
-	 * @return
+	 * @return choiceInput which is an integer choice, -1 if no choice
 	 */
 	public static int integerMenu(int lowerBound, int upperBound, BufferedReader userInput){
 		try {

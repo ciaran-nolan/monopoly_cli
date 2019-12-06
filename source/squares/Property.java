@@ -40,22 +40,42 @@ public class Property extends CanOwn implements Printable {
 	}
 	
 	//Getters and setters
+	/**
+	 * Get the number of hotels on a Property square
+	 * @return this.numHotels
+	 */
 	public int getNumHotels() {
 		return this.numHotels;
 	}
 	//Get number of houses
+	/**
+	 * Get the number of houses on a Square
+	 * @return this.numHouses
+	 */
 	public int getNumHouses() {
 		return this.numHouses;
 	}
 	//set the num of houses
+	/**
+	 * Set the number of houses on a Square 
+	 * @param numHouses Integer number of houses
+	 */
 	public void setNumHouses(int numHouses) {
 		this.numHouses = numHouses;
 	}
 	//set the num of hotels
+	/**
+	 * Set the number of Hotels
+	 * @param numHotels Integer number of hotels
+	 */
 	public void setNumHotels(int numHotels) {
 		this.numHotels = numHotels;
 	}
 	//get the square colour
+	/**
+	 * Get the colour of the square
+	 * @return this.squareColour
+	 */
 	public String getSquareColour() {
 		return this.squareColour;
 	}
@@ -68,6 +88,7 @@ public class Property extends CanOwn implements Printable {
 	 *
 	 * If none of these cases are satisfied, the property goes to auction.
 	 * @param player A player object who wants to buy the Property object
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 
 	public void buy(Player player, BufferedReader userInput) {
@@ -309,14 +330,18 @@ public class Property extends CanOwn implements Printable {
 			return this.getTitleDeedCard().getHousePrice()/2;
 		}
 	}
-
+	/**
+	 * Print the instance data. This comes from the Interface Printable
+	 */
 	@Override
 	public void printInstanceData() {
 		System.out.println("Property, "+this.getName()+"("+this.getSquareColour()+"): \nLocation: Square "+this.getLocation());
 		this.getTitleDeedCard().printInstanceData();
 		System.out.println("Number of houses: "+this.getNumHouses()+ "\nNumber of Hotels: "+this.getNumHotels());
 	}
-
+	/**
+	 * Returning if you can buy a site
+	 */
 	@Override
 	public boolean canBuy() {
 		return this.getTitleDeedCard().canBuy();

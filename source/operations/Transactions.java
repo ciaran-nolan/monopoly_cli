@@ -75,6 +75,10 @@ public class Transactions {
 		else mortgagedTitledeed.getOwnableSite().demortgage(false,true);
 	}
 
+	/**
+	 * Exchanging of the trade items that have been decided on
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
+	 */
 	private static void exchangeTradeItems(BufferedReader userInput) {
 		if(userInput==null)  userInput = new BufferedReader(new InputStreamReader(System.in));
 		Player traderOne = tradeList.get(0);
@@ -262,7 +266,7 @@ public class Transactions {
 	 * If there are only 2 oeople in the playerList, then the single transaction is enacted between them.
 	 * Otherwise, if there are no other players who wish to trade then it goes to auction
 	 * @param bankruptPlayer The player object who is bankrupt and wishes to trade to gain money
-	 * @param userInput
+	 * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
 	 */
 
 	public static void saveFromBankruptcyTrade(Player bankruptPlayer, BufferedReader userInput) {
@@ -288,6 +292,4 @@ public class Transactions {
 			System.out.println("No players are willing to trade");
 		}
 	}
-
-
 }

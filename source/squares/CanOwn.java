@@ -11,7 +11,6 @@ import operations.InputOutput;
  * They have an associated Title Deed card and you can see that functionality in TitleDeed.java.
  * The method in this class are mortgage(),demortgage() and buy() as well as setters and getters for the Title Deed card of a CanOwn object
  * @author Robert Keenan & Ciaran Nolan
- *
  */
 public abstract class CanOwn extends Square {
 	//Class variable of a title deed card
@@ -32,10 +31,10 @@ public abstract class CanOwn extends Square {
 	 * This is the getter for the Title Deed card of the CanOwn object and it returns a TitleDeed card object
 	 * @return titleDeedCard, a TitleDeed object of the CanOwn object
 	 */
-
 	public TitleDeed getTitleDeedCard(){
 		return this.titleDeedCard;
 	}
+	
 	/**
 	 * Setting the Title Deed card of the CanOwn object by giving a TitleDeed object as an argument
 	 * @param card TitleDeed object you want to set this CanOwn object's Title Deed card to
@@ -43,9 +42,7 @@ public abstract class CanOwn extends Square {
 	public void setTitleDeedCard(TitleDeed card){
 		this.titleDeedCard = card;
 	}
-	//FIXME PLEASE Consider whether it should take an argument or not, Refer to Trello
-
-	//The list of players is so you can use the auction method which will be made by Ciaran Nolan
+	
 	/**
 	 * Abstract method for buying a CanOwn property and this is implemented in the child classes
 	 * @param player The player who wishes to buy a CanOwn object

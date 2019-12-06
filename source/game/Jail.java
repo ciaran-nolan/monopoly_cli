@@ -17,8 +17,6 @@ import operations.InputOutput;
  */
 public class Jail {
 
-
-    //FIXME fix jail condition with immediate exit
 	/**
 	 * The method which sends a player to jail in the argument. It prints that the player has been sent to jail.
 	 * It then uses the player method setInJail to change their jail status and set their location to square number 10(Jail)
@@ -32,9 +30,10 @@ public class Jail {
     }
 
     /**
-     * Removing a player from jail.If they didn't roll a double, they can roll the dice and move to that square. Then we perform CheckSquare
+     * Removing a player from jail. If they didn't roll a double, they can roll the dice and move to that square. Then we perform CheckSquare
      * @param jailedPlayer The player that is jailed and will now be freed from jail
      * @param rolledDouble Whether or not the player has rolled a double to free them from jail
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
     public static void removeFromJail(Player jailedPlayer, boolean rolledDouble, BufferedReader userInput){
         System.out.println("Test");
@@ -51,9 +50,10 @@ public class Jail {
 
     /**
      * This handles using a get out of jail free card to leave jail. It will check what pile of cards it came from, either community chest or chance, add it back to
-     * those piles of cards and then remove it from the Arraylist of jail free cards that the jailedPlayer object possesses.
+     * back to the bottom of the pile of cards and then remove it from the Arraylist of jail free cards that the jailedPlayer object possesses.
      * It then calls removeFromJail() to remove them from jail
      * @param jailedPlayer The player who is jailed who is using the get out of jail free card
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
     private static void handleJailFreeCardUsage(Player jailedPlayer,  BufferedReader userInput){
         if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
@@ -72,7 +72,8 @@ public class Jail {
     /**
      * This handles the rolls a player makes when in jail. They can either pay the fine (if they have enough money), use a get out of jail free
      * card if they have one or if they do not have enough for a fine, they will go bankrupt
-     * @param jailedPlayer
+     * @param jailedPlayer The Player object who is jailed
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 
     private static void handleFinalRollAttempt(Player jailedPlayer,  BufferedReader userInput){
@@ -117,6 +118,7 @@ public class Jail {
      * This method handles the moves they make while the jailedPlayer object is in jail such as rolling to see can they roll a double
      * ,paying their fine or using a get out of jail free card
      * @param jailedPlayer The player who is currently in jail who is asked to either roll a dice, pay a fine or use a get out of jail free card if they have one
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
     public static void handleJailMove(Player jailedPlayer){
         BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));

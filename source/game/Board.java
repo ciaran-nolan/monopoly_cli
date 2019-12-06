@@ -42,7 +42,7 @@ public class Board {
 	private static Properties prop = new Properties();
 	
 	/**
-	 * The input stream is setup for a reading in particular configuration file
+	 * The input stream is set up for a reading in particular configuration file
 	 * @param propFileName The Relative path to the configuration file from this Board.java file
 	 * @return inputStream
 	 */
@@ -230,6 +230,9 @@ public class Board {
 			System.out.println("Exception: " + e);
 		}
 	}
+    /** 
+     * Clears the board. This means that it clears the configuaration of everything in terms of properties, trains, chance cards, etc. 
+     */
 	public static void clearBoard(){
 		properties.clear();
 		specialSquares.clear();

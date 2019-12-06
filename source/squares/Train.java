@@ -29,6 +29,7 @@ public class Train extends CanOwn implements Printable {
      * And then checks if you can purchase it, deducts the price from the player object's money and adds the purchased title deed card.
      * If none of these cases are satisfied, it goes to auction.
      * @param player The player object that wants to buy the train station
+     * @param userInput BufferedReader used for simulating user input for much more complex tests in JUnit
      */
 	public void buy(Player player, BufferedReader userInput) {
 		if(userInput==null){
@@ -60,13 +61,17 @@ public class Train extends CanOwn implements Printable {
 			this.getTitleDeedCard().playerAuction(null, userInput);
 		}
 	}
-
+	/**
+	 * Printing the Instance data using Interface Printable
+	 */
 	@Override
 	public void printInstanceData() {
 		System.out.println("Train, "+this.getName()+": \nLocation: Square "+this.getLocation()+"\nMortgage Status: ");
 		this.getTitleDeedCard().printInstanceData();
 	}
-
+	/**
+	 * Whether you can buy the Square
+	 */
 	@Override
 	public boolean canBuy() {
 		 return this.getTitleDeedCard().canBuy();

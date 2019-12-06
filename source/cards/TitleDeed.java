@@ -16,9 +16,12 @@ import squares.CanOwn;
 import squares.Printable;
 
 /**
- * The Title Deed class descirbes the title deed card of a property, train station or utility site such as a Water Works.
+ * The Title Deed class describes the title deed card of a property, train station or utility site such as a Water Works.
  * This title deed card is exactly the same as you would have in a real game of Monopoly if you owned one of these sites.
- * It includes details such as the square's colour, the price of buying the site and what site it is linked to on the board
+ * It includes details such as the square's colour, the price of buying the site and what site it is linked to on the board.
+ * We decided this was a better way of presenting the CanOwn object rather than the Square itself. In terms of buying and selling,  the players 
+ * buy and sell these cards rather than the physical square. This is to reflect as close as possible to the real game of Monopoly where an owner holds the title 
+ * deed card on their side in a game. 
  * @author Robert Keenan & Ciaran Nolan
  *
  */
@@ -67,92 +70,141 @@ public class TitleDeed extends Card implements Printable {
     }
 
     //Setters and Getters for all of the variables
+    /** 
+     * Getting the CanOwn object associated with this TitleDeed object
+     * @return this.ownableSite
+     */
     public CanOwn getOwnableSite(){
         return this.ownableSite;
     }
-
+    /** 
+     * The house price on this Title Deed card for the CanOwn object
+     * @return this.housePrice
+     */
     public int getHousePrice(){
         return this.housePrice;
     }
-
+    /**
+     * Setting house price
+     * @param price Integer price
+     */
     public void setHousePrice(int price){
     	this.housePrice = price;
     }
-
+    /**
+     * Getting price of the title deed card (CanOwn object) to buy
+     * @return this.priceBuy
+     */
     public int getPriceBuy(){
         return this.priceBuy;
     }
-
+    
+    /**
+     * Setting the buy price
+     * @param price Integer price
+     */
     public void setpriceBuy(int price){
         this.priceBuy = price;
     }
-
+    /**
+     * Getting the rents array 
+     * @return this.rents
+     */
     public int[] getRents(){
         return this.rents;
     }
-
+    /**
+     * Setting the rents
+     * @param rents Integer array of rents
+     */
     public void setRents(int[] rents){
         this.rents = rents;
     }
-
+    /**
+     * Getting the square colour
+     * @return this.squareColour
+     */
     public String getSquareColour(){
         return this.squareColour;
     }
-
+    /**
+     * Setting the square colour
+     * @param squareColour String of a colour
+     */
     public void setSquareColour(String squareColour){
         this.squareColour = squareColour;
     }
-
+    /**
+     * Get the Player object who owns the Title Deed
+     * @return this.owner
+     */
     public Player getOwner(){
         return this.owner;
     }
-
+    /**
+     * Setting the owner with a Player object
+     * @param newOwner Player object who is the new owner
+     */
     public void setOwner(Player newOwner){
         this.owner = newOwner;
     }
-
+    /** 
+     * Getting the mortgage status of the associated CanOwn object
+     * @return this.mortgageStatus
+     */
     public boolean getMortgageStatus(){
         //If the card is faced down, it is mortgaged
         return this.mortgageStatus;
     }
-
+    /**
+     * Setting the mortgage status with a boolean argument
+     * @param newStatus A boolean of a new mortgage status
+     */
     public void setMortgageStatus(boolean newStatus){
         this.mortgageStatus = newStatus;
     }
-
+    /**
+     * Getting the mortgage value
+     * @return this.mortgage
+     */
     public int getMortgage(){
         return this.mortgage;
     }
-
+    /**
+     * Setting the mortgage value
+     * @param mortgage Integer of new mortgage value
+     */
     public void setMortgage(int mortgage){
         this.mortgage = mortgage;
     }
 
     /**
-     * This is used to determine the trade status of the site associated with this title deed card and whether it will be enough to make the player not bankrupt
-     * A player is agreed with to provisionally receive the property
+     * This is used to determine the trade status of the site associated with this title deed card and whether it will be enough to make the player not bankrupt anymore. 
+     * Another Player is agreed with, to provisionally receive the property.
      * @param agreedPrice The agreed price to pay for the property by the recipient
      * @param recipient The Player object which is given the property if the owner achieves saving themselves from bankruptcy
      */
     public void setBankruptcyTradeStatus(int agreedPrice, Player recipient){
         bankruptcyTradeStatus.put(agreedPrice, recipient);
     }
-
+    /**
+     * Get the trade status of the property which is a HashMap
+     * @return this.bankruptcyTradeStatus
+     */
     public HashMap<Integer, Player> getBankruptcyTradeStatus(){
         return this.bankruptcyTradeStatus;
     }
 
     /**
-     * This is the player auction method which initiates an auction between a number of players and the owner of the property.
+     * This is the player auction method which initiates an auction between a number of players and the owner of the title deed card (CanOwn object).
      * It increases the bidding pool size and then a number of Player objects can go into a bidding war with each other.
      * The auction ends when somebody enters a value to pay which all of the remaining players in the bidding war don't want to bid against by
-     * entering "n" instead of "y"
-     * If you enter a lower bid than the current highest bit, it will prompt you to enter a new bid as yours is lower than the current highest
+     * entering "n" instead of "y".
+     * If you enter a lower bid than the current highest bit, it will prompt you to enter a new bid as yours is lower than the current highest.
      *
      * @param bankruptPlayer The bankrupt player object who owns the property which is being auctioned off
      */
-
-
+    
     public void playerAuction(Player bankruptPlayer, BufferedReader userInput) {
         if(userInput==null) userInput = new BufferedReader(new InputStreamReader(System.in));
         int[] currentAuctionDetails = new int[] {0,0};
