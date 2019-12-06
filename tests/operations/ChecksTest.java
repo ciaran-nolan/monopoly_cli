@@ -33,6 +33,7 @@ class ChecksTest {
         Game.playerList.clear();
     }
     
+    //Checking square first for a property
     @Test
     void testCheckSquare1() throws IOException {
     	//Property
@@ -40,10 +41,6 @@ class ChecksTest {
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
     	//Unowned - buy property
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
     	Board.properties.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(1, player, null);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.properties.get(0).getTitleDeedCard().getCardDesc()));
@@ -54,10 +51,6 @@ class ChecksTest {
     	Checks.checkSquare(1,player, null);
     	
     	//owned by a different player
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
         instructionInputStream.reset();
         System.setIn(instructionInputStream);
     	Player player2 = new Player("P2","Green");
@@ -69,17 +62,14 @@ class ChecksTest {
     	player.setMoney(1500);
     }
     
+    //Checking square for a utility
     @Test
     void testCheckSquare2() throws IOException {
     	//Utility
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
-    	//Unowned - buy property
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+    	//Unowned - buy train
     	Board.utilities.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(12, player, null);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.utilities.get(0).getTitleDeedCard().getCardDesc()));
@@ -90,10 +80,6 @@ class ChecksTest {
     	Checks.checkSquare(12,player, null);
     	
     	//owned by a different player
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
     	instructionInputStream.reset();
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
@@ -104,18 +90,14 @@ class ChecksTest {
     	assertEquals(1480,player.getMoney());
     	player.setMoney(1500);
     }
-    
+    //Check square for a train station
     @Test
     void testCheckSquare3() throws IOException {
-    	//Utility
+    	//Trains
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
-    	//Unowned - buy property
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+    	//Unowned - buy train
     	Board.trains.get(0).getTitleDeedCard().setOwner(null);
     	Checks.checkSquare(5, player, null);
     	assertTrue(player.getTitleDeedList().get(0).getCardDesc().equals(Board.trains.get(0).getTitleDeedCard().getCardDesc()));
@@ -126,10 +108,6 @@ class ChecksTest {
     	Checks.checkSquare(5,player, null);
     	
     	//owned by a different player
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
     	instructionInputStream.reset();
     	Player player2 = new Player("P2","Green");
     	player2.addPurchasedTitleDeed(player.getTitleDeedList().get(0));
@@ -140,7 +118,7 @@ class ChecksTest {
     	assertEquals(1475,player.getMoney());
     	player.setMoney(1500);
     }
-    
+    //Check square for a special square
     @Test
     void testCheckSquare4() {
     	//GO
@@ -150,7 +128,7 @@ class ChecksTest {
     	//Chance
     	Checks.checkSquare(2,player, null);
     }
-    
+    //Checking funds
     @Test
     void testEnoughFunds() {
         player.setMoney(10);
@@ -159,7 +137,7 @@ class ChecksTest {
         assertTrue(Checks.enoughFunds(player,100));
         player.setMoney(1500);
     }
-
+    //Can buy
     @Test
     void testCanBuy() {
       TitleDeed testTitleDeed = Board.properties.get(0).getTitleDeedCard();
@@ -219,33 +197,22 @@ class ChecksTest {
         assertEquals(0, Checks.canBuildHousesHotels((Property)player.getTitleDeedList().get(0).getOwnableSite(),player));
         player.getTitleDeedList().remove(0);
         //Don't own all the properties in this group, don't try again
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "n ENTER"
-				);
+        
         assertEquals(-2, Checks.canBuildHousesHotels(Board.properties.get(0),player));
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+        
         instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         //Don't own all the properties in this group, try again
         assertEquals(-1,Checks.canBuildHousesHotels(((Property)player.getTitleDeedList().get(0).getOwnableSite()),player));  
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "n ENTER"
-				);
+        
+        //Player 1 enters
         instruction = "n\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         //Null property, don't try again
         assertEquals(-2,  Checks.canBuildHousesHotels(null,player));
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+        //Player 1 enters
         instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
@@ -255,26 +222,18 @@ class ChecksTest {
         player.getTitleDeedList().clear();
         Board.properties.get(0).getTitleDeedCard().setOwner(null);
         
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "n ENTER"
-				);
+        //Player 1 enters
         instruction = "n\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         //don't try again
         assertEquals(-2,Checks.canBuildHousesHotels(Board.properties.get(0),player));
-        System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+        //Player 1 enters
         //try again
         instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
         assertEquals(-1,Checks.canBuildHousesHotels(Board.properties.get(0),player));
-    
-        
     }
 
     @Test
@@ -312,10 +271,8 @@ class ChecksTest {
         System.setIn(instructionInputStream);
     	Player player2 = new Player("P2","Green");
     	Board.properties.get(3).getTitleDeedCard().setOwner(null);
-    	System.out.println("*********\n"+
-				"Player 1 Press:\n"
-				+ "y ENTER"
-				);
+    	
+    	//Player 1 enter y
     	Board.properties.get(3).buy(player, null);
     	player.getTitleDeedList().get(0).setBankruptcyTradeStatus(1000, player2);
     	assertEquals(1000,Checks.checkBankruptcyTradeValue(player));

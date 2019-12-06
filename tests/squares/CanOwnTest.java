@@ -30,11 +30,7 @@ class CanOwnTest {
     	Card card = Board.properties.get(3).getTitleDeedCard();
     	assertTrue(card instanceof TitleDeed,"Card obtained is a Title Deed Card");
     }
-
-    @Test
-    public void testSetTitleDeedCard() {
-    }
-
+    //Test mortgaging
     @Test
     public void testMortgage() {
         String instruction = "y\r\n";
@@ -44,7 +40,7 @@ class CanOwnTest {
         Board.properties.get(3).mortgage(p1,false);
         assertTrue(Board.properties.get(3).getTitleDeedCard().getMortgageStatus());
     }
-
+    //Test removing the mortgage
     @Test
     public void testDemortgage() {
         String instruction = "y\r\n";

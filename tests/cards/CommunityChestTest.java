@@ -23,14 +23,14 @@ class CommunityChestTest {
 
     @Test
     void testDealWithCardPAY() {
+    	//Testing a pay card
         int initialMoney = playerTest.getMoney();
-        //PAY
         commChestTest.dealWithCard(playerTest, null);
         assertEquals(initialMoney-commChestTest.getCardValue(), playerTest.getMoney(),"Check money is reduced from Player");
     }  
     @Test
     public void testDealWithCardINCOME() {
-        //INCOME
+        //INCOME, checking an income card
     	int initialMoney = playerTest.getMoney();
         commChestTest.setCardType("INCOME");
         commChestTest.dealWithCard(playerTest, null);
@@ -38,7 +38,7 @@ class CommunityChestTest {
     }  
     @Test
     public void testDealWithCardMOVE() {
-       //MOVE
+    	//MOVE, checking a Move card
     	int currLocation = playerTest.getLocation();
         commChestTest.setCardType("MOVE");
         commChestTest.setCardValue(5);
@@ -52,26 +52,22 @@ class CommunityChestTest {
         commChestTest.dealWithCard(playerTest, null);
         assertNotEquals(0, playerTest.getJailCard().size(), "Checking the jail card was added to their jail card array list");
     }
+    //In this case, there is a choice to be made and we will pick FINE
     @Test
     public void testDealWithCardCHOICE() {
-        //CHOICE CARD
-        //Fine is input of 0 and Chance is input of 1
-        //FIXME @@ciarannolan....unsure about how to process the choice on this
+        
         String instruction = "0\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
     	int initialMoney = playerTest.getMoney();
     	commChestTest.setCardDesc("Pay fine of £25 or pick Chance card");
         commChestTest.setCardType("CHOICE");
-        System.out.println("\n***********************************");
-        System.out.println("TEST: PLEASE PRESS FINE");
-        System.out.println("***********************************\n");
-
         commChestTest.dealWithCard(playerTest, null);
 
         //Do it in the case of minusing the value
         assertEquals(initialMoney-commChestTest.getCardValue(),playerTest.getMoney(),"Checking on choice");
     }
+    //Jail card
     @Test
     public void testDealWithCardJAIL() {
         //JAIL

@@ -27,7 +27,7 @@ class InputOutputTest {
 		Board.clearBoard();
 		player = null;
 	}
-
+	//Testing  yes no inputs
 	@Test
 	void testYesNoInput() {
 		//Trying incorrect answer first
@@ -37,7 +37,7 @@ class InputOutputTest {
 		boolean answerYesNo = InputOutput.yesNoInput("Please press y for Yes", player, null);
 		assertTrue(answerYesNo);
 	}
-
+	//Just prints square info
 	@Test
 	void testSquareInformation() {
 		InputOutput.squareInformation(5);

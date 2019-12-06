@@ -24,9 +24,8 @@ class ChanceTest {
 
     @Test
     void testDealWithCardPAY() {
-        //In this case I need to test all cases of the chance card
+        //Testing a Chance card with Pay
         Player playerTest = new Player("John", "blue");
-        //FIXME @@ciarannolan does this need to be static?
         int initialMoney = playerTest.getMoney();
         int expectedValuePay= initialMoney - chanceTest.getCardValue();
         chanceTest.dealWithCard(playerTest, null);
@@ -35,7 +34,7 @@ class ChanceTest {
     }
     @Test
     void testDealWithCardINCOME() {
-        //INCOME
+        //Checking an INCOME chest card
     	int initialMoney = playerTest.getMoney();
         int expectedValueIncome = initialMoney + chanceTest.getCardValue();;
         chanceTest.setCardType("INCOME");
@@ -44,7 +43,7 @@ class ChanceTest {
     }
     @Test
     void testDealWithCardMOVE() {
-        //MOVE
+        //Checking a Move Chance card
         String instruction = "n\r\n";
         InputStream instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
@@ -57,14 +56,14 @@ class ChanceTest {
     }
     @Test
     void testDealWithCardGETOUTOFJAIL() {
-        //GET OUT OF JAIL FREE
+        //GET OUT OF JAIL FREE card test
         chanceTest.setCardType("GET_OUT_OF_JAIL");
         chanceTest.dealWithCard(playerTest, null);
         assertNotEquals(0, playerTest.getJailCard().size(), "Checking the player has received a Jail card");
     }
     @Test
     void testDealWithCardJAIL() {
-        //JAIL
+        //JAIL testing in jail
         chanceTest.setCardType("JAIL");
         chanceTest.dealWithCard(playerTest, null);
         assertTrue(playerTest.isInJail());

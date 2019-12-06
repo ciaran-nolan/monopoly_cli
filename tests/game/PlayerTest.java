@@ -146,13 +146,13 @@ class PlayerTest {
         player.movePlayer(5);
         assertEquals(money+200,player.getMoney(),"Checking £200 given for passing GO");
     }
-
+    //Move to specific square
     @Test
     void testMoveToSquare() {
         player.moveToSquare(25);
         assertEquals(25,player.getLocation());
     }
-
+    //Pick the comm chest card
     @Test
     void testPickCommChestCard() {
     	//Checking PAY
@@ -189,7 +189,7 @@ class PlayerTest {
     	player.pickCommChestCard();
     	assertTrue(player.isInJail());
     }
-
+    //Chance card
     @Test
     void testPickChanceCard() {
     	//Checking pay
@@ -240,7 +240,7 @@ class PlayerTest {
         assertTrue(player.isInJail());
     }
 
-
+    //Creating the list of a players
     @Test
     void testCreateListPlayers() {
         String instruction = "2\r\nRob,red\r\nBob,blue";
@@ -255,6 +255,7 @@ class PlayerTest {
         assertEquals("blue", playerList.get(1).getToken(),"Checking Token");
     }
 
+    //Testing the bankrupt function
     @Test
     void testBankrupt() {
         String instruction = "n\r\nn\r\nn\r\nn\r\nn\r\nn\r\n";
@@ -278,6 +279,7 @@ class PlayerTest {
         player.bankrupt(null);
     }
 
+    //Adding a purchased title deed card for a CanOwn site
     @Test
     void testAddPurchasedTitleDeed() {
         Board.initialiseBoard();
@@ -285,6 +287,7 @@ class PlayerTest {
         assertEquals(1,player.getTitleDeedList().size());
     }
 
+    //Removing title deed when it is sold
     @Test
     void testRemoveOwnedTitleDeed() {
         Board.initialiseBoard();
@@ -294,27 +297,25 @@ class PlayerTest {
         assertEquals(0,player.getTitleDeedList().size());
     }
 
+    //Paying rent on a property
     @Test
     void testPayRentPROPERTY() {
         String instruction = "y\r\n";
         instructionInputStream = new ByteArrayInputStream(instruction.getBytes());
         System.setIn(instructionInputStream);
-    	//T1 is now in hand of playerOwed
-    	//Player owed has the title deed card in their list
     	int initialMoney = player.getMoney();
     	int initialMoneyOwed = playerOwed.getMoney();
     	Board.properties.get(0).getTitleDeedCard().setOwner(playerOwed);
     	playerOwed.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
     
-    	//Paying rent on the ownable site
+    	//Paying rent on the CanOwn site
     	((Property)(Board.properties.get(0).getTitleDeedCard().getOwnableSite())).setNumHouses(2);
     	Board.properties.get(0).getTitleDeedCard().setMortgageStatus(false);
-    	System.out.println("\n-----------------\nTEST: PAY RENT PROPERTY\n Press y then ENTER\n-----------------");
     	player.payRent(Board.properties.get(0));
     	assertEquals(initialMoney-30, player.getMoney(),"Comparing money gained");
     	assertEquals(initialMoneyOwed+30, playerOwed.getMoney(), "Comparing money gained by person owed");
     }
-    
+    //Paying rent on a train station 
     @Test
     void testPayRentTRAIN() {
         String instruction = "y\r\n";
@@ -332,6 +333,7 @@ class PlayerTest {
     	assertEquals(initialMoneyOwed+25, playerOwed.getMoney(), "Comparing money gained by person owed");
     }
     
+    //Paying rent on a utility
     @Test
     void testPayRentUTILITY() {
         String instruction = "y\r\n";
@@ -350,6 +352,7 @@ class PlayerTest {
     	assertEquals(initialMoneyOwed+20, playerOwed.getMoney(), "Comparing money gained by person owed");
     }
 
+    //Bankruptcy with mortgaging a property
     @Test
     void testBankruptcyMortgage() {
     	Board.initialiseBoard();
@@ -362,7 +365,7 @@ class PlayerTest {
     	player.getTitleDeedList().clear();
     }
 
-
+    //Saving from bankruptcy
     @Test
     void testSaveFromBankruptcy() {
         String instruction = "y\r\ny\r\n0\r\n0\r\n1500\r\ny\rn\n";
@@ -379,6 +382,7 @@ class PlayerTest {
         Game.playerList.get(0).reduceMoney(2500,null);
     }
 
+    //Clearing the status of a bankruptcy trade status
     @Test
     void testClearBankruptcyTradeStatus() {
         String instruction = "y\r\ny\r\n0\r\n0\r\n1500\r\ny\rn\n";
@@ -386,8 +390,6 @@ class PlayerTest {
         System.setIn(instructionInputStream);
         Game.playerList.add(player);
         Game.playerList.add(playerOwed);
-
-
 
         player.addPurchasedTitleDeed(Board.properties.get(0).getTitleDeedCard());
         player.addPurchasedTitleDeed(Board.properties.get(1).getTitleDeedCard());

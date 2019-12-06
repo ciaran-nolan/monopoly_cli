@@ -23,6 +23,7 @@ class CardTest {
 
     @Test
     void testGetCardType() {
+    	//Getting a card type
         String cardTypeTest = "PAY";
         assertEquals(cardTypeTest, commChestTest.getCardType(),"Checking Card Type");
         cardTypeTest = "INCOME";
@@ -31,6 +32,7 @@ class CardTest {
 
     @Test
     void testGetCardDesc() {
+    	//Getting the card description
         String cardDescTest = "Pay";
         assertNotEquals(cardDescTest,commChestTest.getCardDesc(),"Checking Card Description");
         cardDescTest = "Pay £100 in taxes";
@@ -39,6 +41,7 @@ class CardTest {
 
     @Test
     void testGetCardValue() {
+    	//Getting the card value
         int cardValueTest = 50;
         assertNotEquals(cardValueTest,commChestTest.getCardValue(),"Checking card value different");
         cardValueTest = 100;
@@ -47,18 +50,21 @@ class CardTest {
 
     @Test
     void testSetCardType() {
+    	//Setting the card type
         chanceTest.setCardType("PAY");
         assertEquals("PAY",chanceTest.getCardType(),"Checking Card type can be changed");
     }
 
     @Test
     void testSetCardDesc() {
+    	//Setting the card description
         chanceTest.setCardDesc("You won £20");
         assertEquals("You won £20", chanceTest.getCardDesc(),"Checking card description can be changed");
     }
 
     @Test
     void testSetCardValue() {
+    	//Setting card value
         chanceTest.setCardValue(20);
         assertEquals(20,chanceTest.getCardValue(),"Checking card value can be set to £20");
     }
