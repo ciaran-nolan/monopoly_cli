@@ -1,14 +1,3 @@
-# (COMP41670) Software Engineering Final Project Description 
-## Team members: Robert Keenan (15333066) & Ciaran Nolan (15329936)
-## Team ID: 11
-
-* The aim of this assignment is to create a fully functional version of the board game Monopoly using Java.
-* This repository will contain all the functional code required to run this game.
-* The objective of this variant of Monopoly is to own as much land as possible and be the richest person in the game.
-* With respect to property names and chance and community chest cards, we implemented the UK version of the game. The property rents can be seen for the UK version at this link: [UK Monopoly Properties](http://www.jdawiseman.com/papers/trivia/monopoly-rents.html). For further details, you can see our configuration files which describe them in full in the following folder, source/gameConfigurations.
-* Please see our JavaDoc in our repository for more in-depth details into the structure of our project and the implementation for all methods and classes.
-* NOTE: We had problems with UTF-8 coding of the £ symbol when printing to the console with different text encoding schemes in Eclipse between computers (macOS vs Windows). **Please ensure your text encoding is UTF-8 in your IDE.**
-
 ## Structure of the Repository
 * The repository is firstly split into 2 main folders of Java code:
 	* source: Contains all of the source code in a number of packages.
@@ -117,16 +106,6 @@ Game.playerList = InputOutput.createListPlayers(null);
 ![](Images/FinaliseTrade1.png)
 ![](Images/FinaliseTrade2.png)
 		
-## Teamwork
-* We initially set up a number of ways to communicate and make sure that we were working on different aspects of the project that would lead to minimal interference in pushed code.
-* We started off with a number of white board meetings in the Library to decide on our class structure, class variables, initial class methods for each and our design methods.
-* We use Trello to assign ourselves debugging tasks, merge requests from other branches (also assigned through Gitlab) and setting out tasks for each of us. We found this is an extremely good tool to use when we are working remotely away from each other and we have both used it in a professional setting before so we were quite familiar with its advanced features.
-* We prioritised working on branches for improving the workflow but also separating Master from substantial changes to functionality. This was made most obvious by the TitleDeedChanges branch which was used to implement the changes of exchanging TitleDeed cards instead of the physical Property square when you were buying or selling. This was to make it as accurate as possible to the real game. Branches were used to protect master before assigning merge requests to the other member of the team
-* Through Trello, we can gain an insight into what each other is doing but also ensures that we are not doing the same tasks twice.
-* We also consistently meet up in the Engineering building to see what each other has done and how we can progress with the project as a whole. We actually sit beside each other in the ME Project Lab in the Engineering building so it is easy for us.
-* Once we were finished with a class, we would meet up and review the code. From here, we could make judgements on areas where we could improve, optimise the speed of our program or simplify the structure.
-* As you may have noticed from our Gitlab repository, there is a large number of commits. We have obviously seen in this Software Engineering module just how important Agile methodologies are to the efficient performance of a software development team. We emphasised incremental improvements with many commits a day. This meant that there was a minimal amount of times where we had merge conflicts or encountered issues in our workflow and this is definitely something we prioritised throughout the project.
-* You may also notice when you look at the contributors for our Gitlab repository in Repository > Contributors that there are 4 separate main contributors. This is due to us both using 2 different computers to push changes to the code base.
 
 ## Appendix UML Diagrams
 * I will put these UML Diagrams here as an Appendix for reference
